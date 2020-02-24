@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Redirect,
+  useHistory,
+} from 'react-router-dom';
+import AuthRequiredRoute from 'AuthRequiredRoute';
+import styled from 'styled-components';
+import 'firebase/auth';
+import Home from 'Home';
+import Login from './Login';
 
-function App() {
+const StyledApp = styled.div`
+  background-color: ${props => props.theme.palette.primary.main};
+  height: 100vh;
+`;
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StyledApp>
+      <BrowserRouter>
+        <Switch>
+          <AuthRequiredRoute path="/home">
+            <Home />
+          </AuthRequiredRoute>
+
+          <Route path="/login">
+            <Login />
+          </Route>
+
+          <Redirect to="/home" />
+        </Switch>
+      </BrowserRouter>
+    </StyledApp>
   );
-}
+};
 
 export default App;
