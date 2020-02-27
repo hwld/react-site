@@ -12,7 +12,6 @@ module.exports = {
       "ignore": ["value"]
     }],
     'string-quotes': 'single',
-    'order/properties-alphabetical-order': true,
     'declaration-empty-line-before': 'never',
   },
 };

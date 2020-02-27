@@ -12,7 +12,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Typography>Hello</Typography>
+      <Typography color="textSecondary">Hello</Typography>
       <button
         type="button"
         onClick={() => {

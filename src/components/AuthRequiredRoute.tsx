@@ -4,28 +4,25 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { setUserUid } from 'stores/user';
 import { Typography } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'stores';
 
 const AuthRequiredRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
-  const [isLoading, setisLoading] = useState(true);
-  const [isLoggedin, setIsLoggedin] = useState(false);
   const location = useLocation();
+  const [isLoading, setisLoading] = useState(true);
   const dispatch = useDispatch();
+  const { uid } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    window.console.log('route effect');
     const unSubscribe = firebase.auth().onAuthStateChanged(user => {
+      window.console.log('route onAuthStateChanged');
       if (user) {
         dispatch(setUserUid(user.uid));
-        setIsLoggedin(true);
       }
       setisLoading(false);
     });
 
-    return () => {
-      unSubscribe();
-      window.console.log('route effect unsubscribe');
-    };
+    return unSubscribe;
   }, [dispatch]);
 
   if (isLoading) {
@@ -34,7 +31,7 @@ const AuthRequiredRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
 
   return (
     <Route {...rest}>
-      {isLoggedin ? (
+      {uid ? (
         children
       ) : (
         <Redirect to={{ pathname: '/login', state: { from: location } }} />
