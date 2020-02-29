@@ -25,10 +25,6 @@ const GenreTreeView: React.FC<GenreTreeViewProps> = ({ genres }) => {
         genre => genre.parentGenreId === rawGenre.id,
       );
 
-      if (childrenGenres.length === 0) {
-        return { ...rawGenre, childrenGenres: [] };
-      }
-
       // childrenGenresそれぞれのGenreTreeNodeを作成
       const childrenGenreTreeNodes = childrenGenres.map(genre =>
         buildGenreTreeNode(genre),
