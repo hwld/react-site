@@ -6,10 +6,6 @@ import {
   Divider,
   IconButton,
 } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import TreeView from '@material-ui/lab/TreeView';
-import TreeItem from '@material-ui/lab/TreeItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
@@ -17,6 +13,7 @@ import { useHistory } from 'react-router-dom';
 import { setUserUid } from 'stores/user';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import GenreTreeView, { Genre } from 'components/GenreTreeView';
 
 const Background = styled.div`
   display: flex;
@@ -43,11 +40,33 @@ const Main = styled.div`
   flex-grow: 5;
 `;
 
-const data = {
-  name: 'root',
-  toggled: true,
-  children: [{ name: 'Node1' }, { name: 'Node2' }],
-};
+const genres: Genre[] = [
+  { genreName: 'genre1', id: '1', parentGenreId: null, childrenGenreIds: [] },
+  {
+    genreName: 'genre2',
+    id: '2',
+    parentGenreId: null,
+    childrenGenreIds: ['3', '5'],
+  },
+  {
+    genreName: 'genre2-1',
+    id: '3',
+    parentGenreId: '2',
+    childrenGenreIds: ['4'],
+  },
+  {
+    genreName: 'genre2-2',
+    id: '5',
+    parentGenreId: '2',
+    childrenGenreIds: [],
+  },
+  {
+    genreName: 'genre2-1-1',
+    id: '4',
+    parentGenreId: '3',
+    childrenGenreIds: [],
+  },
+];
 
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -77,16 +96,7 @@ const Home: React.FC = () => {
       <Drawer width="500" isOpen={isOpen}>
         <Toolbar />
         <Divider />
-        <TreeView
-          defaultCollapseIcon={<ExpandMoreIcon color="secondary" />}
-          defaultExpandIcon={<ChevronRightIcon color="secondary" />}
-        >
-          <TreeItem nodeId="1" label="Node1">
-            <TreeItem nodeId="2" label="Node1-1">
-              <TreeItem nodeId="3" label="Node-1-1-1" />
-            </TreeItem>
-          </TreeItem>
-        </TreeView>
+        <GenreTreeView genres={genres} />
       </Drawer>
       <Main>
         <Toolbar />

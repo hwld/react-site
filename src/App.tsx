@@ -4,7 +4,6 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import AuthRequiredRoute from 'components/AuthRequiredRoute';
 import 'firebase/auth';
 import Home from 'components/Home';
-import styled from 'styled-components';
 import Login from './components/Login';
 
 const App: React.FC = () => {
