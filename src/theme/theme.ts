@@ -16,6 +16,10 @@ const theme = createMuiTheme({
       primary: '#ffffff',
       secondary: '000000',
     },
+    action: {
+      selected: '#007bb2',
+      hover: '#707070',
+    },
   },
   props: {
     MuiTypography: {

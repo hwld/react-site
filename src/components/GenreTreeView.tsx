@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { TreeView, TreeItem } from '@material-ui/lab';
+import styled from 'styled-components';
 
 export interface Genre {
   genreName: string;
@@ -11,13 +12,35 @@ export interface Genre {
   childrenGenreIds: string[];
 }
 
-type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
+export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
 
 interface GenreTreeViewProps {
   genres: Genre[];
+  onSelected: (event: React.ChangeEvent<{}>, selectedId: string) => void;
 }
 
-const GenreTreeView: React.FC<GenreTreeViewProps> = ({ genres }) => {
+const StyledTreeView = styled(TreeView)`
+  height: 100%;
+
+  & .MuiTreeItem-content {
+    :hover {
+      background-color: ${props => props.theme.palette.action.hover};
+    }
+  }
+
+  & .Mui-selected {
+    > .MuiTreeItem-content {
+      background-color: ${props => props.theme.palette.action.selected};
+    }
+  }
+`;
+
+const GenreTreeView: React.FC<GenreTreeViewProps> = ({
+  genres,
+  onSelected,
+}) => {
+  const [selectedId, setSelectedId] = useState<string>('');
+
   const buildGenreTreeNode = useCallback(
     (rawGenre: Genre): GenreTreeNode => {
       // rawGenreの子ジャンルを抽出
@@ -42,6 +65,7 @@ const GenreTreeView: React.FC<GenreTreeViewProps> = ({ genres }) => {
     (genreTreeNode: GenreTreeNode): React.ReactNode => {
       return (
         <TreeItem
+          // selected={selectedId === genreTreeNode.id}
           nodeId={genreTreeNode.id}
           label={genreTreeNode.genreName}
           key={genreTreeNode.id}
@@ -69,13 +93,18 @@ const GenreTreeView: React.FC<GenreTreeViewProps> = ({ genres }) => {
   }, [genres, buildGenreTreeNode, buildGenreTreeItems]);
 
   return (
-    <TreeView
+    <StyledTreeView
       defaultCollapseIcon={<ExpandMoreIcon color="secondary" />}
       defaultExpandIcon={<ChevronRightIcon color="secondary" />}
       defaultEndIcon={<></>}
+      onNodeSelect={(event: React.ChangeEvent<{}>, genreId: string) => {
+        setSelectedId(genreId);
+        onSelected(event, genreId);
+      }}
+      selected={selectedId}
     >
       {renderGenreTree()}
-    </TreeView>
+    </StyledTreeView>
   );
 };
 

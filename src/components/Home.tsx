@@ -96,7 +96,12 @@ const Home: React.FC = () => {
       <Drawer width="500" isOpen={isOpen}>
         <Toolbar />
         <Divider />
-        <GenreTreeView genres={genres} />
+        <GenreTreeView
+          genres={genres}
+          onSelected={(event: React.ChangeEvent<{}>, selectedId: string) => {
+            window.console.log(selectedId);
+          }}
+        />
       </Drawer>
       <Main>
         <Toolbar />
