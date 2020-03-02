@@ -14,6 +14,8 @@ import { setUserUid } from 'stores/user';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import GenreTreeView, { Genre } from 'components/GenreTreeView';
+import MemoList from './MemoList';
+import { Memo } from './MemoListItem';
 
 const Background = styled.div`
   display: flex;
@@ -68,8 +70,36 @@ const genres: Genre[] = [
   },
 ];
 
+const memos: Memo[] = [
+  {
+    id: '1',
+    genreId: '1',
+    title: 'title1-1',
+    text: 'text1-1',
+    authorName: 'autho1-1',
+    bookName: 'book1-1',
+  },
+  {
+    id: '2',
+    genreId: '1',
+    title: 'title1-2',
+    text: 'text1-2',
+    authorName: 'autho1-2',
+    bookName: 'book1-2',
+  },
+  {
+    id: '3',
+    genreId: '4',
+    title: 'title4-1',
+    text: 'text4-1',
+    authorName: 'autho4-1',
+    bookName: 'book4-1',
+  },
+];
+
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedGenreId, setSelectedGenreId] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -98,14 +128,14 @@ const Home: React.FC = () => {
         <Divider />
         <GenreTreeView
           genres={genres}
-          onSelected={(event: React.ChangeEvent<{}>, selectedId: string) => {
-            window.console.log(selectedId);
+          onGenreSelect={(event: React.ChangeEvent<{}>, selectedId: string) => {
+            setSelectedGenreId(selectedId);
           }}
         />
       </Drawer>
       <Main>
         <Toolbar />
-        <Typography>Hello</Typography>
+        <MemoList memos={memos} selectedGenreId={selectedGenreId} />
       </Main>
     </Background>
   );
