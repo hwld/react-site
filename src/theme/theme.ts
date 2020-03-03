@@ -14,7 +14,6 @@ const theme = createMuiTheme({
     },
     text: {
       primary: '#ffffff',
-      secondary: '000000',
     },
     action: {
       selected: '#007bb2',

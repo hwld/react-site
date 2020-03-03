@@ -1,5 +1,6 @@
 import React from 'react';
 import { ListItem, ListItemText, Typography } from '@material-ui/core';
+import styled from 'styled-components';
 
 export interface Memo {
   id: string;
@@ -14,14 +15,33 @@ interface MemoListItemProps {
   memo: Memo;
 }
 
+const TitleText = styled(Typography)`
+  font-size: 2em;
+`;
+
+const MemoText = styled(Typography)`
+  font-size: 1.2em;
+  margin-left: 10px;
+`;
+
+const MetaData = styled.div`
+  margin-top: 1em;
+`;
+
+const MetaText = styled(Typography)`
+  font-size: 1em;
+`;
+
 const MemoListItem: React.FC<MemoListItemProps> = ({ memo }) => {
   return (
     <ListItem button>
       <ListItemText>
-        <Typography>{memo.title}</Typography>
-        <Typography>{memo.text}</Typography>
-        <Typography>{memo.authorName}</Typography>
-        <Typography>{memo.bookName}</Typography>
+        <TitleText>{memo.title}</TitleText>
+        <MemoText>{memo.text}</MemoText>
+        <MetaData>
+          <MetaText>著者名:{memo.authorName}</MetaText>
+          <MetaText>書籍名:{memo.bookName}</MetaText>
+        </MetaData>
       </ListItemText>
     </ListItem>
   );
