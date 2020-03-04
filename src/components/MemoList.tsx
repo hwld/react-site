@@ -31,7 +31,7 @@ const MemoList: React.FC<MemoListProps> = ({ memos, selectedGenreId }) => {
       ));
   };
 
-  return <List component="nav">{renderListItem()}</List>;
+  return <List>{renderListItem()}</List>;
 };
 
 export default MemoList;
