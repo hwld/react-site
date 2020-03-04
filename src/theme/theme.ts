@@ -8,16 +8,16 @@ const theme = createMuiTheme({
       light: '#707070',
     },
     secondary: {
-      main: '#00b0ff',
-      dark: '#007bb2',
-      light: '#33bfff',
+      main: '#ff1744',
+      dark: '#b2102f',
+      light: '#ff4569',
     },
     text: {
       primary: '#ffffff',
     },
     action: {
-      selected: '#007bb2',
-      hover: '#707070',
+      selected: '#757575',
+      hover: '#424242',
     },
   },
   props: {
