@@ -23,7 +23,9 @@ const MemoList: React.FC<MemoListProps> = ({ memos, selectedGenreId }) => {
       .filter(memo => memo.genreId === selectedGenreId)
       .map(memo => (
         <MemoListItem
-          onClick={() => selectMemoItem(memo.id)}
+          onSelectMemo={() => selectMemoItem(memo.id)}
+          onDeleteMemo={() => window.console.log('delete')}
+          onEditMemo={() => window.console.log('edit')}
           selected={memo.id === selectedMemoId}
           memo={memo}
           key={memo.id}
