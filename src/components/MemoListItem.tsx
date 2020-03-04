@@ -13,6 +13,8 @@ export interface Memo {
 
 interface MemoListItemProps {
   memo: Memo;
+  selected: boolean;
+  onClick: () => void;
 }
 
 const TitleText = styled(Typography)`
@@ -32,9 +34,13 @@ const MetaText = styled(Typography)`
   font-size: 1em;
 `;
 
-const MemoListItem: React.FC<MemoListItemProps> = ({ memo }) => {
+const MemoListItem: React.FC<MemoListItemProps> = ({
+  memo,
+  selected,
+  onClick,
+}) => {
   return (
-    <ListItem button>
+    <ListItem button selected={selected} onClick={onClick}>
       <ListItemText>
         <TitleText>{memo.title}</TitleText>
         <MemoText>{memo.text}</MemoText>
