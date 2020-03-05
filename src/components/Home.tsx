@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import NotesView from 'components/NotesView';
+import NoteView from 'components/NoteView';
 import AppBar from 'components/AppBar';
 import GenreView from './GenreView';
 
@@ -20,7 +20,7 @@ const Drawer = styled.div<{ width: string; isOpen: boolean }>`
   overflow: auto;
 `;
 
-const StyledNotesView = styled(NotesView)`
+const StyledNoteView = styled(NoteView)`
   height: 100%;
   flex: 1;
 `;
@@ -39,7 +39,7 @@ const Home: React.FC = () => {
           }}
         />
       </Drawer>
-      <StyledNotesView selectedGenreId={selectedGenreId} />
+      <StyledNoteView selectedGenreId={selectedGenreId} />
     </Background>
   );
 };

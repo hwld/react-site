@@ -8,12 +8,13 @@ const theme = createMuiTheme({
       light: '#707070',
     },
     secondary: {
-      main: '#ff1744',
-      dark: '#b2102f',
-      light: '#ff4569',
+      main: '#00796b',
+      dark: '#00544a',
+      light: '#339388',
     },
     text: {
       primary: '#ffffff',
+      secondary: '#000000',
     },
     action: {
       selected: '#757575',
@@ -23,6 +24,12 @@ const theme = createMuiTheme({
   props: {
     MuiTypography: {
       color: 'textPrimary',
+    },
+    MuiAppBar: {
+      color: 'secondary',
+    },
+    MuiToolbar: {
+      color: 'secondary',
     },
   },
 });

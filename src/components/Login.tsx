@@ -77,9 +77,9 @@ const Login: React.FC = () => {
             onClick={login}
             type="button"
             color="secondary"
-            variant="outlined"
+            variant="contained"
           >
-            <Typography color="secondary">ログイン</Typography>
+            <Typography color="textPrimary">ログイン</Typography>
           </LoginButton>
         </LoginForm>
       )}

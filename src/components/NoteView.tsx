@@ -1,9 +1,9 @@
 import React from 'react';
-import { Toolbar } from '@material-ui/core';
+import { Toolbar, Divider } from '@material-ui/core';
 import NoteList from 'components/NoteList';
 import { Note } from 'components/NoteListItem';
 import styled from 'styled-components';
-import NotesViewMenu from 'components/NotesViewMenu';
+import NoteViewMenu from 'components/NoteViewMenu';
 
 const notes: Note[] = [
   {
@@ -34,7 +34,7 @@ const notes: Note[] = [
   },
 ];
 
-interface NotesViewProps {
+interface NoteViewProps {
   selectedGenreId: string;
   className?: string;
 }
@@ -49,22 +49,20 @@ const StyledNoteList = styled(NoteList)`
   height: 85%;
 `;
 
-const StyledNotesViewMenu = styled(NotesViewMenu)`
+const StyledNoteViewMenu = styled(NoteViewMenu)`
   background-color: ${props => props.theme.palette.secondary.main};
   flex: 1;
 `;
 
-const NotesView: React.FC<NotesViewProps> = ({
-  selectedGenreId,
-  className,
-}) => {
+const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
   return (
     <View className={className}>
       <Toolbar />
+      <Divider />
       <StyledNoteList notes={notes} selectedGenreId={selectedGenreId} />
-      <StyledNotesViewMenu />
+      <StyledNoteViewMenu />
     </View>
   );
 };
 
-export default NotesView;
+export default NoteView;

@@ -7,17 +7,16 @@ import MoveNoteIcon from '@material-ui/icons/Forward';
 import SortNoteIcon from '@material-ui/icons/Sort';
 import SearchNoteIcon from '@material-ui/icons/Search';
 
-interface NotesViewMenuProps {
+interface NoteViewMenuProps {
   className?: string;
 }
 
 const StyledToolBar = styled(Toolbar)`
-  background-color: ${props => props.theme.palette.secondary.main};
   display: flex;
   justify-content: center;
 `;
 
-const NotesViewMenu: React.FC<NotesViewMenuProps> = ({ className }) => {
+const NoteViewMenu: React.FC<NoteViewMenuProps> = ({ className }) => {
   return (
     <StyledToolBar className={className}>
       <IconButton>
@@ -39,4 +38,4 @@ const NotesViewMenu: React.FC<NotesViewMenuProps> = ({ className }) => {
   );
 };
 
-export default NotesViewMenu;
+export default NoteViewMenu;

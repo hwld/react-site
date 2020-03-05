@@ -18,6 +18,7 @@ const StyledAppBar = styled(AppBar)`
 `;
 
 const AppTitle = styled(Typography)`
+  color: ${props => props.theme.palette.text.secondary};
   flex-grow: 1;
 `;
 
@@ -34,11 +35,11 @@ const NoteAppBar: React.FC<NoteAppBarProps> = ({ onMenuClick }) => {
   return (
     <StyledAppBar position="absolute">
       <Toolbar>
-        <IconButton color="inherit" edge="start" onClick={onMenuClick}>
+        <IconButton edge="start" onClick={onMenuClick}>
           <MenuIcon />
         </IconButton>
         <AppTitle variant="h4">Notes</AppTitle>
-        <IconButton onClick={logout} color="inherit">
+        <IconButton onClick={logout}>
           <ExitToApp />
         </IconButton>
       </Toolbar>
