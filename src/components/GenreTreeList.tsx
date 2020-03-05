@@ -14,7 +14,7 @@ export interface Genre {
 
 export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
 
-interface GenreTreeViewProps {
+interface GenreTreeListProps {
   genres: Genre[];
   onGenreSelect: (event: React.ChangeEvent<{}>, selectedId: string) => void;
 }
@@ -35,7 +35,7 @@ const StyledTreeView = styled(TreeView)`
   }
 `;
 
-const GenreTreeView: React.FC<GenreTreeViewProps> = ({
+const GenreTreeList: React.FC<GenreTreeListProps> = ({
   genres,
   onGenreSelect,
 }) => {
@@ -108,4 +108,4 @@ const GenreTreeView: React.FC<GenreTreeViewProps> = ({
   );
 };
 
-export default GenreTreeView;
+export default GenreTreeList;
