@@ -1,30 +1,15 @@
 import React, { useState } from 'react';
-import {
-  Typography,
-  AppBar,
-  Toolbar,
-  Divider,
-  IconButton,
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
-import { useHistory } from 'react-router-dom';
-import { setUserUid } from 'stores/user';
-import { useDispatch } from 'react-redux';
+import { Toolbar, Divider } from '@material-ui/core';
 import styled from 'styled-components';
 import GenreTreeView, { Genre } from 'components/GenreTreeView';
 import MemoList from './MemoList';
 import { Memo } from './MemoListItem';
+import NoteAppBar from './NoteAppBar';
 
 const Background = styled.div`
   display: flex;
   height: 100vh;
   background-color: ${props => props.theme.palette.primary.dark};
-`;
-
-const StyledAppBar = styled(AppBar)`
-  z-index: ${props => props.theme.zIndex.drawer + 1};
 `;
 
 const Drawer = styled.div<{ width: string; isOpen: boolean }>`
@@ -88,7 +73,7 @@ const memos: Memo[] = [
     genreId: '1',
     title: 'title1-2',
     text:
-      'text-2text1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2text1-1txt1-1text1-1text1-1textt1-1text11-2text1-1text1-1text1-1textt1-1text11-2text1-1text1-1text1-1textt1-1text11-2text1-1text1-1text1-1text1-1text1-1text1-1text1-1text1-1text1-1text1-1text1-1text1-1',
+      'text-2text1t1-2text1-1textt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2t1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2tt1-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2t-2text1-1text1-1text11-2texext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2text1-1text1-1text1-1teext11-2text1-1txt1-1text1-1text1-1textt1-1text11-2text1-1text1-1text1-1textt1-1text11-2text1-1text1-1text1-1textt1-1text11-2text1-1text1-1text1-1text1-1text1-1text1-1text1-1text1-1text1-1text1-1text1-1text1-1',
     authorName: 'autho1-2',
     bookName: 'book1-2',
   },
@@ -105,29 +90,10 @@ const memos: Memo[] = [
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedGenreId, setSelectedGenreId] = useState('');
-  const history = useHistory();
-  const dispatch = useDispatch();
-
-  const logout = () => {
-    firebase.auth().signOut();
-    dispatch(setUserUid(null));
-    history.replace('/login');
-  };
 
   return (
     <Background>
-      <StyledAppBar position="absolute">
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            edge="start"
-            onClick={() => setIsOpen(state => !state)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h4">Notes</Typography>
-        </Toolbar>
-      </StyledAppBar>
+      <NoteAppBar onMenuClick={() => setIsOpen(state => !state)} />
       <Drawer width="500" isOpen={isOpen}>
         <Toolbar />
         <Divider />

@@ -42,6 +42,7 @@ const MemoText = styled(Typography)`
   font-size: 1.2em;
   margin-top: 20px;
   margin-left: 20px;
+  margin-bottom: 20px;
 `;
 
 const MetaData = styled.div`

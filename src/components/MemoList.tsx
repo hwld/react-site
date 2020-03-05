@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { List } from '@material-ui/core';
+import { List, Toolbar, AppBar } from '@material-ui/core';
 import MemoListItem, { Memo } from './MemoListItem';
 
 interface MemoListProps {
@@ -33,7 +33,11 @@ const MemoList: React.FC<MemoListProps> = ({ memos, selectedGenreId }) => {
       ));
   };
 
-  return <List>{renderListItem()}</List>;
+  return (
+    <>
+      <List>{renderListItem()}</List>
+    </>
+  );
 };
 
 export default MemoList;
