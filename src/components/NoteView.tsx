@@ -58,7 +58,10 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
   return (
     <View className={className}>
       <Toolbar />
+<<<<<<< HEAD
       <Divider />
+=======
+>>>>>>> 6ab1497417c14a49e597d50ecd361c3e7a0aed84
       <StyledNoteList notes={notes} selectedGenreId={selectedGenreId} />
       <StyledNoteViewMenu />
     </View>
