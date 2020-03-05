@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
 import { List } from '@material-ui/core';
+import styled from 'styled-components';
 import NoteListItem, { Note } from './NoteListItem';
 
 interface NoteListProps {
   notes: Note[];
   selectedGenreId: string;
+  className?: string;
 }
 
-const NoteList: React.FC<NoteListProps> = ({ notes, selectedGenreId }) => {
+const Root = styled.div`
+  overflow: auto;
+`;
+
+const NoteList: React.FC<NoteListProps> = ({
+  notes,
+  selectedGenreId,
+  className,
+}) => {
   const [selectedNoteId, setSelectedNoteId] = useState('');
 
   const selectNoteItem = (id: string) => {
@@ -34,9 +44,9 @@ const NoteList: React.FC<NoteListProps> = ({ notes, selectedGenreId }) => {
   };
 
   return (
-    <>
+    <Root className={className}>
       <List>{renderListItem()}</List>
-    </>
+    </Root>
   );
 };
 

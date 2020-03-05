@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import NotesView from 'components/NotesView';
-import NoteAppBar from 'components/NoteAppBar';
+import AppBar from 'components/AppBar';
 import GenreView from './GenreView';
 
 const Background = styled.div`
@@ -17,8 +17,12 @@ const Drawer = styled.div<{ width: string; isOpen: boolean }>`
   flex-basis: ${props => `${props.width}px`};
   margin-left: ${props => (props.isOpen ? '0px' : `-${props.width}px`)};
   transition-duration: 0.3s;
-  word-wrap: normal;
   overflow: auto;
+`;
+
+const StyledNotesView = styled(NotesView)`
+  height: 100%;
+  flex: 1;
 `;
 
 const Home: React.FC = () => {
@@ -27,7 +31,7 @@ const Home: React.FC = () => {
 
   return (
     <Background>
-      <NoteAppBar onMenuClick={() => setIsOpen(state => !state)} />
+      <AppBar onMenuClick={() => setIsOpen(state => !state)} />
       <Drawer width="500" isOpen={isOpen}>
         <GenreView
           onGenreSelect={(event: React.ChangeEvent<{}>, genreId: string) => {
@@ -35,7 +39,7 @@ const Home: React.FC = () => {
           }}
         />
       </Drawer>
-      <NotesView selectedGenreId={selectedGenreId} />
+      <StyledNotesView selectedGenreId={selectedGenreId} />
     </Background>
   );
 };

@@ -3,6 +3,7 @@ import { Toolbar } from '@material-ui/core';
 import NoteList from 'components/NoteList';
 import { Note } from 'components/NoteListItem';
 import styled from 'styled-components';
+import NotesViewMenu from 'components/NotesViewMenu';
 
 const notes: Note[] = [
   {
@@ -35,20 +36,33 @@ const notes: Note[] = [
 
 interface NotesViewProps {
   selectedGenreId: string;
+  className?: string;
 }
 
 const View = styled.div`
   height: 100%;
-  flex: 5;
-  word-wrap: normal;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
 `;
 
-const NotesView: React.FC<NotesViewProps> = ({ selectedGenreId }) => {
+const StyledNoteList = styled(NoteList)`
+  height: 85%;
+`;
+
+const StyledNotesViewMenu = styled(NotesViewMenu)`
+  background-color: ${props => props.theme.palette.secondary.main};
+  flex: 1;
+`;
+
+const NotesView: React.FC<NotesViewProps> = ({
+  selectedGenreId,
+  className,
+}) => {
   return (
-    <View>
+    <View className={className}>
       <Toolbar />
-      <NoteList notes={notes} selectedGenreId={selectedGenreId} />
+      <StyledNoteList notes={notes} selectedGenreId={selectedGenreId} />
+      <StyledNotesViewMenu />
     </View>
   );
 };
