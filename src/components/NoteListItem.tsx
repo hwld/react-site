@@ -4,7 +4,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import styled from 'styled-components';
 
-export interface Memo {
+export interface Note {
   id: string;
   genreId: string;
   title: string;
@@ -13,12 +13,12 @@ export interface Memo {
   bookName: string;
 }
 
-interface MemoListItemProps {
-  memo: Memo;
+interface NoteListItemProps {
+  note: Note;
   selected: boolean;
-  onSelectMemo: () => void;
-  onDeleteMemo: () => void;
-  onEditMemo: () => void;
+  onSelectNote: () => void;
+  onDeleteNote: () => void;
+  onEditNote: () => void;
 }
 
 const GridContainer = styled.div`
@@ -28,7 +28,7 @@ const GridContainer = styled.div`
   align-items: end;
 `;
 
-const MemoTextContainer = styled.div`
+const NoteTextContainer = styled.div`
   padding-left: 20px;
 `;
 
@@ -36,7 +36,7 @@ const TitleText = styled(Typography)`
   font-size: 2em;
 `;
 
-const MemoText = styled(Typography)`
+const NoteText = styled(Typography)`
   white-space: pre-line;
   width: 100%;
   font-size: 1.2em;
@@ -65,29 +65,29 @@ const StyledIconButton = styled(IconButton)`
   }
 `;
 
-const MemoListItem: React.FC<MemoListItemProps> = ({
-  memo,
+const NoteListItem: React.FC<NoteListItemProps> = ({
+  note,
   selected,
-  onSelectMemo,
-  onDeleteMemo,
-  onEditMemo,
+  onSelectNote,
+  onDeleteNote,
+  onEditNote,
 }) => {
   return (
-    <ListItem button selected={selected} onClick={onSelectMemo}>
+    <ListItem button selected={selected} onClick={onSelectNote}>
       <GridContainer>
-        <MemoTextContainer>
-          <TitleText variant="h4">{memo.title}</TitleText>
-          <MemoText>{memo.text}</MemoText>
+        <NoteTextContainer>
+          <TitleText variant="h4">{note.title}</TitleText>
+          <NoteText>{note.text}</NoteText>
           <MetaData>
-            <MetaText>著者名:{memo.authorName}</MetaText>
-            <MetaText>書籍名:{memo.bookName}</MetaText>
+            <MetaText>著者名:{note.authorName}</MetaText>
+            <MetaText>書籍名:{note.bookName}</MetaText>
           </MetaData>
-        </MemoTextContainer>
+        </NoteTextContainer>
         <div>
           <StyledIconButton
             onClick={event => {
               event.stopPropagation();
-              onDeleteMemo();
+              onDeleteNote();
             }}
             size="medium"
           >
@@ -96,7 +96,7 @@ const MemoListItem: React.FC<MemoListItemProps> = ({
           <StyledIconButton
             onClick={event => {
               event.stopPropagation();
-              onEditMemo();
+              onEditNote();
             }}
             size="medium"
           >
@@ -108,4 +108,4 @@ const MemoListItem: React.FC<MemoListItemProps> = ({
   );
 };
 
-export default MemoListItem;
+export default NoteListItem;
