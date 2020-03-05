@@ -14,6 +14,7 @@ const theme = createMuiTheme({
     },
     text: {
       primary: '#ffffff',
+      secondary: '#000000',
     },
     action: {
       selected: '#757575',
@@ -23,6 +24,12 @@ const theme = createMuiTheme({
   props: {
     MuiTypography: {
       color: 'textPrimary',
+    },
+    MuiAppBar: {
+      color: 'secondary',
+    },
+    MuiToolbar: {
+      color: 'secondary',
     },
   },
 });
