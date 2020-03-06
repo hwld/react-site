@@ -18,13 +18,13 @@ const NoteList: React.FC<NoteListProps> = ({
   selectedGenreId,
   className,
 }) => {
-  const [selectedNoteId, setSelectedNoteId] = useState('');
+  const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
 
-  const selectNoteItem = (id: string) => {
-    if (selectedNoteId === id) {
-      setSelectedNoteId('');
+  const selectNotesItem = (id: string) => {
+    if (selectedNoteIds.includes(id)) {
+      setSelectedNoteIds(Ids => Ids.filter(selectedId => selectedId !== id));
     } else {
-      setSelectedNoteId(id);
+      setSelectedNoteIds(Ids => [...Ids, id]);
     }
   };
 
@@ -33,10 +33,10 @@ const NoteList: React.FC<NoteListProps> = ({
       .filter(note => note.genreId === selectedGenreId)
       .map(note => (
         <NoteListItem
-          onSelectNote={() => selectNoteItem(note.id)}
+          onSelectNote={() => selectNotesItem(note.id)}
           onDeleteNote={() => window.console.log('delete')}
           onEditNote={() => window.console.log('edit')}
-          selected={note.id === selectedNoteId}
+          selected={selectedNoteIds.includes(note.id)}
           note={note}
           key={note.id}
         />

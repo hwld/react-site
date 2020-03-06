@@ -32,6 +32,38 @@ const notes: Note[] = [
     authorName: 'autho4-1',
     bookName: 'book4-1',
   },
+  {
+    id: '4',
+    genreId: '4',
+    title: 'title4-1',
+    text: 'text4-1',
+    authorName: 'autho4-1',
+    bookName: 'book4-1',
+  },
+  {
+    id: '5',
+    genreId: '4',
+    title: 'title4-1',
+    text: 'text4-1',
+    authorName: 'autho4-1',
+    bookName: 'book4-1',
+  },
+  {
+    id: '6',
+    genreId: '4',
+    title: 'title4-1',
+    text: 'text4-1',
+    authorName: 'autho4-1',
+    bookName: 'book4-1',
+  },
+  {
+    id: '7',
+    genreId: '4',
+    title: 'title4-1',
+    text: 'text4-1',
+    authorName: 'autho4-1',
+    bookName: 'book4-1',
+  },
 ];
 
 interface NoteViewProps {
