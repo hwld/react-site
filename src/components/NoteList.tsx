@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { List } from '@material-ui/core';
 import styled from 'styled-components';
 import NoteListItem, { Note } from './NoteListItem';
@@ -19,6 +19,10 @@ const NoteList: React.FC<NoteListProps> = ({
   className,
 }) => {
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    setSelectedNoteIds([]);
+  }, [selectedGenreId]);
 
   const selectNotesItem = (id: string) => {
     if (selectedNoteIds.includes(id)) {
