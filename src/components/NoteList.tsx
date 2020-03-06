@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { List } from '@material-ui/core';
 import styled from 'styled-components';
-import NoteListItem, { Note } from './NoteListItem';
+import { Note } from 'stores/store';
+import NoteListItem from './NoteListItem';
 
 interface NoteListProps {
   notes: Note[];

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Toolbar, Divider } from '@material-ui/core';
-import GenreTreeList, { Genre } from 'components/GenreTreeList';
+import GenreTreeList from 'components/GenreTreeList';
 import styled from 'styled-components';
+import { Genre } from 'stores/store';
 import GenreViewMenu from './GenreViewMenu';
 
 const genres: Genre[] = [

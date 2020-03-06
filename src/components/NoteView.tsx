@@ -1,9 +1,9 @@
 import React from 'react';
 import { Toolbar, Divider } from '@material-ui/core';
 import NoteList from 'components/NoteList';
-import { Note } from 'components/NoteListItem';
 import styled from 'styled-components';
 import NoteViewMenu from 'components/NoteViewMenu';
+import { Note } from 'stores/store';
 
 const notes: Note[] = [
   {

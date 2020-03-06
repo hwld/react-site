@@ -3,14 +3,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { TreeView, TreeItem } from '@material-ui/lab';
 import styled from 'styled-components';
-
-export interface Genre {
-  genreName: string;
-  id: string;
-  parentGenreId: string | null;
-  // 直接の子ジャンルのみをもたせる
-  childrenGenreIds: string[];
-}
+import { Genre } from 'stores/store';
 
 export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
 

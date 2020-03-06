@@ -3,15 +3,7 @@ import { ListItem, Typography, IconButton, TextField } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import styled from 'styled-components';
-
-export interface Note {
-  id: string;
-  genreId: string;
-  title: string;
-  text: string;
-  authorName: string;
-  bookName: string;
-}
+import { Note } from 'stores/store';
 
 interface NoteListItemProps {
   note: Note;
