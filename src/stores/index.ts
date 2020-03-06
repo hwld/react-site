@@ -1,8 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import userReducer from 'stores/user';
+import userReducer from 'stores/store';
 
 const reducer = combineReducers({
-  user: userReducer,
+  notes: userReducer,
 });
 
 export type RootState = ReturnType<typeof reducer>;

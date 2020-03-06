@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
-import { setUserUid } from 'stores/user';
+import { setUserUid } from 'stores/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'stores';
 import { Redirect } from 'react-router-dom';
@@ -39,7 +39,7 @@ const LoginButton = styled(Button)`
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
-  const { uid } = useSelector((state: RootState) => state.user);
+  const { uid } = useSelector((state: RootState) => state.notes);
 
   useEffect(() => {
     const unSubscribe = firebase.auth().onAuthStateChanged(loggedinUser => {

@@ -5,7 +5,7 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUserUid } from 'stores/user';
+import { setUserUid } from 'stores/store';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
