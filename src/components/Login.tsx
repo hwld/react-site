@@ -39,7 +39,7 @@ const LoginButton = styled(Button)`
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
-  const { uid } = useSelector((state: RootState) => state.notes);
+  const { uid } = useSelector((state: RootState) => state.reactNotes);
 
   useEffect(() => {
     const unSubscribe = firebase.auth().onAuthStateChanged(loggedinUser => {

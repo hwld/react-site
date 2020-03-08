@@ -4,11 +4,12 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { TreeView, TreeItem } from '@material-ui/lab';
 import styled from 'styled-components';
 import { Genre } from 'stores/store';
+import { RootState } from 'stores';
+import { useSelector } from 'react-redux';
 
 export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
 
 interface GenreTreeListProps {
-  genres: Genre[];
   onGenreSelect: (event: React.ChangeEvent<{}>, selectedId: string) => void;
   className?: string;
 }
@@ -30,10 +31,10 @@ const StyledTreeView = styled(TreeView)`
 `;
 
 const GenreTreeList: React.FC<GenreTreeListProps> = ({
-  genres,
   onGenreSelect,
   className,
 }) => {
+  const { genres } = useSelector((state: RootState) => state.reactNotes);
   const [selectedId, setSelectedId] = useState<string>('');
 
   const buildGenreTreeNode = useCallback(

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { List } from '@material-ui/core';
 import styled from 'styled-components';
-import { Note } from 'stores/store';
+import { RootState } from 'stores';
+import { useSelector } from 'react-redux';
 import NoteListItem from './NoteListItem';
 
 interface NoteListProps {
-  notes: Note[];
   selectedGenreId: string;
   className?: string;
 }
@@ -14,11 +14,9 @@ const Root = styled.div`
   overflow: auto;
 `;
 
-const NoteList: React.FC<NoteListProps> = ({
-  notes,
-  selectedGenreId,
-  className,
-}) => {
+const NoteList: React.FC<NoteListProps> = ({ selectedGenreId, className }) => {
+  const { notes } = useSelector((state: RootState) => state.reactNotes);
+
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
 
   useEffect(() => {

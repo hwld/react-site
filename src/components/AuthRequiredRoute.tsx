@@ -11,7 +11,7 @@ const AuthRequiredRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
   const location = useLocation();
   const [isLoading, setisLoading] = useState(true);
   const dispatch = useDispatch();
-  const { uid } = useSelector((state: RootState) => state.notes);
+  const { uid } = useSelector((state: RootState) => state.reactNotes);
 
   useEffect(() => {
     const unSubscribe = firebase.auth().onAuthStateChanged(user => {
