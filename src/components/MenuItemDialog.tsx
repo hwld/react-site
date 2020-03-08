@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Dialog, IconButton, DialogActions, Button } from '@material-ui/core';
+import {
+  Dialog,
+  IconButton,
+  DialogActions,
+  Button,
+  Tooltip,
+} from '@material-ui/core';
 
 const StyledDialog = styled(Dialog)`
   & .MuiDialog-paper {
@@ -14,6 +20,7 @@ interface MenuItemDialogProps {
   onComplete?: () => void;
   onClose?: () => void;
   actionText?: string;
+  tooltipText: string;
 }
 
 const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
@@ -23,6 +30,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   onComplete,
   onClose,
   disabled,
+  tooltipText,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,9 +45,11 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
 
   return (
     <>
-      <IconButton onClick={OpenDialog} disabled={disabled}>
-        {activaterIcon}
-      </IconButton>
+      <Tooltip title={tooltipText}>
+        <IconButton onClick={OpenDialog} disabled={disabled}>
+          {activaterIcon}
+        </IconButton>
+      </Tooltip>
       <StyledDialog fullWidth open={isOpen} onClose={CloseDialog} maxWidth="sm">
         {children}
         <DialogActions>

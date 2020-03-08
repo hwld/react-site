@@ -5,6 +5,7 @@ import {
   DialogTitle,
   TextField,
   Typography,
+  Tooltip,
 } from '@material-ui/core';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
@@ -52,6 +53,7 @@ const AddNoteMenuItem: React.FC<AddNoteMenuItemProps> = ({
 
   return (
     <MenuItemDialog
+      tooltipText="メモを追加"
       activaterIcon={<AddNoteIcon fontSize="large" />}
       actionText="追加"
       onComplete={AddNote}
