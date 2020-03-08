@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AddNoteIcon from '@material-ui/icons/NoteAdd';
 import {
   DialogContent,
@@ -17,10 +17,12 @@ const FormField = styled.div`
 
 interface AddNoteMenuItemProps {
   selectedGenreId: string;
+  disabled?: boolean;
 }
 
 const AddNoteMenuItem: React.FC<AddNoteMenuItemProps> = ({
   selectedGenreId,
+  disabled,
 }) => {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -54,6 +56,7 @@ const AddNoteMenuItem: React.FC<AddNoteMenuItemProps> = ({
       actionText="追加"
       onComplete={AddNote}
       onClose={ClearField}
+      disabled={disabled}
     >
       <DialogTitle>メモの追加</DialogTitle>
       <DialogContent>

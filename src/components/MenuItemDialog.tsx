@@ -9,6 +9,7 @@ const StyledDialog = styled(Dialog)`
 `;
 
 interface MenuItemDialogProps {
+  disabled?: boolean;
   activaterIcon: JSX.Element;
   onComplete?: () => void;
   onClose?: () => void;
@@ -21,6 +22,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   actionText,
   onComplete,
   onClose,
+  disabled,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -35,7 +37,9 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
 
   return (
     <>
-      <IconButton onClick={OpenDialog}>{activaterIcon}</IconButton>
+      <IconButton onClick={OpenDialog} disabled={disabled}>
+        {activaterIcon}
+      </IconButton>
       <StyledDialog fullWidth open={isOpen} onClose={CloseDialog} maxWidth="sm">
         {children}
         <DialogActions>
