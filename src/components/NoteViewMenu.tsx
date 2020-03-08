@@ -9,6 +9,7 @@ import AddNoteMenuItem from './AddNoteMenuItem';
 
 interface NoteViewMenuProps {
   className?: string;
+  selectedGenreId: string;
 }
 
 const StyledToolBar = styled(Toolbar)`
@@ -16,10 +17,13 @@ const StyledToolBar = styled(Toolbar)`
   justify-content: center;
 `;
 
-const NoteViewMenu: React.FC<NoteViewMenuProps> = ({ className }) => {
+const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
+  className,
+  selectedGenreId,
+}) => {
   return (
     <StyledToolBar className={className}>
-      <AddNoteMenuItem />
+      <AddNoteMenuItem selectedGenreId={selectedGenreId} />
       <IconButton>
         <DeleteNoteIcon fontSize="large" />
       </IconButton>

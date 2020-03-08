@@ -30,7 +30,7 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
       <Toolbar />
       <Divider />
       <StyledNoteList selectedGenreId={selectedGenreId} />
-      <StyledNoteViewMenu />
+      <StyledNoteViewMenu selectedGenreId={selectedGenreId} />
     </View>
   );
 };

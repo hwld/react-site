@@ -21,6 +21,8 @@ interface Store {
   uid: string | null;
   notes: Note[];
   genres: Genre[];
+  nextNoteId: string;
+  nextGenreId: string;
 }
 
 const InitialState: Store = {
@@ -112,6 +114,8 @@ const InitialState: Store = {
       childrenGenreIds: [],
     },
   ],
+  nextNoteId: '8',
+  nextGenreId: '6',
 };
 
 // 指定されたジャンルの子ジャンルのidをすべて取得
@@ -141,7 +145,7 @@ const slice = createSlice({
 
     // Genres
     addGenre: (state, action: PayloadAction<Genre>) => {
-      const newGenre = action.payload;
+      const newGenre: Genre = { ...action.payload, id: state.nextGenreId };
 
       // newGenreの親ジャンルのchildreGenresIdsにnewGenreのidを追加したもの
       const genresWithChildrenAdded = state.genres.map(genre => {
@@ -155,7 +159,11 @@ const slice = createSlice({
       });
 
       // newGenreを追加
-      return { ...state, genres: [...genresWithChildrenAdded, newGenre] };
+      return {
+        ...state,
+        nextGenreId: state.nextGenreId + 1,
+        genres: [...genresWithChildrenAdded, newGenre],
+      };
     },
 
     removeGenre: (state, action: PayloadAction<string>) => {
@@ -188,11 +196,12 @@ const slice = createSlice({
 
     // Notes
     addNote: (state, action: PayloadAction<Note>) => {
-      const note = action.payload;
+      const newNote = { ...action.payload, id: state.nextNoteId };
 
       return {
         ...state,
-        notes: [...state.notes, note],
+        nextNoteId: state.nextNoteId + 1,
+        notes: [...state.notes, newNote],
       };
     },
     removeNote: (state, action: PayloadAction<string>) => {
@@ -206,5 +215,11 @@ const slice = createSlice({
   },
 });
 
-export const { setUserUid } = slice.actions;
+export const {
+  setUserUid,
+  addGenre,
+  removeGenre,
+  addNote,
+  removeNote,
+} = slice.actions;
 export default slice.reducer;

@@ -7,27 +7,43 @@ import {
   Typography,
 } from '@material-ui/core';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { addNote } from 'stores/store';
 import MenuItemDialog from './MenuItemDialog';
 
 const FormField = styled.div`
   margin-top: 20px;
 `;
 
-const AddNoteMenuItem: React.FC = () => {
+interface AddNoteMenuItemProps {
+  selectedGenreId: string;
+}
+
+const AddNoteMenuItem: React.FC<AddNoteMenuItemProps> = ({
+  selectedGenreId,
+}) => {
   const [title, setTitle] = useState('');
-  const [note, setNote] = useState('');
+  const [text, setText] = useState('');
   const [authorName, setAuthorName] = useState('');
   const [bookName, setBookName] = useState('');
+  const dispatch = useDispatch();
 
   const AddNote = () => {
-    window.console.log(
-      `Title:${title} Note:${note} Author:${authorName} Book:${bookName}`,
+    dispatch(
+      addNote({
+        id: '',
+        genreId: selectedGenreId,
+        title,
+        text,
+        authorName,
+        bookName,
+      }),
     );
   };
 
   const ClearField = () => {
     setTitle('');
-    setNote('');
+    setText('');
     setAuthorName('');
     setBookName('');
   };
@@ -56,9 +72,9 @@ const AddNoteMenuItem: React.FC = () => {
         <FormField>
           <Typography>メモ</Typography>
           <TextField
-            value={note}
+            value={text}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setNote(event.target.value)
+              setText(event.target.value)
             }
             color="secondary"
             variant="filled"
