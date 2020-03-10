@@ -43,7 +43,6 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     const unSubscribe = firebase.auth().onAuthStateChanged(loggedinUser => {
-      window.console.log('login onAuthStateChanged');
       if (loggedinUser) {
         dispatch(setUserUid(loggedinUser.uid));
       }

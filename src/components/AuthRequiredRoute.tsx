@@ -15,7 +15,6 @@ const AuthRequiredRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
 
   useEffect(() => {
     const unSubscribe = firebase.auth().onAuthStateChanged(user => {
-      window.console.log('route onAuthStateChanged');
       if (user) {
         dispatch(setUserUid(user.uid));
       }
