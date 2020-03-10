@@ -7,10 +7,12 @@ import MenuItemDialog from './MenuItemDialog';
 
 interface RemoveNoteMenuItemProps {
   selectedNoteIds: string[];
+  size?: 'inherit' | 'default' | 'small' | 'large';
 }
 
 const RemoveNoteMenuItem: React.FC<RemoveNoteMenuItemProps> = ({
   selectedNoteIds,
+  size,
 }) => {
   const dispatch = useDispatch();
 
@@ -22,7 +24,7 @@ const RemoveNoteMenuItem: React.FC<RemoveNoteMenuItemProps> = ({
     <>
       <MenuItemDialog
         tooltipText="メモを削除"
-        activatorIcon={<DeleteNoteIcon fontSize="large" />}
+        activatorIcon={<DeleteNoteIcon fontSize={size} />}
         activatorDisabled={selectedNoteIds.length === 0}
         doneText="削除"
         onDone={RemoveNote}

@@ -5,7 +5,6 @@ import {
   DialogTitle,
   TextField,
   Typography,
-  Tooltip,
 } from '@material-ui/core';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
@@ -18,12 +17,12 @@ const FormField = styled.div`
 
 interface AddNoteMenuItemProps {
   selectedGenreId: string;
-  disabled?: boolean;
+  size?: 'inherit' | 'default' | 'small' | 'large';
 }
 
 const AddNoteMenuItem: React.FC<AddNoteMenuItemProps> = ({
   selectedGenreId,
-  disabled,
+  size,
 }) => {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -54,8 +53,8 @@ const AddNoteMenuItem: React.FC<AddNoteMenuItemProps> = ({
   return (
     <MenuItemDialog
       tooltipText="メモを追加"
-      activatorIcon={<AddNoteIcon fontSize="large" />}
-      activatorDisabled={disabled}
+      activatorIcon={<AddNoteIcon fontSize={size} />}
+      activatorDisabled={selectedGenreId === ''}
       doneText="追加"
       onDone={AddNote}
       doneDisabled={text.length === 0}

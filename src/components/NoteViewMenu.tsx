@@ -25,11 +25,8 @@ const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
 }) => {
   return (
     <StyledToolBar className={className}>
-      <AddNoteMenuItem
-        selectedGenreId={selectedGenreId}
-        disabled={selectedGenreId === ''}
-      />
-      <RemoveNoteMenuItem selectedNoteIds={selectedNoteIds} />
+      <AddNoteMenuItem size="large" selectedGenreId={selectedGenreId} />
+      <RemoveNoteMenuItem size="large" selectedNoteIds={selectedNoteIds} />
       <IconButton>
         <MoveNoteIcon fontSize="large" />
       </IconButton>
