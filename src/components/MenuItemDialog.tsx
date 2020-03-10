@@ -15,21 +15,23 @@ const StyledDialog = styled(Dialog)`
 `;
 
 interface MenuItemDialogProps {
-  disabled?: boolean;
-  activaterIcon: JSX.Element;
-  onComplete?: () => void;
+  activatorDisabled?: boolean;
+  activatorIcon: JSX.Element;
+  doneText?: string;
+  onDone?: () => void;
+  doneDisabled?: boolean;
   onClose?: () => void;
-  actionText?: string;
   tooltipText: string;
 }
 
 const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   children,
-  activaterIcon,
-  actionText,
-  onComplete,
+  activatorIcon,
+  activatorDisabled,
+  doneText,
+  onDone,
+  doneDisabled,
   onClose,
-  disabled,
   tooltipText,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,25 +45,42 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
     if (onClose) onClose();
   };
 
+  // ToolTipの子コンポーネントにdisable属性をつけるとエラーが出るのでifで分岐させる
+  const activator = () => {
+    if (activatorDisabled)
+      return (
+        <IconButton onClick={OpenDialog} disabled>
+          {activatorIcon}
+        </IconButton>
+      );
+
+    return (
+      <Tooltip title={tooltipText}>
+        <IconButton onClick={OpenDialog}>{activatorIcon}</IconButton>
+      </Tooltip>
+    );
+  };
+
   return (
     <>
-      <Tooltip title={tooltipText}>
-        <IconButton onClick={OpenDialog} disabled={disabled}>
-          {activaterIcon}
-        </IconButton>
-      </Tooltip>
+      {activator()}
       <StyledDialog fullWidth open={isOpen} onClose={CloseDialog} maxWidth="sm">
         {children}
         <DialogActions>
           <Button
+            disabled={doneDisabled}
             onClick={() => {
-              if (onComplete) onComplete();
+              if (onDone) onDone();
               CloseDialog();
             }}
+            variant="contained"
+            color="secondary"
           >
-            {actionText || '完了'}
+            {doneText || '完了'}
           </Button>
-          <Button onClick={CloseDialog}>中止</Button>
+          <Button onClick={CloseDialog} variant="contained" color="secondary">
+            中止
+          </Button>
         </DialogActions>
       </StyledDialog>
     </>

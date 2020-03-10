@@ -54,11 +54,12 @@ const AddNoteMenuItem: React.FC<AddNoteMenuItemProps> = ({
   return (
     <MenuItemDialog
       tooltipText="メモを追加"
-      activaterIcon={<AddNoteIcon fontSize="large" />}
-      actionText="追加"
-      onComplete={AddNote}
+      activatorIcon={<AddNoteIcon fontSize="large" />}
+      activatorDisabled={disabled}
+      doneText="追加"
+      onDone={AddNote}
+      doneDisabled={text.length === 0}
       onClose={ClearField}
-      disabled={disabled}
     >
       <DialogTitle>メモの追加</DialogTitle>
       <DialogContent>
@@ -77,6 +78,8 @@ const AddNoteMenuItem: React.FC<AddNoteMenuItemProps> = ({
         <FormField>
           <Typography>メモ</Typography>
           <TextField
+            error={text.length === 0}
+            helperText="※メモは必須項目です."
             value={text}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setText(event.target.value)
