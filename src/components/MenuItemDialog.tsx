@@ -47,12 +47,12 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const OpenDialog = () => {
+  const openDialog = () => {
     setIsOpen(true);
     if (onOpen) onOpen();
   };
 
-  const CloseDialog = () => {
+  const closeDialog = () => {
     setIsOpen(false);
     if (onClose) onClose();
   };
@@ -60,15 +60,16 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   // ToolTipの子コンポーネントにdisable属性をつけるとエラーが出るのでifで分岐させる
   const activator = () => {
     if (activatorDisabled)
-      return (
-        <StyledIconButton onClick={OpenDialog} disabled>
-          {activatorIcon}
-        </StyledIconButton>
-      );
+      return <StyledIconButton disabled>{activatorIcon}</StyledIconButton>;
 
     return (
       <Tooltip title={tooltipText}>
-        <StyledIconButton onClick={OpenDialog}>
+        <StyledIconButton
+          onClick={event => {
+            event.stopPropagation();
+            openDialog();
+          }}
+        >
           {activatorIcon}
         </StyledIconButton>
       </Tooltip>
@@ -78,21 +79,36 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   return (
     <>
       {activator()}
-      <StyledDialog fullWidth open={isOpen} onClose={CloseDialog} maxWidth="sm">
+      <StyledDialog
+        fullWidth
+        open={isOpen}
+        onClose={closeDialog}
+        maxWidth="sm"
+        // ダイアログ外をクリックするとクリックイベントが伝搬してしまうため、ここで防ぐ
+        onClick={event => event.stopPropagation()}
+      >
         {children}
         <DialogActions>
           <Button
             disabled={doneDisabled}
-            onClick={() => {
+            onClick={event => {
+              event.stopPropagation();
               if (onDone) onDone();
-              CloseDialog();
+              closeDialog();
             }}
             variant="contained"
             color="secondary"
           >
             {doneText || '完了'}
           </Button>
-          <Button onClick={CloseDialog} variant="contained" color="secondary">
+          <Button
+            onClick={event => {
+              event.stopPropagation();
+              closeDialog();
+            }}
+            variant="contained"
+            color="secondary"
+          >
             中止
           </Button>
         </DialogActions>
