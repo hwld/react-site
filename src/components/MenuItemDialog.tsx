@@ -14,6 +14,15 @@ const StyledDialog = styled(Dialog)`
   }
 `;
 
+const StyledIconButton = styled(IconButton)`
+  margin-left: 10px;
+  background-color: ${props => props.theme.palette.secondary.main};
+
+  &:hover {
+    background-color: ${props => props.theme.palette.secondary.dark};
+  }
+`;
+
 interface MenuItemDialogProps {
   activatorDisabled?: boolean;
   activatorIcon: JSX.Element;
@@ -49,14 +58,16 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   const activator = () => {
     if (activatorDisabled)
       return (
-        <IconButton onClick={OpenDialog} disabled>
+        <StyledIconButton onClick={OpenDialog} disabled>
           {activatorIcon}
-        </IconButton>
+        </StyledIconButton>
       );
 
     return (
       <Tooltip title={tooltipText}>
-        <IconButton onClick={OpenDialog}>{activatorIcon}</IconButton>
+        <StyledIconButton onClick={OpenDialog}>
+          {activatorIcon}
+        </StyledIconButton>
       </Tooltip>
     );
   };
