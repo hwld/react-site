@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { List } from '@material-ui/core';
 import styled from 'styled-components';
-import { RootState } from 'stores';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeNote, Note } from 'stores/store';
 import NoteListItem from './NoteListItem';
 
 interface NoteListProps {
+  notes: Note[];
   onNotesSelect?: (selectedIds: string[]) => void;
   selectedNoteIds?: string[];
   selectedGenreId: string;
@@ -17,12 +18,11 @@ const Root = styled.div`
 `;
 
 const NoteList: React.FC<NoteListProps> = ({
+  notes,
   onNotesSelect,
   selectedGenreId,
   className,
 }) => {
-  const { notes } = useSelector((state: RootState) => state.reactNotes);
-
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
 
   useEffect(() => {
@@ -34,28 +34,43 @@ const NoteList: React.FC<NoteListProps> = ({
     if (onNotesSelect) onNotesSelect(selectedNoteIds);
   }, [onNotesSelect, selectedNoteIds]);
 
-  const selectNotesItem = (id: string) => {
-    if (selectedNoteIds.includes(id)) {
-      setSelectedNoteIds(Ids => Ids.filter(selectedId => selectedId !== id));
-    } else {
-      setSelectedNoteIds(Ids => [...Ids, id]);
-    }
-  };
+  // 削除、移動したメモの選択状態を解除する
+  useEffect(() => {
+    const viewNoteIds = notes
+      .filter(note => note.genreId === selectedGenreId)
+      .map(note => note.id);
 
-  const renderListItem = () => {
+    selectedNoteIds.forEach(id => {
+      if (!viewNoteIds.includes(id)) {
+        setSelectedNoteIds(selectedIds =>
+          selectedIds.filter(selectedId => selectedId !== id),
+        );
+      }
+    });
+  }, [notes, selectedGenreId, selectedNoteIds]);
+
+  const renderListItem = useCallback(() => {
+    const selectNotesItem = (id: string) => {
+      if (selectedNoteIds.includes(id)) {
+        setSelectedNoteIds(Ids => Ids.filter(selectedId => selectedId !== id));
+      } else {
+        setSelectedNoteIds(Ids => [...Ids, id]);
+      }
+    };
+
     return notes
       .filter(note => note.genreId === selectedGenreId)
       .map(note => (
         <NoteListItem
           onSelectNote={() => selectNotesItem(note.id)}
-          onRemoveNote={() => window.console.log('delete')}
+          onRemoveNote={() => window.console.log('remove')}
           onEditNote={() => window.console.log('edit')}
           selected={selectedNoteIds.includes(note.id)}
           note={note}
           key={note.id}
         />
       ));
-  };
+  }, [notes, selectedGenreId, selectedNoteIds]);
 
   return (
     <Root className={className}>

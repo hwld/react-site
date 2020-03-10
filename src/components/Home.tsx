@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import NoteView from 'components/NoteView';
 import AppBar from 'components/AppBar';

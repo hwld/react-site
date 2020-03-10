@@ -23,6 +23,7 @@ const RemoveNoteMenuItem: React.FC<RemoveNoteMenuItemProps> = ({
       <MenuItemDialog
         tooltipText="メモを削除"
         activatorIcon={<DeleteNoteIcon fontSize="large" />}
+        activatorDisabled={selectedNoteIds.length === 0}
         doneText="削除"
         onDone={RemoveNote}
       >

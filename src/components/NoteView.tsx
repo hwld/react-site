@@ -3,6 +3,8 @@ import { Toolbar, Divider } from '@material-ui/core';
 import NoteList from 'components/NoteList';
 import styled from 'styled-components';
 import NoteViewMenu from 'components/NoteViewMenu';
+import { useSelector } from 'react-redux';
+import { RootState } from 'stores';
 
 interface NoteViewProps {
   selectedGenreId: string;
@@ -25,6 +27,7 @@ const StyledNoteViewMenu = styled(NoteViewMenu)`
 `;
 
 const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
+  const { notes } = useSelector((state: RootState) => state.reactNotes);
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
 
   const selectNoteIds = useCallback((ids: string[]) => {
@@ -36,6 +39,7 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
       <Toolbar />
       <Divider />
       <StyledNoteList
+        notes={notes}
         onNotesSelect={selectNoteIds}
         selectedGenreId={selectedGenreId}
       />
