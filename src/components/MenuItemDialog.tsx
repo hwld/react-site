@@ -29,6 +29,7 @@ interface MenuItemDialogProps {
   doneText?: string;
   onDone?: () => void;
   doneDisabled?: boolean;
+  onOpen?: () => void;
   onClose?: () => void;
   tooltipText: string;
 }
@@ -40,6 +41,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   doneText,
   onDone,
   doneDisabled,
+  onOpen,
   onClose,
   tooltipText,
 }) => {
@@ -47,6 +49,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
 
   const OpenDialog = () => {
     setIsOpen(true);
+    if (onOpen) onOpen();
   };
 
   const CloseDialog = () => {

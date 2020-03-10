@@ -58,7 +58,7 @@ const AddNoteMenuItem: React.FC<AddNoteMenuItemProps> = ({
       doneText="追加"
       onDone={AddNote}
       doneDisabled={text.length === 0}
-      onClose={ClearField}
+      onOpen={ClearField}
     >
       <DialogTitle>メモの追加</DialogTitle>
       <DialogContent>
