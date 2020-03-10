@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { List } from '@material-ui/core';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeNote, Note } from 'stores/store';
+import { Note } from 'stores/store';
 import NoteListItem from './NoteListItem';
 
 interface NoteListProps {
@@ -25,6 +24,7 @@ const NoteList: React.FC<NoteListProps> = ({
 }) => {
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
 
+  // ジャンルが変更されたら選択状態をリセットする
   useEffect(() => {
     setSelectedNoteIds([]);
   }, [selectedGenreId]);

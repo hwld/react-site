@@ -1,9 +1,9 @@
 import React from 'react';
-import { ListItem, Typography, IconButton, TextField } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { ListItem, Typography, IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import styled from 'styled-components';
 import { Note } from 'stores/store';
+import RemoveNoteMenuItem from './RemoveNoteMenuItem';
 
 interface NoteListItemProps {
   note: Note;
@@ -61,7 +61,6 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
   note,
   selected,
   onSelectNote,
-  onRemoveNote,
   onEditNote,
 }) => {
   return (
@@ -76,15 +75,7 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
           </MetaData>
         </NoteTextContainer>
         <div>
-          <StyledIconButton
-            onClick={event => {
-              event.stopPropagation();
-              onRemoveNote();
-            }}
-            size="medium"
-          >
-            <DeleteIcon />
-          </StyledIconButton>
+          <RemoveNoteMenuItem selectedNoteIds={[note.id]} />
           <StyledIconButton
             onClick={event => {
               event.stopPropagation();
