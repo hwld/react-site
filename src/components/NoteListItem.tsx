@@ -9,7 +9,7 @@ interface NoteListItemProps {
   note: Note;
   selected: boolean;
   onSelectNote: () => void;
-  onDeleteNote: () => void;
+  onRemoveNote: () => void;
   onEditNote: () => void;
 }
 
@@ -61,7 +61,7 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
   note,
   selected,
   onSelectNote,
-  onDeleteNote,
+  onRemoveNote,
   onEditNote,
 }) => {
   return (
@@ -79,7 +79,7 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
           <StyledIconButton
             onClick={event => {
               event.stopPropagation();
-              onDeleteNote();
+              onRemoveNote();
             }}
             size="medium"
           >

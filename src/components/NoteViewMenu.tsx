@@ -1,15 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Toolbar, IconButton } from '@material-ui/core';
-import DeleteNoteIcon from '@material-ui/icons/Delete';
 import MoveNoteIcon from '@material-ui/icons/Forward';
 import SortNoteIcon from '@material-ui/icons/Sort';
 import SearchNoteIcon from '@material-ui/icons/Search';
 import AddNoteMenuItem from './AddNoteMenuItem';
+import RemoveNoteMenuItem from './RemoveNoteMenuItem';
 
 interface NoteViewMenuProps {
   className?: string;
   selectedGenreId: string;
+  selectedNoteIds: string[];
 }
 
 const StyledToolBar = styled(Toolbar)`
@@ -20,6 +21,7 @@ const StyledToolBar = styled(Toolbar)`
 const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
   className,
   selectedGenreId,
+  selectedNoteIds,
 }) => {
   return (
     <StyledToolBar className={className}>
@@ -27,9 +29,7 @@ const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
         selectedGenreId={selectedGenreId}
         disabled={selectedGenreId === ''}
       />
-      <IconButton>
-        <DeleteNoteIcon fontSize="large" />
-      </IconButton>
+      <RemoveNoteMenuItem selectedNoteIds={selectedNoteIds} />
       <IconButton>
         <MoveNoteIcon fontSize="large" />
       </IconButton>

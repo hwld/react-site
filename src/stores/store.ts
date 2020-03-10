@@ -167,31 +167,31 @@ const slice = createSlice({
     },
 
     removeGenre: (state, action: PayloadAction<string>) => {
-      const deleteGenre = state.genres.find(
+      const removeGenre = state.genres.find(
         genre => genre.id === action.payload,
       );
 
-      if (!deleteGenre) {
+      if (!removeGenre) {
         return state;
       }
 
       // 削除する必要のあるGenreIdを取得
-      const deleteIds = [
-        deleteGenre.id,
-        ...getChildrenGenreIds(state.genres, deleteGenre),
+      const removeIds = [
+        removeGenre.id,
+        ...getChildrenGenreIds(state.genres, removeGenre),
       ];
 
       // 削除済みジャンル
-      const deletedGenres = state.genres.filter(
-        genre => !deleteIds.includes(genre.id),
+      const removedGenres = state.genres.filter(
+        genre => !removeIds.includes(genre.id),
       );
 
       // 削除済みメモ
-      const deletedNotes = state.notes.filter(
-        note => !deleteIds.includes(note.genreId),
+      const removedNotes = state.notes.filter(
+        note => !removeIds.includes(note.genreId),
       );
 
-      return { ...state, genres: deletedGenres, notes: deletedNotes };
+      return { ...state, genres: removedGenres, notes: removedNotes };
     },
 
     // Notes
