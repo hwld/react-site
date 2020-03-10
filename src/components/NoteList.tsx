@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import NoteListItem from './NoteListItem';
 
 interface NoteListProps {
+  onNotesSelect?: (selectedIds: string[]) => void;
+  selectedNoteIds?: string[];
   selectedGenreId: string;
   className?: string;
 }
@@ -14,7 +16,11 @@ const Root = styled.div`
   overflow: auto;
 `;
 
-const NoteList: React.FC<NoteListProps> = ({ selectedGenreId, className }) => {
+const NoteList: React.FC<NoteListProps> = ({
+  onNotesSelect,
+  selectedGenreId,
+  className,
+}) => {
   const { notes } = useSelector((state: RootState) => state.reactNotes);
 
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
@@ -22,6 +28,11 @@ const NoteList: React.FC<NoteListProps> = ({ selectedGenreId, className }) => {
   useEffect(() => {
     setSelectedNoteIds([]);
   }, [selectedGenreId]);
+
+  // 内部の選択状態が変更されるたびに通知する
+  useEffect(() => {
+    if (onNotesSelect) onNotesSelect(selectedNoteIds);
+  }, [onNotesSelect, selectedNoteIds]);
 
   const selectNotesItem = (id: string) => {
     if (selectedNoteIds.includes(id)) {

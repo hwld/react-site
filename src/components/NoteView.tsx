@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { Toolbar, Divider } from '@material-ui/core';
 import NoteList from 'components/NoteList';
 import styled from 'styled-components';
@@ -25,12 +25,24 @@ const StyledNoteViewMenu = styled(NoteViewMenu)`
 `;
 
 const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
+  const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
+
+  const selectNoteIds = useCallback((ids: string[]) => {
+    setSelectedNoteIds(ids);
+  }, []);
+
   return (
     <View className={className}>
       <Toolbar />
       <Divider />
-      <StyledNoteList selectedGenreId={selectedGenreId} />
-      <StyledNoteViewMenu selectedGenreId={selectedGenreId} />
+      <StyledNoteList
+        onNotesSelect={selectNoteIds}
+        selectedGenreId={selectedGenreId}
+      />
+      <StyledNoteViewMenu
+        selectedNoteIds={selectedNoteIds}
+        selectedGenreId={selectedGenreId}
+      />
     </View>
   );
 };
