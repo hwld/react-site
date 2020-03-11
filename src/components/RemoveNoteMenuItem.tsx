@@ -1,5 +1,5 @@
 import React from 'react';
-import { DialogTitle, DialogContent } from '@material-ui/core';
+import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
 import DeleteNoteIcon from '@material-ui/icons/Delete';
 import { useDispatch } from 'react-redux';
 import { removeNote } from 'stores/store';
@@ -7,7 +7,7 @@ import MenuItemDialog from './MenuItemDialog';
 
 interface RemoveNoteMenuItemProps {
   selectedNoteIds: string[];
-  size?: 'inherit' | 'default' | 'small' | 'large';
+  size?: SvgIconProps['fontSize'];
 }
 
 const RemoveNoteMenuItem: React.FC<RemoveNoteMenuItemProps> = ({

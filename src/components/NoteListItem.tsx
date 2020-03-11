@@ -1,9 +1,9 @@
 import React from 'react';
-import { ListItem, Typography, IconButton } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
+import { ListItem, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { Note } from 'stores/store';
 import RemoveNoteMenuItem from './RemoveNoteMenuItem';
+import UpdateNoteMenuItem from './UpdateNoteMenuItem';
 
 interface NoteListItemProps {
   note: Note;
@@ -48,20 +48,10 @@ const MetaText = styled(Typography)`
   color: #c0c0c0;
 `;
 
-const StyledIconButton = styled(IconButton)`
-  margin-left: 10px;
-  background-color: ${props => props.theme.palette.secondary.main};
-
-  &:hover {
-    background-color: ${props => props.theme.palette.secondary.dark};
-  }
-`;
-
 const NoteListItem: React.FC<NoteListItemProps> = ({
   note,
   selected,
   onSelectNote,
-  onEditNote,
 }) => {
   return (
     <ListItem button selected={selected} onClick={onSelectNote}>
@@ -76,15 +66,7 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
         </NoteTextContainer>
         <div>
           <RemoveNoteMenuItem selectedNoteIds={[note.id]} />
-          <StyledIconButton
-            onClick={event => {
-              event.stopPropagation();
-              onEditNote();
-            }}
-            size="medium"
-          >
-            <EditIcon />
-          </StyledIconButton>
+          <UpdateNoteMenuItem defaultNote={note} />
         </div>
       </GridContainer>
     </ListItem>

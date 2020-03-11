@@ -215,6 +215,23 @@ const slice = createSlice({
         notes: state.notes.filter(note => note.id !== id),
       };
     },
+    updateNote: (state, action: PayloadAction<Note>) => {
+      const updatedNote = action.payload;
+      const updatedNotes = state.notes.map(note => {
+        if (note.id === updatedNote.id)
+          return {
+            ...note,
+            title: updatedNote.title,
+            text: updatedNote.text,
+            authorName: updatedNote.authorName,
+            bookName: updatedNote.bookName,
+          };
+
+        return note;
+      });
+
+      return { ...state, notes: updatedNotes };
+    },
   },
 });
 
@@ -224,5 +241,6 @@ export const {
   removeGenre,
   addNote,
   removeNote,
+  updateNote,
 } = slice.actions;
 export default slice.reducer;
