@@ -1,13 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface Note {
-  id: string;
-  genreId: string;
+export interface NoteField {
   title: string;
   text: string;
   authorName: string;
   bookName: string;
 }
+
+export type Note = NoteField & {
+  id: string;
+  genreId: string;
+};
 
 export interface Genre {
   genreName: string;
