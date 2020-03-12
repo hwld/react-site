@@ -200,6 +200,22 @@ const slice = createSlice({
       return { ...state, genres: removedGenres, notes: removedNotes };
     },
 
+    updateGenre: (state, action: PayloadAction<Genre>) => {
+      const updatedGenre = action.payload;
+      const updatedGenres = state.genres.map(genre => {
+        if (genre.id === updatedGenre.id) {
+          return {
+            ...genre,
+            genreName: updatedGenre.genreName,
+          };
+        }
+
+        return genre;
+      });
+
+      return { ...state, genres: updatedGenres };
+    },
+
     // Notes
     addNote: (state, action: PayloadAction<Note>) => {
       const newNote = { ...action.payload, id: state.nextNoteId };
@@ -242,6 +258,7 @@ export const {
   setUserUid,
   addGenre,
   removeGenre,
+  updateGenre,
   addNote,
   removeNote,
   updateNote,
