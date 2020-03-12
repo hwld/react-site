@@ -37,6 +37,7 @@ const Home: React.FC = () => {
           onGenreSelect={(genreId: string) => {
             setSelectedGenreId(genreId);
           }}
+          selectedGenreId={selectedGenreId}
         />
       </Drawer>
       <StyledNoteView selectedGenreId={selectedGenreId} />

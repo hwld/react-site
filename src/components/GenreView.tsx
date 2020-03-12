@@ -6,6 +6,7 @@ import GenreViewMenu from './GenreViewMenu';
 
 interface GenreViewProps {
   onGenreSelect: (selectedId: string) => void;
+  selectedGenreId: string;
   className?: string;
 }
 
@@ -24,13 +25,16 @@ const StyledGenreViewMenu = styled(GenreViewMenu)`
   flex-grow: 1;
 `;
 
-const GenreView: React.FC<GenreViewProps> = ({ onGenreSelect }) => {
+const GenreView: React.FC<GenreViewProps> = ({
+  onGenreSelect,
+  selectedGenreId,
+}) => {
   return (
     <View>
       <Toolbar />
       <Divider />
       <StyledGenreTreeList onGenreSelect={onGenreSelect} />
-      <StyledGenreViewMenu />
+      <StyledGenreViewMenu selectedGenreId={selectedGenreId} />
     </View>
   );
 };
