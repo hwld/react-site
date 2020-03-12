@@ -34,7 +34,7 @@ const Home: React.FC = () => {
       <AppBar onMenuClick={() => setIsOpen(state => !state)} />
       <Drawer width="500" isOpen={isOpen}>
         <GenreView
-          onGenreSelect={(event: React.ChangeEvent<{}>, genreId: string) => {
+          onGenreSelect={(genreId: string) => {
             setSelectedGenreId(genreId);
           }}
         />

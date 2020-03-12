@@ -1,33 +1,20 @@
-import React, { useCallback, useState } from 'react';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { TreeView, TreeItem } from '@material-ui/lab';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { Genre } from 'stores/store';
 import { RootState } from 'stores';
 import { useSelector } from 'react-redux';
+import TreeView from './util/TreeVIew/TreeView';
+import TreeItem from './util/TreeVIew/TreeItem';
 
 export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
 
 interface GenreTreeListProps {
-  onGenreSelect: (event: React.ChangeEvent<{}>, selectedId: string) => void;
+  onGenreSelect: (selectedId: string) => void;
   className?: string;
 }
 
 const StyledTreeView = styled(TreeView)`
   height: 100%;
-
-  & .MuiTreeItem-content {
-    :hover {
-      background-color: ${props => props.theme.palette.action.hover};
-    }
-  }
-
-  & .Mui-selected {
-    > .MuiTreeItem-content {
-      background-color: ${props => props.theme.palette.action.selected};
-    }
-  }
 `;
 
 const GenreTreeList: React.FC<GenreTreeListProps> = ({
@@ -35,7 +22,6 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
   className,
 }) => {
   const { genres } = useSelector((state: RootState) => state.reactNotes);
-  const [selectedId, setSelectedId] = useState<string>('');
 
   const buildGenreTreeNode = useCallback(
     (rawGenre: Genre): GenreTreeNode => {
@@ -60,12 +46,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
   const buildGenreTreeItems = useCallback(
     (genreTreeNode: GenreTreeNode): React.ReactNode => {
       return (
-        <TreeItem
-          // selected={selectedId === genreTreeNode.id}
-          nodeId={genreTreeNode.id}
-          label={genreTreeNode.genreName}
-          key={genreTreeNode.id}
-        >
+        <TreeItem nodeId={genreTreeNode.id} label={genreTreeNode.genreName}>
           {genreTreeNode.childrenGenres.length === 0
             ? null
             : genreTreeNode.childrenGenres.map(node =>
@@ -91,14 +72,9 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
   return (
     <StyledTreeView
       className={className}
-      defaultCollapseIcon={<ExpandMoreIcon color="secondary" />}
-      defaultExpandIcon={<ChevronRightIcon color="secondary" />}
-      defaultEndIcon={<></>}
-      onNodeSelect={(event: React.ChangeEvent<{}>, genreId: string) => {
-        setSelectedId(genreId);
-        onGenreSelect(event, genreId);
+      onNodeSelect={(genreId: string) => {
+        onGenreSelect(genreId);
       }}
-      selected={selectedId}
     >
       {renderGenreTree()}
     </StyledTreeView>

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import GenreViewMenu from './GenreViewMenu';
 
 interface GenreViewProps {
-  onGenreSelect: (event: React.ChangeEvent<{}>, selectedId: string) => void;
+  onGenreSelect: (selectedId: string) => void;
   className?: string;
 }
 
