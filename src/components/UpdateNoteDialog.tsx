@@ -36,6 +36,7 @@ const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
       activatorIcon={<EditIcon fontSize={size} />}
       doneText="変更"
       onDone={dispatchUpdateNote}
+      doneDisabled={note.text.length === 0}
       onOpen={setDefaultNote}
     >
       <DialogTitle>メモの編集</DialogTitle>

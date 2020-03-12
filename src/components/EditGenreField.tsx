@@ -1,15 +1,15 @@
 import React from 'react';
 import { Typography, TextField } from '@material-ui/core';
+import { GenreField } from 'stores/store';
 
 interface EditGenreFieldProps {
-  genreName: string;
+  genre: GenreField;
   onChange: (genreName: string) => void;
 }
 
-const EditGenreField: React.FC<EditGenreFieldProps> = ({
-  genreName,
-  onChange,
-}) => {
+const EditGenreField: React.FC<EditGenreFieldProps> = ({ genre, onChange }) => {
+  const { genreName } = genre;
+
   const changeGenreName = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
   };

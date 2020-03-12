@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import AddGenreIcon from '@material-ui/icons/CreateNewFolder';
 import { useDispatch } from 'react-redux';
-import { addGenre } from 'stores/store';
+import { addGenre, GenreField } from 'stores/store';
 import MenuItemDialog from './MenuItemDialog';
 import EditGenreField from './EditGenreField';
 
@@ -15,14 +15,16 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
   selectedGenreId,
   size,
 }) => {
-  const [genreName, setGenreName] = useState('');
+  const [genre, setGenre] = useState<GenreField>({
+    genreName: '',
+  });
   const dispatch = useDispatch();
 
   const dispatchAddGenre = () => {
     dispatch(
       addGenre({
         id: '',
-        genreName,
+        genreName: genre.genreName,
         parentGenreId: selectedGenreId,
         childrenGenreIds: [],
       }),
@@ -30,11 +32,11 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
   };
 
   const clearField = () => {
-    setGenreName('');
+    setGenre({ genreName: '' });
   };
 
   const changeGenreName = (text: string) => {
-    setGenreName(text);
+    setGenre({ genreName: text });
   };
 
   return (
@@ -44,12 +46,12 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
         activatorIcon={<AddGenreIcon fontSize={size} />}
         doneText="追加"
         onDone={dispatchAddGenre}
-        doneDisabled={genreName.length === 0}
+        doneDisabled={genre.genreName.length === 0}
         onOpen={clearField}
       >
         <DialogTitle>ジャンルの追加</DialogTitle>
         <DialogContent>
-          <EditGenreField genreName={genreName} onChange={changeGenreName} />
+          <EditGenreField genre={genre} onChange={changeGenreName} />
         </DialogContent>
       </MenuItemDialog>
     </>

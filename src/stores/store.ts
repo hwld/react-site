@@ -200,13 +200,16 @@ const slice = createSlice({
       return { ...state, genres: removedGenres, notes: removedNotes };
     },
 
-    updateGenre: (state, action: PayloadAction<Genre>) => {
-      const updatedGenre = action.payload;
+    updateGenre: (
+      state,
+      action: PayloadAction<GenreField & { id: string }>,
+    ) => {
+      const { id, genreName } = action.payload;
       const updatedGenres = state.genres.map(genre => {
-        if (genre.id === updatedGenre.id) {
+        if (genre.id === id) {
           return {
             ...genre,
-            genreName: updatedGenre.genreName,
+            genreName,
           };
         }
 
