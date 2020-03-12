@@ -46,7 +46,11 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
   const buildGenreTreeItems = useCallback(
     (genreTreeNode: GenreTreeNode): React.ReactNode => {
       return (
-        <TreeItem nodeId={genreTreeNode.id} label={genreTreeNode.genreName}>
+        <TreeItem
+          nodeId={genreTreeNode.id}
+          label={genreTreeNode.genreName}
+          key={genreTreeNode.id}
+        >
           {genreTreeNode.childrenGenres.length === 0
             ? null
             : genreTreeNode.childrenGenres.map(node =>
@@ -60,7 +64,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
 
   const renderGenreTree = useCallback((): React.ReactNode => {
     // ルートジャンルを取得する
-    const rootGenres = genres.filter(genre => genre.parentGenreId == null);
+    const rootGenres = genres.filter(genre => genre.parentGenreId === '');
 
     // ルートジャンルそれぞれのGenreTreeNodeを作成する
     const treeObject = rootGenres.map(genre => buildGenreTreeNode(genre));

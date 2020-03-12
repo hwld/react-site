@@ -12,13 +12,16 @@ export type Note = NoteField & {
   genreId: string;
 };
 
-export interface Genre {
+export interface GenreField {
   genreName: string;
+}
+
+export type Genre = GenreField & {
   id: string;
-  parentGenreId: string | null;
+  parentGenreId: string;
   // 直接の子ジャンルのみをもたせる
   childrenGenreIds: string[];
-}
+};
 
 interface Store {
   uid: string | null;
@@ -91,11 +94,11 @@ const InitialState: Store = {
     },
   ],
   genres: [
-    { genreName: 'genre1', id: '1', parentGenreId: null, childrenGenreIds: [] },
+    { genreName: 'genre1', id: '1', parentGenreId: '', childrenGenreIds: [] },
     {
       genreName: 'genre2',
       id: '2',
-      parentGenreId: null,
+      parentGenreId: '',
       childrenGenreIds: ['3', '5'],
     },
     {
