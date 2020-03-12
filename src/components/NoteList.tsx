@@ -16,6 +16,11 @@ const Root = styled.div`
   overflow: auto;
 `;
 
+const StyledList = styled(List)`
+  padding-top: 0;
+  padding-bottom: 0;
+`;
+
 const NoteList: React.FC<NoteListProps> = ({
   notes,
   onNotesSelect,
@@ -74,7 +79,7 @@ const NoteList: React.FC<NoteListProps> = ({
 
   return (
     <Root className={className}>
-      <List>{renderListItem()}</List>
+      <StyledList>{renderListItem()}</StyledList>
     </Root>
   );
 };
