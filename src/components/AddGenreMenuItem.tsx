@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
-import {
-  SvgIconProps,
-  DialogTitle,
-  DialogContent,
-  Typography,
-  TextField,
-} from '@material-ui/core';
+import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import AddGenreIcon from '@material-ui/icons/CreateNewFolder';
 import { useDispatch } from 'react-redux';
 import { addGenre } from 'stores/store';
 import MenuItemDialog from './MenuItemDialog';
+import EditGenreField from './EditGenreField';
 
 interface AddGenreMenuItemProps {
   selectedGenreId: string;
@@ -38,8 +33,8 @@ const AddGenreMenuItem: React.FC<AddGenreMenuItemProps> = ({
     setGenreName('');
   };
 
-  const changeGenreName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setGenreName(event.target.value);
+  const changeGenreName = (text: string) => {
+    setGenreName(text);
   };
 
   return (
@@ -54,14 +49,7 @@ const AddGenreMenuItem: React.FC<AddGenreMenuItemProps> = ({
       >
         <DialogTitle>ジャンルの追加</DialogTitle>
         <DialogContent>
-          <Typography>ジャンル名</Typography>
-          <TextField
-            value={genreName}
-            onChange={changeGenreName}
-            color="secondary"
-            variant="filled"
-            fullWidth
-          />
+          <EditGenreField genreName={genreName} onChange={changeGenreName} />
         </DialogContent>
       </MenuItemDialog>
     </>
