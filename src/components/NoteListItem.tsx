@@ -2,8 +2,8 @@ import React from 'react';
 import { ListItem, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { Note } from 'stores/store';
-import RemoveNoteMenuItem from './RemoveNoteMenuItem';
-import UpdateNoteMenuItem from './UpdateNoteMenuItem';
+import RemoveNoteDialog from './RemoveNoteDialog';
+import UpdateNoteDialog from './UpdateNoteDialog';
 
 interface NoteListItemProps {
   note: Note;
@@ -65,8 +65,8 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
           </MetaData>
         </NoteTextContainer>
         <div>
-          <RemoveNoteMenuItem selectedNoteIds={[note.id]} />
-          <UpdateNoteMenuItem defaultNote={note} />
+          <RemoveNoteDialog selectedNoteIds={[note.id]} />
+          <UpdateNoteDialog defaultNote={note} />
         </div>
       </GridContainer>
     </ListItem>

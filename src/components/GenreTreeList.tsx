@@ -15,6 +15,7 @@ interface GenreTreeListProps {
 
 const StyledTreeView = styled(TreeView)`
   height: 100%;
+  overflow: auto;
 `;
 
 const GenreTreeList: React.FC<GenreTreeListProps> = ({

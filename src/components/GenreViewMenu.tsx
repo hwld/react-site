@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Toolbar, IconButton } from '@material-ui/core';
 import DeleteGenreIcon from '@material-ui/icons/Delete';
 import EditGenreIcon from '@material-ui/icons/Edit';
-import AddGenreMenuItem from './AddGenreMenuItem';
+import AddGenreDialog from './AddGenreDialog';
 
 interface GenreViewMenuProps {
   selectedGenreId: string;
@@ -21,7 +21,7 @@ const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
 }) => {
   return (
     <StyledToolBar className={className}>
-      <AddGenreMenuItem size="large" selectedGenreId={selectedGenreId} />
+      <AddGenreDialog size="large" selectedGenreId={selectedGenreId} />
       <IconButton>
         <DeleteGenreIcon fontSize="large" />
       </IconButton>

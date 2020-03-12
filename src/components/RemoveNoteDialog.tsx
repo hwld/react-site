@@ -5,12 +5,12 @@ import { useDispatch } from 'react-redux';
 import { removeNote } from 'stores/store';
 import MenuItemDialog from './MenuItemDialog';
 
-interface RemoveNoteMenuItemProps {
+interface RemoveNoteDialogProps {
   selectedNoteIds: string[];
   size?: SvgIconProps['fontSize'];
 }
 
-const RemoveNoteMenuItem: React.FC<RemoveNoteMenuItemProps> = ({
+const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
   selectedNoteIds,
   size,
 }) => {
@@ -36,4 +36,4 @@ const RemoveNoteMenuItem: React.FC<RemoveNoteMenuItemProps> = ({
   );
 };
 
-export default RemoveNoteMenuItem;
+export default RemoveNoteDialog;

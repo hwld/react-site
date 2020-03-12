@@ -6,12 +6,12 @@ import { addNote, NoteField } from 'stores/store';
 import MenuItemDialog from './MenuItemDialog';
 import EditNoteField from './EditNoteField';
 
-interface AddNoteMenuItemProps {
+interface AddNoteDialogProps {
   selectedGenreId: string;
   size?: SvgIconProps['fontSize'];
 }
 
-const AddNoteMenuItem: React.FC<AddNoteMenuItemProps> = ({
+const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   selectedGenreId,
   size,
 }) => {
@@ -62,4 +62,4 @@ const AddNoteMenuItem: React.FC<AddNoteMenuItemProps> = ({
   );
 };
 
-export default AddNoteMenuItem;
+export default AddNoteDialog;

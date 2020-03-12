@@ -6,12 +6,12 @@ import { useDispatch } from 'react-redux';
 import MenuItemDialog from './MenuItemDialog';
 import EditNoteField from './EditNoteField';
 
-interface UpdateNoteMenuItemProps {
+interface UpdateNoteDialogProps {
   defaultNote: Note;
   size?: SvgIconProps['fontSize'];
 }
 
-const UpdateNoteMenuItem: React.FC<UpdateNoteMenuItemProps> = ({
+const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
   defaultNote,
   size,
 }) => {
@@ -46,4 +46,4 @@ const UpdateNoteMenuItem: React.FC<UpdateNoteMenuItemProps> = ({
   );
 };
 
-export default UpdateNoteMenuItem;
+export default UpdateNoteDialog;

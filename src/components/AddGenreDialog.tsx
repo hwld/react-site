@@ -6,12 +6,12 @@ import { addGenre } from 'stores/store';
 import MenuItemDialog from './MenuItemDialog';
 import EditGenreField from './EditGenreField';
 
-interface AddGenreMenuItemProps {
+interface AddGenreDialogProps {
   selectedGenreId: string;
   size?: SvgIconProps['fontSize'];
 }
 
-const AddGenreMenuItem: React.FC<AddGenreMenuItemProps> = ({
+const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
   selectedGenreId,
   size,
 }) => {
@@ -56,4 +56,4 @@ const AddGenreMenuItem: React.FC<AddGenreMenuItemProps> = ({
   );
 };
 
-export default AddGenreMenuItem;
+export default AddGenreDialog;
