@@ -12,7 +12,7 @@ interface NoteListProps {
   className?: string;
 }
 
-const Root = styled.div`
+const StyledList = styled(List)`
   overflow: auto;
 `;
 
@@ -29,9 +29,9 @@ const NoteList: React.FC<NoteListProps> = ({
   }, [notes, selectedGenreId]);
 
   return (
-    <Root className={className}>
-      <List onSelect={onNotesSelect}>{renderListItem()}</List>
-    </Root>
+    <StyledList className={className} onSelect={onNotesSelect}>
+      {renderListItem()}
+    </StyledList>
   );
 };
 

@@ -14,7 +14,6 @@ interface GenreTreeListProps {
 }
 
 const StyledTreeView = styled(TreeView)`
-  height: 100%;
   overflow: auto;
 `;
 

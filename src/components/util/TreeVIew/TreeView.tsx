@@ -24,11 +24,14 @@ const TreeView: React.FC<TreeViewProps> = ({
   const [nodeIds, setNodeIds] = useState<string[]>([]);
 
   useEffect(() => {
+    if (onNodeSelect) onNodeSelect(selectedId);
+  }, [onNodeSelect, selectedId]);
+
+  useEffect(() => {
     if (!nodeIds.includes(selectedId)) {
       setSelectedId('');
-      if (onNodeSelect) onNodeSelect('');
     }
-  }, [nodeIds, onNodeSelect, selectedId]);
+  }, [nodeIds, selectedId]);
 
   const setNodeId = useCallback((id: string) => {
     setNodeIds(ids => [...ids, id]);
@@ -42,13 +45,11 @@ const TreeView: React.FC<TreeViewProps> = ({
     (id: string) => {
       if (selectedId !== id) {
         setSelectedId(id);
-        if (onNodeSelect) onNodeSelect(id);
       } else {
         setSelectedId('');
-        if (onNodeSelect) onNodeSelect('');
       }
     },
-    [onNodeSelect, selectedId],
+    [selectedId],
   );
 
   return (
