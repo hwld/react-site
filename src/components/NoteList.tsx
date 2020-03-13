@@ -14,6 +14,7 @@ interface NoteListProps {
 
 const StyledList = styled(List)`
   overflow: auto;
+  word-break: break-all;
 `;
 
 const NoteList: React.FC<NoteListProps> = ({
