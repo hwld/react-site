@@ -16,7 +16,7 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
 }) => {
   const dispatch = useDispatch();
 
-  const RemoveNote = () => {
+  const dispatchRemoveNotes = () => {
     selectedNoteIds.forEach(id => dispatch(removeNote(id)));
   };
 
@@ -27,7 +27,7 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
         activatorIcon={<DeleteNoteIcon fontSize={size} />}
         activatorDisabled={selectedNoteIds.length === 0}
         doneText="削除"
-        onDone={RemoveNote}
+        onDone={dispatchRemoveNotes}
       >
         <DialogTitle>メモの削除</DialogTitle>
         <DialogContent>削除してよろしいですか?</DialogContent>

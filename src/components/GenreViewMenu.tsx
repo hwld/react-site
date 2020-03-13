@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Toolbar, IconButton } from '@material-ui/core';
-import DeleteGenreIcon from '@material-ui/icons/Delete';
+import { Toolbar } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { RootState } from 'stores';
 import AddGenreDialog from './AddGenreDialog';
 import UpdateGenreDialog from './UpdateGenreDialog';
+import RemoveGenreDialog from './RemoveGenreDIalog';
 
 interface GenreViewMenuProps {
   selectedGenreId: string;
@@ -27,9 +27,7 @@ const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
   return (
     <StyledToolBar className={className}>
       <AddGenreDialog size="large" selectedGenreId={selectedGenreId} />
-      <IconButton>
-        <DeleteGenreIcon fontSize="large" />
-      </IconButton>
+      <RemoveGenreDialog size="large" selectedGenreId={selectedGenreId} />
       <UpdateGenreDialog
         size="large"
         defaultGenre={selectedGenre || { id: '', genreName: '' }}
