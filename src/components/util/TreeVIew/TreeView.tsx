@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import TreeViewContext from './TreeViewContext';
 
@@ -21,19 +21,40 @@ const TreeView: React.FC<TreeViewProps> = ({
   onNodeSelect,
 }) => {
   const [selectedId, setSelectedId] = useState('');
+  const [nodeIds, setNodeIds] = useState<string[]>([]);
 
-  const selectNode = (id: string) => {
-    if (selectedId !== id) {
-      setSelectedId(id);
-      if (onNodeSelect) onNodeSelect(id);
-    } else {
+  useEffect(() => {
+    if (!nodeIds.includes(selectedId)) {
       setSelectedId('');
       if (onNodeSelect) onNodeSelect('');
     }
-  };
+  }, [nodeIds, onNodeSelect, selectedId]);
+
+  const setNodeId = useCallback((id: string) => {
+    setNodeIds(ids => [...ids, id]);
+  }, []);
+
+  const unsetNodeId = useCallback((id: string) => {
+    setNodeIds(Ids => Ids.filter(nodeId => nodeId !== id));
+  }, []);
+
+  const selectNode = useCallback(
+    (id: string) => {
+      if (selectedId !== id) {
+        setSelectedId(id);
+        if (onNodeSelect) onNodeSelect(id);
+      } else {
+        setSelectedId('');
+        if (onNodeSelect) onNodeSelect('');
+      }
+    },
+    [onNodeSelect, selectedId],
+  );
 
   return (
-    <TreeViewContext.Provider value={{ selectedId, selectNode }}>
+    <TreeViewContext.Provider
+      value={{ selectedId, selectNode, setNodeId, unsetNodeId }}
+    >
       <Tree className={className}>{children}</Tree>
     </TreeViewContext.Provider>
   );

@@ -3,6 +3,8 @@ import * as React from 'react';
 type TreeViewContextValue = {
   selectedId?: string;
   selectNode?: (id: string) => void;
+  setNodeId?: (id: string) => void;
+  unsetNodeId?: (id: string) => void;
 };
 
 const TreeViewContext = React.createContext<TreeViewContextValue>({});

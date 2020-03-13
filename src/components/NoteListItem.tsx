@@ -9,8 +9,6 @@ interface NoteListItemProps {
   note: Note;
   selected: boolean;
   onSelectNote: () => void;
-  onRemoveNote: () => void;
-  onEditNote: () => void;
 }
 
 const GridContainer = styled.div`

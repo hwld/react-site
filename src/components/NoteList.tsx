@@ -68,8 +68,6 @@ const NoteList: React.FC<NoteListProps> = ({
       .map(note => (
         <NoteListItem
           onSelectNote={() => selectNotesItem(note.id)}
-          onRemoveNote={() => window.console.log('remove')}
-          onEditNote={() => window.console.log('edit')}
           selected={selectedNoteIds.includes(note.id)}
           note={note}
           key={note.id}

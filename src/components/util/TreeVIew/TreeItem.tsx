@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -35,7 +35,17 @@ interface TreeItemProps {
 
 const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   const [expanded, setExpanded] = useState(false);
-  const { selectedId, selectNode } = useContext(TreeViewContext);
+  const { selectedId, selectNode, setNodeId, unsetNodeId } = useContext(
+    TreeViewContext,
+  );
+
+  useEffect(() => {
+    if (setNodeId) setNodeId(nodeId);
+
+    return () => {
+      if (unsetNodeId) unsetNodeId(nodeId);
+    };
+  }, [nodeId, setNodeId, unsetNodeId]);
 
   const expandable = Boolean(
     Array.isArray(children) ? children.length : children,
