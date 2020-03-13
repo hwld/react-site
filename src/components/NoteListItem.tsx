@@ -1,14 +1,13 @@
 import React from 'react';
-import { ListItem, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { Note } from 'stores/store';
 import RemoveNoteDialog from './RemoveNoteDialog';
 import UpdateNoteDialog from './UpdateNoteDialog';
+import ListItem from './util/List/ListItem';
 
 interface NoteListItemProps {
   note: Note;
-  selected: boolean;
-  onSelectNote: () => void;
 }
 
 const GridContainer = styled.div`
@@ -46,13 +45,9 @@ const MetaText = styled(Typography)`
   color: #c0c0c0;
 `;
 
-const NoteListItem: React.FC<NoteListItemProps> = ({
-  note,
-  selected,
-  onSelectNote,
-}) => {
+const NoteListItem: React.FC<NoteListItemProps> = ({ note }) => {
   return (
-    <ListItem button selected={selected} onClick={onSelectNote}>
+    <ListItem itemId={note.id}>
       <GridContainer>
         <NoteTextContainer>
           <TitleText variant="h4">{note.title}</TitleText>
