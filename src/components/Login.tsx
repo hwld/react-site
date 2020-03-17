@@ -1,6 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import React, { useCallback } from 'react';
 
 import { setUserUid } from 'stores/store';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import { Typography, Button } from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
 import styled from 'styled-components';
+import { login } from 'service/auth';
 
 const Background = styled.div`
   display: flex;
@@ -41,20 +40,8 @@ const Login: React.FC = () => {
   const dispatch = useDispatch();
   const { uid } = useSelector((state: RootState) => state.reactNotes);
 
-  useEffect(() => {
-    const unSubscribe = firebase.auth().onAuthStateChanged(loggedinUser => {
-      if (loggedinUser) {
-        dispatch(setUserUid(loggedinUser.uid));
-      }
-    });
-
-    return unSubscribe;
-  }, [dispatch]);
-
-  const login = useCallback(() => {
-    firebase
-      .auth()
-      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+  const onLogin = useCallback(() => {
+    login()
       .then(result => {
         if (result.user) {
           dispatch(setUserUid(result.user.uid));
@@ -73,7 +60,7 @@ const Login: React.FC = () => {
         <LoginForm>
           <LoginIcon />
           <LoginButton
-            onClick={login}
+            onClick={onLogin}
             type="button"
             color="secondary"
             variant="contained"

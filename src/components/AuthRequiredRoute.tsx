@@ -1,42 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { Route, Redirect, RouteProps, useLocation } from 'react-router-dom';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import React, { useEffect } from 'react';
+import { Route, RouteProps } from 'react-router-dom';
 import { setUserUid } from 'stores/store';
 import { Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'stores';
+import { useCurrentUser } from 'service/auth';
+import Login from './Login';
 
 const AuthRequiredRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
-  const location = useLocation();
-  const [isLoading, setisLoading] = useState(true);
-  const dispatch = useDispatch();
+  const { user, loading } = useCurrentUser();
   const { uid } = useSelector((state: RootState) => state.reactNotes);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const unSubscribe = firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        dispatch(setUserUid(user.uid));
-      }
-      setisLoading(false);
-    });
+    if (user) {
+      dispatch(setUserUid(user.uid));
+    } else {
+      dispatch(setUserUid(null));
+    }
+  }, [dispatch, user]);
 
-    return unSubscribe;
-  }, [dispatch]);
-
-  if (isLoading) {
+  if (loading) {
     return <Typography>Loading...</Typography>;
   }
 
-  return (
-    <Route {...rest}>
-      {uid ? (
-        children
-      ) : (
-        <Redirect to={{ pathname: '/login', state: { from: location } }} />
-      )}
-    </Route>
-  );
+  return <Route {...rest}>{uid ? children : <Login />}</Route>;
 };
 
 export default AuthRequiredRoute;

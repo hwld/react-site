@@ -6,8 +6,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUserUid } from 'stores/store';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import { logout } from 'service/auth';
 
 interface NoteAppBarProps {
   onMenuClick: () => void;
@@ -26,10 +25,10 @@ const NoteAppBar: React.FC<NoteAppBarProps> = ({ onMenuClick }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const logout = () => {
-    firebase.auth().signOut();
+  const onLogout = () => {
+    logout();
     dispatch(setUserUid(null));
-    history.replace('/login');
+    history.replace('/home');
   };
 
   return (
@@ -39,7 +38,7 @@ const NoteAppBar: React.FC<NoteAppBarProps> = ({ onMenuClick }) => {
           <MenuIcon />
         </IconButton>
         <AppTitle variant="h4">Notes</AppTitle>
-        <IconButton onClick={logout}>
+        <IconButton onClick={onLogout}>
           <ExitToApp />
         </IconButton>
       </Toolbar>
