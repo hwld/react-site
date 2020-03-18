@@ -20,9 +20,13 @@ const useGenres = (uid: string) => {
   }, [uid]);
 
   const [genresCollection] = useCollection(genresRef);
-  const genres = genresCollection?.docs.map(genreDoc => {
-    return genreDoc.data();
-  });
+  const genres = useMemo(
+    () =>
+      genresCollection?.docs.map(genreDoc => {
+        return genreDoc.data();
+      }),
+    [genresCollection],
+  );
 
   // 指定されたIdのジャンルの子ノードのidを再帰的に取得し、Promiseの配列にして返す.
   const fetchAllChildrenGenreIds = useCallback(
