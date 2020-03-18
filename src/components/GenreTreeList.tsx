@@ -1,14 +1,13 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { Genre } from 'stores/store';
-import { RootState } from 'stores';
-import { useSelector } from 'react-redux';
 import TreeView from './util/TreeVIew/TreeView';
 import TreeItem from './util/TreeVIew/TreeItem';
 
 export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
 
 interface GenreTreeListProps {
+  genres: Genre[];
   onGenreSelect: (selectedId: string) => void;
   className?: string;
 }
@@ -19,11 +18,10 @@ const StyledTreeView = styled(TreeView)`
 `;
 
 const GenreTreeList: React.FC<GenreTreeListProps> = ({
+  genres,
   onGenreSelect,
   className,
 }) => {
-  const { genres } = useSelector((state: RootState) => state.reactNotes);
-
   const buildGenreTreeNode = useCallback(
     (rawGenre: Genre): GenreTreeNode => {
       // rawGenreの子ジャンルを抽出

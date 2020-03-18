@@ -2,6 +2,8 @@ import React from 'react';
 import { Toolbar, Divider } from '@material-ui/core';
 import GenreTreeList from 'components/GenreTreeList';
 import styled from 'styled-components';
+import { RootState } from 'stores';
+import { useSelector } from 'react-redux';
 import GenreViewMenu from './GenreViewMenu';
 
 interface GenreViewProps {
@@ -29,11 +31,13 @@ const GenreView: React.FC<GenreViewProps> = ({
   onGenreSelect,
   selectedGenreId,
 }) => {
+  const { genres } = useSelector((state: RootState) => state.reactNotes);
+
   return (
     <View>
       <Toolbar />
       <Divider />
-      <StyledGenreTreeList onGenreSelect={onGenreSelect} />
+      <StyledGenreTreeList genres={genres} onGenreSelect={onGenreSelect} />
       <StyledGenreViewMenu selectedGenreId={selectedGenreId} />
     </View>
   );
