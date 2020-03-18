@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUserUid } from 'stores/store';
-import { logout } from 'service/auth';
+import { logout } from 'services/auth';
 
 interface NoteAppBarProps {
   onMenuClick: () => void;

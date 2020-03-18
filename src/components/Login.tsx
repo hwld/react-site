@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom';
 import { Typography, Button } from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
 import styled from 'styled-components';
-import { login } from 'service/auth';
+import { login } from 'services/auth';
 
 const Background = styled.div`
   display: flex;

@@ -4,7 +4,7 @@ import { setUserUid } from 'stores/store';
 import { Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'stores';
-import { useCurrentUser } from 'service/auth';
+import { useCurrentUser } from 'services/auth';
 import Login from './Login';
 
 const AuthRequiredRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
