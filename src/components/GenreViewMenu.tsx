@@ -1,14 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Toolbar } from '@material-ui/core';
-import { useSelector } from 'react-redux';
-import { RootState } from 'stores';
 import { Genre, GenreField } from 'stores/store';
 import AddGenreDialog from './AddGenreDialog';
 import UpdateGenreDialog from './UpdateGenreDialog';
 import RemoveGenreDialog from './RemoveGenreDIalog';
 
 interface GenreViewMenuProps {
+  genres: Genre[];
   add: (genre: Genre) => void;
   remove: (id: string) => Promise<void>;
   update: (id: string, genre: GenreField) => void;
@@ -22,11 +21,12 @@ const StyledToolBar = styled(Toolbar)`
 `;
 
 const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
+  genres,
   add,
+  remove,
   className,
   selectedGenreId,
 }) => {
-  const { genres } = useSelector((state: RootState) => state.reactNotes);
   const selectedGenre = genres.find(genre => genre.id === selectedGenreId);
 
   return (
@@ -36,7 +36,11 @@ const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
         size="large"
         selectedGenreId={selectedGenreId}
       />
-      <RemoveGenreDialog size="large" selectedGenreId={selectedGenreId} />
+      <RemoveGenreDialog
+        remove={remove}
+        size="large"
+        selectedGenreId={selectedGenreId}
+      />
       <UpdateGenreDialog
         size="large"
         defaultGenre={selectedGenre || { id: '', genreName: '' }}

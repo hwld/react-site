@@ -44,6 +44,7 @@ const GenreView: React.FC<GenreViewProps> = ({
       <Divider />
       <StyledGenreTreeList genres={genres} onGenreSelect={onGenreSelect} />
       <StyledGenreViewMenu
+        genres={genres}
         add={addGenre}
         remove={removeGenre}
         update={updateGenre}

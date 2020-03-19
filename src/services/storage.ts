@@ -39,9 +39,13 @@ const useGenres = (uid: string) => {
       // data()の戻り値にうまく形を付けたいけど取り敢えず後回しにした.
       const childrenIds: string[] = parentGenre.childrenGenreIds;
 
-      const promiseGrandChildrenIds = childrenIds.map(id =>
-        fetchAllChildrenGenreIds(id),
-      );
+      const promiseGrandChildrenIds = childrenIds.map(id => {
+        if (id !== '') {
+          return fetchAllChildrenGenreIds(id);
+        }
+
+        return [];
+      });
 
       // 明示的に型を指定しないとanyになってしまう.
       const grandChildrenIds: string[] = (
@@ -79,9 +83,12 @@ const useGenres = (uid: string) => {
       const newGenreRef = genresRef.doc();
 
       if (genre.parentGenreId !== '') {
+        // 親ジャンルの子ジャンルidのリストを更新する
         const parentGenreRef = genresRef.doc(genre.parentGenreId);
         parentGenreRef.update({
-          childrenGenreIds: firebase.firestore.FieldValue.arrayUnion(genre.id),
+          childrenGenreIds: firebase.firestore.FieldValue.arrayUnion(
+            newGenreRef.id,
+          ),
         });
       }
 
