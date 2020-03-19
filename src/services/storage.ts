@@ -9,24 +9,26 @@ const useGenres = (uid: string) => {
     return db
       .collection('users')
       .doc(`${uid}`)
-      .collection('Genres');
+      .collection('genres');
   }, [uid]);
 
-  const memosRef = useMemo(() => {
+  const notesRef = useMemo(() => {
     return db
       .collection('users')
       .doc(`${uid}`)
-      .collection('Memos');
+      .collection('notes');
   }, [uid]);
 
   const [genresCollection] = useCollection(genresRef);
-  const genres = useMemo(
-    () =>
-      genresCollection?.docs.map(genreDoc => {
-        return genreDoc.data();
-      }),
-    [genresCollection],
-  );
+  const genres = useMemo(() => {
+    if (!genresCollection) {
+      return [];
+    }
+
+    return genresCollection?.docs.map(genreDoc => {
+      return genreDoc.data() as Genre;
+    });
+  }, [genresCollection]);
 
   // 指定されたIdのジャンルの子ノードのidを再帰的に取得し、Promiseの配列にして返す.
   const fetchAllChildrenGenreIds = useCallback(
@@ -52,34 +54,36 @@ const useGenres = (uid: string) => {
   );
 
   // 指定されたジャンルIdのメモをPromiseの配列にして全て返す
-  const fetchAllMemosInGenreIds = useCallback(
+  const fetchAllNotesInGenreIds = useCallback(
     async (genreIds: string[]) => {
-      // memoを削除する
-      const promiseMemoIds = genreIds.map(async genreId => {
-        const deletedMemos: string[] = [];
-        const memoDocs = await memosRef
+      const promiseNoteIds = genreIds.map(async genreId => {
+        const deletedNotes: string[] = [];
+
+        const noteDocs = await notesRef
           .where('genreId', '==', `${genreId}`)
           .get();
-        memoDocs.forEach(memo => {
-          deletedMemos.push(memo.data().id);
+        noteDocs.forEach(note => {
+          deletedNotes.push(note.data().id);
         });
 
-        return deletedMemos;
+        return deletedNotes;
       });
 
-      return (await Promise.all(promiseMemoIds)).flat();
+      return (await Promise.all(promiseNoteIds)).flat();
     },
-    [memosRef],
+    [notesRef],
   );
 
   const addGenre = useCallback(
     (genre: Genre) => {
       const newGenreRef = genresRef.doc();
 
-      const parentGenreRef = genresRef.doc(genre.parentGenreId);
-      parentGenreRef.update({
-        childrenGenreIds: firebase.firestore.FieldValue.arrayUnion(genre.id),
-      });
+      if (genre.parentGenreId !== '') {
+        const parentGenreRef = genresRef.doc(genre.parentGenreId);
+        parentGenreRef.update({
+          childrenGenreIds: firebase.firestore.FieldValue.arrayUnion(genre.id),
+        });
+      }
 
       newGenreRef.set({ ...genre, id: newGenreRef.id });
     },
@@ -96,12 +100,12 @@ const useGenres = (uid: string) => {
         genresRef.doc(genreId).delete();
       });
 
-      const deletedMemos = await fetchAllMemosInGenreIds(deletedGenreIds);
-      deletedMemos.forEach(memoId => {
-        memosRef.doc(memoId).delete();
+      const deletedNotes = await fetchAllNotesInGenreIds(deletedGenreIds);
+      deletedNotes.forEach(noteId => {
+        notesRef.doc(noteId).delete();
       });
     },
-    [fetchAllChildrenGenreIds, fetchAllMemosInGenreIds, genresRef, memosRef],
+    [fetchAllChildrenGenreIds, fetchAllNotesInGenreIds, genresRef, notesRef],
   );
 
   const updateGenre = useCallback(

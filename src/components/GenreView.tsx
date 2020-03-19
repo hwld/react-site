@@ -4,6 +4,7 @@ import GenreTreeList from 'components/GenreTreeList';
 import styled from 'styled-components';
 import { RootState } from 'stores';
 import { useSelector } from 'react-redux';
+import { useGenres } from 'services/storage';
 import GenreViewMenu from './GenreViewMenu';
 
 interface GenreViewProps {
@@ -31,14 +32,23 @@ const GenreView: React.FC<GenreViewProps> = ({
   onGenreSelect,
   selectedGenreId,
 }) => {
-  const { genres } = useSelector((state: RootState) => state.reactNotes);
+  const { uid } = useSelector((state: RootState) => state.reactNotes);
+  if (!uid) {
+    throw new Error('ログインされていません');
+  }
+  const { genres, addGenre, removeGenre, updateGenre } = useGenres(uid);
 
   return (
     <View>
       <Toolbar />
       <Divider />
       <StyledGenreTreeList genres={genres} onGenreSelect={onGenreSelect} />
-      <StyledGenreViewMenu selectedGenreId={selectedGenreId} />
+      <StyledGenreViewMenu
+        add={addGenre}
+        remove={removeGenre}
+        update={updateGenre}
+        selectedGenreId={selectedGenreId}
+      />
     </View>
   );
 };
