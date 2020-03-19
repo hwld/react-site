@@ -1,6 +1,6 @@
 import { db } from 'services/firebaseConfig';
 import firebase from 'firebase/app';
-import { Genre, GenreField } from 'stores/store';
+import { Genre } from 'stores/store';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useCallback, useMemo } from 'react';
 
@@ -116,8 +116,8 @@ const useGenres = (uid: string) => {
   );
 
   const updateGenre = useCallback(
-    (id: string, genre: GenreField) => {
-      genresRef.doc(id).update({ ...genre });
+    (genre: Genre) => {
+      genresRef.doc(genre.id).update({ ...genre });
     },
     [genresRef],
   );

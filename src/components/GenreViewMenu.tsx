@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Toolbar } from '@material-ui/core';
-import { Genre, GenreField } from 'stores/store';
+import { Genre } from 'stores/store';
 import AddGenreDialog from './AddGenreDialog';
 import UpdateGenreDialog from './UpdateGenreDialog';
 import RemoveGenreDialog from './RemoveGenreDIalog';
@@ -10,7 +10,7 @@ interface GenreViewMenuProps {
   genres: Genre[];
   add: (genre: Genre) => void;
   remove: (id: string) => Promise<void>;
-  update: (id: string, genre: GenreField) => void;
+  update: (genre: Genre) => void;
   selectedGenreId: string;
   className?: string;
 }
@@ -24,6 +24,7 @@ const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
   genres,
   add,
   remove,
+  update,
   className,
   selectedGenreId,
 }) => {
@@ -42,8 +43,16 @@ const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
         selectedGenreId={selectedGenreId}
       />
       <UpdateGenreDialog
+        update={update}
         size="large"
-        defaultGenre={selectedGenre || { id: '', genreName: '' }}
+        defaultGenre={
+          selectedGenre || {
+            id: '',
+            genreName: '',
+            parentGenreId: '',
+            childrenGenreIds: [],
+          }
+        }
       />
     </StyledToolBar>
   );

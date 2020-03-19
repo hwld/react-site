@@ -1,29 +1,25 @@
 import React, { useState } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
-import { updateGenre, GenreField } from 'stores/store';
+import { Genre } from 'stores/store';
 import MenuItemDialog from './MenuItemDialog';
 import EditGenreField from './EditGenreField';
 
 interface UpdateGenreDialogProps {
-  defaultGenre: GenreField & { id: string };
+  update: (genre: Genre) => void;
+  defaultGenre: Genre;
   size?: SvgIconProps['fontSize'];
 }
 
 const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
+  update,
   defaultGenre,
   size,
 }) => {
   const [genre, setGenre] = useState(defaultGenre);
-  const dispatch = useDispatch();
 
-  const dispatchUpdateGenre = () => {
-    dispatch(
-      updateGenre({
-        ...genre,
-      }),
-    );
+  const updateGenre = () => {
+    update(genre);
   };
 
   const setDefaultGenreName = () => {
@@ -40,7 +36,7 @@ const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
       activatorIcon={<EditIcon fontSize={size} />}
       activatorDisabled={defaultGenre.id === ''}
       doneText="変更"
-      onDone={dispatchUpdateGenre}
+      onDone={updateGenre}
       doneDisabled={genre.genreName === ''}
       onOpen={setDefaultGenreName}
     >
