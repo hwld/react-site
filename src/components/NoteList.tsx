@@ -1,11 +1,13 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { Note } from 'stores/store';
+import { Note, updateNote } from 'stores/store';
 import NoteListItem from './NoteListItem';
 import List from './util/List/List';
 
 interface NoteListProps {
   notes: Note[];
+  removeNote: (id: string) => void;
+  updateNote: (note: Note) => void;
   onNotesSelect?: (selectedIds: string[]) => void;
   selectedNoteIds?: string[];
   selectedGenreId: string;
@@ -19,6 +21,7 @@ const StyledList = styled(List)`
 
 const NoteList: React.FC<NoteListProps> = ({
   notes,
+  removeNote,
   onNotesSelect,
   selectedGenreId,
   className,
@@ -26,8 +29,15 @@ const NoteList: React.FC<NoteListProps> = ({
   const renderListItem = useCallback(() => {
     return notes
       .filter(note => note.genreId === selectedGenreId)
-      .map(note => <NoteListItem note={note} key={note.id} />);
-  }, [notes, selectedGenreId]);
+      .map(note => (
+        <NoteListItem
+          remove={removeNote}
+          update={updateNote}
+          note={note}
+          key={note.id}
+        />
+      ));
+  }, [notes, removeNote, selectedGenreId]);
 
   return (
     <StyledList className={className} onSelect={onNotesSelect}>

@@ -7,6 +7,8 @@ import UpdateNoteDialog from './UpdateNoteDialog';
 import ListItem from './util/List/ListItem';
 
 interface NoteListItemProps {
+  remove: (id: string) => void;
+  update: (note: Note) => void;
   note: Note;
 }
 
@@ -45,7 +47,11 @@ const MetaText = styled(Typography)`
   color: #c0c0c0;
 `;
 
-const NoteListItem: React.FC<NoteListItemProps> = ({ note }) => {
+const NoteListItem: React.FC<NoteListItemProps> = ({
+  remove,
+  update,
+  note,
+}) => {
   return (
     <ListItem itemId={note.id}>
       <GridContainer>
@@ -58,8 +64,8 @@ const NoteListItem: React.FC<NoteListItemProps> = ({ note }) => {
           </MetaData>
         </NoteTextContainer>
         <div>
-          <RemoveNoteDialog selectedNoteIds={[note.id]} />
-          <UpdateNoteDialog defaultNote={note} />
+          <RemoveNoteDialog remove={remove} selectedNoteIds={[note.id]} />
+          <UpdateNoteDialog update={update} defaultNote={note} />
         </div>
       </GridContainer>
     </ListItem>

@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import AddNoteIcon from '@material-ui/icons/NoteAdd';
 import { DialogContent, DialogTitle, SvgIconProps } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import { addNote, NoteField } from 'stores/store';
+import { NoteField, Note } from 'stores/store';
 import MenuItemDialog from './MenuItemDialog';
 import EditNoteField from './EditNoteField';
 
 interface AddNoteDialogProps {
+  add: (note: Note) => void;
   selectedGenreId: string;
   size?: SvgIconProps['fontSize'];
 }
 
 const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
+  add,
   selectedGenreId,
   size,
 }) => {
-  const dispatch = useDispatch();
   const [note, setNote] = useState<NoteField>({
     title: '',
     text: '',
@@ -23,17 +23,15 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
     bookName: '',
   });
 
-  const dispatchAddNote = () => {
-    dispatch(
-      addNote({
-        id: '',
-        genreId: selectedGenreId,
-        title: note.title,
-        text: note.text,
-        authorName: note.authorName,
-        bookName: note.bookName,
-      }),
-    );
+  const addNote = () => {
+    add({
+      id: '',
+      genreId: selectedGenreId,
+      title: note.title,
+      text: note.text,
+      authorName: note.authorName,
+      bookName: note.bookName,
+    });
   };
 
   const clearField = () => {
@@ -50,7 +48,7 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
       activatorIcon={<AddNoteIcon fontSize={size} />}
       activatorDisabled={selectedGenreId === ''}
       doneText="追加"
-      onDone={dispatchAddNote}
+      onDone={addNote}
       doneDisabled={note.text.length === 0}
       onOpen={clearField}
     >

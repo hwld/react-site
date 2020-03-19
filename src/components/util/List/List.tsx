@@ -18,10 +18,12 @@ const List: React.FC<ListProps> = ({ children, className, onSelect }) => {
   const [ItemIds, setItemIds] = useState<string[]>([]);
 
   useEffect(() => {
+    window.console.log('1');
     if (onSelect) onSelect(selectedIds);
   }, [onSelect, selectedIds]);
 
   useEffect(() => {
+    window.console.log('2');
     selectedIds.forEach(selectedId => {
       if (!ItemIds.includes(selectedId)) {
         setSelectedIds(ids => ids.filter(id => id === selectedId));

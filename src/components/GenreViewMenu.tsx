@@ -8,9 +8,9 @@ import RemoveGenreDialog from './RemoveGenreDIalog';
 
 interface GenreViewMenuProps {
   genres: Genre[];
-  add: (genre: Genre) => void;
-  remove: (id: string) => Promise<void>;
-  update: (genre: Genre) => void;
+  addGenre: (genre: Genre) => void;
+  removeGenre: (id: string) => Promise<void>;
+  updateGenre: (genre: Genre) => void;
   selectedGenreId: string;
   className?: string;
 }
@@ -22,9 +22,9 @@ const StyledToolBar = styled(Toolbar)`
 
 const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
   genres,
-  add,
-  remove,
-  update,
+  addGenre,
+  removeGenre,
+  updateGenre,
   className,
   selectedGenreId,
 }) => {
@@ -33,17 +33,17 @@ const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
   return (
     <StyledToolBar className={className}>
       <AddGenreDialog
-        add={add}
+        add={addGenre}
         size="large"
         selectedGenreId={selectedGenreId}
       />
       <RemoveGenreDialog
-        remove={remove}
+        remove={removeGenre}
         size="large"
         selectedGenreId={selectedGenreId}
       />
       <UpdateGenreDialog
-        update={update}
+        update={updateGenre}
         size="large"
         defaultGenre={
           selectedGenre || {

@@ -1,23 +1,22 @@
 import React from 'react';
 import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
 import DeleteNoteIcon from '@material-ui/icons/Delete';
-import { useDispatch } from 'react-redux';
 import { removeNote } from 'stores/store';
 import MenuItemDialog from './MenuItemDialog';
 
 interface RemoveNoteDialogProps {
+  remove: (id: string) => void;
   selectedNoteIds: string[];
   size?: SvgIconProps['fontSize'];
 }
 
 const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
+  remove,
   selectedNoteIds,
   size,
 }) => {
-  const dispatch = useDispatch();
-
-  const dispatchRemoveNotes = () => {
-    selectedNoteIds.forEach(id => dispatch(removeNote(id)));
+  const removeNotes = () => {
+    selectedNoteIds.forEach(id => remove(id));
   };
 
   return (
@@ -27,7 +26,7 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
         activatorIcon={<DeleteNoteIcon fontSize={size} />}
         activatorDisabled={selectedNoteIds.length === 0}
         doneText="削除"
-        onDone={dispatchRemoveNotes}
+        onDone={removeNotes}
       >
         <DialogTitle>メモの削除</DialogTitle>
         <DialogContent>削除してよろしいですか?</DialogContent>

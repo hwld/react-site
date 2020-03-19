@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import NoteViewMenu from 'components/NoteViewMenu';
 import { useSelector } from 'react-redux';
 import { RootState } from 'stores';
+import { useNotes } from 'services/storage/notes';
 
 interface NoteViewProps {
   selectedGenreId: string;
@@ -27,7 +28,12 @@ const StyledNoteViewMenu = styled(NoteViewMenu)`
 `;
 
 const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
-  const { notes } = useSelector((state: RootState) => state.reactNotes);
+  const { uid } = useSelector((state: RootState) => state.reactNotes);
+  if (!uid) {
+    throw new Error('ログインされていません');
+  }
+  const { notes, addNote, removeNote, updateNote } = useNotes(uid);
+
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
 
   const selectNoteIds = useCallback((ids: string[]) => {
@@ -40,10 +46,14 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
       <Divider />
       <StyledNoteList
         notes={notes}
+        removeNote={removeNote}
+        updateNote={updateNote}
         onNotesSelect={selectNoteIds}
         selectedGenreId={selectedGenreId}
       />
       <StyledNoteViewMenu
+        addNote={addNote}
+        removeNote={removeNote}
         selectedNoteIds={selectedNoteIds}
         selectedGenreId={selectedGenreId}
       />

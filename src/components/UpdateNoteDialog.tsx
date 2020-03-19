@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
-import { updateNote, Note, NoteField } from 'stores/store';
+import { Note, NoteField } from 'stores/store';
 import EditIcon from '@material-ui/icons/Edit';
-import { useDispatch } from 'react-redux';
 import MenuItemDialog from './MenuItemDialog';
 import EditNoteField from './EditNoteField';
 
 interface UpdateNoteDialogProps {
   defaultNote: Note;
+  update: (note: Note) => void;
   size?: SvgIconProps['fontSize'];
 }
 
 const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
   defaultNote,
+  update,
   size,
 }) => {
   const [note, setNote] = useState(defaultNote);
-  const dispatch = useDispatch();
 
-  const dispatchUpdateNote = () => {
-    dispatch(updateNote({ ...note }));
+  const updateNote = () => {
+    update({ ...note });
   };
 
   const setDefaultNote = () => {
@@ -35,7 +35,7 @@ const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
       tooltipText="メモを編集"
       activatorIcon={<EditIcon fontSize={size} />}
       doneText="変更"
-      onDone={dispatchUpdateNote}
+      onDone={updateNote}
       doneDisabled={note.text.length === 0}
       onOpen={setDefaultNote}
     >
