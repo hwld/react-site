@@ -4,7 +4,7 @@ import GenreTreeList from 'components/GenreTreeList';
 import styled from 'styled-components';
 import { RootState } from 'stores';
 import { useSelector } from 'react-redux';
-import { useGenres } from 'services/storage';
+import { useGenres } from 'services/storage/genres';
 import GenreViewMenu from './GenreViewMenu';
 
 interface GenreViewProps {

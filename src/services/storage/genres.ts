@@ -25,7 +25,7 @@ const useGenres = (uid: string) => {
       return [];
     }
 
-    return genresCollection?.docs.map(genreDoc => {
+    return genresCollection.docs.map(genreDoc => {
       return genreDoc.data() as Genre;
     });
   }, [genresCollection]);
