@@ -13,11 +13,7 @@ const AuthRequiredRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (userId) {
-      dispatch(setUserUid(userId));
-    } else {
-      dispatch(setUserUid(null));
-    }
+    dispatch(setUserUid(userId));
   }, [dispatch, userId]);
 
   if (loading) {
