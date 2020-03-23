@@ -4,7 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 const useCurrentUserId = () => {
   const [user, loading, error] = useAuthState(auth);
-  const userId = user ? user.uid : null;
+  const userId = user ? user.uid : '';
 
   return { userId, loading, error };
 };

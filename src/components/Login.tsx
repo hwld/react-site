@@ -1,13 +1,9 @@
 import React, { useCallback } from 'react';
-
-import { setUserUid } from 'stores/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'stores';
 import { Redirect } from 'react-router-dom';
 import { Typography, Button } from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
 import styled from 'styled-components';
-import { login } from 'services/auth';
+import { login, useCurrentUserId } from 'services/auth';
 
 const Background = styled.div`
   display: flex;
@@ -37,22 +33,17 @@ const LoginButton = styled(Button)`
 `;
 
 const Login: React.FC = () => {
-  const dispatch = useDispatch();
-  const { uid } = useSelector((state: RootState) => state.reactNotes);
+  const { userId } = useCurrentUserId();
 
   const onLogin = useCallback(() => {
-    login()
-      .then(userId => {
-        dispatch(setUserUid(userId));
-      })
-      .catch(error => {
-        window.console.log(error);
-      });
-  }, [dispatch]);
+    login().catch(error => {
+      window.console.log(error);
+    });
+  }, []);
 
   return (
     <Background>
-      {uid ? (
+      {userId !== '' ? (
         <Redirect to="/home" />
       ) : (
         <LoginForm>

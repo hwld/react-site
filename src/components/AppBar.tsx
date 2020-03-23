@@ -4,8 +4,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setUserUid } from 'stores/store';
 import { logout } from 'services/auth';
 
 interface NoteAppBarProps {
@@ -23,11 +21,9 @@ const AppTitle = styled(Typography)`
 
 const NoteAppBar: React.FC<NoteAppBarProps> = ({ onMenuClick }) => {
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const onLogout = () => {
     logout();
-    dispatch(setUserUid(null));
     history.replace('/home');
   };
 

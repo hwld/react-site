@@ -3,9 +3,8 @@ import { Toolbar, Divider } from '@material-ui/core';
 import NoteList from 'components/NoteList';
 import styled from 'styled-components';
 import NoteViewMenu from 'components/NoteViewMenu';
-import { useSelector } from 'react-redux';
-import { RootState } from 'stores';
 import { useNotes } from 'services/storage/notes';
+import { useCurrentUserId } from 'services/auth';
 
 interface NoteViewProps {
   selectedGenreId: string;
@@ -28,12 +27,9 @@ const StyledNoteViewMenu = styled(NoteViewMenu)`
 `;
 
 const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
-  const { uid } = useSelector((state: RootState) => state.reactNotes);
-  if (!uid) {
-    throw new Error('ログインされていません');
-  }
+  const { userId } = useCurrentUserId();
 
-  const { notes, addNote, removeNote, updateNote } = useNotes(uid);
+  const { notes, addNote, removeNote, updateNote } = useNotes(userId);
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
 
   const selectNoteIds = useCallback((ids: string[]) => {

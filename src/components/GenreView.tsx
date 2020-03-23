@@ -2,9 +2,8 @@ import React from 'react';
 import { Toolbar, Divider } from '@material-ui/core';
 import GenreTreeList from 'components/GenreTreeList';
 import styled from 'styled-components';
-import { RootState } from 'stores';
-import { useSelector } from 'react-redux';
 import { useGenres } from 'services/storage/genres';
+import { useCurrentUserId } from 'services/auth';
 import GenreViewMenu from './GenreViewMenu';
 
 interface GenreViewProps {
@@ -32,11 +31,8 @@ const GenreView: React.FC<GenreViewProps> = ({
   onGenreSelect,
   selectedGenreId,
 }) => {
-  const { uid } = useSelector((state: RootState) => state.reactNotes);
-  if (!uid) {
-    throw new Error('ログインされていません');
-  }
-  const { genres, addGenre, removeGenre, updateGenre } = useGenres(uid);
+  const { userId } = useCurrentUserId();
+  const { genres, addGenre, removeGenre, updateGenre } = useGenres(userId);
 
   return (
     <View>
