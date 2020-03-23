@@ -1,28 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface NoteField {
-  title: string;
-  text: string;
-  authorName: string;
-  bookName: string;
-}
-
-export type Note = NoteField & {
-  id: string;
-  genreId: string;
-};
-
-export interface GenreField {
-  genreName: string;
-}
-
-export type Genre = GenreField & {
-  id: string;
-  parentGenreId: string;
-  // 直接の子ジャンルのみをもたせる
-  childrenGenreIds: string[];
-};
-
 interface Store {
   uid: string | null;
 }

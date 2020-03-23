@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import { Genre } from 'stores/store';
+import { Genre } from 'services/storage/genres';
 import MenuItemDialog from './MenuItemDialog';
 import EditGenreField from './EditGenreField';
 

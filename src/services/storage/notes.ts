@@ -1,7 +1,18 @@
 import { db } from 'services/firebaseConfig';
 import { useMemo, useCallback } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { Note } from 'stores/store';
+
+export interface NoteField {
+  title: string;
+  text: string;
+  authorName: string;
+  bookName: string;
+}
+
+export type Note = NoteField & {
+  id: string;
+  genreId: string;
+};
 
 const useNotes = (uid: string) => {
   const notesRef = useMemo(() => {

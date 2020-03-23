@@ -4,7 +4,7 @@ import { Toolbar, IconButton } from '@material-ui/core';
 import MoveNoteIcon from '@material-ui/icons/Forward';
 import SortNoteIcon from '@material-ui/icons/Sort';
 import SearchNoteIcon from '@material-ui/icons/Search';
-import { Note } from 'stores/store';
+import { Note } from 'services/storage/notes';
 import AddNoteDialog from './AddNoteDialog';
 import RemoveNoteDialog from './RemoveNoteDialog';
 

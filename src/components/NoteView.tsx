@@ -32,8 +32,8 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
   if (!uid) {
     throw new Error('ログインされていません');
   }
-  const { notes, addNote, removeNote, updateNote } = useNotes(uid);
 
+  const { notes, addNote, removeNote, updateNote } = useNotes(uid);
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
 
   const selectNoteIds = useCallback((ids: string[]) => {

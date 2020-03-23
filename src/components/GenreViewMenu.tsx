@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Toolbar } from '@material-ui/core';
-import { Genre } from 'stores/store';
+import { Genre } from 'services/storage/genres';
 import AddGenreDialog from './AddGenreDialog';
 import UpdateGenreDialog from './UpdateGenreDialog';
 import RemoveGenreDialog from './RemoveGenreDIalog';

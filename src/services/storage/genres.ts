@@ -1,8 +1,18 @@
 import { db } from 'services/firebaseConfig';
 import firebase from 'firebase/app';
-import { Genre } from 'stores/store';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useCallback, useMemo } from 'react';
+
+export interface GenreField {
+  genreName: string;
+}
+
+export type Genre = GenreField & {
+  id: string;
+  parentGenreId: string;
+  // 直接の子ジャンルのみをもたせる
+  childrenGenreIds: string[];
+};
 
 const useGenres = (uid: string) => {
   const genresRef = useMemo(() => {

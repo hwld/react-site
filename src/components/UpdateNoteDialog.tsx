@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
-import { Note, NoteField } from 'stores/store';
 import EditIcon from '@material-ui/icons/Edit';
+import { Note, NoteField } from 'services/storage/notes';
 import MenuItemDialog from './MenuItemDialog';
 import EditNoteField from './EditNoteField';
 

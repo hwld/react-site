@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, TextField } from '@material-ui/core';
 import styled from 'styled-components';
-import { NoteField } from 'stores/store';
+import { NoteField } from 'services/storage/notes';
 
 const FormField = styled.div`
   margin-top: 20px;
