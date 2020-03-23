@@ -42,10 +42,8 @@ const Login: React.FC = () => {
 
   const onLogin = useCallback(() => {
     login()
-      .then(result => {
-        if (result.user) {
-          dispatch(setUserUid(result.user.uid));
-        }
+      .then(userId => {
+        dispatch(setUserUid(userId));
       })
       .catch(error => {
         window.console.log(error);

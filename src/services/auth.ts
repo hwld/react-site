@@ -2,18 +2,27 @@ import { auth } from 'services/firebaseConfig';
 import firebase from 'firebase/app';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-const useCurrentUser = () => {
+const useCurrentUserId = () => {
   const [user, loading, error] = useAuthState(auth);
+  const userId = user ? user.uid : null;
 
-  return { user, loading, error };
+  return { userId, loading, error };
 };
 
 const login = () => {
-  return auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  return auth
+    .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+    .then(result => {
+      if (result.user) {
+        return result.user.uid;
+      }
+
+      return null;
+    });
 };
 
 const logout = () => {
   return auth.signOut();
 };
 
-export { useCurrentUser, login, logout };
+export { useCurrentUserId, login, logout };
