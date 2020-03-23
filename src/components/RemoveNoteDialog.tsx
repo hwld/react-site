@@ -1,7 +1,6 @@
 import React from 'react';
 import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
 import DeleteNoteIcon from '@material-ui/icons/Delete';
-import { removeNote } from 'stores/store';
 import MenuItemDialog from './MenuItemDialog';
 
 interface RemoveNoteDialogProps {
