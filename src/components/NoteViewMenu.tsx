@@ -2,15 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import { Toolbar, IconButton } from '@material-ui/core';
 import MoveNoteIcon from '@material-ui/icons/Forward';
-import SortNoteIcon from '@material-ui/icons/Sort';
 import SearchNoteIcon from '@material-ui/icons/Search';
 import { Note } from 'services/storage/notes';
-import AddNoteDialog from './AddNoteDialog';
-import RemoveNoteDialog from './RemoveNoteDialog';
+import AddNoteDialog from './MenuItem/AddNoteDialog';
+import RemoveNoteDialog from './MenuItem/RemoveNoteDialog';
+import { NotesSortOrder } from './NotesSortConditionField';
+import SortNotesDialog from './MenuItem/SortNotesDialog';
 
 interface NoteViewMenuProps {
   addNote: (note: Note) => void;
   removeNote: (id: string) => void;
+  sortNotes: (order: NotesSortOrder) => void;
+  defaultNotesSortOrder: NotesSortOrder;
   className?: string;
   selectedGenreId: string;
   selectedNoteIds: string[];
@@ -24,6 +27,8 @@ const StyledToolBar = styled(Toolbar)`
 const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
   addNote,
   removeNote,
+  sortNotes,
+  defaultNotesSortOrder,
   className,
   selectedGenreId,
   selectedNoteIds,
@@ -43,9 +48,12 @@ const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
       <IconButton>
         <MoveNoteIcon fontSize="large" />
       </IconButton>
-      <IconButton>
-        <SortNoteIcon fontSize="large" />
-      </IconButton>
+      <SortNotesDialog
+        defaultSortOrder={defaultNotesSortOrder}
+        sort={sortNotes}
+        size="large"
+        selectedGenreId={selectedGenreId}
+      />
       <IconButton>
         <SearchNoteIcon fontSize="large" />
       </IconButton>

@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Toolbar } from '@material-ui/core';
 import { Genre } from 'services/storage/genres';
-import AddGenreDialog from './AddGenreDialog';
-import UpdateGenreDialog from './UpdateGenreDialog';
-import RemoveGenreDialog from './RemoveGenreDIalog';
+import AddGenreDialog from './MenuItem/AddGenreDialog';
+import UpdateGenreDialog from './MenuItem/UpdateGenreDialog';
+import RemoveGenreDialog from './MenuItem/RemoveGenreDIalog';
 
 interface GenreViewMenuProps {
   genres: Genre[];

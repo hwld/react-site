@@ -3,7 +3,7 @@ import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { Note, NoteField } from 'services/storage/notes';
 import MenuItemDialog from './MenuItemDialog';
-import EditNoteField from './EditNoteField';
+import EditNoteField from '../EditNoteField';
 
 interface UpdateNoteDialogProps {
   defaultNote: Note;
@@ -19,7 +19,7 @@ const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
   const [note, setNote] = useState(defaultNote);
 
   const updateNote = () => {
-    update({ ...note });
+    update(note);
   };
 
   const setDefaultNote = () => {

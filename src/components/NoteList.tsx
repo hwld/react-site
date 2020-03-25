@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import { Note } from 'services/storage/notes';
 import NoteListItem from './NoteListItem';
 import List from './util/List/List';
+import { NotesSortOrder } from './NotesSortConditionField';
 
 interface NoteListProps {
   notes: Note[];
+  notesOrder?: NotesSortOrder;
   removeNote: (id: string) => void;
   updateNote: (note: Note) => void;
   onNotesSelect?: (selectedIds: string[]) => void;
@@ -21,6 +23,7 @@ const StyledList = styled(List)`
 
 const NoteList: React.FC<NoteListProps> = ({
   notes,
+  notesOrder = { targetField: 'date', order: 'asc' },
   removeNote,
   updateNote,
   onNotesSelect,

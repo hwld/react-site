@@ -3,7 +3,7 @@ import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import AddGenreIcon from '@material-ui/icons/CreateNewFolder';
 import { Genre, GenreField } from 'services/storage/genres';
 import MenuItemDialog from './MenuItemDialog';
-import EditGenreField from './EditGenreField';
+import EditGenreField from '../EditGenreField';
 
 interface AddGenreDialogProps {
   add: (genre: Genre) => void;

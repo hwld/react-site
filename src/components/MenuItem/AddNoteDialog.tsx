@@ -3,7 +3,7 @@ import AddNoteIcon from '@material-ui/icons/NoteAdd';
 import { DialogContent, DialogTitle, SvgIconProps } from '@material-ui/core';
 import { Note, NoteField } from 'services/storage/notes';
 import MenuItemDialog from './MenuItemDialog';
-import EditNoteField from './EditNoteField';
+import EditNoteField from '../EditNoteField';
 
 interface AddNoteDialogProps {
   add: (note: Note) => void;
@@ -27,6 +27,8 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
     add({
       id: '',
       genreId: selectedGenreId,
+      creationDate: new Date(),
+      lastUpdated: new Date(),
       title: note.title,
       text: note.text,
       authorName: note.authorName,
