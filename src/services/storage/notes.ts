@@ -1,4 +1,4 @@
-import { db } from 'services/firebaseConfig';
+import { db, firebase } from 'services/firebaseConfig';
 import { useMemo, useCallback } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
@@ -9,10 +9,17 @@ export interface NoteField {
   bookName: string;
 }
 
-export type Note = NoteField & {
+export interface NoteDate {
+  creationDate: Date;
+  lastUpdated: Date;
+}
+
+export interface NoteInfo {
   id: string;
   genreId: string;
-};
+}
+
+export type Note = NoteField & NoteDate & NoteInfo;
 
 const useNotes = (uid: string) => {
   const notesRef = useMemo(() => {
@@ -29,7 +36,16 @@ const useNotes = (uid: string) => {
     }
 
     return notesCollection.docs.map(noteDoc => {
-      return noteDoc.data() as Note;
+      const data = noteDoc.data();
+
+      // Note型のDate関連だけTimestampからDateに変換したい.
+      const noteOtherThanDate = data as NoteField & NoteInfo;
+      const creationDate: Date = data.creationDate.toDate();
+      const lastUpdated: Date = data.lastUpdated.toDate();
+
+      const note: Note = { ...noteOtherThanDate, creationDate, lastUpdated };
+
+      return note;
     });
   }, [notesCollection]);
 
@@ -37,7 +53,12 @@ const useNotes = (uid: string) => {
     (note: Note) => {
       const newNoteRef = notesRef.doc();
 
-      newNoteRef.set({ ...note, id: newNoteRef.id });
+      newNoteRef.set({
+        ...note,
+        id: newNoteRef.id,
+        creationDate: firebase.firestore.Timestamp.fromDate(new Date()),
+        lastUpdated: firebase.firestore.Timestamp.fromDate(new Date()),
+      });
     },
     [notesRef],
   );
@@ -51,7 +72,10 @@ const useNotes = (uid: string) => {
 
   const updateNote = useCallback(
     (note: Note) => {
-      notesRef.doc(note.id).update({ ...note });
+      notesRef.doc(note.id).update({
+        ...note,
+        lastUpdated: firebase.firestore.Timestamp.fromDate(new Date()),
+      });
     },
     [notesRef],
   );
