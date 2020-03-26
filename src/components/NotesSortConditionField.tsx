@@ -5,10 +5,10 @@ import {
   FormControlLabel,
   Typography,
 } from '@material-ui/core';
-import { NoteField } from 'services/storage/notes';
+import { NoteField, NoteDate } from 'services/storage/notes';
 
 export interface NotesSortOrder {
-  targetField: 'date' | keyof NoteField;
+  targetField: keyof NoteDate | keyof NoteField;
   order: 'asc' | 'desc';
 }
 
@@ -24,14 +24,16 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
   onChangeOrder,
 }) => {
   // 型を保証したくてこう書いた. もっと上手な書き方がありそう.
-  const date: NotesSortOrder['targetField'] = 'date';
+  const creationDate: NotesSortOrder['targetField'] = 'creationDate';
+  const lastUpdated: NotesSortOrder['targetField'] = 'lastUpdated';
   const title: NotesSortOrder['targetField'] = 'title';
   const text: NotesSortOrder['targetField'] = 'text';
   const authorName: NotesSortOrder['targetField'] = 'authorName';
   const bookName: NotesSortOrder['targetField'] = 'bookName';
   const isTargetField = (str: string): str is NotesSortOrder['targetField'] => {
     return (
-      str === date ||
+      str === creationDate ||
+      str === lastUpdated ||
       str === title ||
       str === text ||
       str === authorName ||
@@ -69,10 +71,17 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
       <Typography>並び替え対象</Typography>
       <RadioGroup row name="targetField" onChange={changeTargetField}>
         <FormControlLabel
-          value={date}
-          checked={notesSortOrder.targetField === date}
+          value={creationDate}
+          checked={notesSortOrder.targetField === creationDate}
           control={<Radio color="secondary" />}
           label="作成日"
+          labelPlacement="end"
+        />
+        <FormControlLabel
+          value={lastUpdated}
+          checked={notesSortOrder.targetField === lastUpdated}
+          control={<Radio color="secondary" />}
+          label="最終更新日"
           labelPlacement="end"
         />
         <FormControlLabel

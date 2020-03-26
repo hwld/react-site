@@ -31,7 +31,7 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
   const { userId } = useCurrentUserId();
   const { notes, addNote, removeNote, updateNote } = useNotes(userId);
   const [notesSortOrder, setNotesSortOrder] = useState<NotesSortOrder>({
-    targetField: 'date',
+    targetField: 'creationDate',
     order: 'asc',
   });
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
