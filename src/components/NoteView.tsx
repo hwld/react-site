@@ -50,7 +50,7 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
       <Divider />
       <StyledNoteList
         notes={notes}
-        notesOrder={notesSortOrder}
+        notesSortOrder={notesSortOrder}
         removeNote={removeNote}
         updateNote={updateNote}
         onNotesSelect={selectNoteIds}

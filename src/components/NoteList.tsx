@@ -7,7 +7,7 @@ import { NotesSortOrder } from './NotesSortConditionField';
 
 interface NoteListProps {
   notes: Note[];
-  notesOrder?: NotesSortOrder;
+  notesSortOrder?: NotesSortOrder;
   removeNote: (id: string) => void;
   updateNote: (note: Note) => void;
   onNotesSelect?: (selectedIds: string[]) => void;
@@ -23,16 +23,61 @@ const StyledList = styled(List)`
 
 const NoteList: React.FC<NoteListProps> = ({
   notes,
-  notesOrder = { targetField: 'date', order: 'asc' },
+  notesSortOrder = { targetField: 'creationDate', order: 'asc' },
   removeNote,
   updateNote,
   onNotesSelect,
   selectedGenreId,
   className,
 }) => {
+  const isDate = useCallback((arg: string | Date): arg is Date => {
+    return arg != null && typeof arg !== 'string';
+  }, []);
+
+  // sortOrderを受け取って、比較関数を返す.
+  // note[sortOrder.targetField]がDate型のときにはgetTime()で比較し、
+  // note[sortOrder.targetField]がstring型のときには直接比較する.
+  const notesCompareFunction = useCallback(
+    (sortOrder: NotesSortOrder) => {
+      return (NoteA: Note, NoteB: Note) => {
+        let BisBigger: boolean;
+        let AisBigger: boolean;
+        const targetObjA = NoteA[sortOrder.targetField];
+        const targetObjB = NoteB[sortOrder.targetField];
+
+        if (isDate(targetObjA) && isDate(targetObjB)) {
+          AisBigger = targetObjA.getTime() > targetObjB.getTime();
+          BisBigger = targetObjA.getTime() < targetObjB.getTime();
+        } else {
+          AisBigger = targetObjA > targetObjB;
+          BisBigger = targetObjA < targetObjB;
+        }
+
+        if (AisBigger) {
+          if (sortOrder.order === 'asc') {
+            return 1;
+          }
+
+          return -1;
+        }
+        if (BisBigger) {
+          if (sortOrder.order === 'asc') {
+            return -1;
+          }
+
+          return 1;
+        }
+
+        return 0;
+      };
+    },
+    [isDate],
+  );
+
   const renderListItem = useCallback(() => {
     return notes
       .filter(note => note.genreId === selectedGenreId)
+      .sort(notesCompareFunction(notesSortOrder))
       .map(note => (
         <NoteListItem
           remove={removeNote}
@@ -41,7 +86,14 @@ const NoteList: React.FC<NoteListProps> = ({
           key={note.id}
         />
       ));
-  }, [notes, removeNote, selectedGenreId, updateNote]);
+  }, [
+    notes,
+    notesCompareFunction,
+    notesSortOrder,
+    removeNote,
+    selectedGenreId,
+    updateNote,
+  ]);
 
   return (
     <StyledList className={className} onSelect={onNotesSelect}>
