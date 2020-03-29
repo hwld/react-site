@@ -48,6 +48,7 @@ const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
         defaultGenre={
           selectedGenre || {
             id: '',
+            creationDate: new Date(),
             genreName: '',
             parentGenreId: '',
             childrenGenreIds: [],

@@ -23,6 +23,7 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
   const addGenre = () => {
     add({
       id: '',
+      creationDate: new Date(),
       genreName: genre.genreName,
       parentGenreId: selectedGenreId,
       childrenGenreIds: [],
