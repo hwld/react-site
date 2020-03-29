@@ -22,6 +22,21 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
   onGenreSelect,
   className,
 }) => {
+  // 同じ親を持つgenreを作成順に並び替える.
+  // そのうち並び順を指定できるようにするかも.
+  const genresCompareFunction = useCallback(() => {
+    return (genreA: Genre, genreB: Genre) => {
+      if (genreA.creationDate.getTime() > genreB.creationDate.getTime()) {
+        return 1;
+      }
+      if (genreA.creationDate.getTime() < genreB.creationDate.getTime()) {
+        return -1;
+      }
+
+      return 0;
+    };
+  }, []);
+
   const buildGenreTreeNode = useCallback(
     (rawGenre: Genre): GenreTreeNode => {
       // rawGenreの子ジャンルを抽出
@@ -30,16 +45,16 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
       );
 
       // childrenGenresそれぞれのGenreTreeNodeを作成
-      const childrenGenreTreeNodes = childrenGenres.map(genre =>
-        buildGenreTreeNode(genre),
-      );
+      const childrenGenreTreeNodes = childrenGenres
+        .sort(genresCompareFunction())
+        .map(genre => buildGenreTreeNode(genre));
 
       return {
         ...rawGenre,
         childrenGenres: [...childrenGenreTreeNodes],
       };
     },
-    [genres],
+    [genres, genresCompareFunction],
   );
 
   const buildGenreTreeItems = useCallback(
@@ -66,11 +81,13 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
     const rootGenres = genres.filter(genre => genre.parentGenreId === '');
 
     // ルートジャンルそれぞれのGenreTreeNodeを作成する
-    const treeObject = rootGenres.map(genre => buildGenreTreeNode(genre));
+    const treeObject = rootGenres
+      .sort(genresCompareFunction())
+      .map(genre => buildGenreTreeNode(genre));
 
     // GenreTreeNodeをReactNodeに変換する
     return treeObject.map(obj => buildGenreTreeItems(obj));
-  }, [genres, buildGenreTreeNode, buildGenreTreeItems]);
+  }, [genres, genresCompareFunction, buildGenreTreeNode, buildGenreTreeItems]);
 
   return (
     <StyledTreeView
