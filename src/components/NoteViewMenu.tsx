@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Toolbar, IconButton } from '@material-ui/core';
-import MoveNoteIcon from '@material-ui/icons/Forward';
 import SearchNoteIcon from '@material-ui/icons/Search';
 import { Note } from 'services/storage/notes';
 import AddNoteDialog from './MenuItem/AddNoteDialog';
 import RemoveNoteDialog from './MenuItem/RemoveNoteDialog';
 import { NotesSortOrder } from './NotesSortConditionField';
 import SortNotesDialog from './MenuItem/SortNotesDialog';
+import MoveNotesDialog from './MenuItem/MoveNotesDialog';
 
 interface NoteViewMenuProps {
   addNote: (note: Note) => void;
@@ -45,9 +45,7 @@ const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
         size="large"
         selectedNoteIds={selectedNoteIds}
       />
-      <IconButton>
-        <MoveNoteIcon fontSize="large" />
-      </IconButton>
+      <MoveNotesDialog selectedNotesIds={selectedNoteIds} size="large" />
       <SortNotesDialog
         defaultSortOrder={defaultNotesSortOrder}
         sort={sortNotes}
