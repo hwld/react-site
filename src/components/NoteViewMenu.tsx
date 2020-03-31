@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Toolbar, IconButton } from '@material-ui/core';
 import SearchNoteIcon from '@material-ui/icons/Search';
-import { Note } from 'services/storage/notes';
 import AddNoteDialog from './MenuItem/AddNoteDialog';
 import RemoveNoteDialog from './MenuItem/RemoveNoteDialog';
 import { NotesSortOrder } from './NotesSortConditionField';
@@ -10,8 +9,6 @@ import SortNotesDialog from './MenuItem/SortNotesDialog';
 import MoveNotesDialog from './MenuItem/MoveNotesDialog';
 
 interface NoteViewMenuProps {
-  addNote: (note: Note) => void;
-  removeNote: (id: string) => void;
   sortNotes: (order: NotesSortOrder) => void;
   defaultNotesSortOrder: NotesSortOrder;
   className?: string;
@@ -25,8 +22,6 @@ const StyledToolBar = styled(Toolbar)`
 `;
 
 const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
-  addNote,
-  removeNote,
   sortNotes,
   defaultNotesSortOrder,
   className,
@@ -35,16 +30,8 @@ const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
 }) => {
   return (
     <StyledToolBar className={className}>
-      <AddNoteDialog
-        add={addNote}
-        size="large"
-        selectedGenreId={selectedGenreId}
-      />
-      <RemoveNoteDialog
-        remove={removeNote}
-        size="large"
-        selectedNoteIds={selectedNoteIds}
-      />
+      <AddNoteDialog size="large" selectedGenreId={selectedGenreId} />
+      <RemoveNoteDialog size="large" selectedNoteIds={selectedNoteIds} />
       <MoveNotesDialog selectedNotesIds={selectedNoteIds} size="large" />
       <SortNotesDialog
         defaultSortOrder={defaultNotesSortOrder}

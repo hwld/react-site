@@ -22,9 +22,6 @@ const StyledToolBar = styled(Toolbar)`
 
 const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
   genres,
-  addGenre,
-  removeGenre,
-  updateGenre,
   className,
   selectedGenreId,
 }) => {
@@ -32,18 +29,9 @@ const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
 
   return (
     <StyledToolBar className={className}>
-      <AddGenreDialog
-        add={addGenre}
-        size="large"
-        selectedGenreId={selectedGenreId}
-      />
-      <RemoveGenreDialog
-        remove={removeGenre}
-        size="large"
-        selectedGenreId={selectedGenreId}
-      />
+      <AddGenreDialog size="large" selectedGenreId={selectedGenreId} />
+      <RemoveGenreDialog size="large" selectedGenreId={selectedGenreId} />
       <UpdateGenreDialog
-        update={updateGenre}
         size="large"
         defaultGenre={
           selectedGenre || {

@@ -1,21 +1,24 @@
 import React from 'react';
 import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
 import DeleteNoteIcon from '@material-ui/icons/Delete';
+import { useNotes } from 'services/storage/notes';
+import { useCurrentUserId } from 'services/auth';
 import MenuItemDialog from './MenuItemDialog';
 
 interface RemoveNoteDialogProps {
-  remove: (id: string) => void;
   selectedNoteIds: string[];
   size?: SvgIconProps['fontSize'];
 }
 
 const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
-  remove,
   selectedNoteIds,
   size,
 }) => {
-  const removeNotes = () => {
-    selectedNoteIds.forEach(id => remove(id));
+  const { userId } = useCurrentUserId();
+  const { removeNote } = useNotes(userId);
+
+  const remove = () => {
+    selectedNoteIds.forEach(id => removeNote(id));
   };
 
   return (
@@ -25,7 +28,7 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
         activatorIcon={<DeleteNoteIcon fontSize={size} />}
         activatorDisabled={selectedNoteIds.length === 0}
         doneText="削除"
-        onDone={removeNotes}
+        onDone={remove}
       >
         <DialogTitle>メモの削除</DialogTitle>
         <DialogContent>削除してよろしいですか?</DialogContent>

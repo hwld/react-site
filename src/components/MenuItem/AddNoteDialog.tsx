@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import AddNoteIcon from '@material-ui/icons/NoteAdd';
 import { DialogContent, DialogTitle, SvgIconProps } from '@material-ui/core';
-import { Note, NoteField } from 'services/storage/notes';
+import { NoteField, useNotes } from 'services/storage/notes';
+import { useCurrentUserId } from 'services/auth';
 import MenuItemDialog from './MenuItemDialog';
 import EditNoteField from '../EditNoteField';
 
 interface AddNoteDialogProps {
-  add: (note: Note) => void;
   selectedGenreId: string;
   size?: SvgIconProps['fontSize'];
 }
 
 const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
-  add,
   selectedGenreId,
   size,
 }) => {
@@ -23,8 +22,12 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
     bookName: '',
   });
 
-  const addNote = () => {
-    add({
+  const { userId } = useCurrentUserId();
+  const { addNote } = useNotes(userId);
+
+  const add = () => {
+    window.console.log('new impl addNote');
+    addNote({
       id: '',
       genreId: selectedGenreId,
       creationDate: new Date(),
@@ -50,7 +53,7 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
       activatorIcon={<AddNoteIcon fontSize={size} />}
       activatorDisabled={selectedGenreId === ''}
       doneText="追加"
-      onDone={addNote}
+      onDone={add}
       doneDisabled={note.text.length === 0}
       onOpen={clearField}
     >

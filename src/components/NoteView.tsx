@@ -29,7 +29,7 @@ const StyledNoteViewMenu = styled(NoteViewMenu)`
 
 const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
   const { userId } = useCurrentUserId();
-  const { notes, addNote, removeNote, updateNote } = useNotes(userId);
+  const { notes } = useNotes(userId);
   const [notesSortOrder, setNotesSortOrder] = useState<NotesSortOrder>({
     targetField: 'creationDate',
     order: 'asc',
@@ -51,14 +51,10 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
       <StyledNoteList
         notes={notes}
         notesSortOrder={notesSortOrder}
-        removeNote={removeNote}
-        updateNote={updateNote}
         onNotesSelect={selectNoteIds}
         selectedGenreId={selectedGenreId}
       />
       <StyledNoteViewMenu
-        addNote={addNote}
-        removeNote={removeNote}
         sortNotes={sortNotes}
         defaultNotesSortOrder={notesSortOrder}
         selectedNoteIds={selectedNoteIds}

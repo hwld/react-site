@@ -1,21 +1,25 @@
 import React from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import DeleteGenreIcon from '@material-ui/icons/Delete';
+import { useCurrentUserId } from 'services/auth';
+import { useGenres } from 'services/storage/genres';
 import MenuItemDialog from './MenuItemDialog';
 
 interface RemoveGenreDialogProps {
-  remove: (id: string) => Promise<void>;
   selectedGenreId: string;
   size?: SvgIconProps['fontSize'];
 }
 
 const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
-  remove,
   selectedGenreId,
   size,
 }) => {
-  const removeGenre = () => {
-    remove(selectedGenreId);
+  const { userId } = useCurrentUserId();
+  const { removeGenre } = useGenres(userId);
+
+  const remove = () => {
+    window.console.log('new impl removeGenre');
+    removeGenre(selectedGenreId);
   };
 
   return (
@@ -25,7 +29,7 @@ const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
         activatorIcon={<DeleteGenreIcon fontSize={size} />}
         activatorDisabled={selectedGenreId === ''}
         doneText="削除"
-        onDone={removeGenre}
+        onDone={remove}
       >
         <DialogTitle>ジャンルの削除</DialogTitle>
         <DialogContent>削除してよろしいですか？</DialogContent>
