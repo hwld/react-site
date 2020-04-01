@@ -1,6 +1,16 @@
-import React from 'react';
-import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
+import React, { useState } from 'react';
+import {
+  DialogTitle,
+  DialogContent,
+  SvgIconProps,
+  DialogContentText,
+} from '@material-ui/core';
 import MoveNoteIcon from '@material-ui/icons/Forward';
+import { useCurrentUserId } from 'services/auth';
+import { useGenres } from 'services/storage/genres';
+import GenreTreeList from 'components/GenreTreeList';
+import styled from 'styled-components';
+import { useNotes } from 'services/storage/notes';
 import MenuItemDialog from './MenuItemDialog';
 
 interface MoveNotesDialogProps {
@@ -8,12 +18,23 @@ interface MoveNotesDialogProps {
   size?: SvgIconProps['fontSize'];
 }
 
+const StyledGenreTreeList = styled(GenreTreeList)`
+  height: 50vh;
+  background-color: ${props => props.theme.palette.primary.dark};
+`;
+
 const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
   selectedNotesIds,
   size,
 }) => {
+  const { userId } = useCurrentUserId();
+  const { genres } = useGenres(userId);
+  const [destGenreId, setDestGenreId] = useState('');
+
+  const { moveNote } = useNotes(userId);
+
   const moveNotes = () => {
-    window.console.log('Hello');
+    selectedNotesIds.forEach(id => moveNote(id, destGenreId));
   };
 
   return (
@@ -25,7 +46,12 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
         onDone={moveNotes}
       >
         <DialogTitle>メモの移動</DialogTitle>
-        <DialogContent>Hello</DialogContent>
+        <DialogContent>
+          <DialogContentText color="textPrimary">
+            移動先ジャンル
+          </DialogContentText>
+          <StyledGenreTreeList genres={genres} onGenreSelect={setDestGenreId} />
+        </DialogContent>
       </MenuItemDialog>
     </>
   );

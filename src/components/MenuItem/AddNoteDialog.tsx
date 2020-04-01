@@ -26,7 +26,6 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   const { addNote } = useNotes(userId);
 
   const add = () => {
-    window.console.log('new impl addNote');
     addNote({
       id: '',
       genreId: selectedGenreId,

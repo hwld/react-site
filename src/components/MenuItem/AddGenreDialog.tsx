@@ -22,7 +22,6 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
   });
 
   const add = () => {
-    window.console.log('new impl addGenre');
     addGenre({
       id: '',
       creationDate: new Date(),

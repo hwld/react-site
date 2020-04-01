@@ -18,7 +18,6 @@ const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
   const { removeGenre } = useGenres(userId);
 
   const remove = () => {
-    window.console.log('new impl removeGenre');
     removeGenre(selectedGenreId);
   };
 

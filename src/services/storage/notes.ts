@@ -71,16 +71,26 @@ const useNotes = (uid: string) => {
   );
 
   const updateNote = useCallback(
-    (note: Note) => {
-      notesRef.doc(note.id).update({
-        ...note,
+    (id: string, noteField: NoteField) => {
+      notesRef.doc(id).update({
+        ...noteField,
         lastUpdated: firebase.firestore.Timestamp.fromDate(new Date()),
       });
     },
     [notesRef],
   );
 
-  return { notes, addNote, removeNote, updateNote };
+  const moveNote = useCallback(
+    (noteId: string, destGenreId: string) => {
+      notesRef.doc(noteId).update({
+        genreId: destGenreId,
+        lastUpdated: firebase.firestore.Timestamp.fromDate(new Date()),
+      });
+    },
+    [notesRef],
+  );
+
+  return { notes, addNote, removeNote, updateNote, moveNote };
 };
 
 export { useNotes };
