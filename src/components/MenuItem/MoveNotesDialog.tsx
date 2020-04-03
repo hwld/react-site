@@ -38,22 +38,20 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
   };
 
   return (
-    <>
-      <MenuItemDialog
-        tooltipText="メモを移動"
-        activatorIcon={<MoveNoteIcon fontSize={size} />}
-        doneText="移動"
-        onDone={moveNotes}
-      >
-        <DialogTitle>メモの移動</DialogTitle>
-        <DialogContent>
-          <DialogContentText color="textPrimary">
-            移動先ジャンル
-          </DialogContentText>
-          <StyledGenreTreeList genres={genres} onGenreSelect={setDestGenreId} />
-        </DialogContent>
-      </MenuItemDialog>
-    </>
+    <MenuItemDialog
+      tooltipText="メモを移動"
+      activatorIcon={<MoveNoteIcon fontSize={size} />}
+      doneText="移動"
+      onDone={moveNotes}
+    >
+      <DialogTitle>メモの移動</DialogTitle>
+      <DialogContent>
+        <DialogContentText color="textPrimary">
+          移動先ジャンル
+        </DialogContentText>
+        <StyledGenreTreeList genres={genres} onGenreSelect={setDestGenreId} />
+      </DialogContent>
+    </MenuItemDialog>
   );
 };
 

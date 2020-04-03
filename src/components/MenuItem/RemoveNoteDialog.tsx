@@ -22,18 +22,16 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
   };
 
   return (
-    <>
-      <MenuItemDialog
-        tooltipText="メモを削除"
-        activatorIcon={<DeleteNoteIcon fontSize={size} />}
-        activatorDisabled={selectedNoteIds.length === 0}
-        doneText="削除"
-        onDone={remove}
-      >
-        <DialogTitle>メモの削除</DialogTitle>
-        <DialogContent>削除してよろしいですか?</DialogContent>
-      </MenuItemDialog>
-    </>
+    <MenuItemDialog
+      tooltipText="メモを削除"
+      activatorIcon={<DeleteNoteIcon fontSize={size} />}
+      activatorDisabled={selectedNoteIds.length === 0}
+      doneText="削除"
+      onDone={remove}
+    >
+      <DialogTitle>メモの削除</DialogTitle>
+      <DialogContent>削除してよろしいですか?</DialogContent>
+    </MenuItemDialog>
   );
 };
 

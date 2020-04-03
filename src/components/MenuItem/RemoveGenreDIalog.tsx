@@ -22,18 +22,16 @@ const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
   };
 
   return (
-    <>
-      <MenuItemDialog
-        tooltipText="ジャンルを削除"
-        activatorIcon={<DeleteGenreIcon fontSize={size} />}
-        activatorDisabled={selectedGenreId === ''}
-        doneText="削除"
-        onDone={remove}
-      >
-        <DialogTitle>ジャンルの削除</DialogTitle>
-        <DialogContent>削除してよろしいですか？</DialogContent>
-      </MenuItemDialog>
-    </>
+    <MenuItemDialog
+      tooltipText="ジャンルを削除"
+      activatorIcon={<DeleteGenreIcon fontSize={size} />}
+      activatorDisabled={selectedGenreId === ''}
+      doneText="削除"
+      onDone={remove}
+    >
+      <DialogTitle>ジャンルの削除</DialogTitle>
+      <DialogContent>削除してよろしいですか？</DialogContent>
+    </MenuItemDialog>
   );
 };
 

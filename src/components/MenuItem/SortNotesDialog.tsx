@@ -40,25 +40,23 @@ const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
   };
 
   return (
-    <>
-      <MenuItemDialog
-        tooltipText="ノートを並び替える"
-        activatorIcon={<SortNoteIcon fontSize={size} />}
-        activatorDisabled={selectedGenreId.length === 0}
-        doneText="並び替え"
-        onDone={sortNotes}
-        onOpen={setDefaultSortOrder}
-      >
-        <DialogTitle>ノートの並び替え</DialogTitle>
-        <DialogContent>
-          <NotesSortConditionField
-            notesSortOrder={sortOrder}
-            onChangeTargetField={changeSortTargetField}
-            onChangeOrder={changeSortOrder}
-          />
-        </DialogContent>
-      </MenuItemDialog>
-    </>
+    <MenuItemDialog
+      tooltipText="ノートを並び替える"
+      activatorIcon={<SortNoteIcon fontSize={size} />}
+      activatorDisabled={selectedGenreId.length === 0}
+      doneText="並び替え"
+      onDone={sortNotes}
+      onOpen={setDefaultSortOrder}
+    >
+      <DialogTitle>ノートの並び替え</DialogTitle>
+      <DialogContent>
+        <NotesSortConditionField
+          notesSortOrder={sortOrder}
+          onChangeTargetField={changeSortTargetField}
+          onChangeOrder={changeSortOrder}
+        />
+      </DialogContent>
+    </MenuItemDialog>
   );
 };
 

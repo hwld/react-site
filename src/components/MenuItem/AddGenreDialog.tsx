@@ -40,21 +40,19 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
   };
 
   return (
-    <>
-      <MenuItemDialog
-        tooltipText="ジャンルを追加"
-        activatorIcon={<AddGenreIcon fontSize={size} />}
-        doneText="追加"
-        onDone={add}
-        doneDisabled={genre.genreName.length === 0}
-        onOpen={clearField}
-      >
-        <DialogTitle>ジャンルの追加</DialogTitle>
-        <DialogContent>
-          <EditGenreField genre={genre} onChange={changeGenreName} />
-        </DialogContent>
-      </MenuItemDialog>
-    </>
+    <MenuItemDialog
+      tooltipText="ジャンルを追加"
+      activatorIcon={<AddGenreIcon fontSize={size} />}
+      doneText="追加"
+      onDone={add}
+      doneDisabled={genre.genreName.length === 0}
+      onOpen={clearField}
+    >
+      <DialogTitle>ジャンルの追加</DialogTitle>
+      <DialogContent>
+        <EditGenreField genre={genre} onChange={changeGenreName} />
+      </DialogContent>
+    </MenuItemDialog>
   );
 };
 
