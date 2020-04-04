@@ -1,31 +1,15 @@
 import React, { useState, useCallback } from 'react';
-import { Toolbar, Divider } from '@material-ui/core';
 import NoteList from 'components/NoteList';
-import styled from 'styled-components';
-import NoteViewMenu from 'components/NoteViewMenu';
 import { useNotes } from 'services/storage/notes';
 import { useCurrentUserId } from 'services/auth';
 import { NotesSortOrder } from './NotesSortConditionField';
+import ContentView from './ContentView';
+import NoteViewMenu from './NoteViewMenu';
 
 interface NoteViewProps {
   selectedGenreId: string;
   className?: string;
 }
-
-const View = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyledNoteList = styled(NoteList)`
-  height: 85%;
-`;
-
-const StyledNoteViewMenu = styled(NoteViewMenu)`
-  background-color: ${props => props.theme.palette.secondary.main};
-  flex: 1;
-`;
 
 const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
   const { userId } = useCurrentUserId();
@@ -45,22 +29,25 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
   }, []);
 
   return (
-    <View className={className}>
-      <Toolbar />
-      <Divider />
-      <StyledNoteList
-        notes={notes}
-        notesSortOrder={notesSortOrder}
-        onNotesSelect={selectNoteIds}
-        selectedGenreId={selectedGenreId}
-      />
-      <StyledNoteViewMenu
-        sortNotes={sortNotes}
-        defaultNotesSortOrder={notesSortOrder}
-        selectedNoteIds={selectedNoteIds}
-        selectedGenreId={selectedGenreId}
-      />
-    </View>
+    <ContentView
+      pageType="main"
+      content={
+        <NoteList
+          notes={notes}
+          notesSortOrder={notesSortOrder}
+          onNotesSelect={selectNoteIds}
+          selectedGenreId={selectedGenreId}
+        />
+      }
+      footerMenu={
+        <NoteViewMenu
+          selectedGenreId={selectedGenreId}
+          selectedNoteIds={selectedNoteIds}
+          defaultNotesSortOrder={notesSortOrder}
+          sortNotes={sortNotes}
+        />
+      }
+    />
   );
 };
 

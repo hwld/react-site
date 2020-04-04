@@ -20,11 +20,6 @@ const Drawer = styled.div<{ width: string; isOpen: boolean }>`
   overflow: auto;
 `;
 
-const StyledNoteView = styled(NoteView)`
-  height: 100%;
-  flex: 1;
-`;
-
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [selectedGenreId, setSelectedGenreId] = useState('');
@@ -40,7 +35,7 @@ const Home: React.FC = () => {
           selectedGenreId={selectedGenreId}
         />
       </Drawer>
-      <StyledNoteView selectedGenreId={selectedGenreId} />
+      <NoteView selectedGenreId={selectedGenreId} />
     </Background>
   );
 };
