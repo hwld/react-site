@@ -6,6 +6,7 @@ import {
   DialogActions,
   Button,
   Tooltip,
+  Typography,
 } from '@material-ui/core';
 
 const StyledDialog = styled(Dialog)`
@@ -63,7 +64,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
       return <StyledIconButton disabled>{activatorIcon}</StyledIconButton>;
 
     return (
-      <Tooltip title={tooltipText}>
+      <Tooltip title={<Typography>{tooltipText}</Typography>}>
         <StyledIconButton
           onClick={event => {
             event.stopPropagation();
