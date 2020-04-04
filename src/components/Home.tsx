@@ -20,6 +20,14 @@ const Drawer = styled.div<{ width: string; isOpen: boolean }>`
   overflow: auto;
 `;
 
+const StyledGenreView = styled(GenreView)`
+  flex: 1;
+`;
+
+const StyledNoteView = styled(NoteView)`
+  flex: 1;
+`;
+
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [selectedGenreId, setSelectedGenreId] = useState('');
@@ -28,14 +36,14 @@ const Home: React.FC = () => {
     <Background>
       <AppBar onMenuClick={() => setIsOpen(state => !state)} />
       <Drawer width="500" isOpen={isOpen}>
-        <GenreView
+        <StyledGenreView
           onGenreSelect={(genreId: string) => {
             setSelectedGenreId(genreId);
           }}
           selectedGenreId={selectedGenreId}
         />
       </Drawer>
-      <NoteView selectedGenreId={selectedGenreId} />
+      <StyledNoteView selectedGenreId={selectedGenreId} />
     </Background>
   );
 };

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Toolbar, Divider } from '@material-ui/core';
 
 interface ContentViewProps {
+  className?: string;
   content: ReactNode;
   footerMenu: ReactNode;
   footerColor: string;
@@ -12,7 +13,6 @@ const ViewRoot = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  flex: 1;
 `;
 
 const Content = styled.div`
@@ -29,12 +29,13 @@ const FooterMenu = styled(Toolbar)<{
 `;
 
 const ContentView: React.FC<ContentViewProps> = ({
+  className,
   content,
   footerMenu,
   footerColor,
 }) => {
   return (
-    <ViewRoot>
+    <ViewRoot className={className}>
       <Toolbar />
       <Divider />
 

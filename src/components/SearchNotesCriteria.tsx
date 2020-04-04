@@ -4,13 +4,17 @@ import ContentView from './ContentView';
 
 interface SearchNotesCriteriaProps {
   hoge?: string;
+  className?: string;
 }
 
-const SearchNotesCriteria: React.FC<SearchNotesCriteriaProps> = () => {
+const SearchNotesCriteria: React.FC<SearchNotesCriteriaProps> = ({
+  className,
+}) => {
   const theme = useTheme();
 
   return (
     <ContentView
+      className={className}
       content={<Typography>criteria</Typography>}
       footerMenu={<></>}
       footerColor={theme.palette.secondary.light}

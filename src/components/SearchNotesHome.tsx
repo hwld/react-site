@@ -20,6 +20,14 @@ const Drawer = styled.div<{ width: string; isOpen: boolean }>`
   overflow: auto;
 `;
 
+const StyledSearchNotesCriteria = styled(SearchNotesCriteria)`
+  flex: 1;
+`;
+
+const StyledSearchNotesList = styled(SearchNotesList)`
+  flex: 1;
+`;
+
 const SearchNotesHome: React.FC<{}> = () => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -27,9 +35,9 @@ const SearchNotesHome: React.FC<{}> = () => {
     <Background>
       <SearchModeAppBar onMenuClick={() => setIsOpen(state => !state)} />
       <Drawer width="500" isOpen={isOpen}>
-        <SearchNotesCriteria />
+        <StyledSearchNotesCriteria />
       </Drawer>
-      <SearchNotesList />
+      <StyledSearchNotesList />
     </Background>
   );
 };

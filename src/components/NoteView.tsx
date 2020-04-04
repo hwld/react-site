@@ -32,6 +32,7 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
 
   return (
     <ContentView
+      className={className}
       content={
         <NoteList
           notes={notes}

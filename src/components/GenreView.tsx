@@ -13,6 +13,7 @@ interface GenreViewProps {
 }
 
 const GenreView: React.FC<GenreViewProps> = ({
+  className,
   onGenreSelect,
   selectedGenreId,
 }) => {
@@ -22,6 +23,7 @@ const GenreView: React.FC<GenreViewProps> = ({
 
   return (
     <ContentView
+      className={className}
       content={<GenreTreeList genres={genres} onGenreSelect={onGenreSelect} />}
       footerMenu={
         <GenreViewMenu genres={genres} selectedGenreId={selectedGenreId} />
