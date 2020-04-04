@@ -20,12 +20,12 @@ const Content = styled.div`
 `;
 
 const FooterMenu = styled(Toolbar)<{
-  footerColor: ContentColumnProps['footerColor'];
+  color: ContentColumnProps['footerColor'];
 }>`
   display: flex;
   justify-content: center;
   flex: 1;
-  background-color: ${props => props.footerColor};
+  background-color: ${props => props.color};
 `;
 
 const ContentColumn: React.FC<ContentColumnProps> = ({
@@ -41,7 +41,7 @@ const ContentColumn: React.FC<ContentColumnProps> = ({
 
       <Content>{content}</Content>
 
-      <FooterMenu footerColor={footerColor}>{footerMenu}</FooterMenu>
+      <FooterMenu color={footerColor}>{footerMenu}</FooterMenu>
     </ViewRoot>
   );
 };
