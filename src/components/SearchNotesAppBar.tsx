@@ -6,18 +6,19 @@ import {
   Typography,
   Tooltip,
 } from '@material-ui/core';
-import SearchNoteIcon from '@material-ui/icons/Search';
+import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { logout } from 'services/auth';
 
-interface AppBarProps {
+interface SearchNotesAppBarProps {
   onMenuClick: () => void;
 }
 
 const StyledAppBar = styled(MuiAppBar)`
+  background-color: ${props => props.theme.palette.secondary.light};
   z-index: ${props => props.theme.zIndex.drawer + 1};
 `;
 
@@ -26,7 +27,9 @@ const AppTitle = styled(Typography)`
   flex-grow: 1;
 `;
 
-const AppBar: React.FC<AppBarProps> = ({ onMenuClick }) => {
+const SearchNotesAppBar: React.FC<SearchNotesAppBarProps> = ({
+  onMenuClick,
+}) => {
   const history = useHistory();
 
   const onLogout = () => {
@@ -34,8 +37,8 @@ const AppBar: React.FC<AppBarProps> = ({ onMenuClick }) => {
     history.replace('/home');
   };
 
-  const goSearchMode = () => {
-    history.replace('/search');
+  const backHome = () => {
+    history.replace('/home');
   };
 
   return (
@@ -44,10 +47,10 @@ const AppBar: React.FC<AppBarProps> = ({ onMenuClick }) => {
         <IconButton edge="start" onClick={onMenuClick}>
           <MenuIcon />
         </IconButton>
-        <AppTitle variant="h4">Notes</AppTitle>
-        <Tooltip title={<Typography>検索モードに移動</Typography>}>
-          <IconButton onClick={goSearchMode}>
-            <SearchNoteIcon fontSize="large" />
+        <AppTitle variant="h4">Notes 検索モード</AppTitle>
+        <Tooltip title={<Typography>ホームに戻る</Typography>}>
+          <IconButton onClick={backHome}>
+            <HomeIcon fontSize="large" />
           </IconButton>
         </Tooltip>
         <Tooltip title={<Typography>ログアウト</Typography>}>
@@ -60,4 +63,4 @@ const AppBar: React.FC<AppBarProps> = ({ onMenuClick }) => {
   );
 };
 
-export default AppBar;
+export default SearchNotesAppBar;
