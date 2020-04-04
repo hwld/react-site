@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, useTheme } from '@material-ui/core';
-import ContentView from './ContentView';
+import ContentColumn from './ContentColumn';
 
 interface SearchNotesListProps {
   hoge?: string;
@@ -11,7 +11,7 @@ const SearchNotesList: React.FC<SearchNotesListProps> = ({ className }) => {
   const theme = useTheme();
 
   return (
-    <ContentView
+    <ContentColumn
       className={className}
       content={<Typography>List</Typography>}
       footerMenu={<></>}

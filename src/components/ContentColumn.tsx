@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { Toolbar, Divider } from '@material-ui/core';
 
-interface ContentViewProps {
+interface ContentColumnProps {
   className?: string;
   content: ReactNode;
   footerMenu: ReactNode;
@@ -20,7 +20,7 @@ const Content = styled.div`
 `;
 
 const FooterMenu = styled(Toolbar)<{
-  footerColor: ContentViewProps['footerColor'];
+  footerColor: ContentColumnProps['footerColor'];
 }>`
   display: flex;
   justify-content: center;
@@ -28,7 +28,7 @@ const FooterMenu = styled(Toolbar)<{
   background-color: ${props => props.footerColor};
 `;
 
-const ContentView: React.FC<ContentViewProps> = ({
+const ContentColumn: React.FC<ContentColumnProps> = ({
   className,
   content,
   footerMenu,
@@ -46,4 +46,4 @@ const ContentView: React.FC<ContentViewProps> = ({
   );
 };
 
-export default ContentView;
+export default ContentColumn;

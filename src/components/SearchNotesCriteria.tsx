@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, useTheme } from '@material-ui/core';
-import ContentView from './ContentView';
+import ContentColumn from './ContentColumn';
 
 interface SearchNotesCriteriaProps {
   hoge?: string;
@@ -13,7 +13,7 @@ const SearchNotesCriteria: React.FC<SearchNotesCriteriaProps> = ({
   const theme = useTheme();
 
   return (
-    <ContentView
+    <ContentColumn
       className={className}
       content={<Typography>criteria</Typography>}
       footerMenu={<></>}

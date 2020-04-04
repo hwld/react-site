@@ -4,7 +4,7 @@ import { useNotes } from 'services/storage/notes';
 import { useCurrentUserId } from 'services/auth';
 import { useTheme } from '@material-ui/core';
 import { NotesSortOrder } from './NotesSortConditionField';
-import ContentView from './ContentView';
+import ContentColumn from './ContentColumn';
 import NoteViewMenu from './NoteViewMenu';
 
 interface NoteViewProps {
@@ -31,7 +31,7 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
   }, []);
 
   return (
-    <ContentView
+    <ContentColumn
       className={className}
       content={
         <NoteList
