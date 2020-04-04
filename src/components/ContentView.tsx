@@ -5,7 +5,7 @@ import { Toolbar, Divider } from '@material-ui/core';
 interface ContentViewProps {
   content: ReactNode;
   footerMenu: ReactNode;
-  pageType: 'main' | 'search';
+  footerColor: string;
 }
 
 const ViewRoot = styled.div`
@@ -19,22 +19,19 @@ const Content = styled.div`
   height: 85%;
 `;
 
-const FooterMenu = styled(Toolbar)<{ pageType: ContentViewProps['pageType'] }>`
+const FooterMenu = styled(Toolbar)<{
+  footerColor: ContentViewProps['footerColor'];
+}>`
   display: flex;
   justify-content: center;
   flex: 1;
-  background-color: ${props => {
-    if (props.pageType === 'main') return props.theme.palette.secondary.main;
-    if (props.pageType === 'search') return props.theme.palette.secondary.light;
-
-    return props.theme.palette.secondary.main;
-  }};
+  background-color: ${props => props.footerColor};
 `;
 
 const ContentView: React.FC<ContentViewProps> = ({
   content,
   footerMenu,
-  pageType,
+  footerColor,
 }) => {
   return (
     <ViewRoot>
@@ -43,7 +40,7 @@ const ContentView: React.FC<ContentViewProps> = ({
 
       <Content>{content}</Content>
 
-      <FooterMenu pageType={pageType}>{footerMenu}</FooterMenu>
+      <FooterMenu footerColor={footerColor}>{footerMenu}</FooterMenu>
     </ViewRoot>
   );
 };

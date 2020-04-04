@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography, useTheme } from '@material-ui/core';
 import ContentView from './ContentView';
 
 interface SearchNotesCriteriaProps {
@@ -7,11 +7,13 @@ interface SearchNotesCriteriaProps {
 }
 
 const SearchNotesCriteria: React.FC<SearchNotesCriteriaProps> = () => {
+  const theme = useTheme();
+
   return (
     <ContentView
-      pageType="search"
       content={<Typography>criteria</Typography>}
       footerMenu={<></>}
+      footerColor={theme.palette.secondary.light}
     />
   );
 };

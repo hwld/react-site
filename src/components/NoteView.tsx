@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import NoteList from 'components/NoteList';
 import { useNotes } from 'services/storage/notes';
 import { useCurrentUserId } from 'services/auth';
+import { useTheme } from '@material-ui/core';
 import { NotesSortOrder } from './NotesSortConditionField';
 import ContentView from './ContentView';
 import NoteViewMenu from './NoteViewMenu';
@@ -12,6 +13,7 @@ interface NoteViewProps {
 }
 
 const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
+  const theme = useTheme();
   const { userId } = useCurrentUserId();
   const { notes } = useNotes(userId);
   const [notesSortOrder, setNotesSortOrder] = useState<NotesSortOrder>({
@@ -30,7 +32,6 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
 
   return (
     <ContentView
-      pageType="main"
       content={
         <NoteList
           notes={notes}
@@ -47,6 +48,7 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
           sortNotes={sortNotes}
         />
       }
+      footerColor={theme.palette.secondary.main}
     />
   );
 };
