@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Switch, Redirect } from 'react-router-dom';
-import AuthRequiredRoute from 'components/AuthRequiredRoute';
+import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
+
 import Home from 'components/Home';
 import SearchNotes from 'components/SearchNotesHome';
 import { useCurrentUserId } from 'services/auth';
@@ -9,9 +9,11 @@ import { useGenres } from 'services/storage/genres';
 import { useNotes } from 'services/storage/notes';
 import GenresContext from 'Context/GenresContext';
 import NotesContext from 'Context/NotesContext';
+import Login from 'components/Login';
+import Loading from 'components/Loading';
 
 const App: React.FC = () => {
-  const { userId } = useCurrentUserId();
+  const { userId, loading } = useCurrentUserId();
   const { genres, addGenre, removeGenre, updateGenre } = useGenres(userId);
   const { notes, addNote, removeNote, updateNote, moveNote } = useNotes(userId);
 
@@ -24,13 +26,15 @@ const App: React.FC = () => {
       >
         <BrowserRouter>
           <Switch>
-            <AuthRequiredRoute path="/home">
+            {loading && <Loading />}
+            {userId === '' && <Login />}
+            <Route path="/home">
               <Home />
-            </AuthRequiredRoute>
+            </Route>
 
-            <AuthRequiredRoute path="/search">
+            <Route path="/search">
               <SearchNotes />
-            </AuthRequiredRoute>
+            </Route>
 
             <Redirect to="/home" />
           </Switch>
