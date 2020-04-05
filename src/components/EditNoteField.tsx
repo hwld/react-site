@@ -9,6 +9,8 @@ const FormField = styled.div`
 
 interface EditNoteFieldProps {
   note: NoteField;
+  authorNameList?: string[];
+  bookNameList?: string[];
   onChange: (fieldName: keyof NoteField, value: string) => void;
 }
 

@@ -8,6 +8,8 @@ interface LoadingProps {
 
 const Background = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   background-color: ${props => props.theme.palette.primary.dark};
 `;
@@ -15,7 +17,7 @@ const Background = styled.div`
 const Loading: React.FC<LoadingProps> = () => {
   return (
     <Background>
-      <CircularProgress color="secondary" />
+      <CircularProgress size="10rem" color="secondary" />
     </Background>
   );
 };
