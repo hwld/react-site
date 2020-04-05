@@ -34,7 +34,6 @@ const SearchNotesAppBar: React.FC<SearchNotesAppBarProps> = ({
 
   const onLogout = () => {
     logout();
-    history.replace('/home');
   };
 
   const backHome = () => {

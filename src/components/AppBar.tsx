@@ -31,7 +31,6 @@ const AppBar: React.FC<AppBarProps> = ({ onMenuClick }) => {
 
   const onLogout = () => {
     logout();
-    history.replace('/home');
   };
 
   const goSearchMode = () => {
