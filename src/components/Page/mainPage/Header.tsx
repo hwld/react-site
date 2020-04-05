@@ -13,11 +13,11 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { logout } from 'services/auth';
 
-interface AppBarProps {
+interface HeaderProps {
   onMenuClick: () => void;
 }
 
-const StyledAppBar = styled(MuiAppBar)`
+const StyledHeader = styled(MuiAppBar)`
   z-index: ${props => props.theme.zIndex.drawer + 1};
 `;
 
@@ -26,7 +26,7 @@ const AppTitle = styled(Typography)`
   flex-grow: 1;
 `;
 
-const AppBar: React.FC<AppBarProps> = ({ onMenuClick }) => {
+const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const history = useHistory();
 
   const onLogout = () => {
@@ -38,7 +38,7 @@ const AppBar: React.FC<AppBarProps> = ({ onMenuClick }) => {
   };
 
   return (
-    <StyledAppBar position="absolute">
+    <StyledHeader position="absolute">
       <Toolbar>
         <IconButton edge="start" onClick={onMenuClick}>
           <MenuIcon />
@@ -55,8 +55,8 @@ const AppBar: React.FC<AppBarProps> = ({ onMenuClick }) => {
           </IconButton>
         </Tooltip>
       </Toolbar>
-    </StyledAppBar>
+    </StyledHeader>
   );
 };
 
-export default AppBar;
+export default Header;

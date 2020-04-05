@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import NoteView from 'components/NoteView';
-import AppBar from 'components/AppBar';
+import NoteView from 'components/Page/mainPage/NoteView';
+import AppBar from 'components/Page/mainPage/Header';
 import GenreView from './GenreView';
 
 const Background = styled.div`

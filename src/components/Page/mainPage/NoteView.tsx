@@ -2,8 +2,8 @@ import React, { useState, useCallback, useContext } from 'react';
 import NoteList from 'components/NoteList';
 import { useTheme } from '@material-ui/core';
 import NotesContext from 'context/NotesContext';
-import { NotesSortOrder } from './NotesSortConditionField';
-import ContentColumn from './ContentColumn';
+import { NotesSortOrder } from '../../NotesSortConditionField';
+import ContentColumn from '../../ContentColumn';
 import NoteViewMenu from './NoteViewMenu';
 
 interface NoteViewProps {

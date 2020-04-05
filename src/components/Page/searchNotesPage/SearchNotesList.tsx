@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, useTheme } from '@material-ui/core';
-import ContentColumn from './ContentColumn';
+import ContentColumn from '../../ContentColumn';
 
 interface SearchNotesListProps {
   hoge?: string;
