@@ -23,10 +23,17 @@ export type Note = NoteField & NoteDate & NoteInfo;
 
 const useNotes = (uid: string) => {
   const notesRef = useMemo(() => {
+    if (uid !== '') {
+      return db
+        .collection('users')
+        .doc(`${uid}`)
+        .collection('notes');
+    }
+
     return db
       .collection('users')
-      .doc(`${uid}`)
-      .collection('notes');
+      .doc()
+      .collection('damy');
   }, [uid]);
 
   const [notesCollection] = useCollection(notesRef);

@@ -22,17 +22,31 @@ export type Genre = GenreField & GenreDate & GenreInfo;
 
 const useGenres = (uid: string) => {
   const genresRef = useMemo(() => {
+    if (uid !== '') {
+      return db
+        .collection('users')
+        .doc(`${uid}`)
+        .collection('genres');
+    }
+
     return db
       .collection('users')
-      .doc(`${uid}`)
-      .collection('genres');
+      .doc()
+      .collection('damy');
   }, [uid]);
 
   const notesRef = useMemo(() => {
+    if (uid !== '') {
+      return db
+        .collection('users')
+        .doc(`${uid}`)
+        .collection('notes');
+    }
+
     return db
       .collection('users')
-      .doc(`${uid}`)
-      .collection('notes');
+      .doc()
+      .collection('damy');
   }, [uid]);
 
   const [genresCollection] = useCollection(genresRef);
