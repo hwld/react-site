@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import SearchModeAppBar from './SearchNotesAppBar';
-import SearchNotesCriteria from './SearchNotesCriteria';
-import SearchNotesList from './SearchNotesList';
+import Header from './Header';
+import SearchCriteria from './SearchCriteria';
+import ResultList from './ResultList';
 
 const Background = styled.div`
   display: flex;
@@ -20,11 +20,11 @@ const Drawer = styled.div<{ width: string; isOpen: boolean }>`
   overflow: auto;
 `;
 
-const StyledSearchNotesCriteria = styled(SearchNotesCriteria)`
+const LeftSearchCriteria = styled(SearchCriteria)`
   flex: 1;
 `;
 
-const StyledSearchNotesList = styled(SearchNotesList)`
+const RightSearchNotesList = styled(ResultList)`
   flex: 1;
 `;
 
@@ -33,11 +33,11 @@ const SearchNotesHome: React.FC<{}> = () => {
 
   return (
     <Background>
-      <SearchModeAppBar onMenuClick={() => setIsOpen(state => !state)} />
+      <Header onMenuClick={() => setIsOpen(state => !state)} />
       <Drawer width="500" isOpen={isOpen}>
-        <StyledSearchNotesCriteria />
+        <LeftSearchCriteria />
       </Drawer>
-      <StyledSearchNotesList />
+      <RightSearchNotesList />
     </Background>
   );
 };

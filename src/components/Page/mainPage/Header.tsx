@@ -17,7 +17,7 @@ interface HeaderProps {
   onMenuClick: () => void;
 }
 
-const StyledHeader = styled(MuiAppBar)`
+const TopLayerHeader = styled(MuiAppBar)`
   z-index: ${props => props.theme.zIndex.drawer + 1};
 `;
 
@@ -38,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   };
 
   return (
-    <StyledHeader position="absolute">
+    <TopLayerHeader position="absolute">
       <Toolbar>
         <IconButton edge="start" onClick={onMenuClick}>
           <MenuIcon />
@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           </IconButton>
         </Tooltip>
       </Toolbar>
-    </StyledHeader>
+    </TopLayerHeader>
   );
 };
 

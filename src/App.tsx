@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
 
 import Home from 'components/Page/mainPage/Home';
-import SearchNotes from 'components/Page/searchNotesPage/SearchNotesHome';
+import SearchNotes from 'components/Page/searchNotesPage/Home';
 import { useCurrentUserId } from 'services/auth';
 import { useGenres } from 'services/storage/genres';
 import { useNotes } from 'services/storage/notes';

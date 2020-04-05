@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import NoteView from 'components/Page/mainPage/NoteView';
-import AppBar from 'components/Page/mainPage/Header';
+import Header from 'components/Page/mainPage/Header';
 import GenreView from './GenreView';
 
 const Background = styled.div`
@@ -20,11 +20,11 @@ const Drawer = styled.div<{ width: string; isOpen: boolean }>`
   overflow: auto;
 `;
 
-const StyledGenreView = styled(GenreView)`
+const LeftGenreView = styled(GenreView)`
   flex: 1;
 `;
 
-const StyledNoteView = styled(NoteView)`
+const RightNoteView = styled(NoteView)`
   flex: 1;
 `;
 
@@ -34,16 +34,16 @@ const Home: React.FC = () => {
 
   return (
     <Background>
-      <AppBar onMenuClick={() => setIsOpen(state => !state)} />
+      <Header onMenuClick={() => setIsOpen(state => !state)} />
       <Drawer width="500" isOpen={isOpen}>
-        <StyledGenreView
+        <LeftGenreView
           onGenreSelect={(genreId: string) => {
             setSelectedGenreId(genreId);
           }}
           selectedGenreId={selectedGenreId}
         />
       </Drawer>
-      <StyledNoteView selectedGenreId={selectedGenreId} />
+      <RightNoteView selectedGenreId={selectedGenreId} />
     </Background>
   );
 };

@@ -13,11 +13,11 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { logout } from 'services/auth';
 
-interface SearchNotesAppBarProps {
+interface HeaderProps {
   onMenuClick: () => void;
 }
 
-const StyledAppBar = styled(MuiAppBar)`
+const TopLayerHeader = styled(MuiAppBar)`
   background-color: ${props => props.theme.palette.secondary.light};
   z-index: ${props => props.theme.zIndex.drawer + 1};
 `;
@@ -27,9 +27,7 @@ const AppTitle = styled(Typography)`
   flex-grow: 1;
 `;
 
-const SearchNotesAppBar: React.FC<SearchNotesAppBarProps> = ({
-  onMenuClick,
-}) => {
+const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const history = useHistory();
 
   const onLogout = () => {
@@ -41,7 +39,7 @@ const SearchNotesAppBar: React.FC<SearchNotesAppBarProps> = ({
   };
 
   return (
-    <StyledAppBar position="absolute">
+    <TopLayerHeader position="absolute">
       <Toolbar>
         <IconButton edge="start" onClick={onMenuClick}>
           <MenuIcon />
@@ -58,8 +56,8 @@ const SearchNotesAppBar: React.FC<SearchNotesAppBarProps> = ({
           </IconButton>
         </Tooltip>
       </Toolbar>
-    </StyledAppBar>
+    </TopLayerHeader>
   );
 };
 
-export default SearchNotesAppBar;
+export default Header;
