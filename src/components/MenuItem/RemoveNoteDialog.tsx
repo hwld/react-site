@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
 import DeleteNoteIcon from '@material-ui/icons/Delete';
-import { useNotes } from 'services/storage/notes';
-import { useCurrentUserId } from 'services/auth';
+import NotesContext from 'context/NotesContext';
 import MenuItemDialog from './MenuItemDialog';
 
 interface RemoveNoteDialogProps {
@@ -14,8 +13,7 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
   selectedNoteIds,
   size,
 }) => {
-  const { userId } = useCurrentUserId();
-  const { removeNote } = useNotes(userId);
+  const { removeNote } = useContext(NotesContext);
 
   const remove = () => {
     selectedNoteIds.forEach(id => removeNote(id));

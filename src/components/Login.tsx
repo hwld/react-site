@@ -54,7 +54,7 @@ const Login: React.FC = () => {
             color="secondary"
             variant="contained"
           >
-            <Typography color="textPrimary">ログイン</Typography>
+            <Typography color="textSecondary">ログイン</Typography>
           </LoginButton>
         </LoginForm>
       )}

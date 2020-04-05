@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import DeleteGenreIcon from '@material-ui/icons/Delete';
-import { useCurrentUserId } from 'services/auth';
-import { useGenres } from 'services/storage/genres';
+import GenresContext from 'context/GenresContext';
 import MenuItemDialog from './MenuItemDialog';
 
 interface RemoveGenreDialogProps {
@@ -14,8 +13,7 @@ const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
   selectedGenreId,
   size,
 }) => {
-  const { userId } = useCurrentUserId();
-  const { removeGenre } = useGenres(userId);
+  const { removeGenre } = useContext(GenresContext);
 
   const remove = () => {
     removeGenre(selectedGenreId);

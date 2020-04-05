@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   DialogTitle,
   DialogContent,
@@ -6,11 +6,10 @@ import {
   DialogContentText,
 } from '@material-ui/core';
 import MoveNoteIcon from '@material-ui/icons/Forward';
-import { useCurrentUserId } from 'services/auth';
-import { useGenres } from 'services/storage/genres';
 import GenreTreeList from 'components/GenreTreeList';
 import styled from 'styled-components';
-import { useNotes } from 'services/storage/notes';
+import NotesContext from 'context/NotesContext';
+import GenresContext from 'context/GenresContext';
 import MenuItemDialog from './MenuItemDialog';
 
 interface MoveNotesDialogProps {
@@ -27,11 +26,10 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
   selectedNotesIds,
   size,
 }) => {
-  const { userId } = useCurrentUserId();
-  const { genres } = useGenres(userId);
+  const { genres } = useContext(GenresContext);
   const [destGenreId, setDestGenreId] = useState('');
 
-  const { moveNote } = useNotes(userId);
+  const { moveNote } = useContext(NotesContext);
 
   const moveNotes = () => {
     selectedNotesIds.forEach(id => moveNote(id, destGenreId));

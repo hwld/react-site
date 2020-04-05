@@ -1,8 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import NoteList from 'components/NoteList';
-import { useNotes } from 'services/storage/notes';
-import { useCurrentUserId } from 'services/auth';
 import { useTheme } from '@material-ui/core';
+import NotesContext from 'context/NotesContext';
 import { NotesSortOrder } from './NotesSortConditionField';
 import ContentColumn from './ContentColumn';
 import NoteViewMenu from './NoteViewMenu';
@@ -14,8 +13,7 @@ interface NoteViewProps {
 
 const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
   const theme = useTheme();
-  const { userId } = useCurrentUserId();
-  const { notes } = useNotes(userId);
+  const { notes } = useContext(NotesContext);
   const [notesSortOrder, setNotesSortOrder] = useState<NotesSortOrder>({
     targetField: 'creationDate',
     order: 'asc',

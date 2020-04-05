@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import { Genre, useGenres } from 'services/storage/genres';
-import { useCurrentUserId } from 'services/auth';
+import { Genre } from 'services/storage/genres';
+import GenresContext from 'context/GenresContext';
 import MenuItemDialog from './MenuItemDialog';
 import EditGenreField from '../EditGenreField';
 
@@ -16,8 +16,7 @@ const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
   size,
 }) => {
   const [genre, setGenre] = useState(defaultGenre);
-  const { userId } = useCurrentUserId();
-  const { updateGenre } = useGenres(userId);
+  const { updateGenre } = useContext(GenresContext);
 
   const update = () => {
     updateGenre(genre);

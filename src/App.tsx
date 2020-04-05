@@ -7,8 +7,8 @@ import SearchNotes from 'components/SearchNotesHome';
 import { useCurrentUserId } from 'services/auth';
 import { useGenres } from 'services/storage/genres';
 import { useNotes } from 'services/storage/notes';
-import GenresContext from 'Context/GenresContext';
-import NotesContext from 'Context/NotesContext';
+import GenresContext from 'context/GenresContext';
+import NotesContext from 'context/NotesContext';
 import Login from 'components/Login';
 import Loading from 'components/Loading';
 

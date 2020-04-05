@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import { Note, NoteField, useNotes } from 'services/storage/notes';
-import { useCurrentUserId } from 'services/auth';
+import { Note, NoteField } from 'services/storage/notes';
+import NotesContext from 'context/NotesContext';
 import MenuItemDialog from './MenuItemDialog';
 import EditNoteField from '../EditNoteField';
 
@@ -16,8 +16,7 @@ const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
   size,
 }) => {
   const [note, setNote] = useState(defaultNote);
-  const { userId } = useCurrentUserId();
-  const { updateNote } = useNotes(userId);
+  const { updateNote } = useContext(NotesContext);
 
   const update = () => {
     updateNote(note.id, note);

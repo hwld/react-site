@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import GenreTreeList from 'components/GenreTreeList';
-import { useGenres } from 'services/storage/genres';
-import { useCurrentUserId } from 'services/auth';
 import { useTheme } from '@material-ui/core/styles';
+import GenresContext from 'context/GenresContext';
 import ContentColumn from './ContentColumn';
 import GenreViewMenu from './GenreViewMenu';
 
@@ -17,8 +16,7 @@ const GenreView: React.FC<GenreViewProps> = ({
   onGenreSelect,
   selectedGenreId,
 }) => {
-  const { userId } = useCurrentUserId();
-  const { genres } = useGenres(userId);
+  const { genres } = useContext(GenresContext);
   const theme = useTheme();
 
   return (
