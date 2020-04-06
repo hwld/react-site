@@ -6,7 +6,7 @@ import Drawer from 'components/util/Drawer/Drawer';
 import GenreView from './GenreView';
 
 const Background = styled.div`
-  display: 'flex';
+  display: flex;
   height: 100vh;
   background-color: ${props => props.theme.palette.primary.dark};
 `;
