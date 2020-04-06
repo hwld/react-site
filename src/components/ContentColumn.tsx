@@ -17,11 +17,10 @@ const ViewRoot = styled.div`
 
 const Content = styled.div`
   height: 85%;
+  overflow: auto;
 `;
 
-const FooterMenu = styled(Toolbar)<{
-  color: ContentColumnProps['footerColor'];
-}>`
+const FooterMenu = styled(Toolbar)`
   display: flex;
   justify-content: center;
   flex: 1;

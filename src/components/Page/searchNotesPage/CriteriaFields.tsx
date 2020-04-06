@@ -1,11 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Typography, TextField, Button } from '@material-ui/core';
 import AutoComplete from '@material-ui/lab/Autocomplete';
 import styled from 'styled-components';
 import NotesContext from 'context/NotesContext';
+import GenresContext from 'context/GenresContext';
+import { SearchNotesCriteria } from 'services/storage/notes';
+import SelectGenreButton from './SelectGenreButton';
 
 interface CriteriaFieldsprops {
-  search: () => void;
+  search: (criteria: SearchNotesCriteria) => void;
 }
 
 const Root = styled.div`
@@ -37,8 +40,54 @@ const CriteriaAction = styled.div`
 `;
 
 const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
+  const [targetGenreId, setTargetGenreId] = useState('');
+  const [targetGenreName, setTargetGenreName] = useState('');
+
+  const [targetTitle, setTargetTitle] = useState('');
+  const changeTargetTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTargetTitle(event.target.value);
+  };
+
+  const [targetText, setTargetText] = useState('');
+  const changeTargetText = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTargetText(event.target.value);
+  };
+
+  const [targetAuthorName, setTargetAuthorName] = useState('');
+  const selectTargetAuthorName = (event: object, value: string | null) => {
+    if (value) setTargetAuthorName(value);
+  };
+  const changeTargetAuthorName = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setTargetAuthorName(event.target.value);
+  };
+
+  const [targetBookName, setTargetBookName] = useState('');
+  const selectTargetBookName = (event: object, value: string | null) => {
+    if (value) setTargetBookName(value);
+  };
+  const changeTargetBookName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTargetBookName(event.target.value);
+  };
+
+  const { genres } = useContext(GenresContext);
+
+  const selectGenreId = (id: string) => {
+    setTargetGenreId(id);
+    let genreName = genres.find(genre => genre.id === id)?.genreName;
+    if (!genreName) genreName = '';
+    setTargetGenreName(genreName);
+  };
+
   const onSearch = () => {
-    search();
+    search({
+      genreId: targetGenreId,
+      title: targetTitle,
+      text: targetText,
+      authorName: targetAuthorName,
+      bookName: targetBookName,
+    });
   };
 
   const { notes } = useContext(NotesContext);
@@ -54,21 +103,18 @@ const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
       <CriteriaContent>
         <CriteriaTextField
           inputProps={{ readOnly: true }}
-          onClick={() => {
-            window.console.log('clidk');
-          }}
-          label="ジャンル"
-          value="ジャンル-1-1"
+          label="ジャンル名"
+          value={targetGenreName}
           color="secondary"
           variant="filled"
         />
-        <Button variant="contained" color="secondary">
-          選択
-        </Button>
+        <SelectGenreButton selectGenreId={selectGenreId} />
       </CriteriaContent>
       <CriteriaContent>
         <CriteriaTextField
           label="タイトル"
+          value={targetTitle}
+          onChange={changeTargetTitle}
           color="secondary"
           variant="filled"
           fullWidth
@@ -77,6 +123,8 @@ const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
       <CriteriaContent>
         <CriteriaTextField
           label="メモ"
+          value={targetText}
+          onChange={changeTargetText}
           color="secondary"
           variant="filled"
           fullWidth
@@ -88,10 +136,14 @@ const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
           style={{ width: '100%' }}
           freeSolo
           options={authorNameList}
+          onChange={selectTargetAuthorName}
+          disableClearable
           renderInput={params => (
             <CriteriaTextField
               {...params}
               label="著者名"
+              value={targetAuthorName}
+              onChange={changeTargetAuthorName}
               color="secondary"
               variant="filled"
               fullWidth
@@ -105,10 +157,14 @@ const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
           style={{ width: '100%' }}
           freeSolo
           options={bookNameList}
+          onChange={selectTargetBookName}
+          disableClearable
           renderInput={params => (
             <CriteriaTextField
               {...params}
               label="書籍名"
+              value={targetBookName}
+              onChange={changeTargetBookName}
               color="secondary"
               variant="filled"
               fullWidth

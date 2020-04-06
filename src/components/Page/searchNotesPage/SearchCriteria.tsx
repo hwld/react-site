@@ -1,19 +1,28 @@
 import React from 'react';
-import { Typography, useTheme } from '@material-ui/core';
+import { useTheme } from '@material-ui/core';
+import { SearchNotesCriteria } from 'services/storage/notes';
 import ContentColumn from '../../ContentColumn';
+import CriteriaFields from './CriteriaFields';
 
 interface SearchNotesCriteriaProps {
-  hoge?: string;
+  setCriteria: (criteria: SearchNotesCriteria) => void;
   className?: string;
 }
 
-const SearchCriteria: React.FC<SearchNotesCriteriaProps> = ({ className }) => {
+const SearchCriteria: React.FC<SearchNotesCriteriaProps> = ({
+  setCriteria,
+  className,
+}) => {
   const theme = useTheme();
+
+  const search = (criteria: SearchNotesCriteria) => {
+    setCriteria(criteria);
+  };
 
   return (
     <ContentColumn
       className={className}
-      content={<Typography>criteria</Typography>}
+      content={<CriteriaFields search={search} />}
       footerMenu={<></>}
       footerColor={theme.palette.secondary.light}
     />

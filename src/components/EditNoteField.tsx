@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import { NoteField } from 'services/storage/notes';
-import AutoComplete from '@material-ui/lab/Autocomplete';
+import AutoComplete, { RenderInputParams } from '@material-ui/lab/Autocomplete';
 import NotesContext from 'context/NotesContext';
 
 const FormField = styled.div`
@@ -35,8 +35,14 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
   const changeText = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange('text', event.target.value);
   };
+  const changeSelectBookName = (event: object, value: string | null) => {
+    if (value) onChange('bookName', value);
+  };
   const changeBookName = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange('bookName', event.target.value);
+  };
+  const changeSelectAuthorName = (event: object, value: string | null) => {
+    if (value) onChange('authorName', value);
   };
   const changeAuthorName = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange('authorName', event.target.value);
@@ -80,6 +86,9 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
         <AutoComplete
           freeSolo
           options={authorNameList}
+          defaultValue={authorName}
+          onChange={changeSelectAuthorName}
+          disableClearable
           renderInput={params => (
             <FormTextField
               {...params}
@@ -97,6 +106,9 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
         <AutoComplete
           freeSolo
           options={bookNameList}
+          defaultValue={bookName}
+          onChange={changeSelectBookName}
+          disableClearable
           renderInput={params => (
             <FormTextField
               {...params}

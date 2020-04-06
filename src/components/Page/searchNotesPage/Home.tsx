@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { SearchNotesCriteria } from 'services/storage/notes';
 import Header from './Header';
 import SearchCriteria from './SearchCriteria';
 import ResultList from './ResultList';
@@ -24,20 +25,30 @@ const LeftSearchCriteria = styled(SearchCriteria)`
   flex: 1;
 `;
 
-const RightSearchNotesList = styled(ResultList)`
+const RightResultList = styled(ResultList)`
   flex: 1;
 `;
 
 const SearchNotesHome: React.FC<{}> = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const [searchCriteria, setSearchCriteria] = useState<SearchNotesCriteria>({
+    genreId: '',
+    title: '',
+    text: '',
+    authorName: '',
+    bookName: '',
+  });
+  const setCriterial = (criteria: SearchNotesCriteria) => {
+    setSearchCriteria(criteria);
+  };
 
   return (
     <Background>
       <Header onMenuClick={() => setIsOpen(state => !state)} />
       <Drawer width="500" isOpen={isOpen}>
-        <LeftSearchCriteria />
+        <LeftSearchCriteria setCriteria={setCriterial} />
       </Drawer>
-      <RightSearchNotesList />
+      <RightResultList searchCriteria={searchCriteria} />
     </Background>
   );
 };

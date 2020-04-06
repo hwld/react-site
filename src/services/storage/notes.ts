@@ -21,6 +21,14 @@ export interface NoteInfo {
 
 export type Note = NoteField & NoteDate & NoteInfo;
 
+export interface SearchNotesCriteria {
+  genreId: string;
+  title: string;
+  text: string;
+  authorName: string;
+  bookName: string;
+}
+
 const useNotes = (uid: string) => {
   const notesRef = useMemo(() => {
     if (uid !== '') {
