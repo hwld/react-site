@@ -2,23 +2,16 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import NoteView from 'components/Page/mainPage/NoteView';
 import Header from 'components/Page/mainPage/Header';
+import Drawer from 'components/util/Drawer/Drawer';
 import GenreView from './GenreView';
 
 const Background = styled.div`
-  display: flex;
+  display: ${props => (props.theme.breakpoints.down('xs') ? 'flex' : 'block')};
   height: 100vh;
   background-color: ${props => props.theme.palette.primary.dark};
 `;
 
-const LeftDrawer = styled.div<{ isOpen: boolean }>`
-  background-color: ${props => props.theme.palette.primary.main};
-  flex-basis: 30vw;
-  margin-left: ${props => (props.isOpen ? '0px' : '-30vw')};
-  transition-duration: 0.3s;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-`;
+const LeftDrawer = styled(Drawer)``;
 
 const RightNoteView = styled(NoteView)`
   flex: 1;
@@ -31,7 +24,12 @@ const Home: React.FC = () => {
   return (
     <Background>
       <Header onMenuClick={() => setIsOpen(state => !state)} />
-      <LeftDrawer isOpen={isOpen}>
+      <LeftDrawer
+        width="30"
+        mobileWidth="80"
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+      >
         <GenreView
           onGenreSelect={(genreId: string) => {
             setSelectedGenreId(genreId);
