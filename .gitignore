@@ -21,6 +21,10 @@
 
 devNote
 
+.firebaserc
+firebase.json
+.firebase
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
