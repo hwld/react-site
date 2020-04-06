@@ -20,7 +20,11 @@ const LoginForm = styled.div`
   align-items: center;
   background-color: ${props => props.theme.palette.primary.main};
   height: 80%;
-  width: 30%;
+  width: '30%';
+
+  ${props => props.theme.breakpoints.down('xs')} {
+    width: '80%';
+  }
 `;
 
 const LoginIcon = styled(LockIcon)`

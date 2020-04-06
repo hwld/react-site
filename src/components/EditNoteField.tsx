@@ -1,8 +1,8 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext } from 'react';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import { NoteField } from 'services/storage/notes';
-import AutoComplete, { RenderInputParams } from '@material-ui/lab/Autocomplete';
+import AutoComplete from '@material-ui/lab/Autocomplete';
 import NotesContext from 'context/NotesContext';
 
 const FormField = styled.div`

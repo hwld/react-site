@@ -7,7 +7,7 @@ import SearchCriteria from './SearchCriteria';
 import ResultList from './ResultList';
 
 const Background = styled.div`
-  display: ${props => (props.theme.breakpoints.down('xs') ? 'flex' : 'block')};
+  display: 'flex';
   height: 100vh;
   background-color: ${props => props.theme.palette.primary.dark};
 `;
