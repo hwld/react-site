@@ -1,11 +1,19 @@
 import React from 'react';
-import { Typography, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { GenreField } from 'services/storage/genres';
+import styled from 'styled-components';
 
 interface EditGenreFieldProps {
   genre: GenreField;
   onChange: (genreName: string) => void;
 }
+
+const StyledTextField = styled(TextField)`
+  & label.Mui-focused,
+  .MuiFormLabel-root {
+    color: ${props => props.theme.palette.secondary.main};
+  }
+`;
 
 const EditGenreField: React.FC<EditGenreFieldProps> = ({ genre, onChange }) => {
   const { genreName } = genre;
@@ -15,18 +23,16 @@ const EditGenreField: React.FC<EditGenreFieldProps> = ({ genre, onChange }) => {
   };
 
   return (
-    <>
-      <Typography>ジャンル名</Typography>
-      <TextField
-        error={genreName.length === 0}
-        helperText="※ジャンル名は必須項目です"
-        value={genreName}
-        onChange={changeGenreName}
-        color="secondary"
-        variant="filled"
-        fullWidth
-      />
-    </>
+    <StyledTextField
+      label="ジャンル名"
+      error={genreName.length === 0}
+      helperText="※ジャンル名は必須項目です"
+      value={genreName}
+      onChange={changeGenreName}
+      color="secondary"
+      variant="filled"
+      fullWidth
+    />
   );
 };
 

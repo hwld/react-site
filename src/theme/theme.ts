@@ -2,6 +2,7 @@ import { createMuiTheme } from '@material-ui/core';
 
 const theme = createMuiTheme({
   palette: {
+    type: 'dark',
     primary: {
       main: '#4d4d4d',
       dark: '#353535',
@@ -18,7 +19,8 @@ const theme = createMuiTheme({
     },
     action: {
       selected: '#757575',
-      hover: '#424242',
+      hover: 'rgba(0,0,0,0.26)',
+      disabled: 'rgba(0,0,0,0.26)',
     },
   },
   props: {
@@ -30,6 +32,9 @@ const theme = createMuiTheme({
     },
     MuiToolbar: {
       color: 'secondary',
+    },
+    MuiIconButton: {
+      color: 'primary',
     },
   },
 });

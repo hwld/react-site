@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { ListItem as MuiListItem } from '@material-ui/core';
+import { ListItem as MuiListItem, Divider } from '@material-ui/core';
 import ListContext from './ListContext';
 
 interface ListItemProps {
@@ -32,6 +32,7 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
       >
         {children}
       </MuiListItem>
+      <Divider />
     </>
   );
 };

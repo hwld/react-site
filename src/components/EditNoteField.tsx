@@ -1,10 +1,17 @@
 import React from 'react';
-import { Typography, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import { NoteField } from 'services/storage/notes';
 
 const FormField = styled.div`
   margin-top: 20px;
+`;
+
+const FormTextField = styled(TextField)`
+  & label.Mui-focused,
+  .MuiFormLabel-root {
+    color: ${props => props.theme.palette.secondary.main};
+  }
 `;
 
 interface EditNoteFieldProps {
@@ -33,8 +40,8 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({ note, onChange }) => {
   return (
     <>
       <FormField>
-        <Typography>タイトル</Typography>
-        <TextField
+        <FormTextField
+          label="タイトル"
           value={title}
           onChange={changeTitle}
           color="secondary"
@@ -43,8 +50,8 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({ note, onChange }) => {
         />
       </FormField>
       <FormField>
-        <Typography>メモ</Typography>
-        <TextField
+        <FormTextField
+          label="メモ"
           error={text.length === 0}
           helperText="※メモは必須項目です."
           value={text}
@@ -58,8 +65,8 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({ note, onChange }) => {
         />
       </FormField>
       <FormField>
-        <Typography>著者名</Typography>
-        <TextField
+        <FormTextField
+          label="著者名"
           value={authorName}
           onChange={changeAuthorName}
           color="secondary"
@@ -68,8 +75,8 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({ note, onChange }) => {
         />
       </FormField>
       <FormField>
-        <Typography>書籍名</Typography>
-        <TextField
+        <FormTextField
+          label="書籍名"
           value={bookName}
           onChange={changeBookName}
           color="secondary"
