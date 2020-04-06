@@ -10,7 +10,6 @@ interface NoteListProps {
   notesSortOrder?: NotesSortOrder;
   onNotesSelect?: (selectedIds: string[]) => void;
   selectedNoteIds?: string[];
-  selectedGenreId: string;
   className?: string;
 }
 
@@ -23,7 +22,6 @@ const NoteList: React.FC<NoteListProps> = ({
   notes,
   notesSortOrder = { targetField: 'creationDate', order: 'asc' },
   onNotesSelect,
-  selectedGenreId,
   className,
 }) => {
   const isDate = useCallback((arg: string | Date): arg is Date => {
@@ -72,10 +70,9 @@ const NoteList: React.FC<NoteListProps> = ({
 
   const renderListItem = useCallback(() => {
     return notes
-      .filter(note => note.genreId === selectedGenreId)
       .sort(notesCompareFunction(notesSortOrder))
       .map(note => <NoteListItem note={note} key={note.id} />);
-  }, [notes, notesCompareFunction, notesSortOrder, selectedGenreId]);
+  }, [notes, notesCompareFunction, notesSortOrder]);
 
   return (
     <StyledList className={className} onSelect={onNotesSelect}>
