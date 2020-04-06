@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import { NoteField } from 'services/storage/notes';
+import AutoComplete from '@material-ui/lab/Autocomplete';
+import NotesContext from 'context/NotesContext';
 
 const FormField = styled.div`
   margin-top: 20px;
@@ -15,14 +17,17 @@ const FormTextField = styled(TextField)`
 `;
 
 interface EditNoteFieldProps {
-  note: NoteField;
+  defaultNote: NoteField;
   authorNameList?: string[];
   bookNameList?: string[];
   onChange: (fieldName: keyof NoteField, value: string) => void;
 }
 
-const EditNoteField: React.FC<EditNoteFieldProps> = ({ note, onChange }) => {
-  const { title, text, bookName, authorName } = note;
+const EditNoteField: React.FC<EditNoteFieldProps> = ({
+  defaultNote,
+  onChange,
+}) => {
+  const { title, text, bookName, authorName } = defaultNote;
 
   const changeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange('title', event.target.value);
@@ -36,6 +41,13 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({ note, onChange }) => {
   const changeAuthorName = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange('authorName', event.target.value);
   };
+
+  const { notes } = useContext(NotesContext);
+  // 重複のないリストを作成
+  const authorNameList = Array.from(
+    new Set(notes.map(note => note.authorName)),
+  );
+  const bookNameList = Array.from(new Set(notes.map(note => note.bookName)));
 
   return (
     <>
@@ -65,23 +77,37 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({ note, onChange }) => {
         />
       </FormField>
       <FormField>
-        <FormTextField
-          label="著者名"
-          value={authorName}
-          onChange={changeAuthorName}
-          color="secondary"
-          variant="filled"
-          fullWidth
+        <AutoComplete
+          freeSolo
+          options={authorNameList}
+          renderInput={params => (
+            <FormTextField
+              {...params}
+              label="著者名"
+              value={authorName}
+              onChange={changeAuthorName}
+              color="secondary"
+              variant="filled"
+              fullWidth
+            />
+          )}
         />
       </FormField>
       <FormField>
-        <FormTextField
-          label="書籍名"
-          value={bookName}
-          onChange={changeBookName}
-          color="secondary"
-          variant="filled"
-          fullWidth
+        <AutoComplete
+          freeSolo
+          options={bookNameList}
+          renderInput={params => (
+            <FormTextField
+              {...params}
+              label="書籍名"
+              value={bookName}
+              onChange={changeBookName}
+              color="secondary"
+              variant="filled"
+              fullWidth
+            />
+          )}
         />
       </FormField>
     </>

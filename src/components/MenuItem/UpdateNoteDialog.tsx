@@ -41,7 +41,7 @@ const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
     >
       <DialogTitle>メモの編集</DialogTitle>
       <DialogContent>
-        <EditNoteField note={note} onChange={changeNoteField} />
+        <EditNoteField defaultNote={note} onChange={changeNoteField} />
       </DialogContent>
     </MenuItemDialog>
   );
