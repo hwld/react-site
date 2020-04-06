@@ -11,18 +11,15 @@ const Background = styled.div`
   background-color: ${props => props.theme.palette.primary.dark};
 `;
 
-const Drawer = styled.div<{ width: string; isOpen: boolean }>`
+const LeftDrawer = styled.div<{ isOpen: boolean }>`
   background-color: ${props => props.theme.palette.primary.main};
-  display: flex;
-  flex-direction: column;
-  flex-basis: ${props => `${props.width}px`};
-  margin-left: ${props => (props.isOpen ? '0px' : `-${props.width}px`)};
+  flex-basis: 30vw;
+  margin-left: ${props => (props.isOpen ? '0px' : '-30vw')};
   transition-duration: 0.3s;
   overflow: auto;
-`;
-
-const LeftSearchCriteria = styled(SearchCriteria)`
-  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 `;
 
 const RightResultList = styled(ResultList)`
@@ -45,9 +42,9 @@ const SearchNotesHome: React.FC<{}> = () => {
   return (
     <Background>
       <Header onMenuClick={() => setIsOpen(state => !state)} />
-      <Drawer width="500" isOpen={isOpen}>
-        <LeftSearchCriteria setCriteria={setCriterial} />
-      </Drawer>
+      <LeftDrawer isOpen={isOpen}>
+        <SearchCriteria setCriteria={setCriterial} />
+      </LeftDrawer>
       <RightResultList searchCriteria={searchCriteria} />
     </Background>
   );

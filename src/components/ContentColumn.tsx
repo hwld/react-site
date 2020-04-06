@@ -15,6 +15,10 @@ const ViewRoot = styled.div`
   flex-direction: column;
 `;
 
+const Header = styled(Toolbar)`
+  min-height: 64px;
+`;
+
 const Content = styled.div`
   height: 85%;
   overflow: auto;
@@ -25,6 +29,7 @@ const FooterMenu = styled(Toolbar)`
   justify-content: center;
   flex: 1;
   background-color: ${props => props.color};
+  min-height: 75px;
 `;
 
 const ContentColumn: React.FC<ContentColumnProps> = ({
@@ -35,7 +40,7 @@ const ContentColumn: React.FC<ContentColumnProps> = ({
 }) => {
   return (
     <ViewRoot className={className}>
-      <Toolbar />
+      <Header />
       <Divider />
 
       <Content>{content}</Content>

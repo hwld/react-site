@@ -18,6 +18,7 @@ interface HeaderProps {
 }
 
 const TopLayerHeader = styled(MuiAppBar)`
+  width: 100%;
   z-index: ${props => props.theme.zIndex.drawer + 1};
 `;
 
