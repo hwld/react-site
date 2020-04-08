@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { Note } from 'services/notes';
+import { Note } from '../services/notes';
 import NoteListItem from './NoteListItem';
 import List from './util/List';
 import { NotesSortOrder } from './NotesSortConditionField';

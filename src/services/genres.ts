@@ -1,7 +1,7 @@
-import { db } from 'services/firebaseConfig';
 import firebase from 'firebase/app';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useCallback, useMemo } from 'react';
+import { db } from './firebaseConfig';
 
 export interface GenreField {
   genreName: string;

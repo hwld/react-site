@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
-import { NoteField } from 'services/notes';
 import AutoComplete from '@material-ui/lab/Autocomplete';
-import NotesContext from 'context/NotesContext';
+import NotesContext from '../context/NotesContext';
+import { NoteField } from '../services/notes';
 
 const FormField = styled.div`
   margin-top: 20px;

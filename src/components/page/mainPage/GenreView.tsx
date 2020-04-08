@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import GenreTreeList from 'components/GenreTreeList';
 import { useTheme } from '@material-ui/core/styles';
-import GenresContext from 'context/GenresContext';
+import GenreTreeList from '../../GenreTreeList';
+import GenresContext from '../../../context/GenresContext';
 import ContentColumn from '../../ContentColumn';
 import GenreViewMenu from './GenreViewMenu';
 

@@ -11,7 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { logout } from 'services/auth';
+import { logout } from '../../../services/auth';
 
 interface HeaderProps {
   onMenuClick: () => void;

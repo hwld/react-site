@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import { Note, NoteField } from 'services/notes';
-import NotesContext from 'context/NotesContext';
-import MenuItemDialog from './MenuItemDialog';
+import { Note, NoteField } from '../../services/notes';
+import NotesContext from '../../context/NotesContext';
+import MenuItemDialog from '../MenuItemDialog';
 import EditNoteField from '../EditNoteField';
 
 interface UpdateNoteDialogProps {

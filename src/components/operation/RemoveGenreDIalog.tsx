@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import DeleteGenreIcon from '@material-ui/icons/Delete';
-import GenresContext from 'context/GenresContext';
-import MenuItemDialog from './MenuItemDialog';
+import GenresContext from '../../context/GenresContext';
+import MenuItemDialog from '../MenuItemDialog';
 
 interface RemoveGenreDialogProps {
   selectedGenreId: string;

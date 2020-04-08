@@ -1,9 +1,9 @@
 import React from 'react';
-import AddNoteDialog from 'components/menuItem/AddNoteDialog';
-import RemoveNoteDialog from 'components/menuItem/RemoveNoteDialog';
-import SortNotesDialog from 'components/menuItem/SortNotesDialog';
-import MoveNotesDialog from 'components/menuItem/MoveNotesDialog';
 import { NotesSortOrder } from '../../NotesSortConditionField';
+import AddNoteDialog from '../../operation/AddNoteDialog';
+import RemoveNoteDialog from '../../operation/RemoveNoteDialog';
+import MoveNotesDialog from '../../operation/MoveNotesDialog';
+import SortNotesDialog from '../../operation/SortNotesDialog';
 
 interface NoteViewMenuProps {
   sortNotes: (order: NotesSortOrder) => void;

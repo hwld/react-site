@@ -6,9 +6,9 @@ import {
   DialogContent,
   DialogActions,
 } from '@material-ui/core';
-import GenreTreeList from 'components/GenreTreeList';
-import GenresContext from 'context/GenresContext';
 import styled from 'styled-components';
+import GenreTreeList from '../../GenreTreeList';
+import GenresContext from '../../../context/GenresContext';
 
 interface SelectGenreButtonprops {
   selectGenreId: (id: string) => void;

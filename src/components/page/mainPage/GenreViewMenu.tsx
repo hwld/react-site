@@ -1,8 +1,9 @@
 import React from 'react';
-import { Genre } from 'services/genres';
-import AddGenreDialog from 'components/menuItem/AddGenreDialog';
-import UpdateGenreDialog from 'components/menuItem/UpdateGenreDialog';
-import RemoveGenreDialog from 'components/menuItem/RemoveGenreDIalog';
+import AddGenreDialog from '../../operation/AddGenreDialog';
+
+import { Genre } from '../../../services/genres';
+import RemoveGenreDialog from '../../operation/RemoveGenreDIalog';
+import UpdateGenreDialog from '../../operation/UpdateGenreDialog';
 
 interface GenreViewMenuProps {
   genres: Genre[];

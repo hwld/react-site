@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Genre } from 'services/genres';
+import { Genre } from '../services/genres';
 
 type GenresContextValue = {
   genres: Genre[];

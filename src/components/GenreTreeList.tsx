@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { Genre } from 'services/genres';
 import TreeView from './util/TreeView';
 import TreeItem from './util/TreeItem';
+import { Genre } from '../services/genres';
 
 export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
-import { GenreField } from 'services/genres';
 import styled from 'styled-components';
+import { GenreField } from '../services/genres';
 
 interface EditGenreFieldProps {
   genre: GenreField;

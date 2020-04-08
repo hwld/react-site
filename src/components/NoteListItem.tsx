@@ -1,10 +1,10 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import { Note } from 'services/notes';
-import RemoveNoteDialog from 'components/menuItem/RemoveNoteDialog';
-import UpdateNoteDialog from 'components/menuItem/UpdateNoteDialog';
 import ListItem from './util/ListItem';
+import { Note } from '../services/notes';
+import RemoveNoteDialog from './operation/RemoveNoteDialog';
+import UpdateNoteDialog from './operation/UpdateNoteDialog';
 
 interface NoteListItemProps {
   note: Note;

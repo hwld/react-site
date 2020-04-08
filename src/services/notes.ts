@@ -1,6 +1,6 @@
-import { db, firebase } from 'services/firebaseConfig';
 import { useMemo, useCallback } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
+import { db, firebase } from './firebaseConfig';
 
 export interface NoteField {
   title: string;

@@ -6,7 +6,7 @@ import {
   ThemeProvider as MaterialThemeProvider,
 } from '@material-ui/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import theme from 'theme/theme';
+import theme from './theme/theme';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
 

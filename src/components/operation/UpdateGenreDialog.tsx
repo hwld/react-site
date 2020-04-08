@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import { Genre } from 'services/genres';
-import GenresContext from 'context/GenresContext';
-import MenuItemDialog from './MenuItemDialog';
+import GenresContext from '../../context/GenresContext';
+import { Genre } from '../../services/genres';
+import MenuItemDialog from '../MenuItemDialog';
 import EditGenreField from '../EditGenreField';
 
 interface UpdateGenreDialogProps {

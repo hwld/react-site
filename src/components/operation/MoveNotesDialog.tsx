@@ -6,11 +6,11 @@ import {
   DialogContentText,
 } from '@material-ui/core';
 import MoveNoteIcon from '@material-ui/icons/Forward';
-import GenreTreeList from 'components/GenreTreeList';
 import styled from 'styled-components';
-import NotesContext from 'context/NotesContext';
-import GenresContext from 'context/GenresContext';
-import MenuItemDialog from './MenuItemDialog';
+import MenuItemDialog from '../MenuItemDialog';
+import GenresContext from '../../context/GenresContext';
+import GenreTreeList from '../GenreTreeList';
+import NotesContext from '../../context/NotesContext';
 
 interface MoveNotesDialogProps {
   selectedNotesIds: string[];

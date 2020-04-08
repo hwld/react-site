@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
 import DeleteNoteIcon from '@material-ui/icons/Delete';
-import NotesContext from 'context/NotesContext';
-import MenuItemDialog from './MenuItemDialog';
+import NotesContext from '../../context/NotesContext';
+import MenuItemDialog from '../MenuItemDialog';
 
 interface RemoveNoteDialogProps {
   selectedNoteIds: string[];

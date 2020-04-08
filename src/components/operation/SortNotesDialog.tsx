@@ -3,8 +3,8 @@ import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
 import SortNoteIcon from '@material-ui/icons/Sort';
 import NotesSortConditionField, {
   NotesSortOrder,
-} from 'components/NotesSortConditionField';
-import MenuItemDialog from './MenuItemDialog';
+} from '../NotesSortConditionField';
+import MenuItemDialog from '../MenuItemDialog';
 
 interface SortNotesDialogProps {
   sort: (order: NotesSortOrder) => void;
