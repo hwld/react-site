@@ -1,16 +1,15 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
-
-import Home from 'components/Page/mainPage/Home';
-import SearchNotes from 'components/Page/searchNotesPage/Home';
+import Home from 'components/page/mainPage/Home';
+import SearchNotes from 'components/page/searchNotesPage/Home';
 import { useCurrentUserId } from 'services/auth';
 import { useGenres } from 'services/storage/genres';
 import { useNotes } from 'services/storage/notes';
-import GenresContext from 'context/GenresContext';
-import NotesContext from 'context/NotesContext';
 import Login from 'components/Login';
 import Loading from 'components/Loading';
+import GenresContext from 'context/GenresContext';
+import NotesContext from 'context/NotesContext';
 
 const App: React.FC = () => {
   const { userId, loading } = useCurrentUserId();

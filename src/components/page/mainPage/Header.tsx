@@ -1,16 +1,16 @@
-import React from 'components/page/searchNotesPage/node_modules/react';
+import React from 'react';
 import {
   AppBar as MuiAppBar,
   Toolbar,
   IconButton,
   Typography,
   Tooltip,
-} from 'components/page/searchNotesPage/node_modules/@material-ui/core';
-import HomeIcon from 'components/page/searchNotesPage/node_modules/@material-ui/icons/Home';
-import MenuIcon from 'components/page/searchNotesPage/node_modules/@material-ui/icons/Menu';
-import ExitToApp from 'components/page/searchNotesPage/node_modules/@material-ui/icons/ExitToApp';
+} from '@material-ui/core';
+import SearchNoteIcon from '@material-ui/icons/Search';
+import MenuIcon from '@material-ui/icons/Menu';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import styled from 'styled-components';
-import { useHistory } from 'components/page/searchNotesPage/node_modules/react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { logout } from 'services/auth';
 
 interface HeaderProps {
@@ -18,7 +18,7 @@ interface HeaderProps {
 }
 
 const TopLayerHeader = styled(MuiAppBar)`
-  background-color: ${props => props.theme.palette.secondary.light};
+  width: 100%;
   z-index: ${props => props.theme.zIndex.drawer + 1};
 `;
 
@@ -34,8 +34,8 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
     logout();
   };
 
-  const backHome = () => {
-    history.replace('/home');
+  const goSearchMode = () => {
+    history.replace('/search');
   };
 
   return (
@@ -44,10 +44,10 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         <IconButton edge="start" onClick={onMenuClick}>
           <MenuIcon />
         </IconButton>
-        <AppTitle variant="h4">検索モード</AppTitle>
-        <Tooltip title={<Typography>ホームに戻る</Typography>}>
-          <IconButton onClick={backHome}>
-            <HomeIcon fontSize="large" />
+        <AppTitle variant="h4">Notes</AppTitle>
+        <Tooltip title={<Typography>検索モードに移動</Typography>}>
+          <IconButton onClick={goSearchMode}>
+            <SearchNoteIcon fontSize="large" />
           </IconButton>
         </Tooltip>
         <Tooltip title={<Typography>ログアウト</Typography>}>
