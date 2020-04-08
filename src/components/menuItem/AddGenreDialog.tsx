@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import AddGenreIcon from '@material-ui/icons/CreateNewFolder';
-import { GenreField } from 'services/storage/genres';
+import { GenreField } from 'services/genres';
 import GenresContext from 'context/GenresContext';
 import MenuItemDialog from './MenuItemDialog';
 import EditGenreField from '../EditGenreField';

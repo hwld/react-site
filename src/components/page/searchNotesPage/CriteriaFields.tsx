@@ -4,7 +4,7 @@ import AutoComplete from '@material-ui/lab/Autocomplete';
 import styled from 'styled-components';
 import NotesContext from 'context/NotesContext';
 import GenresContext from 'context/GenresContext';
-import { SearchNotesCriteria } from 'services/storage/notes';
+import { SearchNotesCriteria } from 'services/notes';
 import SelectGenreButton from './SelectGenreButton';
 
 interface CriteriaFieldsprops {

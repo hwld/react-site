@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useTheme } from '@material-ui/core';
 import NoteList from 'components/NoteList';
-import { SearchNotesCriteria } from 'services/storage/notes';
+import { SearchNotesCriteria } from 'services/notes';
 import NotesContext from 'context/NotesContext';
 import ContentColumn from '../../ContentColumn';
 

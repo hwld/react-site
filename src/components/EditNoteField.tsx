@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
-import { NoteField } from 'services/storage/notes';
+import { NoteField } from 'services/notes';
 import AutoComplete from '@material-ui/lab/Autocomplete';
 import NotesContext from 'context/NotesContext';
 

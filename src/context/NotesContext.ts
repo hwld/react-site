@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Note, NoteField } from 'services/storage/notes';
+import { Note, NoteField } from 'services/notes';
 
 type NotesContextValue = {
   notes: Note[];

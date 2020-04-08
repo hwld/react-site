@@ -1,5 +1,5 @@
 import React from 'react';
-import { Genre } from 'services/storage/genres';
+import { Genre } from 'services/genres';
 import AddGenreDialog from 'components/menuItem/AddGenreDialog';
 import UpdateGenreDialog from 'components/menuItem/UpdateGenreDialog';
 import RemoveGenreDialog from 'components/menuItem/RemoveGenreDIalog';

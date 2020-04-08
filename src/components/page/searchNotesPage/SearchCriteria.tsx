@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTheme } from '@material-ui/core';
-import { SearchNotesCriteria } from 'services/storage/notes';
+import { SearchNotesCriteria } from 'services/notes';
 import ContentColumn from '../../ContentColumn';
 import CriteriaFields from './CriteriaFields';
 

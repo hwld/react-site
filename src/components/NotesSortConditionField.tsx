@@ -5,7 +5,7 @@ import {
   FormControlLabel,
   Typography,
 } from '@material-ui/core';
-import { NoteField, NoteDate } from 'services/storage/notes';
+import { NoteField, NoteDate } from 'services/notes';
 
 export interface NotesSortOrder {
   targetField: keyof NoteDate | keyof NoteField;

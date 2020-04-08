@@ -13,9 +13,11 @@ interface NoteViewProps {
 
 const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
   const theme = useTheme();
-  const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
+
   const { notes } = useContext(NotesContext);
   const viewNotes = notes.filter(note => note.genreId === selectedGenreId);
+  const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
+
   const [notesSortOrder, setNotesSortOrder] = useState<NotesSortOrder>({
     targetField: 'creationDate',
     order: 'asc',

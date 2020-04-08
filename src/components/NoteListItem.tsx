@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import { Note } from 'services/storage/notes';
+import { Note } from 'services/notes';
 import RemoveNoteDialog from 'components/menuItem/RemoveNoteDialog';
 import UpdateNoteDialog from 'components/menuItem/UpdateNoteDialog';
 import ListItem from './util/List/ListItem';
