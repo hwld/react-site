@@ -1,5 +1,5 @@
-import React, { useContext } from 'components/page/searchNotesPage/node_modules/react';
-import { useTheme } from 'components/page/searchNotesPage/node_modules/@material-ui/core';
+import React, { useContext } from 'react';
+import { useTheme } from '@material-ui/core';
 import NoteList from 'components/NoteList';
 import { SearchNotesCriteria } from 'services/storage/notes';
 import NotesContext from 'context/NotesContext';

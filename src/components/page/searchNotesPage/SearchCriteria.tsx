@@ -1,5 +1,5 @@
-import React from 'components/page/searchNotesPage/node_modules/react';
-import { useTheme } from 'components/page/searchNotesPage/node_modules/@material-ui/core';
+import React from 'react';
+import { useTheme } from '@material-ui/core';
 import { SearchNotesCriteria } from 'services/storage/notes';
 import ContentColumn from '../../ContentColumn';
 import CriteriaFields from './CriteriaFields';

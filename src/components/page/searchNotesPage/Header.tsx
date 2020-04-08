@@ -1,16 +1,16 @@
-import React from 'components/page/searchNotesPage/node_modules/react';
+import React from 'react';
 import {
   AppBar as MuiAppBar,
   Toolbar,
   IconButton,
   Typography,
   Tooltip,
-} from 'components/page/searchNotesPage/node_modules/@material-ui/core';
-import HomeIcon from 'components/page/searchNotesPage/node_modules/@material-ui/icons/Home';
-import MenuIcon from 'components/page/searchNotesPage/node_modules/@material-ui/icons/Menu';
-import ExitToApp from 'components/page/searchNotesPage/node_modules/@material-ui/icons/ExitToApp';
+} from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
+import MenuIcon from '@material-ui/icons/Menu';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import styled from 'styled-components';
-import { useHistory } from 'components/page/searchNotesPage/node_modules/react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { logout } from 'services/auth';
 
 interface HeaderProps {

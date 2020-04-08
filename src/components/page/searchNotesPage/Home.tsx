@@ -1,4 +1,4 @@
-import React, { useState } from 'components/page/searchNotesPage/node_modules/react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SearchNotesCriteria } from 'services/storage/notes';
 import Drawer from 'components/util/Drawer/Drawer';

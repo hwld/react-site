@@ -1,11 +1,11 @@
-import React, { useState, useContext } from 'components/page/searchNotesPage/node_modules/react';
+import React, { useState, useContext } from 'react';
 import {
   Button,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-} from 'components/page/searchNotesPage/node_modules/@material-ui/core';
+} from '@material-ui/core';
 import GenreTreeList from 'components/GenreTreeList';
 import GenresContext from 'context/GenresContext';
 import styled from 'styled-components';

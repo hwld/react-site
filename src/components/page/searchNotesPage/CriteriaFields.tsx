@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'components/page/searchNotesPage/node_modules/react';
-import { Typography, TextField, Button } from 'components/page/searchNotesPage/node_modules/@material-ui/core';
-import AutoComplete from 'components/page/searchNotesPage/node_modules/@material-ui/lab/Autocomplete';
+import React, { useContext, useState } from 'react';
+import { Typography, TextField, Button } from '@material-ui/core';
+import AutoComplete from '@material-ui/lab/Autocomplete';
 import styled from 'styled-components';
 import NotesContext from 'context/NotesContext';
 import GenresContext from 'context/GenresContext';
