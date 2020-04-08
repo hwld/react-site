@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import NoteView from 'components/page/mainPage/NoteView';
 import Header from 'components/page/mainPage/Header';
-import Drawer from 'components/util/Drawer/Drawer';
+import Drawer from 'components/util/Drawer';
 import GenreView from './GenreView';
 
 const Background = styled.div`

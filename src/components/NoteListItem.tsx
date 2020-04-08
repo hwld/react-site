@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Note } from 'services/notes';
 import RemoveNoteDialog from 'components/menuItem/RemoveNoteDialog';
 import UpdateNoteDialog from 'components/menuItem/UpdateNoteDialog';
-import ListItem from './util/List/ListItem';
+import ListItem from './util/ListItem';
 
 interface NoteListItemProps {
   note: Note;

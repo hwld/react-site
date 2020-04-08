@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SearchNotesCriteria } from 'services/notes';
-import Drawer from 'components/util/Drawer/Drawer';
+import Drawer from 'components/util/Drawer';
 import Header from './Header';
 import SearchCriteria from './SearchCriteria';
 import ResultList from './ResultList';
