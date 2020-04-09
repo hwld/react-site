@@ -3,8 +3,8 @@ import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
 import SortNoteIcon from '@material-ui/icons/Sort';
 import NotesSortConditionField, {
   NotesSortOrder,
-} from '../NotesSortConditionField';
-import MenuItemDialog from '../MenuItemDialog';
+} from '../NotesSortConditionFields';
+import OperationDialog from './OperationDialog';
 
 interface SortNotesDialogProps {
   sort: (order: NotesSortOrder) => void;
@@ -40,7 +40,7 @@ const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
   };
 
   return (
-    <MenuItemDialog
+    <OperationDialog
       tooltipText="ノートを並び替える"
       activatorIcon={<SortNoteIcon fontSize={size} />}
       activatorDisabled={selectedGenreId.length === 0}
@@ -56,7 +56,7 @@ const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
           onChangeOrder={changeSortOrder}
         />
       </DialogContent>
-    </MenuItemDialog>
+    </OperationDialog>
   );
 };
 

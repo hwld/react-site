@@ -3,8 +3,8 @@ import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { Note, NoteField } from '../../services/notes';
 import NotesContext from '../../context/NotesContext';
-import MenuItemDialog from '../MenuItemDialog';
-import EditNoteField from '../EditNoteField';
+import OperationDialog from './OperationDialog';
+import EditNoteField from '../EditNoteFields';
 
 interface UpdateNoteDialogProps {
   defaultNote: Note;
@@ -31,7 +31,7 @@ const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
   };
 
   return (
-    <MenuItemDialog
+    <OperationDialog
       tooltipText="メモを編集"
       activatorIcon={<EditIcon fontSize={size} />}
       doneText="変更"
@@ -43,7 +43,7 @@ const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
       <DialogContent>
         <EditNoteField defaultNote={note} onChange={changeNoteField} />
       </DialogContent>
-    </MenuItemDialog>
+    </OperationDialog>
   );
 };
 

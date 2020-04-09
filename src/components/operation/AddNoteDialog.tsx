@@ -3,8 +3,8 @@ import AddNoteIcon from '@material-ui/icons/NoteAdd';
 import { DialogContent, DialogTitle, SvgIconProps } from '@material-ui/core';
 import NotesContext from '../../context/NotesContext';
 import { NoteField } from '../../services/notes';
-import MenuItemDialog from '../MenuItemDialog';
-import EditNoteField from '../EditNoteField';
+import OperationDialog from './OperationDialog';
+import EditNoteField from '../EditNoteFields';
 
 interface AddNoteDialogProps {
   selectedGenreId: string;
@@ -46,7 +46,7 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   };
 
   return (
-    <MenuItemDialog
+    <OperationDialog
       tooltipText="メモを追加"
       activatorIcon={<AddNoteIcon fontSize={size} />}
       activatorDisabled={selectedGenreId === ''}
@@ -59,7 +59,7 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
       <DialogContent>
         <EditNoteField defaultNote={note} onChange={changeNoteField} />
       </DialogContent>
-    </MenuItemDialog>
+    </OperationDialog>
   );
 };
 

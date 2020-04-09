@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Header from './Header';
-import SearchCriteria from './SearchCriteria';
-import ResultList from './ResultList';
+import CriteriaColumn from './CriteriaColumn';
+import ResultNotesColumn from './ResultNotesColumn';
 import { SearchNotesCriteria } from '../../../services/notes';
 import Drawer from '../../util/Drawer';
 
@@ -13,7 +13,7 @@ const Background = styled.div`
   background-color: ${props => props.theme.palette.primary.dark};
 `;
 
-const RightResultList = styled(ResultList)`
+const RightResultNotesColumn = styled(ResultNotesColumn)`
   flex: 1;
 `;
 
@@ -39,9 +39,9 @@ const SearchNotesHome: React.FC<{}> = () => {
         open={isOpen}
         onClose={() => setIsOpen(false)}
       >
-        <SearchCriteria setCriteria={setCriterial} />
+        <CriteriaColumn setCriteria={setCriterial} />
       </Drawer>
-      <RightResultList searchCriteria={searchCriteria} />
+      <RightResultNotesColumn searchCriteria={searchCriteria} />
     </Background>
   );
 };

@@ -3,8 +3,8 @@ import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import GenresContext from '../../context/GenresContext';
 import { Genre } from '../../services/genres';
-import MenuItemDialog from '../MenuItemDialog';
-import EditGenreField from '../EditGenreField';
+import OperationDialog from './OperationDialog';
+import EditGenreField from '../EditGenreFields';
 
 interface UpdateGenreDialogProps {
   defaultGenre: Genre;
@@ -31,7 +31,7 @@ const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
   };
 
   return (
-    <MenuItemDialog
+    <OperationDialog
       tooltipText="ジャンルを編集"
       activatorIcon={<EditIcon fontSize={size} />}
       activatorDisabled={defaultGenre.id === ''}
@@ -44,7 +44,7 @@ const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
       <DialogContent>
         <EditGenreField genre={genre} onChange={changeGenreName} />
       </DialogContent>
-    </MenuItemDialog>
+    </OperationDialog>
   );
 };
 

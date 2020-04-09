@@ -3,7 +3,7 @@ import { useTheme } from '@material-ui/core/styles';
 import GenreTreeList from '../../GenreTreeList';
 import GenresContext from '../../../context/GenresContext';
 import ContentColumn from '../../ContentColumn';
-import GenreViewMenu from './GenreViewMenu';
+import GenreColumnMenu from './GenresColumnMenu';
 
 interface GenreViewProps {
   onGenreSelect: (selectedId: string) => void;
@@ -24,7 +24,7 @@ const GenreView: React.FC<GenreViewProps> = ({
       className={className}
       content={<GenreTreeList genres={genres} onGenreSelect={onGenreSelect} />}
       footerMenu={
-        <GenreViewMenu genres={genres} selectedGenreId={selectedGenreId} />
+        <GenreColumnMenu genres={genres} selectedGenreId={selectedGenreId} />
       }
       footerColor={theme.palette.secondary.main}
     />

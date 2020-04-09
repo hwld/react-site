@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import NoteView from './NoteView';
+import NotesColumn from './NotesColumn';
 import Header from './Header';
 import Drawer from '../../util/Drawer';
-import GenreView from './GenreView';
+import GenresColumn from './GenresColumn';
 
 const Background = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ const Background = styled.div`
   background-color: ${props => props.theme.palette.primary.dark};
 `;
 
-const RightNoteView = styled(NoteView)`
+const RightNotesColumn = styled(NotesColumn)`
   flex: 1;
 `;
 
@@ -28,14 +28,14 @@ const Home: React.FC = () => {
         open={isOpen}
         onClose={() => setIsOpen(false)}
       >
-        <GenreView
+        <GenresColumn
           onGenreSelect={(genreId: string) => {
             setSelectedGenreId(genreId);
           }}
           selectedGenreId={selectedGenreId}
         />
       </Drawer>
-      <RightNoteView selectedGenreId={selectedGenreId} />
+      <RightNotesColumn selectedGenreId={selectedGenreId} />
     </Background>
   );
 };

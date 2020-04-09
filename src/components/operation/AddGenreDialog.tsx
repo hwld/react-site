@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import AddGenreIcon from '@material-ui/icons/CreateNewFolder';
-import MenuItemDialog from '../MenuItemDialog';
-import EditGenreField from '../EditGenreField';
+import OperationDialog from './OperationDialog';
+import EditGenreField from '../EditGenreFields';
 import GenresContext from '../../context/GenresContext';
 import { GenreField } from '../../services/genres';
 
@@ -39,7 +39,7 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
   };
 
   return (
-    <MenuItemDialog
+    <OperationDialog
       tooltipText="ジャンルを追加"
       activatorIcon={<AddGenreIcon fontSize={size} />}
       doneText="追加"
@@ -51,7 +51,7 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
       <DialogContent>
         <EditGenreField genre={genre} onChange={changeGenreName} />
       </DialogContent>
-    </MenuItemDialog>
+    </OperationDialog>
   );
 };
 

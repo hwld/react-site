@@ -24,7 +24,7 @@ const StyledIconButton = styled(IconButton)`
   }
 `;
 
-interface MenuItemDialogProps {
+interface OperationDialogProps {
   activatorDisabled?: boolean;
   activatorIcon: JSX.Element;
   doneText?: string;
@@ -35,7 +35,7 @@ interface MenuItemDialogProps {
   tooltipText: string;
 }
 
-const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
+const OperationDialog: React.FC<OperationDialogProps> = ({
   children,
   activatorIcon,
   activatorDisabled,
@@ -118,4 +118,4 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   );
 };
 
-export default MenuItemDialog;
+export default OperationDialog;

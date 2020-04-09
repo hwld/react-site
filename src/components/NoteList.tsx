@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Note } from '../services/notes';
 import NoteListItem from './NoteListItem';
 import List from './util/List';
-import { NotesSortOrder } from './NotesSortConditionField';
+import { NotesSortOrder } from './NotesSortConditionFields';
 
 interface NoteListProps {
   notes: Note[];

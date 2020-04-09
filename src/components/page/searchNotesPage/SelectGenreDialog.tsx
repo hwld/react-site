@@ -22,6 +22,7 @@ const SelectGenreButton: React.FC<SelectGenreButtonprops> = ({
   selectGenreId,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   const { genres } = useContext(GenresContext);
   const [selectedGenreId, setSelectedGenreId] = useState('');
 

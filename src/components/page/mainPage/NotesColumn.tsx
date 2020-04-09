@@ -2,9 +2,9 @@ import React, { useState, useCallback, useContext } from 'react';
 import { useTheme } from '@material-ui/core';
 import NotesContext from '../../../context/NotesContext';
 import NoteList from '../../NoteList';
-import { NotesSortOrder } from '../../NotesSortConditionField';
+import { NotesSortOrder } from '../../NotesSortConditionFields';
 import ContentColumn from '../../ContentColumn';
-import NoteViewMenu from './NoteViewMenu';
+import NotesColumnMenu from './NotesClumnMenu';
 
 interface NoteViewProps {
   selectedGenreId: string;
@@ -42,7 +42,7 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
         />
       }
       footerMenu={
-        <NoteViewMenu
+        <NotesColumnMenu
           selectedGenreId={selectedGenreId}
           selectedNoteIds={selectedNoteIds}
           defaultNotesSortOrder={notesSortOrder}

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
 import DeleteNoteIcon from '@material-ui/icons/Delete';
 import NotesContext from '../../context/NotesContext';
-import MenuItemDialog from '../MenuItemDialog';
+import OperationDialog from './OperationDialog';
 
 interface RemoveNoteDialogProps {
   selectedNoteIds: string[];
@@ -20,7 +20,7 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
   };
 
   return (
-    <MenuItemDialog
+    <OperationDialog
       tooltipText="メモを削除"
       activatorIcon={<DeleteNoteIcon fontSize={size} />}
       activatorDisabled={selectedNoteIds.length === 0}
@@ -29,7 +29,7 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
     >
       <DialogTitle>メモの削除</DialogTitle>
       <DialogContent>削除してよろしいですか?</DialogContent>
-    </MenuItemDialog>
+    </OperationDialog>
   );
 };
 

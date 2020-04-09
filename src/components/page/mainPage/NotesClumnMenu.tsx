@@ -1,5 +1,5 @@
 import React from 'react';
-import { NotesSortOrder } from '../../NotesSortConditionField';
+import { NotesSortOrder } from '../../NotesSortConditionFields';
 import AddNoteDialog from '../../operation/AddNoteDialog';
 import RemoveNoteDialog from '../../operation/RemoveNoteDialog';
 import MoveNotesDialog from '../../operation/MoveNotesDialog';

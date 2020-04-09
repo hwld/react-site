@@ -3,13 +3,13 @@ import './App.css';
 import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
 import GenresContext from './context/GenresContext';
 import NotesContext from './context/NotesContext';
-import Login from './components/Login';
-import Loading from './components/Loading';
+import Login from './components/page/loginPage/Login';
+import Loading from './components/page/loadingPage/Loading';
 import { useNotes } from './services/notes';
 import { useGenres } from './services/genres';
 import { useCurrentUserId } from './services/auth';
-import SearchNotes from './components/page/searchNotesPage/Home';
-import Home from './components/page/mainPage/Home';
+import SearchNotesHome from './components/page/searchNotesPage/Home';
+import MainHome from './components/page/mainPage/Home';
 
 const App: React.FC = () => {
   const { userId, loading } = useCurrentUserId();
@@ -28,11 +28,11 @@ const App: React.FC = () => {
             {loading && <Loading />}
             {userId === '' && <Login />}
             <Route path="/home">
-              <Home />
+              <MainHome />
             </Route>
 
             <Route path="/search">
-              <SearchNotes />
+              <SearchNotesHome />
             </Route>
 
             <Redirect to="/home" />

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { Typography, Button } from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
 import styled from 'styled-components';
-import { login, useCurrentUserId } from '../services/auth';
+import { login, useCurrentUserId } from '../../../services/auth';
 
 const Background = styled.div`
   display: flex;
@@ -22,6 +22,8 @@ const LoginForm = styled.div`
   height: 80%;
   width: '30%';
 
+  /* props => props... の ">" がstylelintに引っかかる */
+  /* stylelint-disable-next-line selector-combinator-space-before */
   ${props => props.theme.breakpoints.down('xs')} {
     width: '80%';
   }

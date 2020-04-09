@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import DeleteGenreIcon from '@material-ui/icons/Delete';
 import GenresContext from '../../context/GenresContext';
-import MenuItemDialog from '../MenuItemDialog';
+import OperationDialog from './OperationDialog';
 
 interface RemoveGenreDialogProps {
   selectedGenreId: string;
@@ -20,7 +20,7 @@ const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
   };
 
   return (
-    <MenuItemDialog
+    <OperationDialog
       tooltipText="ジャンルを削除"
       activatorIcon={<DeleteGenreIcon fontSize={size} />}
       activatorDisabled={selectedGenreId === ''}
@@ -29,7 +29,7 @@ const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
     >
       <DialogTitle>ジャンルの削除</DialogTitle>
       <DialogContent>削除してよろしいですか？</DialogContent>
-    </MenuItemDialog>
+    </OperationDialog>
   );
 };
 

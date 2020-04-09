@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { SearchNotesCriteria } from '../../../services/notes';
 import GenresContext from '../../../context/GenresContext';
 import NotesContext from '../../../context/NotesContext';
-import SelectGenreButton from './SelectGenreButton';
+import SelectGenreDialog from './SelectGenreDialog';
 
 interface CriteriaFieldsprops {
   search: (criteria: SearchNotesCriteria) => void;
@@ -108,7 +108,7 @@ const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
           color="secondary"
           variant="filled"
         />
-        <SelectGenreButton selectGenreId={selectGenreId} />
+        <SelectGenreDialog selectGenreId={selectGenreId} />
       </CriteriaContent>
       <CriteriaContent>
         <CriteriaTextField
