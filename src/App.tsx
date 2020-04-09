@@ -3,13 +3,13 @@ import './App.css';
 import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
 import GenresContext from './context/GenresContext';
 import NotesContext from './context/NotesContext';
-import Login from './components/page/loginPage/Login';
-import Loading from './components/page/loadingPage/Loading';
+import Login from './components/project/page/loginPage/Login';
+import Loading from './components/project/page/loadingPage/Loading';
 import { useNotes } from './services/notes';
 import { useGenres } from './services/genres';
 import { useCurrentUserId } from './services/auth';
-import SearchNotesHome from './components/page/searchNotesPage/Home';
-import MainHome from './components/page/mainPage/Home';
+import SearchNotesHome from './components/project/page/searchNotesPage/Home';
+import MainHome from './components/project/page/mainPage/Home';
 
 const App: React.FC = () => {
   const { userId, loading } = useCurrentUserId();
