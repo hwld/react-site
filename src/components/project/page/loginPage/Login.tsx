@@ -20,7 +20,7 @@ const LoginForm = styled.div`
   align-items: center;
   background-color: ${props => props.theme.palette.primary.main};
   height: 80%;
-  width: '30%';
+  width: 30%;
 
   /* props => props... の ">" がstylelintに引っかかる */
   /* stylelint-disable-next-line selector-combinator-space-before */
