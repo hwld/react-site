@@ -25,7 +25,7 @@ const LoginForm = styled.div`
   /* props => props... の ">" がstylelintに引っかかる */
   /* stylelint-disable-next-line selector-combinator-space-before */
   ${props => props.theme.breakpoints.down('xs')} {
-    width: '80%';
+    width: 80%;
   }
 `;
 
