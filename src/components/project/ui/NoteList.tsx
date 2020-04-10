@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
+import Alert from '@material-ui/lab/Alert';
 import { Note } from '../../../services/notes';
 import NoteListItem from './NoteListItem';
 import List from '../../ui/List';
@@ -74,10 +75,12 @@ const NoteList: React.FC<NoteListProps> = ({
       .map(note => <NoteListItem note={note} key={note.id} />);
   }, [notes, notesCompareFunction, notesSortOrder]);
 
-  return (
+  return notes.length !== 0 ? (
     <StyledList className={className} onSelect={onNotesSelect}>
       {renderListItem()}
     </StyledList>
+  ) : (
+    <Alert severity="info">メモが存在しません</Alert>
   );
 };
 

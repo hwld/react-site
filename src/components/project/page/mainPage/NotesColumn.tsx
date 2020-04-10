@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useContext } from 'react';
 import { useTheme } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import NotesContext from '../../../../context/NotesContext';
 import NoteList from '../../ui/NoteList';
 import { NotesSortOrder } from '../../ui/NotesSortConditionFields';
@@ -16,6 +17,7 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
 
   const { notes } = useContext(NotesContext);
   const viewNotes = notes.filter(note => note.genreId === selectedGenreId);
+
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
 
   const [notesSortOrder, setNotesSortOrder] = useState<NotesSortOrder>({
@@ -31,16 +33,24 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
     setSelectedNoteIds(ids);
   }, []);
 
+  const notesContent = () => {
+    window.console.log(selectedGenreId !== '');
+
+    return selectedGenreId !== '' ? (
+      <NoteList
+        notes={viewNotes}
+        notesSortOrder={notesSortOrder}
+        onNotesSelect={selectNoteIds}
+      />
+    ) : (
+      <Alert severity="warning">ジャンルを選択してください</Alert>
+    );
+  };
+
   return (
     <ContentColumn
       className={className}
-      content={
-        <NoteList
-          notes={viewNotes}
-          notesSortOrder={notesSortOrder}
-          onNotesSelect={selectNoteIds}
-        />
-      }
+      content={notesContent()}
       footerMenu={
         <NotesColumnMenu
           selectedGenreId={selectedGenreId}
