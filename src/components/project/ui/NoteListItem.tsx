@@ -2,12 +2,13 @@ import React from 'react';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import ListItem from '../../ui/ListItem';
-import { Note } from '../../../services/notes';
+import { Note, SearchNotesCriteria } from '../../../services/notes';
 import RemoveNoteDialog from '../operation/RemoveNoteDialog';
 import UpdateNoteDialog from '../operation/UpdateNoteDialog';
 
 interface NoteListItemProps {
   note: Note;
+  searchCriteria?: SearchNotesCriteria;
 }
 
 const GridContainer = styled.div`
@@ -45,16 +46,67 @@ const MetaText = styled(Typography)`
   color: #c0c0c0;
 `;
 
-const NoteListItem: React.FC<NoteListItemProps> = ({ note }) => {
+const HighlightSpan = styled.span`
+  background-color: ${props => props.theme.palette.secondary.light};
+  color: ${props => props.theme.palette.primary.main};
+`;
+
+const NoteListItem: React.FC<NoteListItemProps> = ({
+  note,
+  searchCriteria,
+}) => {
+  const getHighlightedText = (text: string, highlight: string) => {
+    const parts = text.split(new RegExp(`(${highlight})`));
+
+    return (
+      <span>
+        {parts.map((part, i) =>
+          part === highlight ? (
+            // eslint-disable-next-line react/no-array-index-key
+            <HighlightSpan key={i}>{part}</HighlightSpan>
+          ) : (
+            part
+          ),
+        )}
+      </span>
+    );
+  };
+
+  const title = () => {
+    if (!searchCriteria) return note.title;
+
+    return getHighlightedText(note.title, searchCriteria.title);
+  };
+
+  const text = () => {
+    if (!searchCriteria) return note.text;
+
+    return getHighlightedText(note.text, searchCriteria.text);
+  };
+
+  const authorName = () => {
+    if (!searchCriteria) return note.authorName;
+
+    return getHighlightedText(note.authorName, searchCriteria.authorName);
+  };
+
+  const bookName = () => {
+    if (!searchCriteria) return note.bookName;
+
+    return getHighlightedText(note.bookName, searchCriteria.bookName);
+  };
+
   return (
     <ListItem itemId={note.id}>
       <GridContainer>
         <NoteTextContainer>
-          <TitleText variant="h4">{note.title}</TitleText>
-          <NoteText>{note.text}</NoteText>
+          <TitleText variant="h4">
+            <span>{title()}</span>
+          </TitleText>
+          <NoteText>{text()}</NoteText>
           <MetaData>
-            <MetaText>著者名:{note.authorName}</MetaText>
-            <MetaText>書籍名:{note.bookName}</MetaText>
+            <MetaText>著者名:{authorName()}</MetaText>
+            <MetaText>書籍名:{bookName()}</MetaText>
           </MetaData>
         </NoteTextContainer>
         <div>

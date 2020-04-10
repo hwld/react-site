@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import Alert from '@material-ui/lab/Alert';
-import { Note } from '../../../services/notes';
+import { Note, SearchNotesCriteria } from '../../../services/notes';
 import NoteListItem from './NoteListItem';
 import List from '../../ui/List';
 import { NotesSortOrder } from './NotesSortConditionFields';
@@ -11,6 +11,7 @@ interface NoteListProps {
   notesSortOrder?: NotesSortOrder;
   onNotesSelect?: (selectedIds: string[]) => void;
   selectedNoteIds?: string[];
+  searchCriteria?: SearchNotesCriteria;
   className?: string;
 }
 
@@ -23,6 +24,7 @@ const NoteList: React.FC<NoteListProps> = ({
   notes,
   notesSortOrder = { targetField: 'creationDate', order: 'asc' },
   onNotesSelect,
+  searchCriteria,
   className,
 }) => {
   const isDate = useCallback((arg: string | Date): arg is Date => {
@@ -72,8 +74,14 @@ const NoteList: React.FC<NoteListProps> = ({
   const renderListItem = useCallback(() => {
     return notes
       .sort(notesCompareFunction(notesSortOrder))
-      .map(note => <NoteListItem note={note} key={note.id} />);
-  }, [notes, notesCompareFunction, notesSortOrder]);
+      .map(note => (
+        <NoteListItem
+          note={note}
+          key={note.id}
+          searchCriteria={searchCriteria}
+        />
+      ));
+  }, [notes, notesCompareFunction, notesSortOrder, searchCriteria]);
 
   return notes.length !== 0 ? (
     <StyledList className={className} onSelect={onNotesSelect}>

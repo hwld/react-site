@@ -63,12 +63,15 @@ const ResultList: React.FC<SearchNotesListProps> = ({
     );
   };
 
-  const resultNotes = searchNotes(searchCriteria);
-
   return (
     <ContentColumn
       className={className}
-      content={<NoteList notes={resultNotes} />}
+      content={
+        <NoteList
+          notes={searchNotes(searchCriteria)}
+          searchCriteria={searchCriteria}
+        />
+      }
       footerMenu={<></>}
       footerColor={theme.palette.secondary.light}
     />
