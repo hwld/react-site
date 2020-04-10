@@ -93,9 +93,15 @@ const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
   const { notes } = useContext(NotesContext);
   // 重複のないリストを作成
   const authorNameList = Array.from(
-    new Set(notes.map(note => note.authorName)),
+    new Set(
+      notes.filter(note => note.authorName !== '').map(note => note.authorName),
+    ),
   );
-  const bookNameList = Array.from(new Set(notes.map(note => note.bookName)));
+  const bookNameList = Array.from(
+    new Set(
+      notes.filter(note => note.bookName !== '').map(note => note.bookName),
+    ),
+  );
 
   return (
     <Root>
