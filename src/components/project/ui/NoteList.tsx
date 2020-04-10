@@ -88,7 +88,7 @@ const NoteList: React.FC<NoteListProps> = ({
       {renderListItem()}
     </StyledList>
   ) : (
-    <Alert severity="info">メモが存在しません</Alert>
+    <Alert severity="warning">メモが存在しません</Alert>
   );
 };
 

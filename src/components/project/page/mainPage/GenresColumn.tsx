@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useTheme } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 import GenreTreeList from '../../ui/GenreTreeList';
 import GenresContext from '../../../../context/GenresContext';
 import ContentColumn from '../../ui/ContentColumn';

@@ -10,7 +10,7 @@ const TreeItemRoot = styled.ul`
   padding-inline-start: 10px;
 `;
 
-const HoverLayer = styled.div`
+const TreeItemContentRoot = styled.div`
   :hover {
     background-color: ${props => props.theme.palette.action.hover};
   }
@@ -74,14 +74,14 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
 
   return (
     <TreeItemRoot>
-      <HoverLayer>
+      <TreeItemContentRoot>
         <TreeItemContent onClick={select} selected={nodeId === selectedId}>
           <SvgIcon focusable onClick={expand}>
             {icon()}
           </SvgIcon>
           <Typography>{label}</Typography>
         </TreeItemContent>
-      </HoverLayer>
+      </TreeItemContentRoot>
       <TreeItemGroup>{expanded ? children : null}</TreeItemGroup>
     </TreeItemRoot>
   );

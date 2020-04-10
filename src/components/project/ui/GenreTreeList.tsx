@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
+import Alert from '@material-ui/lab/Alert';
 import TreeView from '../../ui/TreeView';
 import TreeItem from '../../ui/TreeItem';
 import { Genre } from '../../../services/genres';
@@ -89,7 +90,9 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
     return treeObject.map(obj => buildGenreTreeItems(obj));
   }, [genres, genresCompareFunction, buildGenreTreeNode, buildGenreTreeItems]);
 
-  return (
+  window.console.log(genres);
+
+  return genres.length !== 0 ? (
     <StyledTreeView
       className={className}
       onNodeSelect={(genreId: string) => {
@@ -98,6 +101,8 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
     >
       {renderGenreTree()}
     </StyledTreeView>
+  ) : (
+    <Alert severity="warning">ジャンルが存在しません</Alert>
   );
 };
 

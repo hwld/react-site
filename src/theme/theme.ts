@@ -18,7 +18,7 @@ const theme = createMuiTheme({
       secondary: '#303030',
     },
     action: {
-      selected: '#757575',
+      selected: 'rgba(255,255,255,0.4)',
       hover: 'rgba(0,0,0,0.26)',
       disabled: 'rgba(0,0,0,0.26)',
     },
