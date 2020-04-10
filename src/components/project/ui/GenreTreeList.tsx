@@ -14,6 +14,7 @@ interface GenreTreeListProps {
 }
 
 const StyledTreeView = styled(TreeView)`
+  height: 100%;
   overflow: auto;
   word-break: keep-all;
 `;
@@ -89,8 +90,6 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
     // GenreTreeNodeをReactNodeに変換する
     return treeObject.map(obj => buildGenreTreeItems(obj));
   }, [genres, genresCompareFunction, buildGenreTreeNode, buildGenreTreeItems]);
-
-  window.console.log(genres);
 
   return genres.length !== 0 ? (
     <StyledTreeView

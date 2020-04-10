@@ -34,8 +34,6 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
   }, []);
 
   const notesContent = () => {
-    window.console.log(selectedGenreId !== '');
-
     return selectedGenreId !== '' ? (
       <NoteList
         notes={viewNotes}

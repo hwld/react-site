@@ -14,11 +14,14 @@ const TreeItemContentRoot = styled.div`
   :hover {
     background-color: ${props => props.theme.palette.action.hover};
   }
+  height: 5vh;
 `;
 
 const TreeItemContent = styled.div<{ selected?: boolean }>`
+  height: 100%;
   display: flex;
   justify-content: left;
+  align-items: center;
   background-color: ${props =>
     props.selected && props.theme.palette.action.selected};
 `;
@@ -76,7 +79,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     <TreeItemRoot>
       <TreeItemContentRoot>
         <TreeItemContent onClick={select} selected={nodeId === selectedId}>
-          <SvgIcon focusable onClick={expand}>
+          <SvgIcon focusable onClick={expand} fontSize="large">
             {icon()}
           </SvgIcon>
           <Typography>{label}</Typography>
