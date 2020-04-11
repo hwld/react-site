@@ -49,6 +49,7 @@ const SearchNotesHome: React.FC<{}> = () => {
           width={isMobile ? '80' : '30'}
           isPresistent={!isMobile}
           open={isOpen}
+          onOpen={() => setIsOpen(true)}
           onClose={() => setIsOpen(false)}
         >
           <CriteriaColumn setCriteria={setCriterial} />

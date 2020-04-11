@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drawer as MuiDrawer, DrawerProps } from '@material-ui/core';
+import { SwipeableDrawer as MuiDrawer, DrawerProps } from '@material-ui/core';
 import styled from 'styled-components';
 
 const PresistentDrawer = styled.div<{ open?: boolean; width?: string }>`
@@ -27,6 +27,9 @@ const NormalDrawer = styled(MuiDrawer)<{
 `;
 
 const Drawer: React.FC<DrawerProps & {
+  open: boolean;
+  onClose: () => void;
+  onOpen: () => void;
   width?: string;
   isPresistent: boolean;
 }> = ({ children, open, width, isPresistent, ...rest }) => {
