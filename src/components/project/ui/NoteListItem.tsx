@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import ListItem from '../../ui/ListItem';
@@ -55,7 +55,7 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
   note,
   searchCriteria,
 }) => {
-  const getHighlightedText = (text: string, highlight: string) => {
+  const getHighlightedText = useCallback((text: string, highlight: string) => {
     const parts = text.split(new RegExp(`(${highlight})`));
 
     return (
@@ -70,43 +70,44 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
         )}
       </span>
     );
-  };
+  }, []);
 
-  const title = () => {
-    if (!searchCriteria) return note.title;
+  const title = useMemo(() => {
+    if (!searchCriteria || searchCriteria.title === '') return note.title;
 
     return getHighlightedText(note.title, searchCriteria.title);
-  };
+  }, [getHighlightedText, note.title, searchCriteria]);
 
-  const text = () => {
-    if (!searchCriteria) return note.text;
+  const text = useMemo(() => {
+    if (!searchCriteria || searchCriteria.text === '') return note.text;
 
     return getHighlightedText(note.text, searchCriteria.text);
-  };
+  }, [getHighlightedText, note.text, searchCriteria]);
 
-  const authorName = () => {
-    if (!searchCriteria) return note.authorName;
+  const authorName = useMemo(() => {
+    if (!searchCriteria || searchCriteria.authorName === '')
+      return note.authorName;
 
     return getHighlightedText(note.authorName, searchCriteria.authorName);
-  };
+  }, [getHighlightedText, note.authorName, searchCriteria]);
 
-  const bookName = () => {
-    if (!searchCriteria) return note.bookName;
+  const bookName = useMemo(() => {
+    if (!searchCriteria || searchCriteria.bookName === '') return note.bookName;
 
     return getHighlightedText(note.bookName, searchCriteria.bookName);
-  };
+  }, [getHighlightedText, note.bookName, searchCriteria]);
 
   return (
     <ListItem itemId={note.id}>
       <GridContainer>
         <NoteTextContainer>
           <TitleText variant="h4">
-            <span>{title()}</span>
+            <span>{title}</span>
           </TitleText>
-          <NoteText>{text()}</NoteText>
+          <NoteText>{text}</NoteText>
           <MetaData>
-            <MetaText>著者名:{authorName()}</MetaText>
-            <MetaText>書籍名:{bookName()}</MetaText>
+            <MetaText>著者名:{authorName}</MetaText>
+            <MetaText>書籍名:{bookName}</MetaText>
           </MetaData>
         </NoteTextContainer>
         <div>
