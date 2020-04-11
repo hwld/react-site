@@ -4,6 +4,7 @@ import ContentColumn from '../../ui/ContentColumn';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import NotesContext from '../../../../context/NotesContext';
 import NoteList from '../../ui/NoteList';
+import MobileContext from '../../../../context/MobileContext';
 
 interface SearchNotesListProps {
   searchCriteria: SearchNotesCriteria;
@@ -15,6 +16,8 @@ const ResultList: React.FC<SearchNotesListProps> = ({
   className,
 }) => {
   const theme = useTheme();
+
+  const { isMobile } = useContext(MobileContext);
 
   const { notes } = useContext(NotesContext);
   const searchNotes = (criteria: SearchNotesCriteria) => {
@@ -72,6 +75,7 @@ const ResultList: React.FC<SearchNotesListProps> = ({
           searchCriteria={searchCriteria}
         />
       }
+      fixedFooter={isMobile}
       footerMenu={<></>}
       footerColor={theme.palette.secondary.light}
     />

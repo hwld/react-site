@@ -7,6 +7,7 @@ import CriteriaColumn from './CriteriaColumn';
 import ResultNotesColumn from './ResultNotesColumn';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import Drawer from '../../../ui/Drawer';
+import MobileContext from '../../../../context/MobileContext';
 
 const Background = styled.div`
   display: flex;
@@ -41,18 +42,20 @@ const SearchNotesHome: React.FC<{}> = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
-    <Background>
-      <Header onMenuClick={() => setIsOpen(state => !state)} />
-      <Drawer
-        width={isMobile ? '80' : '30'}
-        isPresistent={!isMobile}
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-      >
-        <CriteriaColumn setCriteria={setCriterial} />
-      </Drawer>
-      <RightResultNotesColumn searchCriteria={searchCriteria} />
-    </Background>
+    <MobileContext.Provider value={{ isMobile }}>
+      <Background>
+        <Header onMenuClick={() => setIsOpen(state => !state)} />
+        <Drawer
+          width={isMobile ? '80' : '30'}
+          isPresistent={!isMobile}
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+        >
+          <CriteriaColumn setCriteria={setCriterial} />
+        </Drawer>
+        <RightResultNotesColumn searchCriteria={searchCriteria} />
+      </Background>
+    </MobileContext.Provider>
   );
 };
 

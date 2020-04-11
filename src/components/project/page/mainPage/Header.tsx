@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   AppBar as MuiAppBar,
   Toolbar,
@@ -12,6 +12,7 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { logout } from '../../../../services/auth';
+import MobileContext from '../../../../context/MobileContext';
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -28,6 +29,8 @@ const AppTitle = styled(Typography)`
 `;
 
 const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
+  const { isMobile } = useContext(MobileContext);
+
   const history = useHistory();
 
   const onLogout = () => {
@@ -47,12 +50,12 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         <AppTitle variant="h4">Notes</AppTitle>
         <Tooltip title={<Typography>検索モードに移動</Typography>}>
           <IconButton onClick={goSearchMode}>
-            <SearchNoteIcon fontSize="large" />
+            <SearchNoteIcon fontSize={isMobile ? 'default' : 'large'} />
           </IconButton>
         </Tooltip>
         <Tooltip title={<Typography>ログアウト</Typography>}>
           <IconButton onClick={onLogout}>
-            <ExitToApp fontSize="large" />
+            <ExitToApp fontSize={isMobile ? 'default' : 'large'} />
           </IconButton>
         </Tooltip>
       </Toolbar>

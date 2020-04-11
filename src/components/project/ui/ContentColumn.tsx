@@ -7,7 +7,7 @@ interface ContentColumnProps {
   content: ReactNode;
   footerMenu: ReactNode;
   footerColor: string;
-  fullWidth?: boolean;
+  fixedFooter?: boolean;
 }
 
 const ViewRoot = styled.div`
@@ -30,9 +30,8 @@ const FooterMenu = styled(Toolbar)`
   justify-content: center;
   flex: 1;
   background-color: ${props => props.color};
-  min-height: 75px;
 
-  &.fullWidth {
+  &.fixed {
     position: fixed;
     width: 100%;
     bottom: 0;
@@ -44,7 +43,7 @@ const ContentColumn: React.FC<ContentColumnProps> = ({
   content,
   footerMenu,
   footerColor,
-  fullWidth = false,
+  fixedFooter = false,
 }) => {
   return (
     <ViewRoot className={className}>
@@ -53,7 +52,7 @@ const ContentColumn: React.FC<ContentColumnProps> = ({
 
       <Content>{content}</Content>
 
-      <FooterMenu className={fullWidth ? 'fullWidth' : ''} color={footerColor}>
+      <FooterMenu className={fixedFooter ? 'fixed' : ''} color={footerColor}>
         {footerMenu}
       </FooterMenu>
     </ViewRoot>

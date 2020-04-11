@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import AddGenreDialog from '../../operation/AddGenreDialog';
 
 import { Genre } from '../../../../services/genres';
 import RemoveGenreDialog from '../../operation/RemoveGenreDIalog';
 import UpdateGenreDialog from '../../operation/UpdateGenreDialog';
+import MobileContext from '../../../../context/MobileContext';
 
 interface GenreViewMenuProps {
   genres: Genre[];
@@ -14,14 +15,22 @@ const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
   genres,
   selectedGenreId,
 }) => {
+  const { isMobile } = useContext(MobileContext);
+
   const selectedGenre = genres.find(genre => genre.id === selectedGenreId);
 
   return (
     <>
-      <AddGenreDialog size="large" selectedGenreId={selectedGenreId} />
-      <RemoveGenreDialog size="large" selectedGenreId={selectedGenreId} />
+      <AddGenreDialog
+        size={isMobile ? 'default' : 'large'}
+        selectedGenreId={selectedGenreId}
+      />
+      <RemoveGenreDialog
+        size={isMobile ? 'default' : 'large'}
+        selectedGenreId={selectedGenreId}
+      />
       <UpdateGenreDialog
-        size="large"
+        size={isMobile ? 'default' : 'large'}
         defaultGenre={
           selectedGenre || {
             id: '',
