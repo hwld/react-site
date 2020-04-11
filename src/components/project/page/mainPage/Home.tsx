@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import NotesColumn from './NotesColumn';
+import { useTheme, useMediaQuery } from '@material-ui/core';
+import NotesView from './NotesView';
 import Header from './Header';
 import Drawer from '../../../ui/Drawer';
-import GenresColumn from './GenresColumn';
+import GenresView from './GenresView';
 
 const Background = styled.div`
   display: flex;
@@ -11,7 +12,7 @@ const Background = styled.div`
   background-color: ${props => props.theme.palette.primary.dark};
 `;
 
-const RightNotesColumn = styled(NotesColumn)`
+const RightNotesView = styled(NotesView)`
   flex: 1;
 `;
 
@@ -19,23 +20,26 @@ const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [selectedGenreId, setSelectedGenreId] = useState('');
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+
   return (
     <Background>
       <Header onMenuClick={() => setIsOpen(state => !state)} />
       <Drawer
-        width="30"
-        mobileWidth="80"
+        width={isMobile ? '80' : '30'}
+        isPresistent={!isMobile}
         open={isOpen}
         onClose={() => setIsOpen(false)}
       >
-        <GenresColumn
+        <GenresView
           onGenreSelect={(genreId: string) => {
             setSelectedGenreId(genreId);
           }}
           selectedGenreId={selectedGenreId}
         />
       </Drawer>
-      <RightNotesColumn selectedGenreId={selectedGenreId} />
+      <RightNotesView isMobile={isMobile} selectedGenreId={selectedGenreId} />
     </Background>
   );
 };

@@ -5,14 +5,19 @@ import NotesContext from '../../../../context/NotesContext';
 import NoteList from '../../ui/NoteList';
 import { NotesSortOrder } from '../../ui/NotesSortConditionFields';
 import ContentColumn from '../../ui/ContentColumn';
-import NotesColumnMenu from './NotesClumnMenu';
+import NotesViewMenu from './NotesViewMenu';
 
 interface NoteViewProps {
   selectedGenreId: string;
+  isMobile: boolean;
   className?: string;
 }
 
-const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
+const NoteView: React.FC<NoteViewProps> = ({
+  selectedGenreId,
+  isMobile,
+  className,
+}) => {
   const theme = useTheme();
 
   const { notes } = useContext(NotesContext);
@@ -47,10 +52,11 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
 
   return (
     <ContentColumn
+      fullWidth={isMobile}
       className={className}
       content={notesContent()}
       footerMenu={
-        <NotesColumnMenu
+        <NotesViewMenu
           selectedGenreId={selectedGenreId}
           selectedNoteIds={selectedNoteIds}
           defaultNotesSortOrder={notesSortOrder}

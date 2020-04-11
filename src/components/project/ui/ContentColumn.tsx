@@ -7,6 +7,7 @@ interface ContentColumnProps {
   content: ReactNode;
   footerMenu: ReactNode;
   footerColor: string;
+  fullWidth?: boolean;
 }
 
 const ViewRoot = styled.div`
@@ -20,7 +21,7 @@ const Header = styled(Toolbar)`
 `;
 
 const Content = styled.div`
-  height: 85%;
+  height: 83%;
   overflow: auto;
 `;
 
@@ -30,6 +31,12 @@ const FooterMenu = styled(Toolbar)`
   flex: 1;
   background-color: ${props => props.color};
   min-height: 75px;
+
+  &.fullWidth {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+  }
 `;
 
 const ContentColumn: React.FC<ContentColumnProps> = ({
@@ -37,6 +44,7 @@ const ContentColumn: React.FC<ContentColumnProps> = ({
   content,
   footerMenu,
   footerColor,
+  fullWidth = false,
 }) => {
   return (
     <ViewRoot className={className}>
@@ -45,7 +53,9 @@ const ContentColumn: React.FC<ContentColumnProps> = ({
 
       <Content>{content}</Content>
 
-      <FooterMenu color={footerColor}>{footerMenu}</FooterMenu>
+      <FooterMenu className={fullWidth ? 'fullWidth' : ''} color={footerColor}>
+        {footerMenu}
+      </FooterMenu>
     </ViewRoot>
   );
 };

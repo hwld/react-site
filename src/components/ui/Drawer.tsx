@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  Drawer as MuiDrawer,
-  useTheme,
-  useMediaQuery,
-  DrawerProps,
-} from '@material-ui/core';
+import { Drawer as MuiDrawer, DrawerProps } from '@material-ui/core';
 import styled from 'styled-components';
 
-const ImmobileDrawer = styled.div<{ open?: boolean; width?: string }>`
+const PresistentDrawer = styled.div<{ open?: boolean; width?: string }>`
   height: 100%;
   flex-basis: ${({ width }) => `${width}vw`};
   margin-left: ${props => (props.open ? '0px' : `-${props.width}vw`)};
@@ -18,7 +13,7 @@ const ImmobileDrawer = styled.div<{ open?: boolean; width?: string }>`
   overflow: hidden;
 `;
 
-const MobileDrawer = styled(MuiDrawer)<{
+const NormalDrawer = styled(MuiDrawer)<{
   width?: string;
 }>`
   height: 100%;
@@ -33,19 +28,16 @@ const MobileDrawer = styled(MuiDrawer)<{
 
 const Drawer: React.FC<DrawerProps & {
   width?: string;
-  mobileWidth?: string;
-}> = ({ children, open, width, mobileWidth, ...rest }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-
-  return isMobile ? (
-    <MobileDrawer open={open} width={mobileWidth} {...rest}>
+  isPresistent: boolean;
+}> = ({ children, open, width, isPresistent, ...rest }) => {
+  return isPresistent ? (
+    <PresistentDrawer open={open} width={width}>
       {children}
-    </MobileDrawer>
+    </PresistentDrawer>
   ) : (
-    <ImmobileDrawer open={open} width={width}>
+    <NormalDrawer open={open} width={width} {...rest}>
       {children}
-    </ImmobileDrawer>
+    </NormalDrawer>
   );
 };
 

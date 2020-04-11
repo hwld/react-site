@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { useTheme, useMediaQuery } from '@material-ui/core';
 import Header from './Header';
 import CriteriaColumn from './CriteriaColumn';
 import ResultNotesColumn from './ResultNotesColumn';
@@ -9,6 +10,12 @@ import Drawer from '../../../ui/Drawer';
 
 const Background = styled.div`
   display: flex;
+
+  /* props => props... の ">" がstylelintに引っかかる */
+  /* stylelint-disable-next-line selector-combinator-space-before */
+  ${props => props.theme.breakpoints.down('xs')} {
+    display: block;
+  }
   height: 100vh;
   background-color: ${props => props.theme.palette.primary.dark};
 `;
@@ -30,12 +37,15 @@ const SearchNotesHome: React.FC<{}> = () => {
     setSearchCriteria(criteria);
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+
   return (
     <Background>
       <Header onMenuClick={() => setIsOpen(state => !state)} />
       <Drawer
-        width="30"
-        mobileWidth="80"
+        width={isMobile ? '80' : '30'}
+        isPresistent={!isMobile}
         open={isOpen}
         onClose={() => setIsOpen(false)}
       >
