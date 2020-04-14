@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -37,31 +37,44 @@ interface TreeItemProps {
 }
 
 const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
-  const [expanded, setExpanded] = useState(false);
-  const { selectedId, selectNode, setNodeId, unsetNodeId } = useContext(
-    TreeViewContext,
-  );
+  const {
+    nodes,
+    addNode,
+    removeNode,
+    selectedId,
+    selectNode,
+    expandNode,
+  } = useContext(TreeViewContext);
 
   useEffect(() => {
-    if (setNodeId) setNodeId(nodeId);
+    addNode(nodeId);
 
     return () => {
-      if (unsetNodeId) unsetNodeId(nodeId);
+      removeNode(nodeId);
     };
-  }, [nodeId, setNodeId, unsetNodeId]);
+  }, [addNode, nodeId, removeNode]);
 
   const expandable = Boolean(
     Array.isArray(children) ? children.length : children,
   );
 
+  const expanded: boolean = useMemo(() => {
+    const node = nodes.find(n => n.id === nodeId);
+    if (node) {
+      return node.expanded;
+    }
+
+    return false;
+  }, [nodeId, nodes]);
+
   const select = () => {
-    if (selectNode) selectNode(nodeId);
+    selectNode(nodeId);
   };
 
   const expand = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     event.stopPropagation();
     if (expandable) {
-      setExpanded(state => !state);
+      expandNode(nodeId);
     }
   };
 
@@ -85,7 +98,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
           <Typography>{label}</Typography>
         </TreeItemContent>
       </TreeItemContentRoot>
-      <TreeItemGroup>{expanded ? children : null}</TreeItemGroup>
+      <TreeItemGroup hidden={!expanded}>{children}</TreeItemGroup>
     </TreeItemRoot>
   );
 };

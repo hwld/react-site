@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
-import TreeViewContext from './TreeViewContext';
+import TreeViewContext, { TreeNode } from './TreeViewContext';
 
 const Tree = styled.ul`
   list-style: none;
@@ -20,25 +20,28 @@ const TreeView: React.FC<TreeViewProps> = ({
   className,
   onNodeSelect,
 }) => {
+  const [nodes, setNodes] = useState<TreeNode[]>([]);
+  window.console.log(nodes);
   const [selectedId, setSelectedId] = useState('');
-  const [nodeIds, setNodeIds] = useState<string[]>([]);
 
+  // 内部の選択状態が変更されたときに外部の選択状態も変更する
   useEffect(() => {
     if (onNodeSelect) onNodeSelect(selectedId);
   }, [onNodeSelect, selectedId]);
 
+  // 選択されているノードが存在しない場合、選択状態を解除する
   useEffect(() => {
-    if (!nodeIds.includes(selectedId)) {
+    if (nodes.filter(node => node.id === selectedId).length === 0) {
       setSelectedId('');
     }
-  }, [nodeIds, selectedId]);
+  }, [nodes, selectedId]);
 
-  const setNodeId = useCallback((id: string) => {
-    setNodeIds(ids => [...ids, id]);
+  const addNode = useCallback((id: string) => {
+    setNodes(state => [...state, { id, expanded: false }]);
   }, []);
 
-  const unsetNodeId = useCallback((id: string) => {
-    setNodeIds(Ids => Ids.filter(nodeId => nodeId !== id));
+  const removeNode = useCallback((id: string) => {
+    setNodes(state => state.filter(node => node.id !== id));
   }, []);
 
   const selectNode = useCallback(
@@ -52,9 +55,19 @@ const TreeView: React.FC<TreeViewProps> = ({
     [selectedId],
   );
 
+  const expandNode = useCallback((id: string) => {
+    setNodes(state => {
+      return state.map(node => {
+        if (node.id === id) return { id: node.id, expanded: !node.expanded };
+
+        return node;
+      });
+    });
+  }, []);
+
   return (
     <TreeViewContext.Provider
-      value={{ selectedId, selectNode, setNodeId, unsetNodeId }}
+      value={{ nodes, addNode, removeNode, selectedId, selectNode, expandNode }}
     >
       <Tree className={className}>{children}</Tree>
     </TreeViewContext.Provider>
