@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useTheme, useMediaQuery } from '@material-ui/core';
 import NotesView from './NotesView';
 import Header from './Header';
-import Drawer from '../../../ui/Drawer';
+import Drawer from '../../../ui/Drawer/Drawer';
 import GenresView from './GenresView';
 import MobileContext from '../../../../context/MobileContext';
 

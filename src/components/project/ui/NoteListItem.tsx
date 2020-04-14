@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback } from 'react';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import ListItem from '../../ui/ListItem';
+import ListItem from '../../ui/List/ListItem';
 import { Note, SearchNotesCriteria } from '../../../services/notes';
 import RemoveNoteDialog from '../operation/RemoveNoteDialog';
 import UpdateNoteDialog from '../operation/UpdateNoteDialog';

@@ -6,7 +6,7 @@ import Header from './Header';
 import CriteriaColumn from './CriteriaColumn';
 import ResultNotesColumn from './ResultNotesColumn';
 import { SearchNotesCriteria } from '../../../../services/notes';
-import Drawer from '../../../ui/Drawer';
+import Drawer from '../../../ui/Drawer/Drawer';
 import MobileContext from '../../../../context/MobileContext';
 
 const Background = styled.div`
