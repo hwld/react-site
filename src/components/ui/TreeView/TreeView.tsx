@@ -21,7 +21,6 @@ const TreeView: React.FC<TreeViewProps> = ({
   onNodeSelect,
 }) => {
   const [nodes, setNodes] = useState<TreeNode[]>([]);
-  window.console.log(nodes);
   const [selectedId, setSelectedId] = useState('');
 
   // 内部の選択状態が変更されたときに外部の選択状態も変更する

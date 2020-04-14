@@ -92,7 +92,7 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
         <AutoComplete
           freeSolo
           options={authorNameList}
-          defaultValue={authorName}
+          value={authorName}
           onChange={changeSelectAuthorName}
           disableClearable
           renderInput={params => (
@@ -112,7 +112,7 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
         <AutoComplete
           freeSolo
           options={bookNameList}
-          defaultValue={bookName}
+          value={bookName}
           onChange={changeSelectBookName}
           disableClearable
           renderInput={params => (
