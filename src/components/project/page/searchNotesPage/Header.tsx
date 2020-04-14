@@ -50,12 +50,12 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         <AppTitle variant="h4">検索モード</AppTitle>
         <Tooltip title={<Typography>ホームに戻る</Typography>}>
           <IconButton onClick={backHome}>
-            <HomeIcon fontSize={isMobile ? 'default' : 'large'} />
+            <HomeIcon fontSize="default" />
           </IconButton>
         </Tooltip>
         <Tooltip title={<Typography>ログアウト</Typography>}>
           <IconButton onClick={onLogout}>
-            <ExitToApp fontSize={isMobile ? 'default' : 'large'} />
+            <ExitToApp fontSize="default" />
           </IconButton>
         </Tooltip>
       </Toolbar>

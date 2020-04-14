@@ -32,6 +32,7 @@ const theme = createMuiTheme({
     },
     MuiToolbar: {
       color: 'secondary',
+      variant: 'dense',
     },
     MuiIconButton: {
       color: 'primary',

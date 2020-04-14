@@ -16,12 +16,10 @@ const ViewRoot = styled.div`
   flex-direction: column;
 `;
 
-const Header = styled(Toolbar)`
-  min-height: 64px;
-`;
+const Header = styled(Toolbar)``;
 
 const Content = styled.div`
-  height: 83%;
+  height: 88%;
   overflow: auto;
 `;
 

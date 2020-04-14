@@ -19,24 +19,13 @@ const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
   selectedGenreId,
   selectedNoteIds,
 }) => {
-  const { isMobile } = useContext(MobileContext);
-
   return (
     <>
-      <AddNoteDialog
-        size={isMobile ? 'default' : 'large'}
-        selectedGenreId={selectedGenreId}
-      />
-      <RemoveNoteDialog
-        size={isMobile ? 'default' : 'large'}
-        selectedNoteIds={selectedNoteIds}
-      />
-      <MoveNotesDialog
-        size={isMobile ? 'default' : 'large'}
-        selectedNotesIds={selectedNoteIds}
-      />
+      <AddNoteDialog size="default" selectedGenreId={selectedGenreId} />
+      <RemoveNoteDialog size="default" selectedNoteIds={selectedNoteIds} />
+      <MoveNotesDialog size="default" selectedNotesIds={selectedNoteIds} />
       <SortNotesDialog
-        size={isMobile ? 'default' : 'large'}
+        size="default"
         defaultSortOrder={defaultNotesSortOrder}
         sort={sortNotes}
         selectedGenreId={selectedGenreId}

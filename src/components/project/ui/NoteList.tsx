@@ -15,11 +15,6 @@ interface NoteListProps {
   className?: string;
 }
 
-const StyledList = styled(List)`
-  overflow: auto;
-  word-break: break-all;
-`;
-
 const NoteList: React.FC<NoteListProps> = ({
   notes,
   notesSortOrder = { targetField: 'creationDate', order: 'asc' },
@@ -84,11 +79,13 @@ const NoteList: React.FC<NoteListProps> = ({
   }, [notes, notesCompareFunction, notesSortOrder, searchCriteria]);
 
   return notes.length !== 0 ? (
-    <StyledList className={className} onSelect={onNotesSelect}>
+    <List className={className} onSelect={onNotesSelect}>
       {renderListItem()}
-    </StyledList>
+    </List>
   ) : (
-    <Alert severity="warning">メモが存在しません</Alert>
+    <Alert className={className} severity="warning">
+      メモが存在しません
+    </Alert>
   );
 };
 

@@ -21,16 +21,10 @@ const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
 
   return (
     <>
-      <AddGenreDialog
-        size={isMobile ? 'default' : 'large'}
-        selectedGenreId={selectedGenreId}
-      />
-      <RemoveGenreDialog
-        size={isMobile ? 'default' : 'large'}
-        selectedGenreId={selectedGenreId}
-      />
+      <AddGenreDialog size="default" selectedGenreId={selectedGenreId} />
+      <RemoveGenreDialog size="default" selectedGenreId={selectedGenreId} />
       <UpdateGenreDialog
-        size={isMobile ? 'default' : 'large'}
+        size="default"
         defaultGenre={
           selectedGenre || {
             id: '',
