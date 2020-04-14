@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   AppBar as MuiAppBar,
   Toolbar,
@@ -47,12 +47,12 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         <AppTitle variant="h5">Notes</AppTitle>
         <Tooltip title={<Typography>検索モードに移動</Typography>}>
           <IconButton onClick={goSearchMode}>
-            <SearchNoteIcon fontSize="default" />
+            <SearchNoteIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title={<Typography>ログアウト</Typography>}>
           <IconButton onClick={onLogout}>
-            <ExitToApp fontSize="default" />
+            <ExitToApp />
           </IconButton>
         </Tooltip>
       </Toolbar>

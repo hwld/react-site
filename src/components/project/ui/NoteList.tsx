@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import styled from 'styled-components';
 import Alert from '@material-ui/lab/Alert';
 import { Note, SearchNotesCriteria } from '../../../services/notes';
 import NoteListItem from './NoteListItem';

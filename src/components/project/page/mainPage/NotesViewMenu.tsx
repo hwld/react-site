@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NotesSortOrder } from '../../ui/NotesSortConditionFields';
 import AddNoteDialog from '../../operation/AddNoteDialog';
 import RemoveNoteDialog from '../../operation/RemoveNoteDialog';
 import MoveNotesDialog from '../../operation/MoveNotesDialog';
 import SortNotesDialog from '../../operation/SortNotesDialog';
-import MobileContext from '../../../../context/MobileContext';
 
 interface NoteViewMenuProps {
   sortNotes: (order: NotesSortOrder) => void;
@@ -21,11 +20,10 @@ const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
 }) => {
   return (
     <>
-      <AddNoteDialog size="default" selectedGenreId={selectedGenreId} />
-      <RemoveNoteDialog size="default" selectedNoteIds={selectedNoteIds} />
-      <MoveNotesDialog size="default" selectedNotesIds={selectedNoteIds} />
+      <AddNoteDialog selectedGenreId={selectedGenreId} />
+      <RemoveNoteDialog selectedNoteIds={selectedNoteIds} />
+      <MoveNotesDialog selectedNotesIds={selectedNoteIds} />
       <SortNotesDialog
-        size="default"
         defaultSortOrder={defaultNotesSortOrder}
         sort={sortNotes}
         selectedGenreId={selectedGenreId}
