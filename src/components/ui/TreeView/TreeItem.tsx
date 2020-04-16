@@ -11,10 +11,11 @@ const TreeItemRoot = styled.ul`
 `;
 
 const TreeItemContentRoot = styled.div`
-  :hover {
+  :hover,
+  :focus {
+    outline: none;
     background-color: ${props => props.theme.palette.action.hover};
   }
-  height: 5vh;
 `;
 
 const TreeItemContent = styled.div<{ selected?: boolean }>`
@@ -82,15 +83,19 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     if (!expandable) return <></>;
 
     if (expanded) {
-      return <ChevronRightIcon color="secondary" />;
+      return <ExpandMoreIcon color="secondary" />;
     }
 
-    return <ExpandMoreIcon color="secondary" />;
+    return <ChevronRightIcon color="secondary" />;
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    window.console.log(event.key);
   };
 
   return (
     <TreeItemRoot>
-      <TreeItemContentRoot>
+      <TreeItemContentRoot tabIndex={0} onKeyDown={handleKeyDown}>
         <TreeItemContent onClick={select} selected={nodeId === selectedId}>
           <SvgIcon focusable onClick={expand} fontSize="large">
             {icon()}

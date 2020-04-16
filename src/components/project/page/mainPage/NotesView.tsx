@@ -51,7 +51,7 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
       <>
         <Card>
           <CardContent>
-            <Typography variant="h6">{selectedGenreName}</Typography>
+            <Typography>{selectedGenreName}</Typography>
           </CardContent>
         </Card>
         <StyledNoteList
