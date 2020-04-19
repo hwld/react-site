@@ -90,7 +90,14 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    window.console.log(event.key);
+    if (event.key === 'Enter') {
+      select();
+    } else if (event.key === ' ') {
+      event.stopPropagation();
+      if (expandable) {
+        expandNode(nodeId);
+      }
+    }
   };
 
   return (
