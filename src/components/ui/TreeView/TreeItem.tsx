@@ -11,8 +11,8 @@ const TreeItemRoot = styled.ul`
 `;
 
 const TreeItemContentRoot = styled.div`
-  :hover,
-  :focus {
+  &:hover,
+  &:focus {
     outline: none;
     background-color: ${props => props.theme.palette.action.hover};
   }
@@ -68,7 +68,8 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     return false;
   }, [nodeId, nodes]);
 
-  const select = () => {
+  const select = (event: React.MouseEvent<{}>) => {
+    event.stopPropagation();
     selectNode(nodeId);
   };
 
@@ -90,8 +91,9 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    window.console.log(event.key);
     if (event.key === 'Enter') {
-      select();
+      selectNode(nodeId);
     } else if (event.key === ' ') {
       event.stopPropagation();
       if (expandable) {

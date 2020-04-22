@@ -68,7 +68,9 @@ const TreeView: React.FC<TreeViewProps> = ({
     <TreeViewContext.Provider
       value={{ nodes, addNode, removeNode, selectedId, selectNode, expandNode }}
     >
-      <Tree className={className}>{children}</Tree>
+      <Tree onClick={() => setSelectedId('')} className={className}>
+        {children}
+      </Tree>
     </TreeViewContext.Provider>
   );
 };

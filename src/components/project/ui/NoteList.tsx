@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import { Note, SearchNotesCriteria } from '../../../services/notes';
 import NoteListItem from './NoteListItem';
@@ -65,7 +65,7 @@ const NoteList: React.FC<NoteListProps> = ({
     [isDate],
   );
 
-  const renderListItem = useCallback(() => {
+  const listItems = useMemo(() => {
     return notes
       .sort(notesCompareFunction(notesSortOrder))
       .map(note => (
@@ -79,7 +79,7 @@ const NoteList: React.FC<NoteListProps> = ({
 
   return notes.length !== 0 ? (
     <List className={className} onSelect={onNotesSelect}>
-      {renderListItem()}
+      {listItems}
     </List>
   ) : (
     <Alert className={className} severity="warning">

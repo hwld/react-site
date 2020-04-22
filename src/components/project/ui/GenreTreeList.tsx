@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import Alert from '@material-ui/lab/Alert';
 import TreeView from '../../ui/TreeView/TreeView';
@@ -78,7 +78,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
     [],
   );
 
-  const renderGenreTree = useCallback((): React.ReactNode => {
+  const genreTreeItems = useMemo(() => {
     // ルートジャンルを取得する
     const rootGenres = genres.filter(genre => genre.parentGenreId === '');
 
@@ -89,7 +89,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
 
     // GenreTreeNodeをReactNodeに変換する
     return treeObject.map(obj => buildGenreTreeItems(obj));
-  }, [genres, genresCompareFunction, buildGenreTreeNode, buildGenreTreeItems]);
+  }, [buildGenreTreeItems, buildGenreTreeNode, genres, genresCompareFunction]);
 
   return genres.length !== 0 ? (
     <StyledTreeView
@@ -98,7 +98,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
         onGenreSelect(genreId);
       }}
     >
-      {renderGenreTree()}
+      {genreTreeItems}
     </StyledTreeView>
   ) : (
     <Alert severity="warning">ジャンルが存在しません</Alert>
