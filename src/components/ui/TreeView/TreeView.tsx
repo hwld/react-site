@@ -23,17 +23,21 @@ const TreeView: React.FC<TreeViewProps> = ({
   const [nodes, setNodes] = useState<TreeNode[]>([]);
   const [selectedId, setSelectedId] = useState('');
 
-  // 内部の選択状態が変更されたときに外部の選択状態も変更する
-  useEffect(() => {
-    if (onNodeSelect) onNodeSelect(selectedId);
-  }, [onNodeSelect, selectedId]);
+  // 内部の選択状態と外部の選択状態を同時に設定する
+  const selectId = useCallback(
+    (id: string) => {
+      setSelectedId(id);
+      if (onNodeSelect) onNodeSelect(id);
+    },
+    [onNodeSelect],
+  );
 
   // 選択されているノードが存在しない場合、選択状態を解除する
   useEffect(() => {
     if (nodes.filter(node => node.id === selectedId).length === 0) {
-      setSelectedId('');
+      selectId('');
     }
-  }, [nodes, selectedId]);
+  }, [nodes, selectId, selectedId]);
 
   const addNode = useCallback((id: string) => {
     setNodes(state => [...state, { id, expanded: false }]);
@@ -46,12 +50,12 @@ const TreeView: React.FC<TreeViewProps> = ({
   const selectNode = useCallback(
     (id: string) => {
       if (selectedId !== id) {
-        setSelectedId(id);
+        selectId(id);
       } else {
-        setSelectedId('');
+        selectId('');
       }
     },
-    [selectedId],
+    [selectId, selectedId],
   );
 
   const expandNode = useCallback((id: string) => {
@@ -68,7 +72,12 @@ const TreeView: React.FC<TreeViewProps> = ({
     <TreeViewContext.Provider
       value={{ nodes, addNode, removeNode, selectedId, selectNode, expandNode }}
     >
-      <Tree onClick={() => setSelectedId('')} className={className}>
+      <Tree
+        onClick={() => {
+          selectId('');
+        }}
+        className={className}
+      >
         {children}
       </Tree>
     </TreeViewContext.Provider>
