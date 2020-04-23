@@ -32,13 +32,6 @@ const TreeView: React.FC<TreeViewProps> = ({
     [onNodeSelect],
   );
 
-  // 選択されているノードが存在しない場合、選択状態を解除する
-  useEffect(() => {
-    if (nodes.filter(node => node.id === selectedId).length === 0) {
-      selectId('');
-    }
-  }, [nodes, selectId, selectedId]);
-
   const addNode = useCallback((id: string) => {
     setNodes(state => [...state, { id, expanded: false }]);
   }, []);
