@@ -52,10 +52,6 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
 
     return () => {
       removeNode(nodeId);
-      // 選択状態のノードであれば、選択状態を解除する
-      if (nodeId === selectedId) {
-        selectNode('');
-      }
     };
   }, [addNode, nodeId, removeNode, selectNode, selectedId]);
 

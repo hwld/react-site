@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useReducer } from 'react';
 import styled from 'styled-components';
 import TreeViewContext, { TreeNode } from './TreeViewContext';
 
@@ -15,50 +15,96 @@ interface TreeViewProps {
   onNodeSelect?: (id: string) => void;
 }
 
+type TreeViewState = {
+  nodes: TreeNode[];
+  selectedId: string;
+  selectedIdHistory: string;
+};
+
+type TreeViewAction =
+  | { type: 'addNode'; id: string }
+  | { type: 'removeNode'; id: string }
+  | { type: 'selectNode'; id: string }
+  | { type: 'expandNode'; id: string };
+
+const TreeViewReducer: React.Reducer<TreeViewState, TreeViewAction> = (
+  state: TreeViewState,
+  action: TreeViewAction,
+) => {
+  switch (action.type) {
+    case 'addNode': {
+      return {
+        ...state,
+        nodes: [...state.nodes, { id: action.id, expanded: false }],
+      };
+    }
+    case 'removeNode': {
+      return {
+        ...state,
+        nodes: state.nodes.filter(node => node.id !== action.id),
+      };
+    }
+    case 'selectNode': {
+      const newState = {
+        ...state,
+        selectedId: action.id !== state.selectedId ? action.id : '',
+      };
+      window.console.log(newState);
+
+      return newState;
+    }
+    case 'expandNode': {
+      const newState = {
+        ...state,
+        nodes: state.nodes.map(
+          (node): TreeNode => {
+            if (node.id === action.id) {
+              return { id: node.id, expanded: !node.expanded };
+            }
+
+            return node;
+          },
+        ),
+      };
+      window.console.log(newState);
+
+      return newState;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 const TreeView: React.FC<TreeViewProps> = ({
   children,
   className,
   onNodeSelect,
 }) => {
-  const [nodes, setNodes] = useState<TreeNode[]>([]);
-  const [selectedId, setSelectedId] = useState('');
+  const [{ nodes, selectedId }, dispatch] = useReducer(TreeViewReducer, {
+    nodes: [],
+    selectedId: '',
+    selectedIdHistory: '',
+  });
 
-  // 内部の選択状態と外部の選択状態を同時に設定する
-  const selectId = useCallback(
+  const addNode = useCallback((id: string) => {
+    dispatch({ type: 'addNode', id });
+  }, []);
+
+  const removeNode = useCallback((id: string) => {
+    dispatch({ type: 'removeNode', id });
+  }, []);
+
+  const selectNode = useCallback(
     (id: string) => {
-      setSelectedId(id);
+      dispatch({ type: 'selectNode', id });
       if (onNodeSelect) onNodeSelect(id);
     },
     [onNodeSelect],
   );
 
-  const addNode = useCallback((id: string) => {
-    setNodes(state => [...state, { id, expanded: false }]);
-  }, []);
-
-  const removeNode = useCallback((id: string) => {
-    setNodes(state => state.filter(node => node.id !== id));
-  }, []);
-
-  const selectNode = useCallback(
-    (id: string) => {
-      if (selectedId !== id) {
-        selectId(id);
-      } else {
-        selectId('');
-      }
-    },
-    [selectId, selectedId],
-  );
-
   const expandNode = useCallback((id: string) => {
-    setNodes(state => {
-      return state.map(node => {
-        if (node.id === id) return { id: node.id, expanded: !node.expanded };
-
-        return node;
-      });
-    });
+    dispatch({ type: 'expandNode', id });
   }, []);
 
   return (
@@ -67,7 +113,7 @@ const TreeView: React.FC<TreeViewProps> = ({
     >
       <Tree
         onClick={() => {
-          selectId('');
+          selectNode('');
         }}
         className={className}
       >
