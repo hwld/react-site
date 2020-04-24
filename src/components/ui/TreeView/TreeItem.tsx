@@ -53,7 +53,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     return () => {
       removeNode(nodeId);
     };
-  }, [addNode, nodeId, removeNode, selectNode, selectedId]);
+  }, [addNode, nodeId, removeNode]);
 
   const expandable = Boolean(
     Array.isArray(children) ? children.length : children,
