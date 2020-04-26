@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { useTheme, useMediaQuery } from '@material-ui/core';
 import NotesView from './NotesView';
@@ -24,6 +24,10 @@ const Home: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
+  const handleGenreSelect = useCallback((id: string) => {
+    setSelectedGenreId(id);
+  }, []);
+
   return (
     <MobileContext.Provider value={{ isMobile }}>
       <Background>
@@ -36,9 +40,7 @@ const Home: React.FC = () => {
           onClose={() => setIsOpen(false)}
         >
           <GenresView
-            onGenreSelect={(genreId: string) => {
-              setSelectedGenreId(genreId);
-            }}
+            onGenreSelect={handleGenreSelect}
             selectedGenreId={selectedGenreId}
           />
         </Drawer>

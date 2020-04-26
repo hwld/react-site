@@ -94,8 +94,8 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
   return genres.length !== 0 ? (
     <StyledTreeView
       className={className}
-      onNodeSelect={(genreId: string) => {
-        onGenreSelect(genreId);
+      onNodeSelect={(id: string) => {
+        onGenreSelect(id);
       }}
     >
       {genreTreeItems}
