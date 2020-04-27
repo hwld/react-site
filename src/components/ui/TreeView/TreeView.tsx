@@ -78,8 +78,8 @@ const TreeView: React.FC<TreeViewProps> = ({
   );
 
   const handleTreeClick = useCallback(() => {
-    select('');
-  }, [select]);
+    selectNode(selectedId);
+  }, [selectNode, selectedId]);
 
   return (
     <TreeViewContext.Provider
