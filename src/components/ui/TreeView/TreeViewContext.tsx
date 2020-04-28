@@ -6,26 +6,26 @@ export type TreeNode = {
 };
 
 type TreeViewContextValue = {
-  selectedId: string;
-  selectNode: (id: string) => void;
-  expandedIds: string[];
-  expandNode: (id: string) => void;
+  nodes: TreeNode[];
   addNode: (id: string) => void;
   removeNode: (id: string) => void;
+  selectedId: string;
+  selectNode: (id: string) => void;
+  expandNode: (id: string) => void;
 };
 
 const TreeViewContext = React.createContext<TreeViewContextValue>({
+  nodes: [],
   selectedId: '',
-  expandedIds: [],
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  selectNode: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  expandNode: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   addNode: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   removeNode: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  selectNode: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  expandNode: () => {},
 });
 
 if (process.env.NODE_ENV !== 'production') {

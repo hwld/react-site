@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -39,31 +39,34 @@ interface TreeItemProps {
 
 const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   const {
-    selectedId,
-    selectNode,
-    expandedIds,
-    expandNode,
+    nodes,
     addNode,
     removeNode,
+    selectedId,
+    selectNode,
+    expandNode,
   } = useContext(TreeViewContext);
 
   useEffect(() => {
     addNode(nodeId);
-  }, [nodeId, addNode]);
 
-  useEffect(() => {
     return () => {
       removeNode(nodeId);
     };
-  }, [nodeId, removeNode]);
+  }, [addNode, nodeId, removeNode]);
 
   const expandable = Boolean(
     Array.isArray(children) ? children.length : children,
   );
 
   const expanded: boolean = useMemo(() => {
-    return !!expandedIds.find(id => id === nodeId);
-  }, [expandedIds, nodeId]);
+    const node = nodes.find(n => n.id === nodeId);
+    if (node) {
+      return node.expanded;
+    }
+
+    return false;
+  }, [nodeId, nodes]);
 
   const select = (event: React.MouseEvent<{}>) => {
     event.stopPropagation();
@@ -88,6 +91,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    window.console.log(event.key);
     if (event.key === 'Enter') {
       selectNode(nodeId);
     } else if (event.key === ' ') {
