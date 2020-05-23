@@ -44,7 +44,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         <IconButton edge="start" onClick={onMenuClick}>
           <MenuIcon />
         </IconButton>
-        <AppTitle variant="h4">検索モード</AppTitle>
+        <AppTitle variant="h5">検索モード</AppTitle>
         <Tooltip title={<Typography>ホームに戻る</Typography>}>
           <IconButton onClick={backHome}>
             <HomeIcon />
