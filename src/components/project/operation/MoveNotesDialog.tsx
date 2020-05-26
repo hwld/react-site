@@ -47,7 +47,11 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
         <DialogContentText color="textPrimary">
           移動先ジャンル
         </DialogContentText>
-        <StyledGenreTreeList genres={genres} onGenreSelect={setDestGenreId} />
+        <StyledGenreTreeList
+          genres={genres}
+          selectedGenreId={destGenreId}
+          onGenreSelect={setDestGenreId}
+        />
       </DialogContent>
     </OperationDialog>
   );

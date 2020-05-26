@@ -22,7 +22,13 @@ const GenreView: React.FC<GenreViewProps> = ({
   return (
     <ContentColumn
       className={className}
-      content={<GenreTreeList genres={genres} onGenreSelect={onGenreSelect} />}
+      content={
+        <GenreTreeList
+          genres={genres}
+          selectedGenreId={selectedGenreId}
+          onGenreSelect={onGenreSelect}
+        />
+      }
       footerMenu={
         <GenreViewMenu genres={genres} selectedGenreId={selectedGenreId} />
       }

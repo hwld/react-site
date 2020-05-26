@@ -12,16 +12,18 @@ const Tree = styled.ul`
 
 interface TreeViewProps {
   className?: string;
+  defaultSelectedId?: string;
   onNodeSelect?: (id: string) => void;
 }
 
 const TreeView: React.FC<TreeViewProps> = ({
   children,
   className,
+  defaultSelectedId = '',
   onNodeSelect,
 }) => {
   const [nodes, setNodes] = useState<TreeNode[]>([]);
-  const [selectedId, setSelectedId] = useState('');
+  const [selectedId, setSelectedId] = useState(defaultSelectedId);
 
   // 内部の選択状態と外部の選択状態を同時に設定する
   const selectId = useCallback(
@@ -34,7 +36,11 @@ const TreeView: React.FC<TreeViewProps> = ({
 
   // 選択されているノードが存在しない場合、選択状態を解除する
   useEffect(() => {
-    if (nodes.filter(node => node.id === selectedId).length === 0) {
+    if (
+      selectedId !== '' &&
+      nodes.length !== 0 &&
+      nodes.filter(node => node.id === selectedId).length === 0
+    ) {
       selectId('');
     }
   }, [nodes, selectId, selectedId]);

@@ -51,7 +51,11 @@ const SelectGenreButton: React.FC<SelectGenreButtonprops> = ({
       <Dialog open={isOpen} onClose={closeDialog} fullWidth maxWidth="sm">
         <DialogTitle>検索するジャンルの選択</DialogTitle>
         <DialogContent>
-          <StyledGenreTreeList genres={genres} onGenreSelect={selectListItem} />
+          <StyledGenreTreeList
+            genres={genres}
+            selectedGenreId={selectedGenreId}
+            onGenreSelect={selectListItem}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={select} variant="contained" color="secondary">
