@@ -32,18 +32,6 @@ const TreeView: React.FC<TreeViewProps> = ({
     [onNodeSelect],
   );
 
-  // TreeViewが破棄されたとき、外部の選択状態を解除する
-  // 再レンダリング前提の破棄のときに復元を行う
-  useEffect(() => {
-    if (selectedId !== '') {
-      if (onNodeSelect) onNodeSelect(selectedId);
-    }
-
-    return () => {
-      if (onNodeSelect) onNodeSelect('');
-    };
-  }, [onNodeSelect, selectedId]);
-
   // 選択されているノードが存在しない場合、選択状態を解除する
   useEffect(() => {
     if (nodes.filter(node => node.id === selectedId).length === 0) {

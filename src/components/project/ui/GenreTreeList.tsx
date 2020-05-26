@@ -91,17 +91,19 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
     return treeObject.map(obj => buildGenreTreeItems(obj));
   }, [buildGenreTreeItems, buildGenreTreeNode, genres, genresCompareFunction]);
 
-  return genres.length !== 0 ? (
+  return (
     <StyledTreeView
       className={className}
       onNodeSelect={(id: string) => {
         onGenreSelect(id);
       }}
     >
-      {genreTreeItems}
+      {genres.length !== 0 ? (
+        genreTreeItems
+      ) : (
+        <Alert severity="warning">ジャンルが存在しません</Alert>
+      )}
     </StyledTreeView>
-  ) : (
-    <Alert severity="warning">ジャンルが存在しません</Alert>
   );
 };
 

@@ -77,14 +77,16 @@ const NoteList: React.FC<NoteListProps> = ({
       ));
   }, [notes, notesCompareFunction, notesSortOrder, searchCriteria]);
 
-  return notes.length !== 0 ? (
+  return (
     <List className={className} onSelect={onNotesSelect}>
-      {listItems}
+      {notes.length !== 0 ? (
+        listItems
+      ) : (
+        <Alert className={className} severity="warning">
+          メモが存在しません
+        </Alert>
+      )}
     </List>
-  ) : (
-    <Alert className={className} severity="warning">
-      メモが存在しません
-    </Alert>
   );
 };
 

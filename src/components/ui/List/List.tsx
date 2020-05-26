@@ -29,18 +29,6 @@ const List: React.FC<ListProps> = ({ children, className, onSelect }) => {
     });
   }, [ItemIds, selectedIds]);
 
-  // Listの破棄時に外部の選択状態を解除する
-  // 再レンダリング前提の破棄と区別がつけられないので再レンダリング時には選択状態を戻す
-  useEffect(() => {
-    if (selectedIds.length === 0) {
-      if (onSelect) onSelect(selectedIds);
-    }
-
-    return () => {
-      if (onSelect) onSelect([]);
-    };
-  }, [onSelect, selectedIds]);
-
   const setItemId = useCallback((id: string) => {
     setItemIds(ids => [...ids, id]);
   }, []);
