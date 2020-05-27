@@ -54,14 +54,12 @@ const Login: React.FC = () => {
       ) : (
         <LoginForm>
           <LoginIcon />
-          <LoginButton
+          <input
             onClick={onLogin}
-            type="button"
-            color="secondary"
-            variant="contained"
-          >
-            <Typography color="textSecondary">ログイン</Typography>
-          </LoginButton>
+            type="image"
+            src="./btn_google_signin_dark_normal_web.png"
+            alt="Googleでログイン"
+          />
         </LoginForm>
       )}
     </Background>
