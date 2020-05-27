@@ -38,7 +38,6 @@ const TreeView: React.FC<TreeViewProps> = ({
   useEffect(() => {
     if (
       selectedId !== '' &&
-      nodes.length !== 0 &&
       nodes.filter(node => node.id === selectedId).length === 0
     ) {
       selectId('');
