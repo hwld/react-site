@@ -34,8 +34,8 @@ const SelectGenreButton: React.FC<SelectGenreButtonprops> = ({
     setIsOpen(false);
   };
 
-  const selectListItem = (id: string) => {
-    setSelectedGenreId(id);
+  const selectListItem = (ids: string[]) => {
+    setSelectedGenreId(ids[0] || '');
   };
 
   const select = () => {
@@ -53,7 +53,7 @@ const SelectGenreButton: React.FC<SelectGenreButtonprops> = ({
         <DialogContent>
           <StyledGenreTreeList
             genres={genres}
-            selectedGenreId={selectedGenreId}
+            selectedGenreIds={[selectedGenreId]}
             onGenreSelect={selectListItem}
           />
         </DialogContent>

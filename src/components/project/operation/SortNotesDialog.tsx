@@ -9,14 +9,14 @@ import OperationDialog from './OperationDialog';
 interface SortNotesDialogProps {
   sort: (order: NotesSortOrder) => void;
   defaultSortOrder: NotesSortOrder;
-  selectedGenreId: string;
+  disabled?: boolean;
   size?: SvgIconProps['fontSize'];
 }
 
 const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
   sort,
   defaultSortOrder,
-  selectedGenreId,
+  disabled,
   size,
 }) => {
   const [sortOrder, setSortOrder] = useState(defaultSortOrder);
@@ -43,7 +43,7 @@ const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
     <OperationDialog
       tooltipText="ノートを並び替える"
       activatorIcon={<SortNoteIcon fontSize={size} />}
-      activatorDisabled={selectedGenreId.length === 0}
+      activatorDisabled={disabled}
       doneText="並び替え"
       onDone={sortNotes}
       onOpen={setDefaultSortOrder}

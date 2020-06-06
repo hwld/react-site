@@ -7,12 +7,14 @@ import GenresContext from '../../../context/GenresContext';
 import { GenreField } from '../../../services/genres';
 
 interface AddGenreDialogProps {
-  selectedGenreId: string;
+  disabled?: boolean;
+  selectedGenreIds: string[];
   size?: SvgIconProps['fontSize'];
 }
 
 const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
-  selectedGenreId,
+  disabled,
+  selectedGenreIds,
   size,
 }) => {
   const { addGenre } = useContext(GenresContext);
@@ -25,7 +27,7 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
       id: '',
       creationDate: new Date(),
       genreName: genre.genreName,
-      parentGenreId: selectedGenreId,
+      parentGenreId: selectedGenreIds[0] || '',
       childrenGenreIds: [],
     });
   };
@@ -42,6 +44,7 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
     <OperationDialog
       tooltipText="ジャンルを追加"
       activatorIcon={<AddGenreIcon fontSize={size} />}
+      activatorDisabled={disabled}
       doneText="追加"
       onDone={add}
       doneDisabled={genre.genreName.length === 0}

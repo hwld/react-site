@@ -7,11 +7,13 @@ import OperationDialog from './OperationDialog';
 import EditGenreField from '../ui/EditGenreFields';
 
 interface UpdateGenreDialogProps {
+  disabled?: boolean;
   defaultGenre: Genre;
   size?: SvgIconProps['fontSize'];
 }
 
 const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
+  disabled,
   defaultGenre,
   size,
 }) => {
@@ -34,7 +36,7 @@ const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
     <OperationDialog
       tooltipText="ジャンルを編集"
       activatorIcon={<EditIcon fontSize={size} />}
-      activatorDisabled={defaultGenre.id === ''}
+      activatorDisabled={disabled}
       doneText="変更"
       onDone={update}
       doneDisabled={genre.genreName === ''}

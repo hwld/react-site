@@ -6,14 +6,14 @@ import ContentColumn from '../../ui/ContentColumn';
 import GenreViewMenu from './GenresViewMenu';
 
 interface GenreViewProps {
-  onGenreSelect: (selectedId: string) => void;
-  selectedGenreId: string;
+  onGenreSelect: (selectedId: string[]) => void;
+  selectedGenreIds: string[];
   className?: string;
 }
 
 const GenreView: React.FC<GenreViewProps> = ({
   onGenreSelect,
-  selectedGenreId,
+  selectedGenreIds,
   className,
 }) => {
   const { genres } = useContext(GenresContext);
@@ -24,13 +24,14 @@ const GenreView: React.FC<GenreViewProps> = ({
       className={className}
       content={
         <GenreTreeList
+          multiple
           genres={genres}
-          selectedGenreId={selectedGenreId}
+          selectedGenreIds={selectedGenreIds}
           onGenreSelect={onGenreSelect}
         />
       }
       footerMenu={
-        <GenreViewMenu genres={genres} selectedGenreId={selectedGenreId} />
+        <GenreViewMenu genres={genres} selectedGenreIds={selectedGenreIds} />
       }
       footerColor={theme.palette.secondary.main}
     />

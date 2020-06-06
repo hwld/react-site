@@ -20,6 +20,16 @@ export interface GenreInfo {
 
 export type Genre = GenreField & GenreDate & GenreInfo;
 
+export const createDefaultGenre = () => {
+  return {
+    id: '',
+    creationDate: new Date(),
+    genreName: '',
+    parentGenreId: '',
+    childrenGenreIds: [],
+  };
+};
+
 const useGenres = (uid: string) => {
   const genresRef = useMemo(() => {
     if (uid !== '') {

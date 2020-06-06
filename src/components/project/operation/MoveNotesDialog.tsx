@@ -13,6 +13,7 @@ import GenreTreeList from '../ui/GenreTreeList';
 import NotesContext from '../../../context/NotesContext';
 
 interface MoveNotesDialogProps {
+  disabled?: boolean;
   selectedNotesIds: string[];
   size?: SvgIconProps['fontSize'];
 }
@@ -23,6 +24,7 @@ const StyledGenreTreeList = styled(GenreTreeList)`
 `;
 
 const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
+  disabled,
   selectedNotesIds,
   size,
 }) => {
@@ -35,10 +37,15 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
     selectedNotesIds.forEach(id => moveNote(id, destGenreId));
   };
 
+  const selectGenre = (ids: string[]) => {
+    setDestGenreId(ids[0] || '');
+  };
+
   return (
     <OperationDialog
       tooltipText="メモを移動"
       activatorIcon={<MoveNoteIcon fontSize={size} />}
+      activatorDisabled={disabled}
       doneText="移動"
       onDone={moveNotes}
     >
@@ -49,8 +56,8 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
         </DialogContentText>
         <StyledGenreTreeList
           genres={genres}
-          selectedGenreId={destGenreId}
-          onGenreSelect={setDestGenreId}
+          selectedGenreIds={[destGenreId]}
+          onGenreSelect={selectGenre}
         />
       </DialogContent>
     </OperationDialog>

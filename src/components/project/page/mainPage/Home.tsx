@@ -19,13 +19,13 @@ const RightNotesView = styled(NotesView)`
 
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [selectedGenreId, setSelectedGenreId] = useState('');
+  const [selectedGenreIds, setSelectedGenreIds] = useState<string[]>([]);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const handleGenreSelect = useCallback((id: string) => {
-    setSelectedGenreId(id);
+  const handleGenreSelect = useCallback((id: string[]) => {
+    setSelectedGenreIds(id);
   }, []);
 
   return (
@@ -41,10 +41,10 @@ const Home: React.FC = () => {
         >
           <GenresView
             onGenreSelect={handleGenreSelect}
-            selectedGenreId={selectedGenreId}
+            selectedGenreIds={selectedGenreIds}
           />
         </Drawer>
-        <RightNotesView selectedGenreId={selectedGenreId} />
+        <RightNotesView selectedGenreIds={selectedGenreIds} />
       </Background>
     </MobileContext.Provider>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { useTheme, Typography, Card, CardContent } from '@material-ui/core';
+import { useTheme } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import styled from 'styled-components';
 import NotesContext from '../../../../context/NotesContext';
@@ -8,28 +8,26 @@ import { NotesSortOrder } from '../../ui/NotesSortConditionFields';
 import ContentColumn from '../../ui/ContentColumn';
 import NotesViewMenu from './NotesViewMenu';
 import MobileContext from '../../../../context/MobileContext';
-import GenresContext from '../../../../context/GenresContext';
 
 const StyledNoteList = styled(NoteList)`
   padding-top: 20px;
 `;
 
 interface NoteViewProps {
-  selectedGenreId: string;
+  selectedGenreIds: string[];
   className?: string;
 }
 
-const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
+const NoteView: React.FC<NoteViewProps> = ({ selectedGenreIds, className }) => {
   const theme = useTheme();
 
   const { isMobile } = useContext(MobileContext);
 
-  const { genres } = useContext(GenresContext);
-  const selectedGenreName = genres.find(genre => genre.id === selectedGenreId)
-    ?.genreName;
-
   const { notes } = useContext(NotesContext);
-  const viewNotes = notes.filter(note => note.genreId === selectedGenreId);
+  const viewNotes = notes.filter(note =>
+    selectedGenreIds.includes(note.genreId),
+  );
+  console.log(viewNotes);
 
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
 
@@ -47,13 +45,8 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
   }, []);
 
   const notesContent = () => {
-    return selectedGenreId !== '' ? (
+    return selectedGenreIds.length !== 0 ? (
       <>
-        <Card>
-          <CardContent>
-            <Typography>{selectedGenreName}</Typography>
-          </CardContent>
-        </Card>
         <StyledNoteList
           notes={viewNotes}
           notesSortOrder={notesSortOrder}
@@ -72,7 +65,7 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreId, className }) => {
       fixedFooter={isMobile}
       footerMenu={
         <NotesViewMenu
-          selectedGenreId={selectedGenreId}
+          selectedGenreIds={selectedGenreIds}
           selectedNoteIds={selectedNoteIds}
           defaultNotesSortOrder={notesSortOrder}
           sortNotes={sortNotes}

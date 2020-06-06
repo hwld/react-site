@@ -1,35 +1,44 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import AddGenreDialog from '../../operation/AddGenreDialog';
 
-import { Genre } from '../../../../services/genres';
+import { Genre, createDefaultGenre } from '../../../../services/genres';
 import RemoveGenreDialog from '../../operation/RemoveGenreDIalog';
 import UpdateGenreDialog from '../../operation/UpdateGenreDialog';
 
 interface GenreViewMenuProps {
   genres: Genre[];
-  selectedGenreId: string;
+  selectedGenreIds: string[];
 }
 
 const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
   genres,
-  selectedGenreId,
+  selectedGenreIds,
 }) => {
-  const selectedGenre = genres.find(genre => genre.id === selectedGenreId);
+  const selectedGenres = genres.filter(genre =>
+    selectedGenreIds.includes(genre.id),
+  );
+
+  const removeGenreDisabled = useMemo(() => {
+    const parentIds = genres
+      .filter(genre => selectedGenreIds.includes(genre.id))
+      .map(genre => genre.parentGenreId);
+
+    return (
+      selectedGenreIds.length === 0 ||
+      !parentIds.every(id => id === parentIds[0])
+    );
+  }, [genres, selectedGenreIds]);
 
   return (
     <>
-      <AddGenreDialog selectedGenreId={selectedGenreId} />
-      <RemoveGenreDialog selectedGenreId={selectedGenreId} />
+      <AddGenreDialog selectedGenreIds={selectedGenreIds} />
+      <RemoveGenreDialog
+        disabled={removeGenreDisabled}
+        selectedGenreIds={selectedGenreIds}
+      />
       <UpdateGenreDialog
-        defaultGenre={
-          selectedGenre || {
-            id: '',
-            creationDate: new Date(),
-            genreName: '',
-            parentGenreId: '',
-            childrenGenreIds: [],
-          }
-        }
+        disabled={selectedGenres.length !== 1}
+        defaultGenre={selectedGenres[0] || createDefaultGenre()}
       />
     </>
   );

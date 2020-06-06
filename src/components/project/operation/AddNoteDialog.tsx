@@ -7,11 +7,13 @@ import OperationDialog from './OperationDialog';
 import EditNoteField from '../ui/EditNoteFields';
 
 interface AddNoteDialogProps {
+  disabled?: boolean;
   selectedGenreId: string;
   size?: SvgIconProps['fontSize'];
 }
 
 const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
+  disabled,
   selectedGenreId,
   size,
 }) => {
@@ -49,7 +51,7 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
     <OperationDialog
       tooltipText="メモを追加"
       activatorIcon={<AddNoteIcon fontSize={size} />}
-      activatorDisabled={selectedGenreId === ''}
+      activatorDisabled={disabled}
       doneText="追加"
       onDone={add}
       doneDisabled={note.text.length === 0}

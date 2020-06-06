@@ -8,9 +8,10 @@ import { Genre } from '../../../services/genres';
 export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
 
 interface GenreTreeListProps {
+  multiple?: boolean;
   genres: Genre[];
-  selectedGenreId: string;
-  onGenreSelect: (selectedId: string) => void;
+  selectedGenreIds: string[];
+  onGenreSelect: (selectedId: string[]) => void;
   className?: string;
 }
 
@@ -21,8 +22,9 @@ const StyledTreeView = styled(TreeView)`
 `;
 
 const GenreTreeList: React.FC<GenreTreeListProps> = ({
+  multiple = false,
   genres,
-  selectedGenreId,
+  selectedGenreIds,
   onGenreSelect,
   className,
 }) => {
@@ -95,10 +97,11 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
 
   return (
     <StyledTreeView
+      multiple={multiple}
       className={className}
-      defaultSelectedId={selectedGenreId}
+      defaultSelectedIds={selectedGenreIds}
       onNodeSelect={(id: string[]) => {
-        onGenreSelect(id[0] || '');
+        onGenreSelect(id);
       }}
     >
       {genres.length !== 0 ? (

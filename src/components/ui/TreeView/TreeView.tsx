@@ -13,7 +13,7 @@ const Tree = styled.ul`
 interface TreeViewProps {
   className?: string;
   multiple?: boolean;
-  defaultSelectedId?: string;
+  defaultSelectedIds?: string[];
   onNodeSelect?: (id: string[]) => void;
 }
 
@@ -21,11 +21,11 @@ const TreeView: React.FC<TreeViewProps> = ({
   children,
   className,
   multiple,
-  defaultSelectedId = '',
+  defaultSelectedIds = [],
   onNodeSelect,
 }) => {
   const [nodes, setNodes] = useState<TreeNode[]>([]);
-  const [selectedIds, setSelectedIds] = useState([defaultSelectedId]);
+  const [selectedIds, setSelectedIds] = useState(defaultSelectedIds);
 
   // 内部の選択状態と外部の選択状態を同時に設定する
   const setSelectedIdsWithExternal = useCallback(

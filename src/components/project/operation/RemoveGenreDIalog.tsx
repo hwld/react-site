@@ -5,25 +5,27 @@ import GenresContext from '../../../context/GenresContext';
 import OperationDialog from './OperationDialog';
 
 interface RemoveGenreDialogProps {
-  selectedGenreId: string;
+  disabled?: boolean;
+  selectedGenreIds: string[];
   size?: SvgIconProps['fontSize'];
 }
 
 const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
-  selectedGenreId,
+  disabled,
+  selectedGenreIds,
   size,
 }) => {
   const { removeGenre } = useContext(GenresContext);
 
   const remove = () => {
-    removeGenre(selectedGenreId);
+    selectedGenreIds.forEach(id => removeGenre(id));
   };
 
   return (
     <OperationDialog
       tooltipText="ジャンルを削除"
       activatorIcon={<DeleteGenreIcon fontSize={size} />}
-      activatorDisabled={selectedGenreId === ''}
+      activatorDisabled={disabled}
       doneText="削除"
       onDone={remove}
     >

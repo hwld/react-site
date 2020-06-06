@@ -8,25 +8,31 @@ import SortNotesDialog from '../../operation/SortNotesDialog';
 interface NoteViewMenuProps {
   sortNotes: (order: NotesSortOrder) => void;
   defaultNotesSortOrder: NotesSortOrder;
-  selectedGenreId: string;
+  selectedGenreIds: string[];
   selectedNoteIds: string[];
 }
 
 const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
   sortNotes,
   defaultNotesSortOrder,
-  selectedGenreId,
+  selectedGenreIds,
   selectedNoteIds,
 }) => {
   return (
     <>
-      <AddNoteDialog selectedGenreId={selectedGenreId} />
+      <AddNoteDialog
+        disabled={selectedGenreIds.length !== 1}
+        selectedGenreId={selectedGenreIds[0] || ''}
+      />
       <RemoveNoteDialog selectedNoteIds={selectedNoteIds} />
-      <MoveNotesDialog selectedNotesIds={selectedNoteIds} />
+      <MoveNotesDialog
+        disabled={selectedGenreIds.length === 0}
+        selectedNotesIds={selectedNoteIds}
+      />
       <SortNotesDialog
+        disabled={selectedGenreIds.length === 0}
         defaultSortOrder={defaultNotesSortOrder}
         sort={sortNotes}
-        selectedGenreId={selectedGenreId}
       />
     </>
   );
