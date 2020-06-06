@@ -9,10 +9,6 @@ import ContentColumn from '../../ui/ContentColumn';
 import NotesViewMenu from './NotesViewMenu';
 import MobileContext from '../../../../context/MobileContext';
 
-const StyledNoteList = styled(NoteList)`
-  padding-top: 20px;
-`;
-
 interface NoteViewProps {
   selectedGenreIds: string[];
   className?: string;
@@ -47,7 +43,7 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreIds, className }) => {
   const notesContent = () => {
     return selectedGenreIds.length !== 0 ? (
       <>
-        <StyledNoteList
+        <NoteList
           notes={viewNotes}
           notesSortOrder={notesSortOrder}
           onNotesSelect={selectNoteIds}
