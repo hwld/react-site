@@ -42,8 +42,8 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     nodes,
     addNode,
     removeNode,
-    selectedId,
-    selectNode,
+    selectedIds,
+    changeSelectedIds,
     expandNode,
   } = useContext(TreeViewContext);
 
@@ -70,7 +70,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
 
   const select = (event: React.MouseEvent<{}>) => {
     event.stopPropagation();
-    selectNode(nodeId);
+    changeSelectedIds(nodeId, event.ctrlKey);
   };
 
   const expand = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
@@ -91,9 +91,8 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    window.console.log(event.key);
     if (event.key === 'Enter') {
-      selectNode(nodeId);
+      changeSelectedIds(nodeId, event.ctrlKey);
     } else if (event.key === ' ') {
       event.stopPropagation();
       if (expandable) {
@@ -105,7 +104,10 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   return (
     <TreeItemRoot>
       <TreeItemContentRoot tabIndex={0} onKeyDown={handleKeyDown}>
-        <TreeItemContent onClick={select} selected={nodeId === selectedId}>
+        <TreeItemContent
+          onClick={select}
+          selected={selectedIds.includes(nodeId)}
+        >
           <SvgIcon focusable onClick={expand} fontSize="large">
             {icon()}
           </SvgIcon>

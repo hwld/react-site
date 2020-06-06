@@ -21,9 +21,10 @@ const List: React.FC<ListProps> = ({ children, className, onSelect }) => {
     if (onSelect) onSelect(selectedIds);
   }, [onSelect, selectedIds]);
 
+  // 選択されているアイテムのうち、存在しないアイテムを外す.
   useEffect(() => {
     selectedIds.forEach(selectedId => {
-      if (selectedId !== '' && !ItemIds.includes(selectedId)) {
+      if (!ItemIds.includes(selectedId)) {
         setSelectedIds(ids => ids.filter(id => id !== selectedId));
       }
     });

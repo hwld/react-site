@@ -9,21 +9,21 @@ type TreeViewContextValue = {
   nodes: TreeNode[];
   addNode: (id: string) => void;
   removeNode: (id: string) => void;
-  selectedId: string;
-  selectNode: (id: string) => void;
+  selectedIds: string[];
+  changeSelectedIds: (id: string, withCtrKey: boolean) => void;
   expandNode: (id: string) => void;
 };
 
 const TreeViewContext = React.createContext<TreeViewContextValue>({
   nodes: [],
-  selectedId: '',
+  selectedIds: [],
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   addNode: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   removeNode: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  selectNode: () => {},
+  changeSelectedIds: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   expandNode: () => {},
 });

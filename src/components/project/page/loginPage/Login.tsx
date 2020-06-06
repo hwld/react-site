@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Typography, Button } from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
 import styled from 'styled-components';
 import { login, useCurrentUserId } from '../../../../services/auth';
@@ -32,10 +31,6 @@ const LoginForm = styled.div`
 const LoginIcon = styled(LockIcon)`
   width: 50%;
   height: 50%;
-`;
-
-const LoginButton = styled(Button)`
-  width: 70%;
 `;
 
 const Login: React.FC = () => {
