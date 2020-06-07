@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useContext } from 'react';
 import { useTheme } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import styled from 'styled-components';
 import NotesContext from '../../../../context/NotesContext';
 import NoteList from '../../ui/NoteList';
 import { NotesSortOrder } from '../../ui/NotesSortConditionFields';
@@ -23,7 +22,6 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreIds, className }) => {
   const viewNotes = notes.filter(note =>
     selectedGenreIds.includes(note.genreId),
   );
-  console.log(viewNotes);
 
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
 
