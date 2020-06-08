@@ -15,6 +15,7 @@ interface TreeViewProps {
   multiple?: boolean;
   defaultSelectedIds?: string[];
   onNodeSelect?: (id: string[]) => void;
+  onDrop?: (sourceIds: string[], targetId: string) => void;
 }
 
 const TreeView: React.FC<TreeViewProps> = ({
@@ -23,6 +24,7 @@ const TreeView: React.FC<TreeViewProps> = ({
   multiple,
   defaultSelectedIds = [],
   onNodeSelect,
+  onDrop,
 }) => {
   const [nodes, setNodes] = useState<TreeNode[]>([]);
   const [selectedIds, setSelectedIds] = useState(defaultSelectedIds);
@@ -111,6 +113,8 @@ const TreeView: React.FC<TreeViewProps> = ({
         selectedIds,
         changeSelectedIds,
         expandNode,
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onDrop: onDrop || (() => {}),
       }}
     >
       <Tree

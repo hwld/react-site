@@ -16,8 +16,21 @@ const GenreView: React.FC<GenreViewProps> = ({
   selectedGenreIds,
   className,
 }) => {
-  const { genres } = useContext(GenresContext);
+  const { genres, moveGenre } = useContext(GenresContext);
   const theme = useTheme();
+
+  const moveGenres = (genreIds: string[], destGenreId: string) => {
+    const sourceGenres = genreIds.map(id => {
+      const sourceGenre = genres.find(genre => genre.id === id);
+      if (!sourceGenre) {
+        throw Error();
+      }
+
+      return sourceGenre;
+    });
+
+    sourceGenres.forEach(sourceGenre => moveGenre(sourceGenre, destGenreId));
+  };
 
   return (
     <ContentColumn
@@ -28,6 +41,7 @@ const GenreView: React.FC<GenreViewProps> = ({
           genres={genres}
           selectedGenreIds={selectedGenreIds}
           onGenreSelect={onGenreSelect}
+          onDrop={moveGenres}
         />
       }
       footerMenu={

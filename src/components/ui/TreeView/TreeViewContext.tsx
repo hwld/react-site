@@ -12,6 +12,7 @@ type TreeViewContextValue = {
   selectedIds: string[];
   changeSelectedIds: (id: string, withCtrKey: boolean) => void;
   expandNode: (id: string) => void;
+  onDrop: (sourceIds: string[], targetId: string) => void;
 };
 
 const TreeViewContext = React.createContext<TreeViewContextValue>({
@@ -26,6 +27,8 @@ const TreeViewContext = React.createContext<TreeViewContextValue>({
   changeSelectedIds: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   expandNode: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  onDrop: () => {},
 });
 
 if (process.env.NODE_ENV !== 'production') {

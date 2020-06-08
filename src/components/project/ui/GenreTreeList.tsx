@@ -12,6 +12,7 @@ interface GenreTreeListProps {
   genres: Genre[];
   selectedGenreIds: string[];
   onGenreSelect: (selectedId: string[]) => void;
+  onDrop?: (sourceIds: string[], targetId: string) => void;
   className?: string;
 }
 
@@ -26,6 +27,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
   genres,
   selectedGenreIds,
   onGenreSelect,
+  onDrop,
   className,
 }) => {
   // 同じ親を持つgenreを作成順に並び替える.
@@ -103,6 +105,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
       onNodeSelect={(id: string[]) => {
         onGenreSelect(id);
       }}
+      onDrop={onDrop}
     >
       {genres.length !== 0 ? (
         genreTreeItems

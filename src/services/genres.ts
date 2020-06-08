@@ -176,10 +176,12 @@ const useGenres = (uid: string) => {
 
   const moveGenre = useCallback(
     (genre: Genre, destGenreId: string | '') => {
-      // 移動元ジャンルの親のchildrenから移動元ジャンルを削除する
-      genresRef.doc(genre.parentGenreId).update({
-        childrenGenreIds: firebase.firestore.FieldValue.arrayRemove(genre.id),
-      });
+      // 移動元ジャンルの親がrootじゃない場合、childrenから移動元ジャンルを削除する
+      if (genre.parentGenreId !== '') {
+        genresRef.doc(genre.parentGenreId).update({
+          childrenGenreIds: firebase.firestore.FieldValue.arrayRemove(genre.id),
+        });
+      }
 
       // 移動元ジャンルの親を移動先ジャンルに設定
       // 親がルート

@@ -53,6 +53,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     selectedIds,
     changeSelectedIds,
     expandNode,
+    onDrop,
   } = useContext(TreeViewContext);
 
   const [{ isDragging }, drag, preview] = useDrag({
@@ -65,6 +66,11 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
         changeSelectedIds(nodeId, false);
       }
     },
+    end: (item, monitor) => {
+      if (monitor.didDrop()) {
+        selectedIds.forEach(id => changeSelectedIds(id, false));
+      }
+    },
   });
 
   const [{ isOver, canDrop }, drop] = useDrop({
@@ -74,6 +80,9 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
       canDrop: !!monitor.canDrop(),
     }),
     canDrop: () => !isDragging && !selectedIds.includes(nodeId),
+    drop: () => {
+      onDrop(selectedIds, nodeId);
+    },
   });
 
   useEffect(() => {
