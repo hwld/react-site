@@ -174,7 +174,34 @@ const useGenres = (uid: string) => {
     [genresRef],
   );
 
-  return { genres, addGenre, removeGenre, updateGenre };
+  const moveGenre = useCallback(
+    (genre: Genre, destGenreId: string | '') => {
+      // 移動元ジャンルの親のchildrenから移動元ジャンルを削除する
+      genresRef.doc(genre.parentGenreId).update({
+        childrenGenreIds: firebase.firestore.FieldValue.arrayRemove(genre.id),
+      });
+
+      // 移動元ジャンルの親を移動先ジャンルに設定
+      // 親がルート
+      if (destGenreId === '') {
+        genresRef.doc(genre.id).update({
+          parentGenreId: '',
+        });
+      } else {
+        genresRef.doc(genre.id).update({
+          parentGenreId: destGenreId,
+        });
+
+        // 親がルートでなければchildrenも設定する
+        genresRef.doc(destGenreId).update({
+          childrenGenreIds: firebase.firestore.FieldValue.arrayUnion(genre.id),
+        });
+      }
+    },
+    [genresRef],
+  );
+
+  return { genres, addGenre, removeGenre, updateGenre, moveGenre };
 };
 
 export { useGenres };

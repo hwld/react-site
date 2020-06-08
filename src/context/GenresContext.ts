@@ -6,6 +6,7 @@ type GenresContextValue = {
   addGenre: (genre: Genre) => void;
   removeGenre: (id: string) => Promise<void>;
   updateGenre: (genre: Genre) => void;
+  moveGenre: (genre: Genre, destGenreId: string) => void;
 };
 
 const GenresContext = React.createContext<GenresContextValue>({
@@ -17,6 +18,8 @@ const GenresContext = React.createContext<GenresContextValue>({
   removeGenre: () => new Promise(resolve => resolve()),
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   updateGenre: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  moveGenre: () => {},
 });
 
 export default GenresContext;

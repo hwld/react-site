@@ -13,12 +13,14 @@ import MainHome from './components/project/page/mainPage/Home';
 
 const App: React.FC = () => {
   const { userId, loading } = useCurrentUserId();
-  const { genres, addGenre, removeGenre, updateGenre } = useGenres(userId);
+  const { genres, addGenre, removeGenre, updateGenre, moveGenre } = useGenres(
+    userId,
+  );
   const { notes, addNote, removeNote, updateNote, moveNote } = useNotes(userId);
 
   return (
     <GenresContext.Provider
-      value={{ genres, addGenre, removeGenre, updateGenre }}
+      value={{ genres, addGenre, removeGenre, updateGenre, moveGenre }}
     >
       <NotesContext.Provider
         value={{ notes, addNote, removeNote, updateNote, moveNote }}
