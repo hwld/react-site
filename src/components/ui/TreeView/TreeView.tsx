@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
+import { useDrop } from 'react-dnd';
 import TreeViewContext, { TreeNode } from './TreeViewContext';
+import { ItemTypes } from './ItemTypes';
 
 const Tree = styled.ul`
   list-style: none;
@@ -49,6 +51,13 @@ const TreeView: React.FC<TreeViewProps> = ({
       }
     });
   }, [nodes, selectedIds, setSelectedIdsWithExternal]);
+
+  const [, drop] = useDrop({
+    accept: ItemTypes.TreeItem,
+    drop: () => {
+      if (onDrop) onDrop(selectedIds, '');
+    },
+  });
 
   const addNode = useCallback((id: string) => {
     setNodes(state => [...state, { id, expanded: false }]);
@@ -122,6 +131,7 @@ const TreeView: React.FC<TreeViewProps> = ({
           setSelectedIdsWithExternal([]);
         }}
         className={className}
+        ref={drop}
       >
         {children}
       </Tree>
