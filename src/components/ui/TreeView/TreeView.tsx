@@ -122,7 +122,6 @@ const TreeView: React.FC<TreeViewProps> = ({
         selectedIds,
         changeSelectedIds,
         expandNode,
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         onDrop: onDrop || (() => {}),
       }}
     >

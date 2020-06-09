@@ -19,15 +19,10 @@ const TreeViewContext = React.createContext<TreeViewContextValue>({
   nodes: [],
   selectedIds: [],
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  addNode: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  addNode: () => {},  
   removeNode: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   changeSelectedIds: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   expandNode: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onDrop: () => {},
 });
 

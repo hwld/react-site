@@ -13,13 +13,9 @@ type NotesContextValue = {
 const NotesContext = React.createContext<NotesContextValue>({
   notes: [],
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   addNote: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  removeNote: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  removeNote: () => {},  
   updateNote: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   moveNote: () => {},
 });
 

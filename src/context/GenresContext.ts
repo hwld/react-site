@@ -12,13 +12,9 @@ type GenresContextValue = {
 const GenresContext = React.createContext<GenresContextValue>({
   genres: [],
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   addGenre: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   removeGenre: () => new Promise(resolve => resolve()),
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   updateGenre: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   moveGenre: () => {},
 });
 
