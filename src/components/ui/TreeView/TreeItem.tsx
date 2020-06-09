@@ -80,8 +80,10 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
       canDrop: !!monitor.canDrop(),
     }),
     canDrop: () => !isDragging && !selectedIds.includes(nodeId),
-    drop: () => {
-      onDrop(selectedIds, nodeId);
+    drop: (item, monitor) => {
+      if (!monitor.didDrop()) {
+        onDrop(selectedIds, nodeId);
+      }
     },
   });
 

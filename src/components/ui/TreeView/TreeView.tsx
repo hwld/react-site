@@ -54,8 +54,8 @@ const TreeView: React.FC<TreeViewProps> = ({
 
   const [, drop] = useDrop({
     accept: ItemTypes.TreeItem,
-    drop: () => {
-      if (onDrop) onDrop(selectedIds, '');
+    drop: (item, monitor) => {
+      if (!monitor.didDrop() && onDrop) onDrop(selectedIds, '');
     },
   });
 
