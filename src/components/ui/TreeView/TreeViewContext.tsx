@@ -6,6 +6,7 @@ export type TreeNode = {
 };
 
 type TreeViewContextValue = {
+  multiple: boolean;
   nodes: TreeNode[];
   addNode: (id: string) => void;
   removeNode: (id: string) => void;
@@ -16,6 +17,7 @@ type TreeViewContextValue = {
 };
 
 const TreeViewContext = React.createContext<TreeViewContextValue>({
+  multiple: false,
   nodes: [],
   selectedIds: [],
 

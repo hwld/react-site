@@ -47,6 +47,7 @@ interface TreeItemProps {
 
 const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   const {
+    multiple,
     nodes,
     addNode,
     removeNode,
@@ -110,12 +111,12 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
 
   const select = (withCtrl: boolean) => {
     if (selectedIds.includes(nodeId)) {
-      if (withCtrl) {
+      if (withCtrl && multiple) {
         selectIds(selectedIds.filter(id => id !== nodeId));
       } else {
         selectIds([]);
       }
-    } else if (withCtrl) {
+    } else if (withCtrl && multiple) {
       selectIds([...selectedIds, nodeId]);
     } else {
       selectIds([nodeId]);

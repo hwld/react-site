@@ -23,7 +23,7 @@ const StyledTreeView = styled(TreeView)`
 `;
 
 const GenreTreeList: React.FC<GenreTreeListProps> = ({
-  multiple = false,
+  multiple,
   genres,
   selectedGenreIds,
   onGenreSelect,

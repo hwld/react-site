@@ -23,7 +23,7 @@ interface TreeViewProps {
 const TreeView: React.FC<TreeViewProps> = ({
   children,
   className,
-  multiple,
+  multiple = false,
   defaultSelectedIds = [],
   onNodeSelect,
   onDrop,
@@ -87,6 +87,7 @@ const TreeView: React.FC<TreeViewProps> = ({
   return (
     <TreeViewContext.Provider
       value={{
+        multiple,
         nodes,
         addNode,
         removeNode,
