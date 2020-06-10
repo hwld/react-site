@@ -25,8 +25,8 @@ const TreeView: React.FC<TreeViewProps> = ({
   className,
   multiple = false,
   defaultSelectedIds = [],
-  onNodeSelect,
-  onDrop,
+  onNodeSelect = () => {},
+  onDrop = () => {},
 }) => {
   const [nodes, setNodes] = useState<TreeNode[]>([]);
   const [selectedIds, setSelectedIds] = useState(defaultSelectedIds);
@@ -35,7 +35,7 @@ const TreeView: React.FC<TreeViewProps> = ({
   const setSelectedIdsWithExternal = useCallback(
     (ids: string[]) => {
       setSelectedIds(ids);
-      if (onNodeSelect) onNodeSelect(ids);
+      onNodeSelect(ids);
     },
     [onNodeSelect],
   );
@@ -43,11 +43,9 @@ const TreeView: React.FC<TreeViewProps> = ({
   // 選択されているノードが存在しない場合、選択状態から外す.
   useEffect(() => {
     const nodeIds = nodes.map(node => node.id);
-    selectedIds.forEach(selectedIdNew => {
-      if (!nodeIds.includes(selectedIdNew)) {
-        setSelectedIdsWithExternal(
-          selectedIds.filter(id => id !== selectedIdNew),
-        );
+    selectedIds.forEach(selectedId => {
+      if (!nodeIds.includes(selectedId)) {
+        setSelectedIdsWithExternal(selectedIds.filter(id => id !== selectedId));
       }
     });
   }, [nodes, selectedIds, setSelectedIdsWithExternal]);
@@ -55,15 +53,17 @@ const TreeView: React.FC<TreeViewProps> = ({
   const [, drop] = useDrop({
     accept: ItemTypes.TreeItem,
     drop: (item, monitor) => {
-      if (!monitor.didDrop() && onDrop) onDrop(selectedIds, '');
+      if (!monitor.didDrop()) {
+        onDrop(selectedIds, '');
+      }
     },
   });
 
-  const addNode = useCallback((id: string) => {
+  const addNodeId = useCallback((id: string) => {
     setNodes(state => [...state, { id, expanded: false }]);
   }, []);
 
-  const removeNode = useCallback((id: string) => {
+  const removeNodeId = useCallback((id: string) => {
     setNodes(state => state.filter(node => node.id !== id));
   }, []);
 
@@ -77,7 +77,9 @@ const TreeView: React.FC<TreeViewProps> = ({
   const expandNode = useCallback((id: string) => {
     setNodes(state => {
       return state.map(node => {
-        if (node.id === id) return { id: node.id, expanded: !node.expanded };
+        if (node.id === id) {
+          return { id: node.id, expanded: !node.expanded };
+        }
 
         return node;
       });
@@ -89,12 +91,12 @@ const TreeView: React.FC<TreeViewProps> = ({
       value={{
         multiple,
         nodes,
-        addNode,
-        removeNode,
+        addNodeId,
+        removeNodeId,
         selectedIds,
         selectIds,
         expandNode,
-        onDrop: onDrop || (() => {}),
+        onDrop,
       }}
     >
       <Tree

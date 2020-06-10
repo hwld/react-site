@@ -49,8 +49,8 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   const {
     multiple,
     nodes,
-    addNode,
-    removeNode,
+    addNodeId,
+    removeNodeId,
     selectedIds,
     selectIds,
     expandNode,
@@ -77,8 +77,8 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: ItemTypes.TreeItem,
     collect: monitor => ({
-      isOver: !!monitor.isOver(),
-      canDrop: !!monitor.canDrop(),
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
     }),
     canDrop: () => !isDragging && !selectedIds.includes(nodeId),
     drop: (item, monitor) => {
@@ -89,12 +89,12 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   });
 
   useEffect(() => {
-    addNode(nodeId);
+    addNodeId(nodeId);
 
     return () => {
-      removeNode(nodeId);
+      removeNodeId(nodeId);
     };
-  }, [addNode, nodeId, removeNode]);
+  }, [addNodeId, nodeId, removeNodeId]);
 
   const expandable = Boolean(
     Array.isArray(children) ? children.length : children,
@@ -109,23 +109,35 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     return false;
   }, [nodeId, nodes]);
 
-  const select = (withCtrl: boolean) => {
-    if (selectedIds.includes(nodeId)) {
-      if (withCtrl && multiple) {
-        selectIds(selectedIds.filter(id => id !== nodeId));
-      } else {
-        selectIds([]);
-      }
-    } else if (withCtrl && multiple) {
+  const select = (isMulti: boolean) => {
+    if (isMulti) {
       selectIds([...selectedIds, nodeId]);
     } else {
       selectIds([nodeId]);
     }
   };
 
+  const deselect = (isMulti: boolean) => {
+    if (isMulti) {
+      selectIds(selectedIds.filter(id => id !== nodeId));
+    } else {
+      selectIds([]);
+    }
+  };
+
+  const setSelectedIds = (isMulti: boolean) => {
+    const isMultiple = multiple && isMulti;
+
+    if (selectedIds.includes(nodeId)) {
+      deselect(isMultiple);
+    } else {
+      select(isMultiple);
+    }
+  };
+
   const onClickNode = (event: React.MouseEvent<{}>) => {
     event.stopPropagation();
-    select(event.ctrlKey);
+    setSelectedIds(event.ctrlKey);
   };
 
   const expand = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
@@ -147,7 +159,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter') {
-      select(event.ctrlKey);
+      setSelectedIds(event.ctrlKey);
     } else if (event.key === ' ') {
       event.stopPropagation();
       if (expandable) {

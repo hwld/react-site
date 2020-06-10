@@ -7,20 +7,20 @@ interface ListItemProps {
 }
 
 const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
-  const { selectedIds, selectItem, setItemId, unsetItemId } = useContext(
+  const { selectedIds, selectItem, addItemId, removeItemId } = useContext(
     ListContext,
   );
 
   useEffect(() => {
-    if (setItemId) setItemId(itemId);
+    addItemId(itemId);
 
     return () => {
-      if (unsetItemId) unsetItemId(itemId);
+      removeItemId(itemId);
     };
-  }, [itemId, setItemId, unsetItemId]);
+  }, [itemId, addItemId, removeItemId]);
 
   const select = () => {
-    if (selectItem) selectItem(itemId);
+    selectItem(itemId);
   };
 
   return (
@@ -28,7 +28,7 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
       <MuiListItem
         button
         onClick={select}
-        selected={selectedIds?.includes(itemId)}
+        selected={selectedIds.includes(itemId)}
       >
         {children}
       </MuiListItem>

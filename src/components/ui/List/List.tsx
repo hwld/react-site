@@ -13,45 +13,58 @@ interface ListProps {
   onSelect?: (ids: string[]) => void;
 }
 
-const List: React.FC<ListProps> = ({ children, className, onSelect }) => {
+const List: React.FC<ListProps> = ({
+  children,
+  className,
+  onSelect = () => {},
+}) => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [ItemIds, setItemIds] = useState<string[]>([]);
+  const [ItemIds, addItemIds] = useState<string[]>([]);
+
+  // 内部の選択状態と外部の選択状態を同時に設定する
+  const setSelectedIdsWithExternal = useCallback(
+    (ids: string[]) => {
+      setSelectedIds(ids);
+      onSelect(ids);
+    },
+    [onSelect],
+  );
 
   useEffect(() => {
-    if (onSelect) onSelect(selectedIds);
+    onSelect(selectedIds);
   }, [onSelect, selectedIds]);
 
   // 選択されているアイテムのうち、存在しないアイテムを外す.
   useEffect(() => {
     selectedIds.forEach(selectedId => {
       if (!ItemIds.includes(selectedId)) {
-        setSelectedIds(ids => ids.filter(id => id !== selectedId));
+        setSelectedIdsWithExternal(selectedIds.filter(id => id !== selectedId));
       }
     });
-  }, [ItemIds, selectedIds]);
+  }, [ItemIds, selectedIds, setSelectedIdsWithExternal]);
 
-  const setItemId = useCallback((id: string) => {
-    setItemIds(ids => [...ids, id]);
+  const addItemId = useCallback((id: string) => {
+    addItemIds(ids => [...ids, id]);
   }, []);
 
-  const unsetItemId = useCallback((id: string) => {
-    setItemIds(ids => ids.filter(nodeId => nodeId !== id));
+  const removeItemId = useCallback((id: string) => {
+    addItemIds(ids => ids.filter(nodeId => nodeId !== id));
   }, []);
 
   const selectItem = useCallback(
     (id: string) => {
       if (selectedIds.includes(id)) {
-        setSelectedIds(ids => ids.filter(itemId => itemId !== id));
+        setSelectedIdsWithExternal(selectedIds.filter(itemId => itemId !== id));
       } else {
-        setSelectedIds(ids => [...ids, id]);
+        setSelectedIdsWithExternal([...selectedIds, id]);
       }
     },
-    [selectedIds],
+    [selectedIds, setSelectedIdsWithExternal],
   );
 
   return (
     <ListContext.Provider
-      value={{ selectedIds, selectItem, setItemId, unsetItemId }}
+      value={{ selectedIds, selectItem, addItemId, removeItemId }}
     >
       <StyledMuiList className={className}>{children}</StyledMuiList>
     </ListContext.Provider>
