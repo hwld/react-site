@@ -10,7 +10,7 @@ type TreeViewContextValue = {
   addNode: (id: string) => void;
   removeNode: (id: string) => void;
   selectedIds: string[];
-  changeSelectedIds: (id: string, withCtrKey: boolean) => void;
+  selectIds: (ids: string[]) => void;
   expandNode: (id: string) => void;
   onDrop: (sourceIds: string[], targetId: string) => void;
 };
@@ -19,9 +19,9 @@ const TreeViewContext = React.createContext<TreeViewContextValue>({
   nodes: [],
   selectedIds: [],
 
-  addNode: () => {},  
+  addNode: () => {},
   removeNode: () => {},
-  changeSelectedIds: () => {},
+  selectIds: () => {},
   expandNode: () => {},
   onDrop: () => {},
 });

@@ -68,39 +68,10 @@ const TreeView: React.FC<TreeViewProps> = ({
   }, []);
 
   const selectIds = useCallback(
-    (id: string, withCtrKey: boolean) => {
-      if (withCtrKey && multiple) {
-        setSelectedIdsWithExternal([...selectedIds, id]);
-      } else {
-        setSelectedIdsWithExternal([id]);
-      }
+    (ids: string[]) => {
+      setSelectedIdsWithExternal(ids);
     },
-    [multiple, selectedIds, setSelectedIdsWithExternal],
-  );
-
-  const deselectIds = useCallback(
-    (id: string, withCtrKey: boolean) => {
-      if (withCtrKey && multiple) {
-        setSelectedIdsWithExternal(
-          selectedIds.filter(selectedId => selectedId !== id),
-        );
-      } else {
-        setSelectedIdsWithExternal([]);
-      }
-    },
-    [multiple, selectedIds, setSelectedIdsWithExternal],
-  );
-
-  const changeSelectedIds = useCallback(
-    (id: string, withCtrKey: boolean) => {
-      // 選択されていないノードが指定された.
-      if (!selectedIds.includes(id)) {
-        selectIds(id, withCtrKey);
-      } else {
-        deselectIds(id, withCtrKey);
-      }
-    },
-    [deselectIds, selectIds, selectedIds],
+    [setSelectedIdsWithExternal],
   );
 
   const expandNode = useCallback((id: string) => {
@@ -120,7 +91,7 @@ const TreeView: React.FC<TreeViewProps> = ({
         addNode,
         removeNode,
         selectedIds,
-        changeSelectedIds,
+        selectIds,
         expandNode,
         onDrop: onDrop || (() => {}),
       }}

@@ -51,7 +51,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     addNode,
     removeNode,
     selectedIds,
-    changeSelectedIds,
+    selectIds,
     expandNode,
     onDrop,
   } = useContext(TreeViewContext);
@@ -63,12 +63,12 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     }),
     begin: () => {
       if (!selectedIds.includes(nodeId)) {
-        changeSelectedIds(nodeId, false);
+        selectIds([...selectedIds, nodeId]);
       }
     },
     end: (item, monitor) => {
       if (monitor.didDrop()) {
-        selectedIds.forEach(id => changeSelectedIds(id, false));
+        selectIds([]);
       }
     },
   });
@@ -108,9 +108,23 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     return false;
   }, [nodeId, nodes]);
 
-  const select = (event: React.MouseEvent<{}>) => {
+  const select = (withCtrl: boolean) => {
+    if (selectedIds.includes(nodeId)) {
+      if (withCtrl) {
+        selectIds(selectedIds.filter(id => id !== nodeId));
+      } else {
+        selectIds([]);
+      }
+    } else if (withCtrl) {
+      selectIds([...selectedIds, nodeId]);
+    } else {
+      selectIds([nodeId]);
+    }
+  };
+
+  const onClickNode = (event: React.MouseEvent<{}>) => {
     event.stopPropagation();
-    changeSelectedIds(nodeId, event.ctrlKey);
+    select(event.ctrlKey);
   };
 
   const expand = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
@@ -132,7 +146,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter') {
-      changeSelectedIds(nodeId, event.ctrlKey);
+      select(event.ctrlKey);
     } else if (event.key === ' ') {
       event.stopPropagation();
       if (expandable) {
@@ -151,7 +165,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
           onKeyDown={handleKeyDown}
         >
           <TreeItemContent
-            onClick={select}
+            onClick={onClickNode}
             selected={selectedIds.includes(nodeId)}
           >
             <SvgIcon focusable onClick={expand} fontSize="large">
