@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useMemo, ReactNode } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  ReactNode,
+  useRef,
+} from 'react';
 import styled from 'styled-components';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -17,13 +23,16 @@ const TreeItemDropLayer = styled.div<{ canDrop?: boolean; isOver?: boolean }>`
     props.canDrop && props.isOver ? props.theme.palette.secondary.main : ''};
 `;
 
+const TreeItemDragLayer = styled.div<{ isDragging?: boolean }>`
+  opacity: ${props => (props.isDragging ? 0.5 : 1)};
+`;
+
 const TreeItemContentRoot = styled.div<{ isDragging?: boolean }>`
   &:hover,
   &:focus {
     outline: none;
     background-color: ${props => props.theme.palette.action.hover};
   }
-  opacity: ${props => (props.isDragging ? 0.5 : 1)};
 `;
 
 const TreeItemContent = styled.div<{ selected?: boolean }>`
@@ -59,6 +68,8 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     expandNode,
     onDrop,
   } = useContext(TreeViewContext);
+
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     addNodeId(nodeId);
@@ -175,6 +186,9 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
 
   const onClickNode = (event: React.MouseEvent<{}>) => {
     event.stopPropagation();
+    if (selectedIds.includes(nodeId) && ref.current) {
+      ref.current.blur();
+    }
     setSelectedIds(event.ctrlKey);
   };
 
@@ -209,26 +223,23 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   return (
     <TreeItemRoot>
       <TreeItemDropLayer ref={drop} isOver={isOver} canDrop={canDrop}>
-        <TreeItemContentRoot
-          ref={drag}
-          isDragging={isDragging}
-          tabIndex={0}
-          onKeyDown={handleKeyDown}
-        >
-          <TreeItemContent
-            onClick={onClickNode}
-            selected={selectedIds.includes(nodeId)}
-          >
-            <SvgIcon focusable onClick={expand} fontSize="large">
-              {icon()}
-            </SvgIcon>
-            <Typography>{label}</Typography>
-          </TreeItemContent>
-        </TreeItemContentRoot>
-        <DragPreviewImage
-          connect={preview}
-          src={`${process.env.PUBLIC_URL}/folder.svg`}
-        />
+        <TreeItemDragLayer ref={drag} isDragging={isDragging}>
+          <TreeItemContentRoot ref={ref} tabIndex={0} onKeyDown={handleKeyDown}>
+            <TreeItemContent
+              onClick={onClickNode}
+              selected={selectedIds.includes(nodeId)}
+            >
+              <SvgIcon focusable onClick={expand} fontSize="large">
+                {icon()}
+              </SvgIcon>
+              <Typography>{label}</Typography>
+            </TreeItemContent>
+          </TreeItemContentRoot>
+          <DragPreviewImage
+            connect={preview}
+            src={`${process.env.PUBLIC_URL}/folder.svg`}
+          />
+        </TreeItemDragLayer>
       </TreeItemDropLayer>
       <TreeItemGroup hidden={!expanded}>{children}</TreeItemGroup>
     </TreeItemRoot>
