@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo, ReactNode } from 'react';
 import styled from 'styled-components';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -49,13 +49,46 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   const {
     multiple,
     nodes,
+    nodeChildrenId,
     addNodeId,
+    addNodeChildrenId,
     removeNodeId,
+    removeNodeChildrenId,
     selectedIds,
     selectIds,
     expandNode,
     onDrop,
   } = useContext(TreeViewContext);
+
+  useEffect(() => {
+    addNodeId(nodeId);
+
+    return () => {
+      removeNodeId(nodeId);
+    };
+  }, [addNodeId, nodeId, removeNodeId]);
+
+  useEffect(() => {
+    const getAllChildrenId = (childrenNode: React.ReactNode) => {
+      const childrenId: string[] = [];
+      React.Children.forEach(childrenNode, child => {
+        if (React.isValidElement(child) && child.props.nodeId) {
+          childrenId.push(child.props.nodeId);
+          if (child.props.children) {
+            childrenId.push(...getAllChildrenId(child.props.children));
+          }
+        }
+      });
+
+      return childrenId;
+    };
+
+    addNodeChildrenId(nodeId, getAllChildrenId(children));
+
+    return () => {
+      removeNodeChildrenId(nodeId);
+    };
+  }, [addNodeChildrenId, children, nodeId, removeNodeChildrenId]);
 
   const [{ isDragging }, drag, preview] = useDrag({
     item: { type: ItemTypes.TreeItem },
@@ -80,21 +113,26 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
     }),
-    canDrop: () => !isDragging && !selectedIds.includes(nodeId),
+    canDrop: () => {
+      const isChild = selectedIds.some(parentId => {
+        const parentWithChild = nodeChildrenId.find(
+          obj => obj.parentId === parentId,
+        );
+        if (!parentWithChild) {
+          throw new Error('存在しないジャンル');
+        }
+
+        return parentWithChild.childrenId.includes(nodeId);
+      });
+
+      return !isDragging && !selectedIds.includes(nodeId) && !isChild;
+    },
     drop: (item, monitor) => {
       if (!monitor.didDrop()) {
         onDrop(selectedIds, nodeId);
       }
     },
   });
-
-  useEffect(() => {
-    addNodeId(nodeId);
-
-    return () => {
-      removeNodeId(nodeId);
-    };
-  }, [addNodeId, nodeId, removeNodeId]);
 
   const expandable = Boolean(
     Array.isArray(children) ? children.length : children,

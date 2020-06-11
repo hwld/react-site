@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
-import TreeViewContext, { TreeNode } from './TreeViewContext';
+import TreeViewContext, {
+  TreeNode,
+  ParentIdWithChildrenId,
+} from './TreeViewContext';
 import { ItemTypes } from './ItemTypes';
 
 const Tree = styled.ul`
@@ -30,6 +33,10 @@ const TreeView: React.FC<TreeViewProps> = ({
 }) => {
   const [nodes, setNodes] = useState<TreeNode[]>([]);
   const [selectedIds, setSelectedIds] = useState(defaultSelectedIds);
+
+  const [nodeChildrenId, setNodeChildrenId] = useState<
+    ParentIdWithChildrenId[]
+  >([]);
 
   // 内部の選択状態と外部の選択状態を同時に設定する
   const setSelectedIdsWithExternal = useCallback(
@@ -63,8 +70,23 @@ const TreeView: React.FC<TreeViewProps> = ({
     setNodes(state => [...state, { id, expanded: false }]);
   }, []);
 
+  const addNodeChildrenId = useCallback((id: string, childrenId: string[]) => {
+    setNodeChildrenId(state => {
+      return [
+        ...state.filter(s => s.parentId !== id),
+        { parentId: id, childrenId },
+      ];
+    });
+  }, []);
+
   const removeNodeId = useCallback((id: string) => {
     setNodes(state => state.filter(node => node.id !== id));
+  }, []);
+
+  const removeNodeChildrenId = useCallback((id: string) => {
+    setNodeChildrenId(state => {
+      return state.filter(s => s.parentId !== id);
+    });
   }, []);
 
   const selectIds = useCallback(
@@ -91,8 +113,11 @@ const TreeView: React.FC<TreeViewProps> = ({
       value={{
         multiple,
         nodes,
+        nodeChildrenId,
         addNodeId,
+        addNodeChildrenId,
         removeNodeId,
+        removeNodeChildrenId,
         selectedIds,
         selectIds,
         expandNode,
