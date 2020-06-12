@@ -63,10 +63,11 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     removeNodeId,
     selectedIds,
     selectIds,
-    expandNode,
+    setExpanded,
     onDrop,
   } = useContext(TreeViewContext);
 
+  const prevChildCount = useRef<number>(React.Children.count(children));
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -93,7 +94,14 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     };
 
     addNodeChildrenId(nodeId, getAllChildrenId(children));
-  }, [addNodeChildrenId, children, nodeId]);
+
+    // 子ノードが追加されていたら、展開する
+    const childrenCount = React.Children.count(children);
+    if (childrenCount > prevChildCount.current) {
+      setExpanded(nodeId, true);
+      prevChildCount.current = childrenCount;
+    }
+  }, [addNodeChildrenId, children, nodeId, setExpanded]);
 
   const [{ isDragging }, drag, preview] = useDrag({
     item: { type: ItemTypes.TreeItem },
@@ -127,7 +135,6 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
 
         return parentWithChild.childrenId.includes(nodeId);
       });
-      console.log(nodes);
 
       return !isDragging && !selectedIds.includes(nodeId) && !isChild;
     },
@@ -188,7 +195,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   const expand = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     event.stopPropagation();
     if (expandable) {
-      expandNode(nodeId);
+      setExpanded(nodeId, !expanded);
     }
   };
 
@@ -208,7 +215,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     } else if (event.key === ' ') {
       event.stopPropagation();
       if (expandable) {
-        expandNode(nodeId);
+        setExpanded(nodeId, !expanded);
       }
     }
   };

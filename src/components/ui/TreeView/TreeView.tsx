@@ -87,13 +87,13 @@ const TreeView: React.FC<TreeViewProps> = ({
     [setSelectedIdsWithExternal],
   );
 
-  const expandNode = useCallback((id: string) => {
+  const setExpanded = useCallback((id: string, isExpand: boolean) => {
     setNodes(state => {
       return state.map(node => {
         if (node.id === id) {
           return {
             id: node.id,
-            expanded: !node.expanded,
+            expanded: isExpand,
             childrenId: node.childrenId,
           };
         }
@@ -113,7 +113,7 @@ const TreeView: React.FC<TreeViewProps> = ({
         removeNodeId,
         selectedIds,
         selectIds,
-        expandNode,
+        setExpanded,
         onDrop,
       }}
     >
