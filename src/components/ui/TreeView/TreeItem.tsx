@@ -58,11 +58,9 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   const {
     multiple,
     nodes,
-    nodeChildrenId,
     addNodeId,
     addNodeChildrenId,
     removeNodeId,
-    removeNodeChildrenId,
     selectedIds,
     selectIds,
     expandNode,
@@ -95,11 +93,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     };
 
     addNodeChildrenId(nodeId, getAllChildrenId(children));
-
-    return () => {
-      removeNodeChildrenId(nodeId);
-    };
-  }, [addNodeChildrenId, children, nodeId, removeNodeChildrenId]);
+  }, [addNodeChildrenId, children, nodeId]);
 
   const [{ isDragging }, drag, preview] = useDrag({
     item: { type: ItemTypes.TreeItem },
@@ -126,15 +120,14 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     }),
     canDrop: () => {
       const isChild = selectedIds.some(parentId => {
-        const parentWithChild = nodeChildrenId.find(
-          obj => obj.parentId === parentId,
-        );
+        const parentWithChild = nodes.find(node => node.id === parentId);
         if (!parentWithChild) {
           throw new Error('存在しないジャンル');
         }
 
         return parentWithChild.childrenId.includes(nodeId);
       });
+      console.log(nodes);
 
       return !isDragging && !selectedIds.includes(nodeId) && !isChild;
     },

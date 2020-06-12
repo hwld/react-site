@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
-import TreeViewContext, {
-  TreeNode,
-  ParentIdWithChildrenId,
-} from './TreeViewContext';
+import TreeViewContext, { TreeNode } from './TreeViewContext';
 import { ItemTypes } from './ItemTypes';
 
 const Tree = styled.ul`
@@ -33,10 +30,6 @@ const TreeView: React.FC<TreeViewProps> = ({
 }) => {
   const [nodes, setNodes] = useState<TreeNode[]>([]);
   const [selectedIds, setSelectedIds] = useState(defaultSelectedIds);
-
-  const [nodeChildrenId, setNodeChildrenId] = useState<
-    ParentIdWithChildrenId[]
-  >([]);
 
   // 内部の選択状態と外部の選択状態を同時に設定する
   const setSelectedIdsWithExternal = useCallback(
@@ -67,26 +60,24 @@ const TreeView: React.FC<TreeViewProps> = ({
   });
 
   const addNodeId = useCallback((id: string) => {
-    setNodes(state => [...state, { id, expanded: false }]);
+    setNodes(state => [...state, { id, expanded: true, childrenId: [] }]);
   }, []);
 
   const addNodeChildrenId = useCallback((id: string, childrenId: string[]) => {
-    setNodeChildrenId(state => {
+    setNodes(state => {
       return [
-        ...state.filter(s => s.parentId !== id),
-        { parentId: id, childrenId },
+        ...state.filter(s => s.id !== id),
+        ...state
+          .filter(s => s.id === id)
+          .map(
+            (s): TreeNode => ({ id: s.id, expanded: s.expanded, childrenId }),
+          ),
       ];
     });
   }, []);
 
   const removeNodeId = useCallback((id: string) => {
     setNodes(state => state.filter(node => node.id !== id));
-  }, []);
-
-  const removeNodeChildrenId = useCallback((id: string) => {
-    setNodeChildrenId(state => {
-      return state.filter(s => s.parentId !== id);
-    });
   }, []);
 
   const selectIds = useCallback(
@@ -100,7 +91,11 @@ const TreeView: React.FC<TreeViewProps> = ({
     setNodes(state => {
       return state.map(node => {
         if (node.id === id) {
-          return { id: node.id, expanded: !node.expanded };
+          return {
+            id: node.id,
+            expanded: !node.expanded,
+            childrenId: node.childrenId,
+          };
         }
 
         return node;
@@ -113,11 +108,9 @@ const TreeView: React.FC<TreeViewProps> = ({
       value={{
         multiple,
         nodes,
-        nodeChildrenId,
         addNodeId,
         addNodeChildrenId,
         removeNodeId,
-        removeNodeChildrenId,
         selectedIds,
         selectIds,
         expandNode,

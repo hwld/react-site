@@ -3,6 +3,7 @@ import * as React from 'react';
 export type TreeNode = {
   id: string;
   expanded: boolean;
+  childrenId: string[];
 };
 
 export type ParentIdWithChildrenId = {
@@ -13,11 +14,9 @@ export type ParentIdWithChildrenId = {
 type TreeViewContextValue = {
   multiple: boolean;
   nodes: TreeNode[];
-  nodeChildrenId: ParentIdWithChildrenId[];
   addNodeId: (id: string) => void;
   addNodeChildrenId: (id: string, children: string[]) => void;
   removeNodeId: (id: string) => void;
-  removeNodeChildrenId: (id: string) => void;
   selectedIds: string[];
   selectIds: (ids: string[]) => void;
   expandNode: (id: string) => void;
@@ -27,13 +26,11 @@ type TreeViewContextValue = {
 const TreeViewContext = React.createContext<TreeViewContextValue>({
   multiple: false,
   nodes: [],
-  nodeChildrenId: [],
   selectedIds: [],
 
   addNodeId: () => {},
   addNodeChildrenId: () => {},
   removeNodeId: () => {},
-  removeNodeChildrenId: () => {},
   selectIds: () => {},
   expandNode: () => {},
   onDrop: () => {},
