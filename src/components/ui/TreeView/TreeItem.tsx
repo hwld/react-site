@@ -18,9 +18,24 @@ const TreeItemRoot = styled.ul`
   padding-inline-start: 10px;
 `;
 
-const TreeItemDropLayer = styled.div<{ canDrop?: boolean; isOver?: boolean }>`
+const ExternalDropLayer = styled.div<{
+  canDrop?: boolean;
+  isDropOver?: boolean;
+}>`
   background-color: ${props =>
-    props.canDrop && props.isOver ? props.theme.palette.secondary.main : ''};
+    props.canDrop && props.isDropOver
+      ? props.theme.palette.secondary.main
+      : ''};
+`;
+
+const TreeItemDropLayer = styled.div<{
+  canDrop?: boolean;
+  isDropOver?: boolean;
+}>`
+  background-color: ${props =>
+    props.canDrop && props.isDropOver
+      ? props.theme.palette.secondary.main
+      : ''};
 `;
 
 const TreeItemDragLayer = styled.div<{ isDragging?: boolean }>`
@@ -52,9 +67,17 @@ const TreeItemGroup = styled.li`
 interface TreeItemProps {
   label: string;
   nodeId: string;
+  canDrop?: boolean;
+  isDropOver?: boolean;
 }
 
-const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
+const TreeItem: React.FC<TreeItemProps> = ({
+  children,
+  label,
+  nodeId,
+  isDropOver = false,
+  canDrop = false,
+}) => {
   const {
     multiple,
     nodes,
@@ -121,11 +144,11 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     },
   });
 
-  const [{ isOver, canDrop }, drop] = useDrop({
+  const [{ isDropOverInner, canDropInner }, drop] = useDrop({
     accept: ItemTypes.TreeItem,
     collect: monitor => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
+      isDropOverInner: monitor.isOver(),
+      canDropInner: monitor.canDrop(),
     }),
     canDrop: () => {
       const isChild = selectedIds.some(parentId => {
@@ -223,25 +246,35 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
 
   return (
     <TreeItemRoot>
-      <TreeItemDropLayer ref={drop} isOver={isOver} canDrop={canDrop}>
-        <TreeItemDragLayer ref={isDrag ? drag : null} isDragging={isDragging}>
-          <TreeItemContentRoot ref={ref} tabIndex={0} onKeyDown={handleKeyDown}>
-            <TreeItemContent
-              onClick={onClickNode}
-              selected={selectedIds.includes(nodeId)}
+      <ExternalDropLayer isDropOver={isDropOver} canDrop={canDrop}>
+        <TreeItemDropLayer
+          ref={drop}
+          isDropOver={isDropOverInner}
+          canDrop={canDropInner}
+        >
+          <TreeItemDragLayer ref={isDrag ? drag : null} isDragging={isDragging}>
+            <TreeItemContentRoot
+              ref={ref}
+              tabIndex={0}
+              onKeyDown={handleKeyDown}
             >
-              <SvgIcon focusable onClick={expand} fontSize="large">
-                {icon()}
-              </SvgIcon>
-              <Typography>{label}</Typography>
-            </TreeItemContent>
-          </TreeItemContentRoot>
-          <DragPreviewImage
-            connect={preview}
-            src={`${process.env.PUBLIC_URL}/folder.svg`}
-          />
-        </TreeItemDragLayer>
-      </TreeItemDropLayer>
+              <TreeItemContent
+                onClick={onClickNode}
+                selected={selectedIds.includes(nodeId)}
+              >
+                <SvgIcon focusable onClick={expand} fontSize="large">
+                  {icon()}
+                </SvgIcon>
+                <Typography>{label}</Typography>
+              </TreeItemContent>
+            </TreeItemContentRoot>
+            <DragPreviewImage
+              connect={preview}
+              src={`${process.env.PUBLIC_URL}/folder.svg`}
+            />
+          </TreeItemDragLayer>
+        </TreeItemDropLayer>
+      </ExternalDropLayer>
       <TreeItemGroup hidden={!expanded}>{children}</TreeItemGroup>
     </TreeItemRoot>
   );
