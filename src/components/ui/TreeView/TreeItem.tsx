@@ -11,7 +11,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { SvgIcon, Typography } from '@material-ui/core';
 import { useDrag, useDrop, DragPreviewImage } from 'react-dnd';
 import TreeViewContext from './TreeViewContext';
-import { ItemTypes } from './ItemTypes';
+import { ItemTypes } from '../ItemTypesc';
 
 const TreeItemRoot = styled.ul`
   list-style: none;
@@ -64,6 +64,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     selectedIds,
     selectIds,
     setExpanded,
+    isDrag,
     onDrop,
   } = useContext(TreeViewContext);
 
@@ -110,7 +111,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     }),
     begin: () => {
       if (!selectedIds.includes(nodeId)) {
-        selectIds([...selectedIds, nodeId]);
+        selectIds([nodeId]);
       }
     },
     end: (item, monitor) => {
@@ -223,7 +224,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
   return (
     <TreeItemRoot>
       <TreeItemDropLayer ref={drop} isOver={isOver} canDrop={canDrop}>
-        <TreeItemDragLayer ref={drag} isDragging={isDragging}>
+        <TreeItemDragLayer ref={isDrag ? drag : null} isDragging={isDragging}>
           <TreeItemContentRoot ref={ref} tabIndex={0} onKeyDown={handleKeyDown}>
             <TreeItemContent
               onClick={onClickNode}

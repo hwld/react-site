@@ -12,6 +12,7 @@ interface GenreTreeListProps {
   genres: Genre[];
   selectedGenreIds: string[];
   onGenreSelect: (selectedId: string[]) => void;
+  isDrag?: boolean;
   onDrop?: (sourceIds: string[], targetId: string) => void;
   className?: string;
 }
@@ -27,6 +28,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
   genres,
   selectedGenreIds,
   onGenreSelect,
+  isDrag = false,
   onDrop,
   className,
 }) => {
@@ -105,6 +107,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
       onNodeSelect={(id: string[]) => {
         onGenreSelect(id);
       }}
+      isDrag={isDrag}
       onDrop={onDrop}
     >
       {genres.length !== 0 ? (

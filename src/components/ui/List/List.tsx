@@ -11,12 +11,14 @@ const StyledMuiList = styled(MuiList)`
 interface ListProps {
   className?: string;
   onSelect?: (ids: string[]) => void;
+  isDrag?: boolean;
 }
 
 const List: React.FC<ListProps> = ({
   children,
   className,
   onSelect = () => {},
+  isDrag = false,
 }) => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [ItemIds, addItemIds] = useState<string[]>([]);
@@ -29,10 +31,6 @@ const List: React.FC<ListProps> = ({
     },
     [onSelect],
   );
-
-  useEffect(() => {
-    onSelect(selectedIds);
-  }, [onSelect, selectedIds]);
 
   // 選択されているアイテムのうち、存在しないアイテムを外す.
   useEffect(() => {
@@ -52,19 +50,15 @@ const List: React.FC<ListProps> = ({
   }, []);
 
   const selectItem = useCallback(
-    (id: string) => {
-      if (selectedIds.includes(id)) {
-        setSelectedIdsWithExternal(selectedIds.filter(itemId => itemId !== id));
-      } else {
-        setSelectedIdsWithExternal([...selectedIds, id]);
-      }
+    (ids: string[]) => {
+      setSelectedIdsWithExternal(ids);
     },
-    [selectedIds, setSelectedIdsWithExternal],
+    [setSelectedIdsWithExternal],
   );
 
   return (
     <ListContext.Provider
-      value={{ selectedIds, selectItem, addItemId, removeItemId }}
+      value={{ selectedIds, isDrag, selectItem, addItemId, removeItemId }}
     >
       <StyledMuiList className={className}>{children}</StyledMuiList>
     </ListContext.Provider>

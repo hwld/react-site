@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
 import TreeViewContext, { TreeNode } from './TreeViewContext';
-import { ItemTypes } from './ItemTypes';
+import { ItemTypes } from '../ItemTypesc';
 
 const Tree = styled.ul`
   list-style: none;
@@ -13,6 +13,7 @@ const Tree = styled.ul`
 `;
 
 interface TreeViewProps {
+  isDrag?: boolean;
   className?: string;
   multiple?: boolean;
   defaultSelectedIds?: string[];
@@ -21,6 +22,7 @@ interface TreeViewProps {
 }
 
 const TreeView: React.FC<TreeViewProps> = ({
+  isDrag = false,
   children,
   className,
   multiple = false,
@@ -114,6 +116,7 @@ const TreeView: React.FC<TreeViewProps> = ({
         selectedIds,
         selectIds,
         setExpanded,
+        isDrag,
         onDrop,
       }}
     >

@@ -41,6 +41,7 @@ const GenreView: React.FC<GenreViewProps> = ({
           genres={genres}
           selectedGenreIds={selectedGenreIds}
           onGenreSelect={onGenreSelect}
+          isDrag
           onDrop={moveGenres}
         />
       }
