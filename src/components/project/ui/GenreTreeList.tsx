@@ -2,8 +2,8 @@ import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import Alert from '@material-ui/lab/Alert';
 import TreeView from '../../ui/TreeView/TreeView';
-import TreeItem from '../../ui/TreeView/TreeItem';
 import { Genre } from '../../../services/genres';
+import GenreTreeItem from './GenreTreeItem';
 
 export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
 
@@ -70,9 +70,9 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
   const buildGenreTreeItems = useCallback(
     (genreTreeNode: GenreTreeNode): React.ReactNode => {
       return (
-        <TreeItem
-          nodeId={genreTreeNode.id}
-          label={genreTreeNode.genreName}
+        <GenreTreeItem
+          genreId={genreTreeNode.id}
+          genreName={genreTreeNode.genreName}
           key={genreTreeNode.id}
         >
           {genreTreeNode.childrenGenres.length === 0
@@ -80,7 +80,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
             : genreTreeNode.childrenGenres.map(node =>
                 buildGenreTreeItems(node),
               )}
-        </TreeItem>
+        </GenreTreeItem>
       );
     },
     [],
