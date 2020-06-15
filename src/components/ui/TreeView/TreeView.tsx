@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
 import TreeViewContext, { TreeNode } from './TreeViewContext';
-import { ItemTypes } from '../ItemTypesc';
+import { ItemTypes } from '../ItemTypes';
 
 const Tree = styled.ul`
   list-style: none;

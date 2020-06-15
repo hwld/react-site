@@ -11,7 +11,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { SvgIcon, Typography } from '@material-ui/core';
 import { useDrag, useDrop, DragPreviewImage } from 'react-dnd';
 import TreeViewContext from './TreeViewContext';
-import { ItemTypes } from '../ItemTypesc';
+import { ItemTypes } from '../ItemTypes';
 
 const TreeItemRoot = styled.ul`
   list-style: none;
@@ -107,7 +107,6 @@ const TreeItem: React.FC<TreeItemProps> = ({
       const childrenId: string[] = [];
       React.Children.forEach(childrenNode, child => {
         if (React.isValidElement(child)) {
-          console.log(child);
           if (child.props.nodeId) {
             childrenId.push(child.props.nodeId);
           }
