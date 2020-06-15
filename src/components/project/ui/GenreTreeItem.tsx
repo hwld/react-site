@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import TreeItem from '../../ui/TreeView/TreeItem';
 
 type GenreTreeItemProps = {
-  genreId: string;
+  nodeId: string;
   genreName: string;
 };
 
@@ -11,12 +11,12 @@ const DropLayer = styled.div``;
 
 const GenreTreeItem: React.FC<GenreTreeItemProps> = ({
   children,
-  genreId,
+  nodeId,
   genreName,
 }) => {
   return (
     <DropLayer>
-      <TreeItem nodeId={genreId} label={genreName}>
+      <TreeItem nodeId={nodeId} label={genreName}>
         {children}
       </TreeItem>
     </DropLayer>

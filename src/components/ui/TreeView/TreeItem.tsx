@@ -83,8 +83,11 @@ const TreeItem: React.FC<TreeItemProps> = ({ children, label, nodeId }) => {
     const getAllChildrenId = (childrenNode: React.ReactNode) => {
       const childrenId: string[] = [];
       React.Children.forEach(childrenNode, child => {
-        if (React.isValidElement(child) && child.props.nodeId) {
-          childrenId.push(child.props.nodeId);
+        if (React.isValidElement(child)) {
+          console.log(child);
+          if (child.props.nodeId) {
+            childrenId.push(child.props.nodeId);
+          }
           if (child.props.children) {
             childrenId.push(...getAllChildrenId(child.props.children));
           }
