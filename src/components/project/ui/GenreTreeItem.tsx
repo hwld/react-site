@@ -17,7 +17,7 @@ const GenreTreeItem: React.FC<GenreTreeItemProps> = ({
 }) => {
   const { moveNote } = useContext(NotesContext);
 
-  const [, drop] = useDrop({
+  const [{ isDropOver, canDrop }, drop] = useDrop({
     accept: ItemTypes.ListItem,
     drop(item: ListItemDropType, monitor) {
       if (!monitor.didDrop()) {
@@ -26,11 +26,24 @@ const GenreTreeItem: React.FC<GenreTreeItemProps> = ({
         });
       }
     },
+    canDrop: (item, monitor) => {
+      return monitor.isOver({ shallow: true });
+    },
+    collect: monitor => ({
+      isDropOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
   });
 
+  // TreeItemはネストされているので、DropしたいNodeの親もDropTargetになっているが、子のノードで処理される.
   return (
     <div ref={drop}>
-      <TreeItem nodeId={nodeId} label={genreName}>
+      <TreeItem
+        nodeId={nodeId}
+        label={genreName}
+        isDropOver={isDropOver}
+        canDrop={canDrop}
+      >
         {children}
       </TreeItem>
     </div>

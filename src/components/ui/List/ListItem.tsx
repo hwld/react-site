@@ -35,6 +35,8 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
     begin: () => {
       if (!selectedIds.includes(itemId)) {
         selectItem([itemId]);
+
+        return { type: ItemTypes.ListItem, ids: [itemId] };
       }
     },
     end: (item, monitor) => {
