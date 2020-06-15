@@ -8,4 +8,5 @@
 
 * TreeView
   * TreeItem
+    * ラップするときにnodeIdプロパティを指定しないと正しく動かない.
   * TreeContext

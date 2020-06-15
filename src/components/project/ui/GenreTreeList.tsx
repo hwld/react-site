@@ -71,7 +71,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
     (genreTreeNode: GenreTreeNode): React.ReactNode => {
       return (
         <GenreTreeItem
-          genreId={genreTreeNode.id}
+          nodeId={genreTreeNode.id}
           genreName={genreTreeNode.genreName}
           key={genreTreeNode.id}
         >
