@@ -253,8 +253,13 @@ const TreeItem: React.FC<TreeItemProps> = ({
           ref={drop}
           isDropOver={isDropOverInner}
           canDrop={canDropInner}
+          data-testid={`dropLayer-${nodeId}`}
         >
-          <TreeItemDragLayer ref={isDrag ? drag : null} isDragging={isDragging}>
+          <TreeItemDragLayer
+            ref={isDrag ? drag : null}
+            isDragging={isDragging}
+            data-testid={`dragLayer-${nodeId}`}
+          >
             <TreeItemContentRoot
               ref={ref}
               tabIndex={0}
