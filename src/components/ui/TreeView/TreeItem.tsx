@@ -215,6 +215,7 @@ const TreeItem: React.FC<TreeItemProps> = ({
     if (selectedIds.includes(nodeId) && ref.current) {
       ref.current.blur();
     }
+
     setSelectedIds(event.ctrlKey);
   };
 
@@ -268,6 +269,7 @@ const TreeItem: React.FC<TreeItemProps> = ({
               <TreeItemContent
                 onClick={onClickNode}
                 selected={selectedIds.includes(nodeId)}
+                data-testid={`clickLayer-${nodeId}`}
               >
                 <SvgIcon focusable onClick={expand} fontSize="large">
                   {icon()}

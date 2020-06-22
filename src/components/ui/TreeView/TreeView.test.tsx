@@ -6,57 +6,116 @@ import TreeView from './TreeView';
 import TreeItem from './TreeItem';
 
 describe('<TreeView>', () => {
-  const DragAndDrop = (src: HTMLElement, dst: HTMLElement) => {
-    fireEvent.dragStart(src);
-    fireEvent.dragEnter(dst);
-    fireEvent.drop(dst);
-    fireEvent.dragLeave(dst);
-    fireEvent.dragEnd(src);
-  };
+  describe('Drag and Drop', () => {
+    const DragAndDrop = (src: HTMLElement, dst: HTMLElement) => {
+      fireEvent.dragStart(src);
+      fireEvent.dragEnter(dst);
+      fireEvent.drop(dst);
+      fireEvent.dragLeave(dst);
+      fireEvent.dragEnd(src);
+    };
 
-  const createTestTree = (onDrop?: jest.Mock<{}>) => (
-    <DndProvider backend={HTML5Backend}>
-      <TreeView isDrag onDrop={onDrop}>
-        <TreeItem label="parent" nodeId="parent">
-          <TreeItem label="child" nodeId="child">
-            <TreeItem label="grandChild" nodeId="grandChild" />
+    const createDragableTestTree = (
+      onDrop?: jest.Mock<{}>,
+      isMulti?: boolean,
+    ) => (
+      <DndProvider backend={HTML5Backend}>
+        <TreeView isDrag multiple={isMulti} onDrop={onDrop}>
+          <TreeItem label="parent" nodeId="parent">
+            <TreeItem label="child" nodeId="child">
+              <TreeItem label="grandChild" nodeId="grandChild" />
+            </TreeItem>
           </TreeItem>
-        </TreeItem>
-      </TreeView>
-    </DndProvider>
-  );
-
-  test('TreeItemは親以上のTreeItemにdropできる.', () => {
-    const onDrop = jest.fn();
-
-    const { getByTestId } = render(createTestTree(onDrop));
-
-    DragAndDrop(
-      getByTestId('dragLayer-grandChild'),
-      getByTestId('dropLayer-child'),
+        </TreeView>
+      </DndProvider>
     );
 
-    DragAndDrop(
-      getByTestId('dragLayer-grandChild'),
-      getByTestId('dropLayer-parent'),
-    );
-    expect(onDrop.mock.calls.length).toBe(2);
-  });
+    test('TreeItemは親以上のTreeItemにdropできる.', () => {
+      const onDrop = jest.fn();
 
-  test('TreeItemは子以下のTreeItemにdropできない.', () => {
-    const onDrop = jest.fn();
+      const { getByTestId } = render(
+        <DndProvider backend={HTML5Backend}>
+          <TreeView isDrag onDrop={onDrop}>
+            <TreeItem label="parent" nodeId="parent">
+              <TreeItem label="child" nodeId="child">
+                <TreeItem label="grandChild" nodeId="grandChild" />
+              </TreeItem>
+            </TreeItem>
+          </TreeView>
+        </DndProvider>,
+      );
 
-    const { getByTestId } = render(createTestTree(onDrop));
+      DragAndDrop(
+        getByTestId('dragLayer-grandChild'),
+        getByTestId('dropLayer-child'),
+      );
 
-    DragAndDrop(
-      getByTestId('dragLayer-parent'),
-      getByTestId('dropLayer-child'),
-    );
+      DragAndDrop(
+        getByTestId('dragLayer-grandChild'),
+        getByTestId('dropLayer-parent'),
+      );
 
-    DragAndDrop(
-      getByTestId('dragLayer-parent'),
-      getByTestId('dropLayer-grandChild'),
-    );
-    expect(onDrop.mock.calls.length).toBe(0);
+      expect(onDrop.mock.calls.length).toBe(2);
+      expect(onDrop.mock.calls[0][0]).toEqual(['grandChild']);
+      expect(onDrop.mock.calls[0][1]).toEqual('child');
+
+      expect(onDrop.mock.calls[1][0]).toEqual(['grandChild']);
+      expect(onDrop.mock.calls[1][1]).toEqual('parent');
+    });
+
+    test('TreeItemは子以下のTreeItemにdropできない.', () => {
+      const onDrop = jest.fn();
+
+      const { getByTestId } = render(
+        <DndProvider backend={HTML5Backend}>
+          <TreeView isDrag onDrop={onDrop}>
+            <TreeItem label="parent" nodeId="parent">
+              <TreeItem label="child" nodeId="child">
+                <TreeItem label="grandChild" nodeId="grandChild" />
+              </TreeItem>
+            </TreeItem>
+          </TreeView>
+        </DndProvider>,
+      );
+
+      DragAndDrop(
+        getByTestId('dragLayer-parent'),
+        getByTestId('dropLayer-child'),
+      );
+
+      DragAndDrop(
+        getByTestId('dragLayer-parent'),
+        getByTestId('dropLayer-grandChild'),
+      );
+      expect(onDrop.mock.calls.length).toBe(0);
+    });
+
+    test('複数のTreeItemをdropできる', () => {
+      const onDrop = jest.fn();
+
+      const { getByTestId } = render(
+        <DndProvider backend={HTML5Backend}>
+          <TreeView isDrag multiple onDrop={onDrop}>
+            <TreeItem label="parent" nodeId="parent">
+              <TreeItem label="child" nodeId="child">
+                <TreeItem label="grandChild" nodeId="grandChild" />
+              </TreeItem>
+            </TreeItem>
+          </TreeView>
+        </DndProvider>,
+      );
+
+      fireEvent.click(getByTestId('clickLayer-child'));
+      fireEvent.click(getByTestId('clickLayer-grandChild'), { ctrlKey: true });
+
+      DragAndDrop(
+        getByTestId('dragLayer-child'),
+        getByTestId('dropLayer-parent'),
+      );
+
+      expect(onDrop.mock.calls.length).toBe(1);
+      expect(onDrop.mock.calls[0][0]).toEqual(['child', 'grandChild']);
+      expect(onDrop.mock.calls[0][1]).toBe('parent');
+    });
   });
 });
