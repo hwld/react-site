@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { render, fireEvent } from '../../../test-util';
@@ -7,6 +7,53 @@ import TreeItem from './TreeItem';
 
 describe('<TreeView>', () => {
   describe('ドラッグアンドドロップ', () => {
+    const SingleDropTreeView: React.FC<{ onDrop: () => void }> = ({
+      onDrop,
+    }) => {
+      const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+      return (
+        <DndProvider backend={HTML5Backend}>
+          <TreeView
+            isDrag
+            onDrop={onDrop}
+            onNodeSelect={ids => setSelectedIds(ids)}
+            selectedIds={selectedIds}
+          >
+            <TreeItem label="parent" nodeId="parent">
+              <TreeItem label="child" nodeId="child">
+                <TreeItem label="grandChild" nodeId="grandChild" />
+              </TreeItem>
+            </TreeItem>
+          </TreeView>
+        </DndProvider>
+      );
+    };
+
+    const MultiDropTreeView: React.FC<{ onDrop: () => void }> = ({
+      onDrop,
+    }) => {
+      const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+      return (
+        <DndProvider backend={HTML5Backend}>
+          <TreeView
+            isDrag
+            multiple
+            onDrop={onDrop}
+            onNodeSelect={ids => setSelectedIds(ids)}
+            selectedIds={selectedIds}
+          >
+            <TreeItem label="parent" nodeId="parent">
+              <TreeItem label="child" nodeId="child">
+                <TreeItem label="grandChild" nodeId="grandChild" />
+              </TreeItem>
+            </TreeItem>
+          </TreeView>
+        </DndProvider>
+      );
+    };
+
     const DragAndDrop = (src: HTMLElement, dst: HTMLElement) => {
       fireEvent.dragStart(src);
       fireEvent.dragEnter(dst);
@@ -18,17 +65,7 @@ describe('<TreeView>', () => {
     test('TreeItemは親以上のTreeItemにdropできる.', () => {
       const onDrop = jest.fn();
 
-      const { getByTestId } = render(
-        <DndProvider backend={HTML5Backend}>
-          <TreeView isDrag onDrop={onDrop}>
-            <TreeItem label="parent" nodeId="parent">
-              <TreeItem label="child" nodeId="child">
-                <TreeItem label="grandChild" nodeId="grandChild" />
-              </TreeItem>
-            </TreeItem>
-          </TreeView>
-        </DndProvider>,
-      );
+      const { getByTestId } = render(<SingleDropTreeView onDrop={onDrop} />);
 
       DragAndDrop(
         getByTestId('dragLayer-grandChild'),
@@ -51,17 +88,7 @@ describe('<TreeView>', () => {
     test('TreeItemは子以下のTreeItemにdropできない.', () => {
       const onDrop = jest.fn();
 
-      const { getByTestId } = render(
-        <DndProvider backend={HTML5Backend}>
-          <TreeView isDrag onDrop={onDrop}>
-            <TreeItem label="parent" nodeId="parent">
-              <TreeItem label="child" nodeId="child">
-                <TreeItem label="grandChild" nodeId="grandChild" />
-              </TreeItem>
-            </TreeItem>
-          </TreeView>
-        </DndProvider>,
-      );
+      const { getByTestId } = render(<SingleDropTreeView onDrop={onDrop} />);
 
       DragAndDrop(
         getByTestId('dragLayer-parent'),
@@ -78,17 +105,7 @@ describe('<TreeView>', () => {
     test('複数のTreeItemをdropできる', () => {
       const onDrop = jest.fn();
 
-      const { getByTestId } = render(
-        <DndProvider backend={HTML5Backend}>
-          <TreeView isDrag multiple onDrop={onDrop}>
-            <TreeItem label="parent" nodeId="parent">
-              <TreeItem label="child" nodeId="child">
-                <TreeItem label="grandChild" nodeId="grandChild" />
-              </TreeItem>
-            </TreeItem>
-          </TreeView>
-        </DndProvider>,
-      );
+      const { getByTestId } = render(<MultiDropTreeView onDrop={onDrop} />);
 
       fireEvent.click(getByTestId('clickLayer-child'));
       fireEvent.click(getByTestId('clickLayer-grandChild'), { ctrlKey: true });

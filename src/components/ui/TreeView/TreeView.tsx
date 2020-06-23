@@ -16,7 +16,7 @@ interface TreeViewProps {
   isDrag?: boolean;
   className?: string;
   multiple?: boolean;
-  defaultSelectedIds?: string[];
+  selectedIds?: string[];
   onNodeSelect?: (id: string[]) => void;
   onDrop?: (sourceIds: string[], targetId: string) => void;
 }
@@ -26,31 +26,21 @@ const TreeView: React.FC<TreeViewProps> = ({
   children,
   className,
   multiple = false,
-  defaultSelectedIds = [],
+  selectedIds = [],
   onNodeSelect = () => {},
   onDrop = () => {},
 }) => {
   const [nodes, setNodes] = useState<TreeNode[]>([]);
-  const [selectedIds, setSelectedIds] = useState(defaultSelectedIds);
-
-  // 内部の選択状態と外部の選択状態を同時に設定する
-  const setSelectedIdsWithExternal = useCallback(
-    (ids: string[]) => {
-      setSelectedIds(ids);
-      onNodeSelect(ids);
-    },
-    [onNodeSelect],
-  );
 
   // 選択されているノードが存在しない場合、選択状態から外す.
   useEffect(() => {
     const nodeIds = nodes.map(node => node.id);
     selectedIds.forEach(selectedId => {
       if (!nodeIds.includes(selectedId)) {
-        setSelectedIdsWithExternal(selectedIds.filter(id => id !== selectedId));
+        onNodeSelect(selectedIds.filter(id => id !== selectedId));
       }
     });
-  }, [nodes, selectedIds, setSelectedIdsWithExternal]);
+  }, [nodes, onNodeSelect, selectedIds]);
 
   const [, drop] = useDrop({
     accept: ItemTypes.TreeItem,
@@ -87,9 +77,9 @@ const TreeView: React.FC<TreeViewProps> = ({
 
   const selectIds = useCallback(
     (ids: string[]) => {
-      setSelectedIdsWithExternal(ids);
+      onNodeSelect(ids);
     },
-    [setSelectedIdsWithExternal],
+    [onNodeSelect],
   );
 
   const setExpanded = useCallback((id: string, isExpand: boolean) => {
@@ -125,7 +115,7 @@ const TreeView: React.FC<TreeViewProps> = ({
     >
       <Tree
         onClick={() => {
-          setSelectedIdsWithExternal([]);
+          onNodeSelect([]);
         }}
         className={className}
         ref={drop}

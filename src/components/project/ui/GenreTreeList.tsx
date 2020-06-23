@@ -103,7 +103,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
     <StyledTreeView
       multiple={multiple}
       className={className}
-      defaultSelectedIds={selectedGenreIds}
+      selectedIds={selectedGenreIds}
       onNodeSelect={(id: string[]) => {
         onGenreSelect(id);
       }}
