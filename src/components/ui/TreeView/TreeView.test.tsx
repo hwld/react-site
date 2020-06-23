@@ -6,7 +6,7 @@ import TreeView from './TreeView';
 import TreeItem from './TreeItem';
 
 describe('<TreeView>', () => {
-  describe('Drag and Drop', () => {
+  describe('ドラッグアンドドロップ', () => {
     const DragAndDrop = (src: HTMLElement, dst: HTMLElement) => {
       fireEvent.dragStart(src);
       fireEvent.dragEnter(dst);
@@ -14,21 +14,6 @@ describe('<TreeView>', () => {
       fireEvent.dragLeave(dst);
       fireEvent.dragEnd(src);
     };
-
-    const createDragableTestTree = (
-      onDrop?: jest.Mock<{}>,
-      isMulti?: boolean,
-    ) => (
-      <DndProvider backend={HTML5Backend}>
-        <TreeView isDrag multiple={isMulti} onDrop={onDrop}>
-          <TreeItem label="parent" nodeId="parent">
-            <TreeItem label="child" nodeId="child">
-              <TreeItem label="grandChild" nodeId="grandChild" />
-            </TreeItem>
-          </TreeItem>
-        </TreeView>
-      </DndProvider>
-    );
 
     test('TreeItemは親以上のTreeItemにdropできる.', () => {
       const onDrop = jest.fn();
