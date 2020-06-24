@@ -18,6 +18,7 @@ interface NoteListProps {
 const NoteList: React.FC<NoteListProps> = ({
   notes,
   notesSortOrder = { targetField: 'creationDate', order: 'asc' },
+  selectedNoteIds = [],
   onNotesSelect,
   searchCriteria,
   className,
@@ -80,7 +81,12 @@ const NoteList: React.FC<NoteListProps> = ({
   }, [notes, notesCompareFunction, notesSortOrder, searchCriteria]);
 
   return (
-    <List isDrag={isDrag} className={className} onSelect={onNotesSelect}>
+    <List
+      isDrag={isDrag}
+      className={className}
+      selectedIds={selectedNoteIds}
+      onSelect={onNotesSelect}
+    >
       {notes.length !== 0 ? (
         listItems
       ) : (

@@ -14,30 +14,26 @@ export type ListItemDropType = {
 };
 
 const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
-  const {
-    selectedIds,
-    isDrag,
-    selectItem,
-    addItemId,
-    removeItemId,
-  } = useContext(ListContext);
+  const { selectedIds, isDrag, selectItem, removeItemId } = useContext(
+    ListContext,
+  );
 
   useEffect(() => {
-    addItemId(itemId);
-
     return () => {
       removeItemId(itemId);
     };
-  }, [itemId, addItemId, removeItemId]);
+  }, [itemId, removeItemId]);
 
   const [, drag, preview] = useDrag({
     item: { type: ItemTypes.ListItem, ids: [...selectedIds] },
-    begin: () => {
+    begin: monitor => {
       if (!selectedIds.includes(itemId)) {
         selectItem([itemId]);
 
         return { type: ItemTypes.ListItem, ids: [itemId] };
       }
+
+      return monitor.getItem();
     },
     end: (item, monitor) => {
       if (monitor.didDrop()) {

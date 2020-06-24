@@ -35,7 +35,6 @@ const GenreTreeItem: React.FC<GenreTreeItemProps> = ({
     }),
   });
 
-  // TreeItemはネストされているので、DropしたいNodeの親もDropTargetになっているが、子のノードで処理される.
   return (
     <div ref={drop}>
       <TreeItem

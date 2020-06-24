@@ -24,7 +24,6 @@ describe('<TreeView>', () => {
       );
 
       expect(nodeSelect.mock.calls.length).toBe(1);
-      //  選択解除
       expect(nodeSelect.mock.calls[0][0]).toEqual([]);
     });
   });

@@ -4,7 +4,6 @@ type ListContextValue = {
   selectedIds: string[];
   isDrag: boolean;
   selectItem: (ids: string[]) => void;
-  addItemId: (id: string) => void;
   removeItemId: (id: string) => void;
 };
 
@@ -13,7 +12,6 @@ const ListContext = React.createContext<ListContextValue>({
   isDrag: false,
 
   selectItem: () => {},
-  addItemId: () => {},
   removeItemId: () => {},
 });
 

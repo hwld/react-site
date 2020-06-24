@@ -34,7 +34,7 @@ const TreeView: React.FC<TreeViewProps> = ({
 
   // 選択状態のItemが削除されたときに、それを除いた選択状態を返す
   // これとonNodeSelectを使って、内部と外部の選択状態の同期をとる.
-  // 内部の状態をいちいち用意しているのは、removeNodeの依存リストにpropsを含めたくなかったから.
+  // 内部の状態をいちいち用意しているのは、Itemの破棄のときだけにremoveNodeを動かしたいので、依存リストにpropsを含めたくなかったから.
   const [internalSelectedIds, setInternalSelectedIds] = useState(selectedIds);
 
   // 内部の選択状態と外部の選択状態の同期

@@ -45,6 +45,7 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreIds, className }) => {
           isDrag
           notes={viewNotes}
           notesSortOrder={notesSortOrder}
+          selectedNoteIds={selectedNoteIds}
           onNotesSelect={selectNoteIds}
         />
       </>

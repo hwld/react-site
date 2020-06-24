@@ -10,6 +10,7 @@ const StyledMuiList = styled(MuiList)`
 
 interface ListProps {
   className?: string;
+  selectedIds?: string[];
   onSelect?: (ids: string[]) => void;
   isDrag?: boolean;
 }
@@ -17,48 +18,34 @@ interface ListProps {
 const List: React.FC<ListProps> = ({
   children,
   className,
+  selectedIds = [],
   onSelect = () => {},
   isDrag = false,
 }) => {
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [ItemIds, addItemIds] = useState<string[]>([]);
+  const [internalSelectedIds, setInternalSelectedIds] = useState(selectedIds);
 
   // 内部の選択状態と外部の選択状態を同時に設定する
-  const setSelectedIdsWithExternal = useCallback(
+  const selectItem = useCallback(
     (ids: string[]) => {
-      setSelectedIds(ids);
+      setInternalSelectedIds(ids);
       onSelect(ids);
     },
     [onSelect],
   );
 
-  // 選択されているアイテムのうち、存在しないアイテムを外す.
   useEffect(() => {
-    selectedIds.forEach(selectedId => {
-      if (!ItemIds.includes(selectedId)) {
-        setSelectedIdsWithExternal(selectedIds.filter(id => id !== selectedId));
-      }
-    });
-  }, [ItemIds, selectedIds, setSelectedIdsWithExternal]);
-
-  const addItemId = useCallback((id: string) => {
-    addItemIds(ids => [...ids, id]);
-  }, []);
+    if (internalSelectedIds.length !== selectedIds.length) {
+      onSelect(internalSelectedIds);
+    }
+  }, [internalSelectedIds, onSelect, selectedIds.length]);
 
   const removeItemId = useCallback((id: string) => {
-    addItemIds(ids => ids.filter(nodeId => nodeId !== id));
+    setInternalSelectedIds(ids => ids.filter(selectId => selectId !== id));
   }, []);
-
-  const selectItem = useCallback(
-    (ids: string[]) => {
-      setSelectedIdsWithExternal(ids);
-    },
-    [setSelectedIdsWithExternal],
-  );
 
   return (
     <ListContext.Provider
-      value={{ selectedIds, isDrag, selectItem, addItemId, removeItemId }}
+      value={{ selectedIds, isDrag, selectItem, removeItemId }}
     >
       <StyledMuiList className={className}>{children}</StyledMuiList>
     </ListContext.Provider>
