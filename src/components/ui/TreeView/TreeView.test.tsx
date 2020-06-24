@@ -6,40 +6,41 @@ import TreeView from './TreeView';
 import TreeItem from './TreeItem';
 
 describe('<TreeView>', () => {
-  describe('ドラッグアンドドロップ', () => {
-    const SingleDropTreeView: React.FC<{ onDrop: () => void }> = ({
-      onDrop,
-    }) => {
-      const [selectedIds, setSelectedIds] = useState<string[]>([]);
-
-      return (
+  describe('選択関係', () => {
+    test('選択状態のアイテムを削除すると、選択状態から除外される', () => {
+      const nodeSelect = jest.fn();
+      const { rerender } = render(
         <DndProvider backend={HTML5Backend}>
-          <TreeView
-            isDrag
-            onDrop={onDrop}
-            onNodeSelect={ids => setSelectedIds(ids)}
-            selectedIds={selectedIds}
-          >
-            <TreeItem label="parent" nodeId="parent">
-              <TreeItem label="child" nodeId="child">
-                <TreeItem label="grandChild" nodeId="grandChild" />
-              </TreeItem>
-            </TreeItem>
+          <TreeView selectedIds={['item']} onNodeSelect={nodeSelect}>
+            <TreeItem label="item" nodeId="item" />
           </TreeView>
-        </DndProvider>
+        </DndProvider>,
       );
-    };
 
-    const MultiDropTreeView: React.FC<{ onDrop: () => void }> = ({
-      onDrop,
-    }) => {
+      rerender(
+        <DndProvider backend={HTML5Backend}>
+          <TreeView selectedIds={['item']} onNodeSelect={nodeSelect} />
+        </DndProvider>,
+      );
+
+      expect(nodeSelect.mock.calls.length).toBe(1);
+      //  選択解除
+      expect(nodeSelect.mock.calls[0][0]).toEqual([]);
+    });
+  });
+
+  describe('ドラッグアンドドロップ', () => {
+    const DropTreeView: React.FC<{
+      onDrop: () => void;
+      multiple?: boolean;
+    }> = ({ onDrop, multiple = false }) => {
       const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
       return (
         <DndProvider backend={HTML5Backend}>
           <TreeView
+            multiple={multiple}
             isDrag
-            multiple
             onDrop={onDrop}
             onNodeSelect={ids => setSelectedIds(ids)}
             selectedIds={selectedIds}
@@ -65,7 +66,7 @@ describe('<TreeView>', () => {
     test('TreeItemは親以上のTreeItemにdropできる.', () => {
       const onDrop = jest.fn();
 
-      const { getByTestId } = render(<SingleDropTreeView onDrop={onDrop} />);
+      const { getByTestId } = render(<DropTreeView onDrop={onDrop} />);
 
       DragAndDrop(
         getByTestId('dragLayer-grandChild'),
@@ -88,7 +89,7 @@ describe('<TreeView>', () => {
     test('TreeItemは子以下のTreeItemにdropできない.', () => {
       const onDrop = jest.fn();
 
-      const { getByTestId } = render(<SingleDropTreeView onDrop={onDrop} />);
+      const { getByTestId } = render(<DropTreeView onDrop={onDrop} />);
 
       DragAndDrop(
         getByTestId('dragLayer-parent'),
@@ -105,7 +106,7 @@ describe('<TreeView>', () => {
     test('複数のTreeItemをdropできる', () => {
       const onDrop = jest.fn();
 
-      const { getByTestId } = render(<MultiDropTreeView onDrop={onDrop} />);
+      const { getByTestId } = render(<DropTreeView onDrop={onDrop} multiple />);
 
       fireEvent.click(getByTestId('clickLayer-child'));
       fireEvent.click(getByTestId('clickLayer-grandChild'), { ctrlKey: true });

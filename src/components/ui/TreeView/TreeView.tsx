@@ -32,15 +32,25 @@ const TreeView: React.FC<TreeViewProps> = ({
 }) => {
   const [nodes, setNodes] = useState<TreeNode[]>([]);
 
-  // 選択されているノードが存在しない場合、選択状態から外す.
+  // 選択状態のItemが削除されたときに、それを除いた選択状態を返す
+  // これとonNodeSelectを使って、内部と外部の選択状態の同期をとる.
+  // 内部の状態をいちいち用意しているのは、removeNodeの依存リストにpropsを含めたくなかったから.
+  const [internalSelectedIds, setInternalSelectedIds] = useState(selectedIds);
+
+  // 内部の選択状態と外部の選択状態の同期
   useEffect(() => {
-    const nodeIds = nodes.map(node => node.id);
-    selectedIds.forEach(selectedId => {
-      if (!nodeIds.includes(selectedId)) {
-        onNodeSelect(selectedIds.filter(id => id !== selectedId));
-      }
-    });
-  }, [nodes, onNodeSelect, selectedIds]);
+    if (selectedIds.length !== internalSelectedIds.length) {
+      onNodeSelect(internalSelectedIds);
+    }
+  }, [internalSelectedIds, onNodeSelect, selectedIds]);
+
+  const selectIds = useCallback(
+    (ids: string[]) => {
+      onNodeSelect(ids);
+      setInternalSelectedIds(ids);
+    },
+    [onNodeSelect],
+  );
 
   const [, drop] = useDrop({
     accept: ItemTypes.TreeItem,
@@ -54,8 +64,17 @@ const TreeView: React.FC<TreeViewProps> = ({
     },
   });
 
+  // TreeItemの初回レンダリング時にだけ動かしたいので、依存しないようにする
   const addNodeId = useCallback((id: string) => {
     setNodes(state => [...state, { id, expanded: true, childrenId: [] }]);
+  }, []);
+
+  // TreeItemの破棄の時にだけ動かしたいので、依存しないようにする
+  const removeNodeId = useCallback((id: string) => {
+    setNodes(state => state.filter(node => node.id !== id));
+    setInternalSelectedIds(internalIds =>
+      internalIds.filter(internalId => internalId !== id),
+    );
   }, []);
 
   const addNodeChildrenId = useCallback((id: string, childrenId: string[]) => {
@@ -70,17 +89,6 @@ const TreeView: React.FC<TreeViewProps> = ({
       ];
     });
   }, []);
-
-  const removeNodeId = useCallback((id: string) => {
-    setNodes(state => state.filter(node => node.id !== id));
-  }, []);
-
-  const selectIds = useCallback(
-    (ids: string[]) => {
-      onNodeSelect(ids);
-    },
-    [onNodeSelect],
-  );
 
   const setExpanded = useCallback((id: string, isExpand: boolean) => {
     setNodes(state => {
@@ -115,7 +123,7 @@ const TreeView: React.FC<TreeViewProps> = ({
     >
       <Tree
         onClick={() => {
-          onNodeSelect([]);
+          selectIds([]);
         }}
         className={className}
         ref={drop}
