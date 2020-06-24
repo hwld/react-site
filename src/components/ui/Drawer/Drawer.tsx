@@ -13,9 +13,7 @@ const PresistentDrawer = styled.div<{ open?: boolean; width?: string }>`
   overflow: hidden;
 `;
 
-const NormalDrawer = styled(MuiDrawer)<{
-  width?: string;
-}>`
+const NormalDrawer = styled(MuiDrawer)<{ width?: string }>`
   height: 100%;
   display: flex;
   flex-direction: column;

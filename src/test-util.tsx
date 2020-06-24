@@ -5,13 +5,17 @@ import {
   ThemeProvider as MaterialThemeProvider,
 } from '@material-ui/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import theme from './theme/theme';
 
 const AllProviders: React.FC = ({ children }) => {
   return (
     <StylesProvider injectFirst>
       <MaterialThemeProvider theme={theme}>
-        <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
+        <StyledThemeProvider theme={theme}>
+          <DndProvider backend={HTML5Backend}>{children}</DndProvider>
+        </StyledThemeProvider>
       </MaterialThemeProvider>
     </StylesProvider>
   );

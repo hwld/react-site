@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { render, fireEvent } from '../../../test-util';
 import TreeView from './TreeView';
 import TreeItem from './TreeItem';
@@ -10,18 +8,12 @@ describe('<TreeView>', () => {
     test('選択状態のアイテムを削除すると、選択状態から除外される', () => {
       const nodeSelect = jest.fn();
       const { rerender } = render(
-        <DndProvider backend={HTML5Backend}>
-          <TreeView selectedIds={['item']} onNodeSelect={nodeSelect}>
-            <TreeItem label="item" nodeId="item" />
-          </TreeView>
-        </DndProvider>,
+        <TreeView selectedIds={['item']} onNodeSelect={nodeSelect}>
+          <TreeItem label="item" nodeId="item" />
+        </TreeView>,
       );
 
-      rerender(
-        <DndProvider backend={HTML5Backend}>
-          <TreeView selectedIds={['item']} onNodeSelect={nodeSelect} />
-        </DndProvider>,
-      );
+      rerender(<TreeView selectedIds={['item']} onNodeSelect={nodeSelect} />);
 
       expect(nodeSelect.mock.calls.length).toBe(1);
       expect(nodeSelect.mock.calls[0][0]).toEqual([]);
@@ -36,21 +28,19 @@ describe('<TreeView>', () => {
       const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
       return (
-        <DndProvider backend={HTML5Backend}>
-          <TreeView
-            multiple={multiple}
-            isDrag
-            onDrop={onDrop}
-            onNodeSelect={ids => setSelectedIds(ids)}
-            selectedIds={selectedIds}
-          >
-            <TreeItem label="parent" nodeId="parent">
-              <TreeItem label="child" nodeId="child">
-                <TreeItem label="grandChild" nodeId="grandChild" />
-              </TreeItem>
+        <TreeView
+          multiple={multiple}
+          isDrag
+          onDrop={onDrop}
+          onNodeSelect={ids => setSelectedIds(ids)}
+          selectedIds={selectedIds}
+        >
+          <TreeItem label="parent" nodeId="parent">
+            <TreeItem label="child" nodeId="child">
+              <TreeItem label="grandChild" nodeId="grandChild" />
             </TreeItem>
-          </TreeView>
-        </DndProvider>
+          </TreeItem>
+        </TreeView>
       );
     };
 
