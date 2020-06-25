@@ -51,11 +51,12 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
   };
 
   return (
-    <div ref={isDrag ? drag : null}>
+    <div ref={isDrag ? drag : null} data-testid={`dragLayer-${itemId}`}>
       <MuiListItem
         button
         onClick={setSelectedIds}
         selected={selectedIds.includes(itemId)}
+        data-testid={`selectLayer-${itemId}`}
       >
         {children}
       </MuiListItem>

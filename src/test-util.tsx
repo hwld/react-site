@@ -1,5 +1,10 @@
 import React, { ReactElement } from 'react';
-import { render, RenderOptions, RenderResult } from '@testing-library/react';
+import {
+  render,
+  RenderOptions,
+  RenderResult,
+  fireEvent,
+} from '@testing-library/react';
 import {
   StylesProvider,
   ThemeProvider as MaterialThemeProvider,
@@ -27,6 +32,14 @@ const customRender = (
   options?: Omit<RenderOptions, 'queries'>,
 ): RenderResult => render(ui, { wrapper: AllProviders, ...options });
 
+const dragAndDrop = (src: HTMLElement, dst: HTMLElement) => {
+  fireEvent.dragStart(src);
+  fireEvent.dragEnter(dst);
+  fireEvent.drop(dst);
+  fireEvent.dragLeave(dst);
+  fireEvent.dragEnd(src);
+};
+
 export * from '@testing-library/react';
 
-export { customRender as render };
+export { customRender as render, dragAndDrop };

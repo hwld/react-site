@@ -24,20 +24,20 @@ const List: React.FC<ListProps> = ({
 }) => {
   const [internalSelectedIds, setInternalSelectedIds] = useState(selectedIds);
 
-  // 内部の選択状態と外部の選択状態を同時に設定する
-  const selectItem = useCallback(
-    (ids: string[]) => {
-      setInternalSelectedIds(ids);
-      onSelect(ids);
-    },
-    [onSelect],
-  );
-
   useEffect(() => {
     if (internalSelectedIds.length !== selectedIds.length) {
       onSelect(internalSelectedIds);
     }
-  }, [internalSelectedIds, onSelect, selectedIds.length]);
+  }, [internalSelectedIds, onSelect, selectedIds]);
+
+  // 内部の選択状態と外部の選択状態を同時に設定する
+  const selectItem = useCallback(
+    (ids: string[]) => {
+      onSelect(ids);
+      setInternalSelectedIds(ids);
+    },
+    [onSelect],
+  );
 
   const removeItemId = useCallback((id: string) => {
     setInternalSelectedIds(ids => ids.filter(selectId => selectId !== id));

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { render, fireEvent } from '../../../test-util';
+import { render, fireEvent, dragAndDrop } from '../../../test-util';
 import TreeView from './TreeView';
 import TreeItem from './TreeItem';
 
@@ -17,6 +17,36 @@ describe('<TreeView>', () => {
 
       expect(nodeSelect.mock.calls.length).toBe(1);
       expect(nodeSelect.mock.calls[0][0]).toEqual([]);
+    });
+  });
+
+  describe('Expanded', () => {
+    test('デフォルトは展開状態', () => {
+      const { getByTestId } = render(
+        <TreeView>
+          <TreeItem label="parent" nodeId="parent">
+            <TreeItem label="child" nodeId="child" />
+          </TreeItem>
+        </TreeView>,
+      );
+
+      expect(getByTestId('childrenLayer-parent')).not.toHaveAttribute('hidden');
+    });
+
+    test('正常に開閉できる', () => {
+      const { getByTestId } = render(
+        <TreeView>
+          <TreeItem label="parent" nodeId="parent">
+            <TreeItem label="child" nodeId="child" />
+          </TreeItem>
+        </TreeView>,
+      );
+
+      fireEvent.click(getByTestId('expandLayer-parent'));
+      expect(getByTestId('childrenLayer-parent')).toHaveAttribute('hidden');
+
+      fireEvent.click(getByTestId('expandLayer-parent'));
+      expect(getByTestId('childrenLayer-parent')).not.toHaveAttribute('hidden');
     });
   });
 
@@ -44,25 +74,17 @@ describe('<TreeView>', () => {
       );
     };
 
-    const DragAndDrop = (src: HTMLElement, dst: HTMLElement) => {
-      fireEvent.dragStart(src);
-      fireEvent.dragEnter(dst);
-      fireEvent.drop(dst);
-      fireEvent.dragLeave(dst);
-      fireEvent.dragEnd(src);
-    };
-
     test('TreeItemは親以上のTreeItemにdropできる.', () => {
       const onDrop = jest.fn();
 
       const { getByTestId } = render(<DropTreeView onDrop={onDrop} />);
 
-      DragAndDrop(
+      dragAndDrop(
         getByTestId('dragLayer-grandChild'),
         getByTestId('dropLayer-child'),
       );
 
-      DragAndDrop(
+      dragAndDrop(
         getByTestId('dragLayer-grandChild'),
         getByTestId('dropLayer-parent'),
       );
@@ -80,12 +102,12 @@ describe('<TreeView>', () => {
 
       const { getByTestId } = render(<DropTreeView onDrop={onDrop} />);
 
-      DragAndDrop(
+      dragAndDrop(
         getByTestId('dragLayer-parent'),
         getByTestId('dropLayer-child'),
       );
 
-      DragAndDrop(
+      dragAndDrop(
         getByTestId('dragLayer-parent'),
         getByTestId('dropLayer-grandChild'),
       );
@@ -100,7 +122,7 @@ describe('<TreeView>', () => {
       fireEvent.click(getByTestId('clickLayer-child'));
       fireEvent.click(getByTestId('clickLayer-grandChild'), { ctrlKey: true });
 
-      DragAndDrop(
+      dragAndDrop(
         getByTestId('dragLayer-child'),
         getByTestId('dropLayer-parent'),
       );

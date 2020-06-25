@@ -271,7 +271,12 @@ const TreeItem: React.FC<TreeItemProps> = ({
                 selected={selectedIds.includes(nodeId)}
                 data-testid={`clickLayer-${nodeId}`}
               >
-                <SvgIcon focusable onClick={expand} fontSize="large">
+                <SvgIcon
+                  focusable
+                  onClick={expand}
+                  fontSize="large"
+                  data-testid={`expandLayer-${nodeId}`}
+                >
                   {icon()}
                 </SvgIcon>
                 <Typography>{label}</Typography>
@@ -284,7 +289,9 @@ const TreeItem: React.FC<TreeItemProps> = ({
           </TreeItemDragLayer>
         </TreeItemDropLayer>
       </ExternalDropLayer>
-      <TreeItemGroup hidden={!expanded}>{children}</TreeItemGroup>
+      <TreeItemGroup hidden={!expanded} data-testid={`childrenLayer-${nodeId}`}>
+        {children}
+      </TreeItemGroup>
     </TreeItemRoot>
   );
 };
