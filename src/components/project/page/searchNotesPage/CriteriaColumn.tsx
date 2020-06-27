@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTheme } from '@material-ui/core';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import ContentColumn from '../../ui/ContentColumn';
 import CriteriaFields from './CriteriaFields';
@@ -13,18 +12,12 @@ const SearchCriteria: React.FC<SearchNotesCriteriaProps> = ({
   setCriteria,
   className,
 }) => {
-  const theme = useTheme();
-
   const search = (criteria: SearchNotesCriteria) => {
     setCriteria(criteria);
   };
 
   return (
-    <ContentColumn
-      className={className}
-      footerMenu={<></>}
-      footerColor={theme.palette.secondary.light}
-    >
+    <ContentColumn className={className}>
       <CriteriaFields search={search} />
     </ContentColumn>
   );

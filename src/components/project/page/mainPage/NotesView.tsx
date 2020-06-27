@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { useTheme } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import NotesContext from '../../../../context/NotesContext';
 import NoteList from '../../ui/NoteList';
@@ -14,7 +13,6 @@ interface NoteViewProps {
 }
 
 const NoteView: React.FC<NoteViewProps> = ({ selectedGenreIds, className }) => {
-  const theme = useTheme();
 
   const { isMobile } = useContext(MobileContext);
 
@@ -66,7 +64,6 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreIds, className }) => {
           sortNotes={sortNotes}
         />
       }
-      footerColor={theme.palette.secondary.main}
     >
       {notesContent()}
     </ContentColumn>

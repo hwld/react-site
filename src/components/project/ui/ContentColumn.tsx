@@ -19,7 +19,7 @@ const FooterMenu = styled(Toolbar)`
   display: flex;
   justify-content: center;
   flex: 1;
-  background-color: ${props => props.color};
+  background-color: ${props => props.theme.palette.secondary.main};
 
   &.fixed {
     position: fixed;
@@ -30,8 +30,7 @@ const FooterMenu = styled(Toolbar)`
 
 interface ContentColumnProps {
   className?: string;
-  footerMenu: ReactNode;
-  footerColor: string;
+  footerMenu?: ReactNode;
   fixedFooter?: boolean;
 }
 
@@ -39,7 +38,6 @@ const ContentColumn: React.FC<ContentColumnProps> = ({
   children,
   className,
   footerMenu,
-  footerColor,
   fixedFooter = false,
 }) => {
   return (
@@ -49,7 +47,7 @@ const ContentColumn: React.FC<ContentColumnProps> = ({
 
       <Content>{children}</Content>
 
-      <FooterMenu className={fixedFooter ? 'fixed' : ''} color={footerColor}>
+      <FooterMenu className={fixedFooter ? 'fixed' : ''}>
         {footerMenu}
       </FooterMenu>
     </ViewRoot>

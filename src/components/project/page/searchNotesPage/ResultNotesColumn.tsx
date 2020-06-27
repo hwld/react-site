@@ -1,5 +1,4 @@
 import React, { useContext, useMemo, useCallback } from 'react';
-import { useTheme } from '@material-ui/core';
 import ContentColumn from '../../ui/ContentColumn';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import NotesContext from '../../../../context/NotesContext';
@@ -15,8 +14,6 @@ const ResultList: React.FC<SearchNotesListProps> = ({
   searchCriteria,
   className,
 }) => {
-  const theme = useTheme();
-
   const { isMobile } = useContext(MobileContext);
 
   const { notes } = useContext(NotesContext);
@@ -76,12 +73,7 @@ const ResultList: React.FC<SearchNotesListProps> = ({
   ]);
 
   return (
-    <ContentColumn
-      className={className}
-      fixedFooter={isMobile}
-      footerMenu={<></>}
-      footerColor={theme.palette.secondary.light}
-    >
+    <ContentColumn className={className} fixedFooter={isMobile}>
       <NoteList notes={searchNotes} searchCriteria={searchCriteria} />
     </ContentColumn>
   );

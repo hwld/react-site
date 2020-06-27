@@ -18,7 +18,6 @@ interface HeaderProps {
 }
 
 const TopLayerHeader = styled(MuiAppBar)`
-  background-color: ${props => props.theme.palette.secondary.light};
   z-index: ${props => props.theme.zIndex.drawer + 1};
 `;
 

@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useTheme } from '@material-ui/core/styles';
 import GenreTreeList from '../../ui/GenreTreeList';
 import GenresContext from '../../../../context/GenresContext';
 import ContentColumn from '../../ui/ContentColumn';
@@ -17,7 +16,6 @@ const GenreView: React.FC<GenreViewProps> = ({
   className,
 }) => {
   const { genres, moveGenre } = useContext(GenresContext);
-  const theme = useTheme();
 
   const moveGenres = (genreIds: string[], destGenreId: string) => {
     const sourceGenres = genreIds.map(id => {
@@ -38,7 +36,6 @@ const GenreView: React.FC<GenreViewProps> = ({
       footerMenu={
         <GenreViewMenu genres={genres} selectedGenreIds={selectedGenreIds} />
       }
-      footerColor={theme.palette.secondary.main}
     >
       <GenreTreeList
         multiple
