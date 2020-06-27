@@ -32,7 +32,7 @@ const Drawer: React.FC<DrawerProps & {
   isPresistent: boolean;
 }> = ({ children, open, width, isPresistent, ...rest }) => {
   return isPresistent ? (
-    <PresistentDrawer open={open} width={width}>
+    <PresistentDrawer open={open} width={width} data-testid="presistentDrawer">
       {children}
     </PresistentDrawer>
   ) : (
