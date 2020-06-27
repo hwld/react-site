@@ -78,11 +78,12 @@ const ResultList: React.FC<SearchNotesListProps> = ({
   return (
     <ContentColumn
       className={className}
-      content={<NoteList notes={searchNotes} searchCriteria={searchCriteria} />}
       fixedFooter={isMobile}
       footerMenu={<></>}
       footerColor={theme.palette.secondary.light}
-    />
+    >
+      <NoteList notes={searchNotes} searchCriteria={searchCriteria} />
+    </ContentColumn>
   );
 };
 export default ResultList;

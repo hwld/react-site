@@ -22,10 +22,11 @@ const SearchCriteria: React.FC<SearchNotesCriteriaProps> = ({
   return (
     <ContentColumn
       className={className}
-      content={<CriteriaFields search={search} />}
       footerMenu={<></>}
       footerColor={theme.palette.secondary.light}
-    />
+    >
+      <CriteriaFields search={search} />
+    </ContentColumn>
   );
 };
 

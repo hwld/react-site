@@ -2,14 +2,6 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { Toolbar, Divider } from '@material-ui/core';
 
-interface ContentColumnProps {
-  className?: string;
-  content: ReactNode;
-  footerMenu: ReactNode;
-  footerColor: string;
-  fixedFooter?: boolean;
-}
-
 const ViewRoot = styled.div`
   height: 100%;
   display: flex;
@@ -36,9 +28,16 @@ const FooterMenu = styled(Toolbar)`
   }
 `;
 
+interface ContentColumnProps {
+  className?: string;
+  footerMenu: ReactNode;
+  footerColor: string;
+  fixedFooter?: boolean;
+}
+
 const ContentColumn: React.FC<ContentColumnProps> = ({
+  children,
   className,
-  content,
   footerMenu,
   footerColor,
   fixedFooter = false,
@@ -48,7 +47,7 @@ const ContentColumn: React.FC<ContentColumnProps> = ({
       <Header />
       <Divider />
 
-      <Content>{content}</Content>
+      <Content>{children}</Content>
 
       <FooterMenu className={fixedFooter ? 'fixed' : ''} color={footerColor}>
         {footerMenu}

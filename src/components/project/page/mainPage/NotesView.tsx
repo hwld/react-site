@@ -57,7 +57,6 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreIds, className }) => {
   return (
     <ContentColumn
       className={className}
-      content={notesContent()}
       fixedFooter={isMobile}
       footerMenu={
         <NotesViewMenu
@@ -68,7 +67,9 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreIds, className }) => {
         />
       }
       footerColor={theme.palette.secondary.main}
-    />
+    >
+      {notesContent()}
+    </ContentColumn>
   );
 };
 

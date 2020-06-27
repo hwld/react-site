@@ -35,21 +35,20 @@ const GenreView: React.FC<GenreViewProps> = ({
   return (
     <ContentColumn
       className={className}
-      content={
-        <GenreTreeList
-          multiple
-          genres={genres}
-          selectedGenreIds={selectedGenreIds}
-          onGenreSelect={onGenreSelect}
-          isDrag
-          onDrop={moveGenres}
-        />
-      }
       footerMenu={
         <GenreViewMenu genres={genres} selectedGenreIds={selectedGenreIds} />
       }
       footerColor={theme.palette.secondary.main}
-    />
+    >
+      <GenreTreeList
+        multiple
+        genres={genres}
+        selectedGenreIds={selectedGenreIds}
+        onGenreSelect={onGenreSelect}
+        isDrag
+        onDrop={moveGenres}
+      />
+    </ContentColumn>
   );
 };
 
