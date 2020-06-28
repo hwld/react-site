@@ -14,7 +14,7 @@ const NotesContext = React.createContext<NotesContextValue>({
   notes: [],
 
   addNote: () => {},
-  removeNote: () => {},  
+  removeNote: () => {},
   updateNote: () => {},
   moveNote: () => {},
 });

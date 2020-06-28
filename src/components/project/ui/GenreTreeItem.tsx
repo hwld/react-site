@@ -36,7 +36,7 @@ const GenreTreeItem: React.FC<GenreTreeItemProps> = ({
   });
 
   return (
-    <div ref={drop}>
+    <div ref={drop} data-testid={`gti-dropLayer-${nodeId}`}>
       <TreeItem
         nodeId={nodeId}
         label={genreName}
