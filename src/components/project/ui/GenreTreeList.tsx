@@ -10,8 +10,8 @@ export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
 interface GenreTreeListProps {
   multiple?: boolean;
   genres: Genre[];
-  selectedGenreIds: string[];
-  onGenreSelect: (selectedId: string[]) => void;
+  selectedGenreIds?: string[];
+  onGenreSelect?: (selectedId: string[]) => void;
   isDrag?: boolean;
   onDrop?: (sourceIds: string[], targetId: string) => void;
   className?: string;
@@ -26,8 +26,8 @@ const StyledTreeView = styled(TreeView)`
 const GenreTreeList: React.FC<GenreTreeListProps> = ({
   multiple,
   genres,
-  selectedGenreIds,
-  onGenreSelect,
+  selectedGenreIds = [],
+  onGenreSelect = () => {},
   isDrag = false,
   onDrop,
   className,
