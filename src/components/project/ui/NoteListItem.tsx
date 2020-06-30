@@ -63,7 +63,9 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
         {parts.map((part, i) =>
           part === highlight ? (
             // eslint-disable-next-line react/no-array-index-key
-            <HighlightSpan key={i}>{part}</HighlightSpan>
+            <HighlightSpan key={i} data-testid="search-highlight">
+              {part}
+            </HighlightSpan>
           ) : (
             part
           ),
