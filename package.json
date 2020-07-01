@@ -36,7 +36,7 @@
     "build": "react-scripts build",
     "deploy": "firebase deploy",
     "disable": "firebase hosting:disable",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -70,6 +70,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^2.3.0",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "minimist": "^1.2.2",
     "prettier": "^1.19.1",
     "prettier-stylelint": "^0.4.2",
