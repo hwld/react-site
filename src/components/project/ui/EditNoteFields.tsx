@@ -65,6 +65,7 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
     <>
       <FormField>
         <FormTextField
+          id="editNoteFieldsTitle"
           label="タイトル"
           value={title}
           onChange={changeTitle}
@@ -75,6 +76,7 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
       </FormField>
       <FormField>
         <FormTextField
+          id="editNoteFieldsNote"
           label="メモ"
           error={text.length === 0}
           helperText="※メモは必須項目です."

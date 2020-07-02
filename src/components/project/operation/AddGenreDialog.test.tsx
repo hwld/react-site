@@ -18,7 +18,7 @@ describe('<AddGenreDialog>', () => {
           moveGenre: others,
         }}
       >
-        <AddGenreDialog selectedGenreIds={['genre1']} />
+        <AddGenreDialog parentGenreId="genre1" />
       </GenresContext.Provider>,
     );
 
