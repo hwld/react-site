@@ -8,13 +8,13 @@ import { GenreField } from '../../../services/genres';
 
 interface AddGenreDialogProps {
   disabled?: boolean;
-  selectedGenreIds: string[];
+  parentGenreId: string;
   size?: SvgIconProps['fontSize'];
 }
 
 const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
   disabled,
-  selectedGenreIds,
+  parentGenreId,
   size,
 }) => {
   const { addGenre } = useContext(GenresContext);
@@ -27,7 +27,7 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
       id: '',
       creationDate: new Date(),
       genreName: genre.genreName,
-      parentGenreId: selectedGenreIds[0] || '',
+      parentGenreId: parentGenreId || '',
       childrenGenreIds: [],
     });
   };

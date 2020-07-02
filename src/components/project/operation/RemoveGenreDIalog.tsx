@@ -6,19 +6,19 @@ import OperationDialog from './OperationDialog';
 
 interface RemoveGenreDialogProps {
   disabled?: boolean;
-  selectedGenreIds: string[];
+  targetGenreIds: string[];
   size?: SvgIconProps['fontSize'];
 }
 
 const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
   disabled,
-  selectedGenreIds,
+  targetGenreIds,
   size,
 }) => {
   const { removeGenre } = useContext(GenresContext);
 
   const remove = () => {
-    selectedGenreIds.forEach(id => removeGenre(id));
+    targetGenreIds.forEach(id => removeGenre(id));
   };
 
   return (

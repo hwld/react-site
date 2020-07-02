@@ -113,7 +113,7 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
           </MetaData>
         </NoteTextContainer>
         <div>
-          <RemoveNoteDialog selectedNoteIds={[note.id]} />
+          <RemoveNoteDialog targetNoteIds={[note.id]} />
           <UpdateNoteDialog defaultNote={note} />
         </div>
       </GridContainer>

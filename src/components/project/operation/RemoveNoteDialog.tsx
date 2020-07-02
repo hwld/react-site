@@ -5,25 +5,27 @@ import NotesContext from '../../../context/NotesContext';
 import OperationDialog from './OperationDialog';
 
 interface RemoveNoteDialogProps {
-  selectedNoteIds: string[];
+  disabled?: boolean;
+  targetNoteIds: string[];
   size?: SvgIconProps['fontSize'];
 }
 
 const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
-  selectedNoteIds,
+  disabled,
+  targetNoteIds,
   size,
 }) => {
   const { removeNote } = useContext(NotesContext);
 
   const remove = () => {
-    selectedNoteIds.forEach(id => removeNote(id));
+    targetNoteIds.forEach(id => removeNote(id));
   };
 
   return (
     <OperationDialog
       tooltipText="メモを削除"
       activatorIcon={<DeleteNoteIcon fontSize={size} />}
-      activatorDisabled={selectedNoteIds.length === 0}
+      activatorDisabled={disabled}
       doneText="削除"
       onDone={remove}
     >

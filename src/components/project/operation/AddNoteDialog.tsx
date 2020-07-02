@@ -8,13 +8,13 @@ import EditNoteField from '../ui/EditNoteFields';
 
 interface AddNoteDialogProps {
   disabled?: boolean;
-  selectedGenreId: string;
+  genreId: string;
   size?: SvgIconProps['fontSize'];
 }
 
 const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   disabled,
-  selectedGenreId,
+  genreId,
   size,
 }) => {
   const [note, setNote] = useState<NoteField>({
@@ -29,7 +29,7 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   const add = () => {
     addNote({
       id: '',
-      genreId: selectedGenreId,
+      genreId,
       creationDate: new Date(),
       lastUpdated: new Date(),
       title: note.title,

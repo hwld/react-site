@@ -22,12 +22,15 @@ const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
     <>
       <AddNoteDialog
         disabled={selectedGenreIds.length !== 1}
-        selectedGenreId={selectedGenreIds[0] || ''}
+        genreId={selectedGenreIds[0] || ''}
       />
-      <RemoveNoteDialog selectedNoteIds={selectedNoteIds} />
+      <RemoveNoteDialog
+        disabled={selectedNoteIds.length === 0}
+        targetNoteIds={selectedNoteIds}
+      />
       <MoveNotesDialog
         disabled={selectedGenreIds.length === 0}
-        selectedNotesIds={selectedNoteIds}
+        sourceNoteIds={selectedNoteIds}
       />
       <SortNotesDialog
         disabled={selectedGenreIds.length === 0}

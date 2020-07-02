@@ -31,10 +31,13 @@ const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
 
   return (
     <>
-      <AddGenreDialog selectedGenreIds={selectedGenreIds} />
+      <AddGenreDialog
+        disabled={selectedGenreIds.length !== 1}
+        parentGenreId={selectedGenreIds[0]}
+      />
       <RemoveGenreDialog
         disabled={removeGenreDisabled}
-        selectedGenreIds={selectedGenreIds}
+        targetGenreIds={selectedGenreIds}
       />
       <UpdateGenreDialog
         disabled={selectedGenres.length !== 1}

@@ -14,7 +14,7 @@ import NotesContext from '../../../context/NotesContext';
 
 interface MoveNotesDialogProps {
   disabled?: boolean;
-  selectedNotesIds: string[];
+  sourceNoteIds: string[];
   size?: SvgIconProps['fontSize'];
 }
 
@@ -25,7 +25,7 @@ const StyledGenreTreeList = styled(GenreTreeList)`
 
 const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
   disabled,
-  selectedNotesIds,
+  sourceNoteIds,
   size,
 }) => {
   const { genres } = useContext(GenresContext);
@@ -34,7 +34,7 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
   const { moveNote } = useContext(NotesContext);
 
   const moveNotes = () => {
-    selectedNotesIds.forEach(id => moveNote(id, destGenreId));
+    sourceNoteIds.forEach(id => moveNote(id, destGenreId));
   };
 
   const selectGenre = (ids: string[]) => {
@@ -48,6 +48,9 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
       activatorDisabled={disabled}
       doneText="移動"
       onDone={moveNotes}
+      onClose={() => {
+        setDestGenreId('');
+      }}
     >
       <DialogTitle>メモの移動</DialogTitle>
       <DialogContent>
