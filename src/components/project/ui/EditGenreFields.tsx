@@ -24,6 +24,7 @@ const EditGenreField: React.FC<EditGenreFieldProps> = ({ genre, onChange }) => {
 
   return (
     <StyledTextField
+      id="EditGenreFieldsGenreName"
       label="ジャンル名"
       error={genreName.length === 0}
       helperText="※ジャンル名は必須項目です"
@@ -32,6 +33,7 @@ const EditGenreField: React.FC<EditGenreFieldProps> = ({ genre, onChange }) => {
       color="secondary"
       variant="filled"
       fullWidth
+      data-testid="genreName"
     />
   );
 };

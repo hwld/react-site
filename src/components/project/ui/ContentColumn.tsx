@@ -47,7 +47,7 @@ const ContentColumn: React.FC<ContentColumnProps> = ({
 
       <Content>{children}</Content>
 
-      <FooterMenu className={fixedFooter ? 'fixed' : ''}>
+      <FooterMenu className={fixedFooter ? 'fixed' : ''} data-testid="footer">
         {footerMenu}
       </FooterMenu>
     </ViewRoot>

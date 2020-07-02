@@ -8,7 +8,7 @@ describe('<AddNoteDialog>', () => {
   test('ノート追加処理が適切に呼び出される', () => {
     const addNote = jest.fn((note: Note) => note);
     const others = jest.fn();
-    const { getByRole, getByLabelText, getAllByRole } = render(
+    const { getByLabelText, getByTestId } = render(
       <NotesContext.Provider
         value={{
           notes: [
@@ -34,32 +34,22 @@ describe('<AddNoteDialog>', () => {
     );
 
     // ダイアログ表示
-    const activator = getByRole('button');
-    expect(activator).toBeTruthy();
-    fireEvent.click(activator);
+    fireEvent.click(getByTestId('activatorButton'));
 
     // メモの情報を設定
-    const titleField = getByLabelText('タイトル');
-    const textField = getByLabelText('メモ');
-    const authorNameField = getByLabelText('著者名');
-    const bookNameField = getByLabelText('書籍名');
-
-    expect(titleField).toBeTruthy();
-    expect(textField).toBeTruthy();
-    expect(authorNameField).toBeTruthy();
-    expect(bookNameField).toBeTruthy();
-
-    fireEvent.change(titleField, { target: { value: 'testTitle' } });
-    fireEvent.change(textField, { target: { value: 'testText' } });
-    fireEvent.change(authorNameField, { target: { value: 'testAuthorName' } });
-    fireEvent.change(bookNameField, { target: { value: 'testBookName' } });
+    fireEvent.change(getByLabelText('タイトル'), {
+      target: { value: 'testTitle' },
+    });
+    fireEvent.change(getByLabelText('メモ'), { target: { value: 'testText' } });
+    fireEvent.change(getByLabelText('著者名'), {
+      target: { value: 'testAuthorName' },
+    });
+    fireEvent.change(getByLabelText('書籍名'), {
+      target: { value: 'testBookName' },
+    });
 
     // 追加ボタンを押す
-    const addButton = getAllByRole('button').filter(button =>
-      button.textContent?.match(/追加/),
-    );
-    expect(addButton.length).toBe(1);
-    fireEvent.click(addButton[0]);
+    fireEvent.click(getByTestId('doneButton'));
 
     // メモの追加が呼び出されているか
     expect(addNote.mock.calls.length).toBe(1);

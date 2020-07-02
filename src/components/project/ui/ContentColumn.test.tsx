@@ -3,7 +3,7 @@ import { render } from '../../../test-util';
 import ContentColumn from './ContentColumn';
 
 describe('<ContentColumn>', () => {
-  test('Content,Footerが正しく表示される', () => {
+  test('Content,Footerが表示される', () => {
     const { queryByText } = render(
       <ContentColumn footerMenu={<div>testFooter</div>}>
         <div>testContent</div>

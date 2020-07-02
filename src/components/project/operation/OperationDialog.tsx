@@ -61,7 +61,11 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
   // ToolTipの子コンポーネントにdisable属性をつけるとエラーが出るのでifで分岐させる
   const activator = () => {
     if (activatorDisabled)
-      return <StyledIconButton disabled>{activatorIcon}</StyledIconButton>;
+      return (
+        <StyledIconButton disabled data-testid="activatorButton">
+          {activatorIcon}
+        </StyledIconButton>
+      );
 
     return (
       <Tooltip title={<Typography>{tooltipText}</Typography>}>
@@ -70,6 +74,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
             event.stopPropagation();
             openDialog();
           }}
+          data-testid="activatorButton"
         >
           {activatorIcon}
         </StyledIconButton>
@@ -87,6 +92,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
         maxWidth="sm"
         // ダイアログ外をクリックするとクリックイベントが伝搬してしまうため、ここで防ぐ
         onClick={event => event.stopPropagation()}
+        data-testid="dialog"
       >
         {children}
         <DialogActions>
@@ -99,6 +105,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
             }}
             variant="contained"
             color="secondary"
+            data-testid="doneButton"
           >
             {doneText || '完了'}
           </Button>
@@ -109,6 +116,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
             }}
             variant="contained"
             color="secondary"
+            data-testid="cancelButton"
           >
             中止
           </Button>

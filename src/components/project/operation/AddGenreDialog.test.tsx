@@ -8,7 +8,7 @@ describe('<AddGenreDialog>', () => {
   test('ジャンル追加処理が適切に呼び出される', () => {
     const addGenre = jest.fn((genre: Genre) => genre);
     const others = jest.fn();
-    const { getByRole, getAllByRole } = render(
+    const { getByTestId, getByLabelText } = render(
       <GenresContext.Provider
         value={{
           genres: [],
@@ -23,21 +23,15 @@ describe('<AddGenreDialog>', () => {
     );
 
     // ダイアログ表示
-    const activator = getByRole('button');
-    expect(activator).toBeTruthy();
-    fireEvent.click(activator);
+    fireEvent.click(getByTestId('activatorButton'));
 
     // ジャンルの情報を設定
-    const genreNameField = getByRole('textbox');
-    expect(genreNameField).toBeTruthy();
-    fireEvent.change(genreNameField, { target: { value: 'TestGenreName' } });
+    fireEvent.change(getByLabelText('ジャンル名'), {
+      target: { value: 'TestGenreName' },
+    });
 
     // 追加ボタンを押す
-    const addButton = getAllByRole('button').filter(button =>
-      button.textContent?.match(/追加/),
-    );
-    expect(addButton.length).toBe(1);
-    fireEvent.click(addButton[0]);
+    fireEvent.click(getByTestId('doneButton'));
 
     // ジャンルの追加が呼び出されているか
     expect(addGenre.mock.calls.length).toBe(1);

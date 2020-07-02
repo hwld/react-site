@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from '../../../test-util';
-import NoteList from './NoteList';
 import NoteListItem from './NoteListItem';
 
 describe('<NoteListItem>', () => {

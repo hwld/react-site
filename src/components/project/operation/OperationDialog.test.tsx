@@ -8,87 +8,59 @@ import {
 
 describe('<OperationDialog>', () => {
   test('ダイアログを開閉することができる', async () => {
-    const TestDialogContent = 'TestDialogContent';
-    const { queryByText, getAllByRole } = render(
-      <OperationDialog
-        activatorIcon={<>testActivator</>}
-        tooltipText="testToolTip"
-      >
-        {TestDialogContent}
-      </OperationDialog>,
+    const { getByTestId, queryByTestId } = render(
+      <OperationDialog activatorIcon={<></>} tooltipText="testToolTip" />,
     );
+
+    expect(queryByTestId('dialog')).toBe(null);
 
     // ダイアログを開くボタン
-    expect(queryByText(TestDialogContent)).toBe(null);
-    const Activator = getAllByRole('button').filter(element =>
-      element.textContent?.match(/testActivator/),
-    );
-    expect(Activator.length).toBe(1);
-    fireEvent.click(Activator[0]);
-    expect(queryByText(TestDialogContent)).not.toBe(null);
+    fireEvent.click(getByTestId('activatorButton'));
+    expect(queryByTestId('dialog')).not.toBe(null);
 
     // ダイアログを閉じる
-    const Cancel = getAllByRole('button').filter(element =>
-      element.textContent?.match(/中止/),
-    );
-    expect(Cancel.length).toBe(1);
-    fireEvent.click(Cancel[0]);
-    await waitForElementToBeRemoved(() => queryByText(TestDialogContent));
-    expect(queryByText(TestDialogContent)).toBe(null);
+    fireEvent.click(getByTestId('cancelButton'));
+
+    // ダイアログが閉じるのを待機
+    await waitForElementToBeRemoved(() => queryByTestId('dialog'));
+    expect(queryByTestId('dialog')).toBe(null);
   });
 
   test('アクティベータを無効にできる', () => {
-    const TestDialogContent = 'TestDialogContent';
-    const { queryByText, getAllByRole } = render(
+    const { getByTestId, queryByTestId } = render(
       <OperationDialog
-        activatorIcon={<>testActivator</>}
+        activatorIcon={<></>}
         tooltipText="testToolTip"
         activatorDisabled
-      >
-        {TestDialogContent}
-      </OperationDialog>,
+      />,
     );
 
-    expect(queryByText(TestDialogContent)).toBe(null);
-    const Activator = getAllByRole('button').filter(element =>
-      element.textContent?.match(/testActivator/),
-    );
-    expect(Activator[0]).toBeTruthy();
-    fireEvent.click(Activator[0]);
-    expect(queryByText(TestDialogContent)).toBe(null);
+    expect(queryByTestId('dialog')).toBe(null);
+
+    fireEvent.click(getByTestId('activatorButton'));
+    expect(queryByTestId('dialog')).toBe(null);
   });
 
   test('ダイアログを完了すると指定した処理が行われる', async () => {
-    const TestDialogContent = 'TestDialogContent';
     const onDone = jest.fn();
-    const { getAllByRole, queryByText } = render(
+    const { getByTestId, queryByTestId } = render(
       <OperationDialog
-        activatorIcon={<>testActivator</>}
+        activatorIcon={<></>}
         doneText="完了"
         onDone={onDone}
         tooltipText="testToolTip"
-      >
-        {TestDialogContent}
-      </OperationDialog>,
+      />,
     );
 
-    const Activator = getAllByRole('button').filter(element =>
-      element.textContent?.match(/testActivator/),
-    );
-    expect(Activator.length).toBe(1);
-    fireEvent.click(Activator[0]);
-    expect(queryByText(TestDialogContent)).not.toBe(null);
+    fireEvent.click(getByTestId('activatorButton'));
+    expect(queryByTestId('dialog')).not.toBe(null);
 
-    const DoneButton = getAllByRole('button').filter(element =>
-      element.textContent?.match(/完了/),
-    );
-    expect(DoneButton.length).toBe(1);
-    fireEvent.click(DoneButton[0]);
+    fireEvent.click(getByTestId('doneButton'));
     expect(onDone.mock.calls.length).toBe(1);
 
     // ダイアログが閉じるのを待機する
-    await waitForElementToBeRemoved(() => queryByText(TestDialogContent));
+    await waitForElementToBeRemoved(() => queryByTestId('dialog'));
 
-    expect(queryByText(TestDialogContent)).toBe(null);
+    expect(queryByTestId('dialog')).toBe(null);
   });
 });
