@@ -104,12 +104,16 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
       <GridContainer>
         <NoteTextContainer>
           <TitleText variant="h4">
-            <span>{title}</span>
+            <span data-testid="title">{title}</span>
           </TitleText>
-          <NoteText>{text}</NoteText>
+          <NoteText data-testid="text">{text}</NoteText>
           <MetaData>
-            <MetaText>著者名:{authorName}</MetaText>
-            <MetaText>書籍名:{bookName}</MetaText>
+            <MetaText>
+              著者名:<span data-testid="authorName">{authorName}</span>
+            </MetaText>
+            <MetaText>
+              書籍名:<span data-testid="bookName">{bookName}</span>
+            </MetaText>
           </MetaData>
         </NoteTextContainer>
         <div>

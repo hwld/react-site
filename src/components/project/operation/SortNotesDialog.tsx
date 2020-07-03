@@ -8,14 +8,14 @@ import OperationDialog from './OperationDialog';
 
 interface SortNotesDialogProps {
   sort: (order: NotesSortOrder) => void;
-  defaultSortOrder: NotesSortOrder;
+  defaultSortOrder?: NotesSortOrder;
   disabled?: boolean;
   size?: SvgIconProps['fontSize'];
 }
 
 const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
   sort,
-  defaultSortOrder,
+  defaultSortOrder = { targetField: 'creationDate', order: 'asc' },
   disabled,
   size,
 }) => {

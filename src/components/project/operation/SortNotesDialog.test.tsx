@@ -1,0 +1,145 @@
+import React from 'react';
+import { render, fireEvent } from '../../../test-util';
+import SortNotesDialog from './SortNotesDialog';
+import { NotesSortOrder } from '../ui/NotesSortConditionFields';
+
+describe('<SortNotesDialog>', () => {
+  test('タイトルの昇降順を設定できる', () => {
+    const sort = jest.fn((order: NotesSortOrder) => order);
+    const { getByTestId } = render(<SortNotesDialog sort={sort} />);
+
+    // 昇順
+    fireEvent.click(getByTestId('activatorButton'));
+    fireEvent.click(getByTestId('title'));
+    fireEvent.click(getByTestId('asc'));
+    fireEvent.click(getByTestId('doneButton'));
+
+    expect(sort.mock.calls.length).toBe(1);
+    expect(sort.mock.calls[0][0].targetField).toBe('title');
+    expect(sort.mock.calls[0][0].order).toBe('asc');
+
+    // 降順
+    fireEvent.click(getByTestId('activatorButton'));
+    fireEvent.click(getByTestId('title'));
+    fireEvent.click(getByTestId('desc'));
+    fireEvent.click(getByTestId('doneButton'));
+    expect(sort.mock.calls.length).toBe(2);
+    expect(sort.mock.calls[1][0].targetField).toBe('title');
+    expect(sort.mock.calls[1][0].order).toBe('desc');
+  });
+  test('本文の昇降順を設定できる', () => {
+    const sort = jest.fn((order: NotesSortOrder) => order);
+    const { getByTestId } = render(<SortNotesDialog sort={sort} />);
+
+    // 昇順
+    fireEvent.click(getByTestId('activatorButton'));
+    fireEvent.click(getByTestId('text'));
+    fireEvent.click(getByTestId('asc'));
+    fireEvent.click(getByTestId('doneButton'));
+
+    expect(sort.mock.calls.length).toBe(1);
+    expect(sort.mock.calls[0][0].targetField).toBe('text');
+    expect(sort.mock.calls[0][0].order).toBe('asc');
+
+    // 降順
+    fireEvent.click(getByTestId('activatorButton'));
+    fireEvent.click(getByTestId('text'));
+    fireEvent.click(getByTestId('desc'));
+    fireEvent.click(getByTestId('doneButton'));
+    expect(sort.mock.calls.length).toBe(2);
+    expect(sort.mock.calls[1][0].targetField).toBe('text');
+    expect(sort.mock.calls[1][0].order).toBe('desc');
+  });
+  test('著者名の昇降順を設定できる', () => {
+    const sort = jest.fn((order: NotesSortOrder) => order);
+    const { getByTestId } = render(<SortNotesDialog sort={sort} />);
+
+    // 昇順
+    fireEvent.click(getByTestId('activatorButton'));
+    fireEvent.click(getByTestId('authorName'));
+    fireEvent.click(getByTestId('asc'));
+    fireEvent.click(getByTestId('doneButton'));
+
+    expect(sort.mock.calls.length).toBe(1);
+    expect(sort.mock.calls[0][0].targetField).toBe('authorName');
+    expect(sort.mock.calls[0][0].order).toBe('asc');
+
+    // 降順
+    fireEvent.click(getByTestId('activatorButton'));
+    fireEvent.click(getByTestId('authorName'));
+    fireEvent.click(getByTestId('desc'));
+    fireEvent.click(getByTestId('doneButton'));
+    expect(sort.mock.calls.length).toBe(2);
+    expect(sort.mock.calls[1][0].targetField).toBe('authorName');
+    expect(sort.mock.calls[1][0].order).toBe('desc');
+  });
+  test('書籍名の昇降順を設定できる', () => {
+    const sort = jest.fn((order: NotesSortOrder) => order);
+    const { getByTestId } = render(<SortNotesDialog sort={sort} />);
+
+    // 昇順
+    fireEvent.click(getByTestId('activatorButton'));
+    fireEvent.click(getByTestId('bookName'));
+    fireEvent.click(getByTestId('asc'));
+    fireEvent.click(getByTestId('doneButton'));
+
+    expect(sort.mock.calls.length).toBe(1);
+    expect(sort.mock.calls[0][0].targetField).toBe('bookName');
+    expect(sort.mock.calls[0][0].order).toBe('asc');
+
+    // 降順
+    fireEvent.click(getByTestId('activatorButton'));
+    fireEvent.click(getByTestId('bookName'));
+    fireEvent.click(getByTestId('desc'));
+    fireEvent.click(getByTestId('doneButton'));
+    expect(sort.mock.calls.length).toBe(2);
+    expect(sort.mock.calls[1][0].targetField).toBe('bookName');
+    expect(sort.mock.calls[1][0].order).toBe('desc');
+  });
+  test('作成日の昇降順を設定できる', () => {
+    const sort = jest.fn((order: NotesSortOrder) => order);
+    const { getByTestId } = render(<SortNotesDialog sort={sort} />);
+
+    // 昇順
+    fireEvent.click(getByTestId('activatorButton'));
+    fireEvent.click(getByTestId('creationDate'));
+    fireEvent.click(getByTestId('asc'));
+    fireEvent.click(getByTestId('doneButton'));
+
+    expect(sort.mock.calls.length).toBe(1);
+    expect(sort.mock.calls[0][0].targetField).toBe('creationDate');
+    expect(sort.mock.calls[0][0].order).toBe('asc');
+
+    // 降順
+    fireEvent.click(getByTestId('activatorButton'));
+    fireEvent.click(getByTestId('creationDate'));
+    fireEvent.click(getByTestId('desc'));
+    fireEvent.click(getByTestId('doneButton'));
+    expect(sort.mock.calls.length).toBe(2);
+    expect(sort.mock.calls[1][0].targetField).toBe('creationDate');
+    expect(sort.mock.calls[1][0].order).toBe('desc');
+  });
+  test('更新日の昇降順を設定できる', () => {
+    const sort = jest.fn((order: NotesSortOrder) => order);
+    const { getByTestId } = render(<SortNotesDialog sort={sort} />);
+
+    // 昇順
+    fireEvent.click(getByTestId('activatorButton'));
+    fireEvent.click(getByTestId('lastUpdated'));
+    fireEvent.click(getByTestId('asc'));
+    fireEvent.click(getByTestId('doneButton'));
+
+    expect(sort.mock.calls.length).toBe(1);
+    expect(sort.mock.calls[0][0].targetField).toBe('lastUpdated');
+    expect(sort.mock.calls[0][0].order).toBe('asc');
+
+    // 降順
+    fireEvent.click(getByTestId('activatorButton'));
+    fireEvent.click(getByTestId('lastUpdated'));
+    fireEvent.click(getByTestId('desc'));
+    fireEvent.click(getByTestId('doneButton'));
+    expect(sort.mock.calls.length).toBe(2);
+    expect(sort.mock.calls[1][0].targetField).toBe('lastUpdated');
+    expect(sort.mock.calls[1][0].order).toBe('desc');
+  });
+});

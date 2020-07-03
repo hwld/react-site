@@ -76,6 +76,7 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
           control={<Radio color="secondary" />}
           label="作成日"
           labelPlacement="end"
+          data-testid="creationDate"
         />
         <FormControlLabel
           value={lastUpdated}
@@ -83,6 +84,7 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
           control={<Radio color="secondary" />}
           label="最終更新日"
           labelPlacement="end"
+          data-testid="lastUpdated"
         />
         <FormControlLabel
           value={title}
@@ -90,6 +92,7 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
           control={<Radio color="secondary" />}
           label="タイトル"
           labelPlacement="end"
+          data-testid="title"
         />
         <FormControlLabel
           value={text}
@@ -97,6 +100,7 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
           control={<Radio color="secondary" />}
           label="メモ本文"
           labelPlacement="end"
+          data-testid="text"
         />
         <FormControlLabel
           value={authorName}
@@ -104,6 +108,7 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
           control={<Radio color="secondary" />}
           label="著者名"
           labelPlacement="end"
+          data-testid="authorName"
         />
         <FormControlLabel
           value={bookName}
@@ -111,6 +116,7 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
           control={<Radio color="secondary" />}
           label="書籍名"
           labelPlacement="end"
+          data-testid="bookName"
         />
       </RadioGroup>
       <Typography>並び替え順</Typography>
@@ -121,6 +127,7 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
           control={<Radio color="secondary" />}
           label="昇順"
           labelPlacement="end"
+          data-testid="asc"
         />
         <FormControlLabel
           value={desc}
@@ -128,6 +135,7 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
           control={<Radio color="secondary" />}
           label="降順"
           labelPlacement="end"
+          data-testid="desc"
         />
       </RadioGroup>
     </>

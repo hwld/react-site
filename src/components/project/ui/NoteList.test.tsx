@@ -12,8 +12,8 @@ describe('<NoteList>', () => {
       text: 'test-text1',
       authorName: 'test-authorName1',
       bookName: 'test-bookName1',
-      creationDate: new Date(),
-      lastUpdated: new Date(),
+      creationDate: new Date(2000, 6, 1),
+      lastUpdated: new Date(2000, 7, 1),
     },
     {
       id: 'note2',
@@ -22,8 +22,8 @@ describe('<NoteList>', () => {
       text: 'test-text2',
       authorName: 'test-authorName2',
       bookName: 'test-bookName2',
-      creationDate: new Date(),
-      lastUpdated: new Date(),
+      creationDate: new Date(2000, 7, 1),
+      lastUpdated: new Date(2000, 6, 1),
     },
   ];
   test('渡したノートがすべて表示される', () => {
@@ -41,15 +41,15 @@ describe('<NoteList>', () => {
   });
 
   test('タイトルの昇降順で並び替えができる', () => {
-    const { getAllByText, rerender } = render(
+    const { getAllByTestId, rerender } = render(
       <NoteList
         notes={notes}
         notesSortOrder={{ targetField: 'title', order: 'asc' }}
       />,
     );
 
-    expect(getAllByText(/test-title/)[0].textContent).toBe('test-title1');
-    expect(getAllByText(/test-title/)[1].textContent).toBe('test-title2');
+    expect(getAllByTestId('title')[0].textContent).toBe('test-title1');
+    expect(getAllByTestId('title')[1].textContent).toBe('test-title2');
 
     rerender(
       <NoteList
@@ -58,19 +58,19 @@ describe('<NoteList>', () => {
       />,
     );
 
-    expect(getAllByText(/test-title/)[0].textContent).toBe('test-title2');
-    expect(getAllByText(/test-title/)[1].textContent).toBe('test-title1');
+    expect(getAllByTestId('title')[0].textContent).toBe('test-title2');
+    expect(getAllByTestId('title')[1].textContent).toBe('test-title1');
   });
   test('テキストの昇降順で並び替えができる', () => {
-    const { getAllByText, rerender } = render(
+    const { getAllByTestId, rerender } = render(
       <NoteList
         notes={notes}
         notesSortOrder={{ targetField: 'text', order: 'asc' }}
       />,
     );
 
-    expect(getAllByText(/test-text/)[0].textContent).toBe('test-text1');
-    expect(getAllByText(/test-text/)[1].textContent).toBe('test-text2');
+    expect(getAllByTestId('text')[0].textContent).toBe('test-text1');
+    expect(getAllByTestId('text')[1].textContent).toBe('test-text2');
 
     rerender(
       <NoteList
@@ -79,21 +79,21 @@ describe('<NoteList>', () => {
       />,
     );
 
-    expect(getAllByText(/test-text/)[0].textContent).toBe('test-text2');
-    expect(getAllByText(/test-text/)[1].textContent).toBe('test-text1');
+    expect(getAllByTestId('text')[0].textContent).toBe('test-text2');
+    expect(getAllByTestId('text')[1].textContent).toBe('test-text1');
   });
   test('著者名の昇降順で並び替えができる', () => {
-    const { getAllByText, rerender } = render(
+    const { getAllByTestId, rerender } = render(
       <NoteList
         notes={notes}
         notesSortOrder={{ targetField: 'authorName', order: 'asc' }}
       />,
     );
 
-    expect(getAllByText(/test-authorName/)[0].textContent).toMatch(
+    expect(getAllByTestId('authorName')[0].textContent).toMatch(
       /test-authorName1/,
     );
-    expect(getAllByText(/test-authorName/)[1].textContent).toMatch(
+    expect(getAllByTestId('authorName')[1].textContent).toMatch(
       /test-authorName2/,
     );
 
@@ -104,27 +104,23 @@ describe('<NoteList>', () => {
       />,
     );
 
-    expect(getAllByText(/test-authorName/)[0].textContent).toMatch(
+    expect(getAllByTestId('authorName')[0].textContent).toMatch(
       /test-authorName2/,
     );
-    expect(getAllByText(/test-authorName/)[1].textContent).toMatch(
+    expect(getAllByTestId('authorName')[1].textContent).toMatch(
       /test-authorName1/,
     );
   });
   test('書籍名の昇降順で並び替えができる', () => {
-    const { getAllByText, rerender } = render(
+    const { getAllByTestId, rerender } = render(
       <NoteList
         notes={notes}
         notesSortOrder={{ targetField: 'bookName', order: 'asc' }}
       />,
     );
 
-    expect(getAllByText(/test-bookName/)[0].textContent).toMatch(
-      /test-bookName1/,
-    );
-    expect(getAllByText(/test-bookName/)[1].textContent).toMatch(
-      /test-bookName2/,
-    );
+    expect(getAllByTestId('bookName')[0].textContent).toMatch(/test-bookName1/);
+    expect(getAllByTestId('bookName')[1].textContent).toMatch(/test-bookName2/);
 
     rerender(
       <NoteList
@@ -133,11 +129,47 @@ describe('<NoteList>', () => {
       />,
     );
 
-    expect(getAllByText(/test-bookName/)[0].textContent).toMatch(
-      /test-bookName2/,
+    expect(getAllByTestId('bookName')[0].textContent).toMatch(/test-bookName2/);
+    expect(getAllByTestId('bookName')[1].textContent).toMatch(/test-bookName1/);
+  });
+  test('作成日の昇降順で並び替えができる', () => {
+    const { getAllByTestId, rerender } = render(
+      <NoteList
+        notes={notes}
+        notesSortOrder={{ targetField: 'creationDate', order: 'asc' }}
+      />,
     );
-    expect(getAllByText(/test-bookName/)[1].textContent).toMatch(
-      /test-bookName1/,
+    expect(getAllByTestId('title')[0].textContent).toMatch(/test-title1/);
+    expect(getAllByTestId('title')[1].textContent).toMatch(/test-title2/);
+
+    rerender(
+      <NoteList
+        notes={notes}
+        notesSortOrder={{ targetField: 'creationDate', order: 'desc' }}
+      />,
     );
+
+    expect(getAllByTestId('title')[0].textContent).toMatch(/test-title2/);
+    expect(getAllByTestId('title')[1].textContent).toMatch(/test-title1/);
+  });
+  test('更新日の昇降順で並び替えができる', () => {
+    const { getAllByTestId, rerender } = render(
+      <NoteList
+        notes={notes}
+        notesSortOrder={{ targetField: 'lastUpdated', order: 'asc' }}
+      />,
+    );
+    expect(getAllByTestId('title')[0].textContent).toMatch(/test-title2/);
+    expect(getAllByTestId('title')[1].textContent).toMatch(/test-title1/);
+
+    rerender(
+      <NoteList
+        notes={notes}
+        notesSortOrder={{ targetField: 'lastUpdated', order: 'desc' }}
+      />,
+    );
+
+    expect(getAllByTestId('title')[0].textContent).toMatch(/test-title1/);
+    expect(getAllByTestId('title')[1].textContent).toMatch(/test-title2/);
   });
 });
