@@ -48,6 +48,7 @@ const Login: React.FC = () => {
           type="image"
           src="./btn_google_signin_dark_normal_web.png"
           alt="Googleでログイン"
+          data-testid="loginButton"
         />
       </LoginForm>
     </Background>
