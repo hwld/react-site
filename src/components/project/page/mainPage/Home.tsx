@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { useTheme, useMediaQuery } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import NotesView from './NotesView';
 import Header from './Header';
 import Drawer from '../../../ui/Drawer/Drawer';
@@ -20,6 +21,7 @@ const RightNotesView = styled(NotesView)`
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [selectedGenreIds, setSelectedGenreIds] = useState<string[]>([]);
+  const history = useHistory();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
@@ -28,10 +30,17 @@ const Home: React.FC = () => {
     setSelectedGenreIds(id);
   }, []);
 
+  const goSearchMode = () => {
+    history.replace('/search');
+  };
+
   return (
     <MobileContext.Provider value={{ isMobile }}>
-      <Background>
-        <Header onMenuClick={() => setIsOpen(state => !state)} />
+      <Background data-testid="mainPage">
+        <Header
+          onMenuClick={() => setIsOpen(state => !state)}
+          onGoSearchMode={goSearchMode}
+        />
         <Drawer
           width={isMobile ? '80' : '30'}
           isPresistent={!isMobile}

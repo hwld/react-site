@@ -10,11 +10,11 @@ import SearchNoteIcon from '@material-ui/icons/Search';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 import { logout } from '../../../../services/auth';
 
 interface HeaderProps {
   onMenuClick: () => void;
+  onGoSearchMode: () => void;
 }
 
 const TopLayerHeader = styled(MuiAppBar)`
@@ -27,31 +27,25 @@ const AppTitle = styled(Typography)`
   flex-grow: 1;
 `;
 
-const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
-  const history = useHistory();
-
+const Header: React.FC<HeaderProps> = ({ onMenuClick, onGoSearchMode }) => {
   const onLogout = () => {
     logout();
-  };
-
-  const goSearchMode = () => {
-    history.replace('/search');
   };
 
   return (
     <TopLayerHeader position="absolute">
       <Toolbar>
-        <IconButton edge="start" onClick={onMenuClick}>
+        <IconButton edge="start" data-testid="menuButton" onClick={onMenuClick}>
           <MenuIcon />
         </IconButton>
         <AppTitle variant="h5">Notes</AppTitle>
         <Tooltip title={<Typography>検索モードに移動</Typography>}>
-          <IconButton onClick={goSearchMode}>
+          <IconButton data-testid="searchModeButton" onClick={onGoSearchMode}>
             <SearchNoteIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title={<Typography>ログアウト</Typography>}>
-          <IconButton onClick={onLogout}>
+          <IconButton data-testid="logoutButton" onClick={onLogout}>
             <ExitToApp />
           </IconButton>
         </Tooltip>

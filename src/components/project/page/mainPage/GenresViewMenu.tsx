@@ -18,7 +18,7 @@ const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
     selectedGenreIds.includes(genre.id),
   );
 
-  const removeGenreDisabled = useMemo(() => {
+  const genreRemoveDisabled = useMemo(() => {
     const parentIds = genres
       .filter(genre => selectedGenreIds.includes(genre.id))
       .map(genre => genre.parentGenreId);
@@ -32,11 +32,11 @@ const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
   return (
     <>
       <AddGenreDialog
-        disabled={selectedGenreIds.length !== 1}
+        disabled={selectedGenreIds.length > 1}
         parentGenreId={selectedGenreIds[0]}
       />
       <RemoveGenreDialog
-        disabled={removeGenreDisabled}
+        disabled={genreRemoveDisabled}
         targetGenreIds={selectedGenreIds}
       />
       <UpdateGenreDialog

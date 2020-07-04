@@ -43,7 +43,7 @@ const SearchNotesHome: React.FC<{}> = () => {
 
   return (
     <MobileContext.Provider value={{ isMobile }}>
-      <Background>
+      <Background data-testid="searchNotestPage">
         <Header onMenuClick={() => setIsOpen(state => !state)} />
         <Drawer
           width={isMobile ? '80' : '30'}

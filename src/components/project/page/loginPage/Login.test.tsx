@@ -9,14 +9,13 @@ jest.mock('../../../../services/auth', () => {
     login: jest.fn(() => new Promise(resolve => resolve())),
   };
 });
+const mockedLogin = login as jest.MockedFunction<typeof login>;
 
 describe('<Login>', () => {
   test('ログイン処理が正しく呼び出される', () => {
     const { getByTestId } = render(<Login />);
     fireEvent.click(getByTestId('loginButton'));
 
-    expect((login as jest.MockedFunction<typeof login>).mock.calls.length).toBe(
-      1,
-    );
+    expect(mockedLogin.mock.calls.length).toBe(1);
   });
 });
