@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
-import { Redirect } from 'react-router-dom';
 import LockIcon from '@material-ui/icons/Lock';
 import styled from 'styled-components';
-import { login, useCurrentUserId } from '../../../../services/auth';
+import { login } from '../../../../services/auth';
 
 const Background = styled.div`
   display: flex;
@@ -34,8 +33,6 @@ const LoginIcon = styled(LockIcon)`
 `;
 
 const Login: React.FC = () => {
-  const { userId } = useCurrentUserId();
-
   const onLogin = useCallback(() => {
     login().catch(error => {
       window.console.log(error);
@@ -44,19 +41,15 @@ const Login: React.FC = () => {
 
   return (
     <Background>
-      {userId !== '' ? (
-        <Redirect to="/home" />
-      ) : (
-        <LoginForm>
-          <LoginIcon />
-          <input
-            onClick={onLogin}
-            type="image"
-            src="./btn_google_signin_dark_normal_web.png"
-            alt="Googleでログイン"
-          />
-        </LoginForm>
-      )}
+      <LoginForm>
+        <LoginIcon />
+        <input
+          onClick={onLogin}
+          type="image"
+          src="./btn_google_signin_dark_normal_web.png"
+          alt="Googleでログイン"
+        />
+      </LoginForm>
     </Background>
   );
 };
