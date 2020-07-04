@@ -22,8 +22,12 @@ const LoadingText = styled(Typography)`
 const Loading: React.FC<LoadingProps> = () => {
   return (
     <Background>
-      <CircularProgress size="5rem" color="secondary" />
-      <LoadingText>Now Loading</LoadingText>
+      <CircularProgress
+        size="5rem"
+        color="secondary"
+        data-testid="loadingCircle"
+      />
+      <LoadingText data-testid="loadingText">Now Loading</LoadingText>
     </Background>
   );
 };
