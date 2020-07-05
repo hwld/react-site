@@ -5,14 +5,14 @@ import RemoveNoteDialog from '../../operation/RemoveNoteDialog';
 import MoveNotesDialog from '../../operation/MoveNotesDialog';
 import SortNotesDialog from '../../operation/SortNotesDialog';
 
-interface NoteViewMenuProps {
+interface NotesViewMenuProps {
   sortNotes: (order: NotesSortOrder) => void;
   defaultNotesSortOrder: NotesSortOrder;
   selectedGenreIds: string[];
   selectedNoteIds: string[];
 }
 
-const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
+const NotesViewMenu: React.FC<NotesViewMenuProps> = ({
   sortNotes,
   defaultNotesSortOrder,
   selectedGenreIds,
@@ -41,4 +41,4 @@ const NoteViewMenu: React.FC<NoteViewMenuProps> = ({
   );
 };
 
-export default NoteViewMenu;
+export default NotesViewMenu;

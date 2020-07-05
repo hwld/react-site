@@ -7,13 +7,15 @@ import ContentColumn from '../../ui/ContentColumn';
 import NotesViewMenu from './NotesViewMenu';
 import MobileContext from '../../../../context/MobileContext';
 
-interface NoteViewProps {
+interface NotesViewProps {
   selectedGenreIds: string[];
   className?: string;
 }
 
-const NoteView: React.FC<NoteViewProps> = ({ selectedGenreIds, className }) => {
-
+const NotesView: React.FC<NotesViewProps> = ({
+  selectedGenreIds,
+  className,
+}) => {
   const { isMobile } = useContext(MobileContext);
 
   const { notes } = useContext(NotesContext);
@@ -70,4 +72,4 @@ const NoteView: React.FC<NoteViewProps> = ({ selectedGenreIds, className }) => {
   );
 };
 
-export default NoteView;
+export default NotesView;

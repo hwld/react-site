@@ -56,6 +56,7 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
       onDone={add}
       doneDisabled={note.text.length === 0}
       onOpen={clearField}
+      data-testid="addNoteDialog"
     >
       <DialogTitle>メモの追加</DialogTitle>
       <DialogContent>

@@ -49,6 +49,7 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
       onDone={add}
       doneDisabled={genre.genreName.length === 0}
       onOpen={clearField}
+      data-testid="addGenreDialog"
     >
       <DialogTitle>ジャンルの追加</DialogTitle>
       <DialogContent>

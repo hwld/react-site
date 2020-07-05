@@ -28,6 +28,7 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
       activatorDisabled={disabled}
       doneText="削除"
       onDone={remove}
+      data-testid="removeNoteDialog"
     >
       <DialogTitle>メモの削除</DialogTitle>
       <DialogContent>削除してよろしいですか?</DialogContent>

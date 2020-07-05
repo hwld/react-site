@@ -33,6 +33,7 @@ interface OperationDialogProps {
   onOpen?: () => void;
   onClose?: () => void;
   tooltipText: string;
+  'data-testid'?: string;
 }
 
 const OperationDialog: React.FC<OperationDialogProps> = ({
@@ -45,6 +46,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
   onOpen,
   onClose,
   tooltipText,
+  'data-testid': dataTestId,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -83,7 +85,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
   };
 
   return (
-    <>
+    <div data-testid={dataTestId}>
       {activator()}
       <StyledDialog
         fullWidth
@@ -122,7 +124,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
           </Button>
         </DialogActions>
       </StyledDialog>
-    </>
+    </div>
   );
 };
 

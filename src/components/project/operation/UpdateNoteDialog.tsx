@@ -38,6 +38,7 @@ const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
       onDone={update}
       doneDisabled={note.text.length === 0}
       onOpen={setDefaultNote}
+      data-testid="updateNoteDialog"
     >
       <DialogTitle>メモの編集</DialogTitle>
       <DialogContent>

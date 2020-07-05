@@ -47,6 +47,7 @@ const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
       doneText="並び替え"
       onDone={sortNotes}
       onOpen={setDefaultSortOrder}
+      data-testid="sortNotesDialog"
     >
       <DialogTitle>ノートの並び替え</DialogTitle>
       <DialogContent>

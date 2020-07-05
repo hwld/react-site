@@ -4,13 +4,13 @@ import GenresContext from '../../../../context/GenresContext';
 import ContentColumn from '../../ui/ContentColumn';
 import GenreViewMenu from './GenresViewMenu';
 
-interface GenreViewProps {
+interface GenresViewProps {
   onGenreSelect: (selectedId: string[]) => void;
   selectedGenreIds: string[];
   className?: string;
 }
 
-const GenreView: React.FC<GenreViewProps> = ({
+const GenresView: React.FC<GenresViewProps> = ({
   onGenreSelect,
   selectedGenreIds,
   className,
@@ -49,4 +49,4 @@ const GenreView: React.FC<GenreViewProps> = ({
   );
 };
 
-export default GenreView;
+export default GenresView;

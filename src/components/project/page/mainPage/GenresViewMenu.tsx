@@ -1,16 +1,16 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import AddGenreDialog from '../../operation/AddGenreDialog';
 
 import { Genre, createDefaultGenre } from '../../../../services/genres';
 import RemoveGenreDialog from '../../operation/RemoveGenreDIalog';
 import UpdateGenreDialog from '../../operation/UpdateGenreDialog';
 
-interface GenreViewMenuProps {
+interface GenresViewMenuProps {
   genres: Genre[];
   selectedGenreIds: string[];
 }
 
-const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
+const GenresViewMenu: React.FC<GenresViewMenuProps> = ({
   genres,
   selectedGenreIds,
 }) => {
@@ -62,4 +62,4 @@ const GenreViewMenu: React.FC<GenreViewMenuProps> = ({
   );
 };
 
-export default GenreViewMenu;
+export default GenresViewMenu;

@@ -28,6 +28,7 @@ const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
       activatorDisabled={disabled}
       doneText="削除"
       onDone={remove}
+      data-testid="removeGenreDialog"
     >
       <DialogTitle>ジャンルの削除</DialogTitle>
       <DialogContent>削除してよろしいですか？</DialogContent>

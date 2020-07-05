@@ -51,6 +51,7 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
       onClose={() => {
         setDestGenreId('');
       }}
+      data-testid="moveNotesDialog"
     >
       <DialogTitle>メモの移動</DialogTitle>
       <DialogContent>

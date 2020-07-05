@@ -41,6 +41,7 @@ const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
       onDone={update}
       doneDisabled={genre.genreName === ''}
       onOpen={setDefaultGenreName}
+      data-testid="updateGenreDialog"
     >
       <DialogTitle>ジャンルの編集</DialogTitle>
       <DialogContent>
