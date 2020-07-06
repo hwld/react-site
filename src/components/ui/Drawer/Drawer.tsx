@@ -36,7 +36,12 @@ const Drawer: React.FC<DrawerProps & {
       {children}
     </PresistentDrawer>
   ) : (
-    <NormalDrawer open={open} width={width} {...rest}>
+    <NormalDrawer
+      open={open}
+      width={width}
+      {...rest}
+      data-testid="normalDrawer"
+    >
       {children}
     </NormalDrawer>
   );

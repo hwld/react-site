@@ -50,7 +50,9 @@ const NotesView: React.FC<NotesViewProps> = ({
         />
       </>
     ) : (
-      <Alert severity="warning">ジャンルを選択してください</Alert>
+      <Alert severity="warning" data-testid="noselectedAlert">
+        ジャンルを選択してください
+      </Alert>
     );
   };
 

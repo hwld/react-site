@@ -27,17 +27,17 @@ describe('<NoteList>', () => {
     },
   ];
   test('渡したノートがすべて表示される', () => {
-    const { getByText } = render(<NoteList notes={notes} />);
+    const { queryByText } = render(<NoteList notes={notes} />);
 
-    expect(getByText('test-title1')).toBeTruthy();
-    expect(getByText('test-text1')).toBeTruthy();
-    expect(getByText(/test-authorName1/)).toBeTruthy();
-    expect(getByText(/test-bookName1/)).toBeTruthy();
+    expect(queryByText('test-title1')).toBeTruthy();
+    expect(queryByText('test-text1')).toBeTruthy();
+    expect(queryByText(/test-authorName1/)).toBeTruthy();
+    expect(queryByText(/test-bookName1/)).toBeTruthy();
 
-    expect(getByText('test-title2')).toBeTruthy();
-    expect(getByText('test-text2')).toBeTruthy();
-    expect(getByText(/test-authorName2/)).toBeTruthy();
-    expect(getByText(/test-bookName2/)).toBeTruthy();
+    expect(queryByText('test-title2')).toBeTruthy();
+    expect(queryByText('test-text2')).toBeTruthy();
+    expect(queryByText(/test-authorName2/)).toBeTruthy();
+    expect(queryByText(/test-bookName2/)).toBeTruthy();
   });
 
   test('タイトルの昇降順で並び替えができる', () => {

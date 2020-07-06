@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTheme, useMediaQuery } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
@@ -26,10 +26,6 @@ const Home: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const handleGenreSelect = useCallback((id: string[]) => {
-    setSelectedGenreIds(id);
-  }, []);
-
   const goSearchMode = () => {
     history.replace('/search');
   };
@@ -49,7 +45,7 @@ const Home: React.FC = () => {
           onClose={() => setIsOpen(false)}
         >
           <GenresView
-            onGenreSelect={handleGenreSelect}
+            onGenreSelect={setSelectedGenreIds}
             selectedGenreIds={selectedGenreIds}
           />
         </Drawer>

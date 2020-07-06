@@ -155,6 +155,7 @@ const TreeItem: React.FC<TreeItemProps> = ({
     canDrop: () => {
       const isChild = selectedIds.some(parentId => {
         const parentWithChild = nodes.find(node => node.id === parentId);
+
         if (!parentWithChild) {
           throw new Error('存在しないジャンル');
         }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Note, NoteField } from '../services/notes';
 
-type NotesContextValue = {
+export type NotesContextValue = {
   notes: Note[];
 
   addNote: (note: Note) => void;
