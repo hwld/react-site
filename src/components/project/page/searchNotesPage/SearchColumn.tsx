@@ -1,14 +1,14 @@
 import React from 'react';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import ContentColumn from '../../ui/ContentColumn';
-import CriteriaFields from './CriteriaFields';
+import SearchForm from './SearchForm';
 
-interface SearchNotesCriteriaProps {
+interface SearchColumnProps {
   setCriteria: (criteria: SearchNotesCriteria) => void;
   className?: string;
 }
 
-const SearchCriteria: React.FC<SearchNotesCriteriaProps> = ({
+const SearchColumn: React.FC<SearchColumnProps> = ({
   setCriteria,
   className,
 }) => {
@@ -18,9 +18,9 @@ const SearchCriteria: React.FC<SearchNotesCriteriaProps> = ({
 
   return (
     <ContentColumn className={className}>
-      <CriteriaFields search={search} />
+      <SearchForm search={search} />
     </ContentColumn>
   );
 };
 
-export default SearchCriteria;
+export default SearchColumn;

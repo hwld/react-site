@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useTheme, useMediaQuery } from '@material-ui/core';
 import Header from './Header';
-import CriteriaColumn from './CriteriaColumn';
+import SearchColumn from './SearchColumn';
 import ResultNotesColumn from './ResultNotesColumn';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import Drawer from '../../../ui/Drawer/Drawer';
@@ -52,7 +52,7 @@ const SearchNotesHome: React.FC<{}> = () => {
           onOpen={() => setIsOpen(true)}
           onClose={() => setIsOpen(false)}
         >
-          <CriteriaColumn setCriteria={setCriterial} />
+          <SearchColumn setCriteria={setCriterial} />
         </Drawer>
         <RightResultNotesColumn searchCriteria={searchCriteria} />
       </Background>

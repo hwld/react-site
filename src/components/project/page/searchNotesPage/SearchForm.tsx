@@ -7,10 +7,6 @@ import GenresContext from '../../../../context/GenresContext';
 import NotesContext from '../../../../context/NotesContext';
 import SelectGenreDialog from './SelectGenreDialog';
 
-interface CriteriaFieldsprops {
-  search: (criteria: SearchNotesCriteria) => void;
-}
-
 const Root = styled.div`
   padding: 16px 24px;
 `;
@@ -39,46 +35,21 @@ const CriteriaAction = styled.div`
   margin-top: 20px;
 `;
 
-const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
+interface SearchFormprops {
+  search: (criteria: SearchNotesCriteria) => void;
+}
+
+const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
+  const { genres } = useContext(GenresContext);
+  const { notes } = useContext(NotesContext);
+
   const [targetGenreId, setTargetGenreId] = useState('');
   const [targetGenreName, setTargetGenreName] = useState('');
 
   const [targetTitle, setTargetTitle] = useState('');
-  const changeTargetTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTargetTitle(event.target.value);
-  };
-
   const [targetText, setTargetText] = useState('');
-  const changeTargetText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTargetText(event.target.value);
-  };
-
   const [targetAuthorName, setTargetAuthorName] = useState('');
-  const selectTargetAuthorName = (event: object, value: string | null) => {
-    if (value) setTargetAuthorName(value);
-  };
-  const changeTargetAuthorName = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setTargetAuthorName(event.target.value);
-  };
-
   const [targetBookName, setTargetBookName] = useState('');
-  const selectTargetBookName = (event: object, value: string | null) => {
-    if (value) setTargetBookName(value);
-  };
-  const changeTargetBookName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTargetBookName(event.target.value);
-  };
-
-  const { genres } = useContext(GenresContext);
-
-  const selectGenreId = (id: string) => {
-    setTargetGenreId(id);
-    let genreName = genres.find(genre => genre.id === id)?.genreName;
-    if (!genreName) genreName = '';
-    setTargetGenreName(genreName);
-  };
 
   const onSearch = () => {
     search({
@@ -90,7 +61,6 @@ const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
     });
   };
 
-  const { notes } = useContext(NotesContext);
   // 重複のないリストを作成
   const authorNameList = Array.from(
     new Set(
@@ -103,11 +73,43 @@ const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
     ),
   );
 
+  const changeTargetTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTargetTitle(event.target.value);
+  };
+
+  const changeTargetText = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTargetText(event.target.value);
+  };
+
+  const selectTargetAuthorName = (event: object, value: string | null) => {
+    if (value) setTargetAuthorName(value);
+  };
+  const changeTargetAuthorName = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setTargetAuthorName(event.target.value);
+  };
+
+  const selectTargetBookName = (event: object, value: string | null) => {
+    if (value) setTargetBookName(value);
+  };
+  const changeTargetBookName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTargetBookName(event.target.value);
+  };
+
+  const selectGenreId = (id: string) => {
+    setTargetGenreId(id);
+    let genreName = genres.find(genre => genre.id === id)?.genreName;
+    if (!genreName) genreName = '';
+    setTargetGenreName(genreName);
+  };
+
   return (
     <Root>
       <CriteriaTitle>検索条件</CriteriaTitle>
       <CriteriaContent>
         <CriteriaTextField
+          id="searchFormGenreName"
           inputProps={{ readOnly: true }}
           label="ジャンル名"
           value={targetGenreName}
@@ -118,6 +120,7 @@ const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
       </CriteriaContent>
       <CriteriaContent>
         <CriteriaTextField
+          id="searchFormTitle"
           label="タイトル"
           value={targetTitle}
           onChange={changeTargetTitle}
@@ -128,6 +131,7 @@ const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
       </CriteriaContent>
       <CriteriaContent>
         <CriteriaTextField
+          id="searchFormText"
           label="メモ"
           value={targetText}
           onChange={changeTargetText}
@@ -147,6 +151,7 @@ const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
           renderInput={params => (
             <CriteriaTextField
               {...params}
+              id="searchFormAuthorName"
               label="著者名"
               value={targetAuthorName}
               onChange={changeTargetAuthorName}
@@ -168,6 +173,7 @@ const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
           renderInput={params => (
             <CriteriaTextField
               {...params}
+              id="searchFormBookName"
               label="書籍名"
               value={targetBookName}
               onChange={changeTargetBookName}
@@ -179,7 +185,12 @@ const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
         />
       </CriteriaContent>
       <CriteriaAction>
-        <Button variant="contained" color="secondary" onClick={onSearch}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={onSearch}
+          data-testid="searchButton"
+        >
           検索
         </Button>
       </CriteriaAction>
@@ -187,4 +198,4 @@ const CriteriaFields: React.FC<CriteriaFieldsprops> = ({ search }) => {
   );
 };
 
-export default CriteriaFields;
+export default SearchForm;

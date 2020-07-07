@@ -45,7 +45,12 @@ const SelectGenreButton: React.FC<SelectGenreButtonprops> = ({
 
   return (
     <>
-      <Button variant="contained" color="secondary" onClick={openDialog}>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={openDialog}
+        data-testid="activator"
+      >
         選択
       </Button>
       <Dialog open={isOpen} onClose={closeDialog} fullWidth maxWidth="sm">
@@ -58,7 +63,12 @@ const SelectGenreButton: React.FC<SelectGenreButtonprops> = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={select} variant="contained" color="secondary">
+          <Button
+            onClick={select}
+            variant="contained"
+            color="secondary"
+            data-testid="selectButton"
+          >
             選択
           </Button>
           <Button onClick={closeDialog} variant="contained" color="secondary">
