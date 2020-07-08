@@ -42,7 +42,7 @@ const ContentColumn: React.FC<ContentColumnProps> = ({
 }) => {
   return (
     <ViewRoot className={className}>
-      <Header />
+      <Header data-testid="header" />
       <Divider />
 
       <Content>{children}</Content>

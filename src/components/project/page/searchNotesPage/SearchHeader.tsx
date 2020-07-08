@@ -26,7 +26,7 @@ const AppTitle = styled(Typography)`
   flex-grow: 1;
 `;
 
-const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
+const SearchHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const history = useHistory();
 
   const onLogout = () => {
@@ -40,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   return (
     <TopLayerHeader position="absolute">
       <Toolbar>
-        <IconButton edge="start" onClick={onMenuClick}>
+        <IconButton edge="start" onClick={onMenuClick} data-testid="menuButton">
           <MenuIcon />
         </IconButton>
         <AppTitle variant="h5">検索モード</AppTitle>
@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           </IconButton>
         </Tooltip>
         <Tooltip title={<Typography>ログアウト</Typography>}>
-          <IconButton onClick={onLogout}>
+          <IconButton onClick={onLogout} data-testid="logoutButton">
             <ExitToApp />
           </IconButton>
         </Tooltip>
@@ -59,4 +59,4 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   );
 };
 
-export default Header;
+export default SearchHeader;

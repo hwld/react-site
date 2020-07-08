@@ -1,7 +1,7 @@
 import React from 'react';
 import { logout } from '../../../../services/auth';
 import { render, fireEvent } from '../../../../test-util';
-import Header from './Header';
+import MainHeader from './MainHeader';
 
 jest.mock('../../../../services/auth', () => {
   return {
@@ -11,10 +11,10 @@ jest.mock('../../../../services/auth', () => {
 });
 const mockedLogout = logout as jest.MockedFunction<typeof logout>;
 
-describe('<Header>', () => {
+describe('<MainHeader>', () => {
   test('ログアウト処理が呼び出される', () => {
     const { getByTestId } = render(
-      <Header onMenuClick={() => {}} onGoSearchMode={() => {}} />,
+      <MainHeader onMenuClick={() => {}} onGoSearchMode={() => {}} />,
     );
     fireEvent.click(getByTestId('logoutButton'));
     expect(mockedLogout.mock.calls.length).toBe(1);
@@ -24,7 +24,7 @@ describe('<Header>', () => {
     const menuClick = jest.fn();
     const goSearchMode = jest.fn();
     const { getByTestId } = render(
-      <Header onMenuClick={menuClick} onGoSearchMode={goSearchMode} />,
+      <MainHeader onMenuClick={menuClick} onGoSearchMode={goSearchMode} />,
     );
 
     fireEvent.click(getByTestId('menuButton'));

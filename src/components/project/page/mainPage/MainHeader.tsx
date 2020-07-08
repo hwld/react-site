@@ -27,7 +27,7 @@ const AppTitle = styled(Typography)`
   flex-grow: 1;
 `;
 
-const Header: React.FC<HeaderProps> = ({ onMenuClick, onGoSearchMode }) => {
+const MainHeader: React.FC<HeaderProps> = ({ onMenuClick, onGoSearchMode }) => {
   const onLogout = () => {
     logout();
   };
@@ -54,4 +54,4 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, onGoSearchMode }) => {
   );
 };
 
-export default Header;
+export default MainHeader;

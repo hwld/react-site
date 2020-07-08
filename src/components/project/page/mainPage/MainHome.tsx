@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useTheme, useMediaQuery } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import NotesView from './NotesView';
-import Header from './Header';
+import MainHeader from './MainHeader';
 import Drawer from '../../../ui/Drawer/Drawer';
 import GenresView from './GenresView';
 import MobileContext from '../../../../context/MobileContext';
@@ -18,7 +18,7 @@ const RightNotesView = styled(NotesView)`
   flex: 1;
 `;
 
-const Home: React.FC = () => {
+const MainHome: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [selectedGenreIds, setSelectedGenreIds] = useState<string[]>([]);
   const history = useHistory();
@@ -33,7 +33,7 @@ const Home: React.FC = () => {
   return (
     <MobileContext.Provider value={{ isMobile }}>
       <Background data-testid="mainPage">
-        <Header
+        <MainHeader
           onMenuClick={() => setIsOpen(state => !state)}
           onGoSearchMode={goSearchMode}
         />
@@ -55,4 +55,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default MainHome;

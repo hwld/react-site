@@ -1,15 +1,15 @@
 import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
-import Home from './Home';
+import MainHome from './MainHome';
 
-describe('<Home>', () => {
+describe('<MainHome>', () => {
   test('メインページが表示されている', () => {
-    const { queryByTestId } = render(<Home />);
+    const { queryByTestId } = render(<MainHome />);
     expect(queryByTestId('mainPage')).toBeTruthy();
   });
 
-  test('ドロワーが開閉できる', async () => {
-    const { queryByTestId, getByTestId } = render(<Home />);
+  test('ドロワーを開閉できる', () => {
+    const { queryByTestId, getByTestId } = render(<MainHome />);
 
     expect(queryByTestId('presistentDrawer')).toHaveAttribute('open');
     fireEvent.click(getByTestId('menuButton'));

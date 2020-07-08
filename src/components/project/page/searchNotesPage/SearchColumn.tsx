@@ -12,13 +12,9 @@ const SearchColumn: React.FC<SearchColumnProps> = ({
   setCriteria,
   className,
 }) => {
-  const search = (criteria: SearchNotesCriteria) => {
-    setCriteria(criteria);
-  };
-
   return (
     <ContentColumn className={className}>
-      <SearchForm search={search} />
+      <SearchForm search={setCriteria} />
     </ContentColumn>
   );
 };

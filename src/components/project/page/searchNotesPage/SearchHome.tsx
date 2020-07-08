@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { useTheme, useMediaQuery } from '@material-ui/core';
-import Header from './Header';
+import SearchHeader from './SearchHeader';
 import SearchColumn from './SearchColumn';
 import ResultNotesColumn from './ResultNotesColumn';
 import { SearchNotesCriteria } from '../../../../services/notes';
@@ -25,7 +25,7 @@ const RightResultNotesColumn = styled(ResultNotesColumn)`
   flex: 1;
 `;
 
-const SearchNotesHome: React.FC<{}> = () => {
+const SearchHome: React.FC<{}> = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [searchCriteria, setSearchCriteria] = useState<SearchNotesCriteria>({
     genreId: '',
@@ -44,7 +44,7 @@ const SearchNotesHome: React.FC<{}> = () => {
   return (
     <MobileContext.Provider value={{ isMobile }}>
       <Background data-testid="searchNotestPage">
-        <Header onMenuClick={() => setIsOpen(state => !state)} />
+        <SearchHeader onMenuClick={() => setIsOpen(state => !state)} />
         <Drawer
           width={isMobile ? '80' : '30'}
           isPresistent={!isMobile}
@@ -60,4 +60,4 @@ const SearchNotesHome: React.FC<{}> = () => {
   );
 };
 
-export default SearchNotesHome;
+export default SearchHome;

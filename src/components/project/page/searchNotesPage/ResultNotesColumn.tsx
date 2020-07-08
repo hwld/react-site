@@ -10,7 +10,7 @@ interface SearchNotesListProps {
   className?: string;
 }
 
-const ResultList: React.FC<SearchNotesListProps> = ({
+const ResultNotesList: React.FC<SearchNotesListProps> = ({
   searchCriteria,
   className,
 }) => {
@@ -78,4 +78,4 @@ const ResultList: React.FC<SearchNotesListProps> = ({
     </ContentColumn>
   );
 };
-export default ResultList;
+export default ResultNotesList;

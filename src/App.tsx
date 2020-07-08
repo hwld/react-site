@@ -8,8 +8,8 @@ import Loading from './components/project/page/loadingPage/Loading';
 import { useNotes } from './services/notes';
 import { useGenres } from './services/genres';
 import { useCurrentUserId } from './services/auth';
-import SearchNotesHome from './components/project/page/searchNotesPage/Home';
-import MainHome from './components/project/page/mainPage/Home';
+import SearchHome from './components/project/page/searchNotesPage/SearchHome';
+import MainHome from './components/project/page/mainPage/MainHome';
 
 const App: React.FC = () => {
   const { userId, loading } = useCurrentUserId();
@@ -34,7 +34,7 @@ const App: React.FC = () => {
             </Route>
 
             <Route path="/search">
-              <SearchNotesHome />
+              <SearchHome />
             </Route>
 
             <Redirect to="/home" />
