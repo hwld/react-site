@@ -1,16 +1,18 @@
 import React from 'react';
 import { Note } from '../../../services/notes';
 import { render, fireEvent } from '../../../test-util';
-import NotesContext from '../../../context/NotesContext';
+import NotesContext, {
+  notesContextDefaultValue,
+} from '../../../context/NotesContext';
 import AddNoteDialog from './AddNoteDialog';
 
 describe('<AddNoteDialog>', () => {
   test('ノート追加処理が適切に呼び出される', () => {
     const addNote = jest.fn((note: Note) => note);
-    const others = jest.fn();
     const { getByLabelText, getByTestId } = render(
       <NotesContext.Provider
         value={{
+          ...notesContextDefaultValue,
           notes: [
             {
               title: 'dammy',
@@ -24,9 +26,6 @@ describe('<AddNoteDialog>', () => {
             },
           ],
           addNote,
-          removeNote: others,
-          updateNote: others,
-          moveNote: others,
         }}
       >
         <AddNoteDialog genreId="genre1" />

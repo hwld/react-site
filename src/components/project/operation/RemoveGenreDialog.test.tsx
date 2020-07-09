@@ -1,20 +1,18 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
 import RemoveGenreDialog from './RemoveGenreDIalog';
-import GenresContext from '../../../context/GenresContext';
+import GenresContext, {
+  genresContextDefaultValue,
+} from '../../../context/GenresContext';
 
 describe('<RemoveGenreDialog>', () => {
   test('ジャンルの削除処理が正しく呼ばれる', () => {
     const removeGenre = jest.fn();
-    const others = jest.fn();
     const { getByTestId } = render(
       <GenresContext.Provider
         value={{
-          genres: [],
-          addGenre: others,
+          ...genresContextDefaultValue,
           removeGenre,
-          updateGenre: others,
-          moveGenre: others,
         }}
       >
         <RemoveGenreDialog targetGenreIds={['genre1']} />

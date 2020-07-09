@@ -3,7 +3,9 @@ import { render, dragAndDrop } from '../../../test-util';
 import List from '../../ui/List/List';
 import GenreTreeItem from '../../project/ui/GenreTreeItem';
 import ListItem from '../../ui/List/ListItem';
-import NotesContext from '../../../context/NotesContext';
+import NotesContext, {
+  notesContextDefaultValue,
+} from '../../../context/NotesContext';
 
 describe('<GenreTreeItem> with <List>', () => {
   const DnDTestList: React.FC<{ onDrop: () => {} }> = ({ onDrop }) => {
@@ -12,11 +14,8 @@ describe('<GenreTreeItem> with <List>', () => {
     return (
       <NotesContext.Provider
         value={{
+          ...notesContextDefaultValue,
           moveNote: onDrop,
-          notes: [],
-          addNote: () => {},
-          removeNote: () => {},
-          updateNote: () => {},
         }}
       >
         <List

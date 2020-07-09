@@ -10,13 +10,17 @@ export type NotesContextValue = {
   moveNote: (noteId: string, destGenreId: string) => void;
 };
 
-const NotesContext = React.createContext<NotesContextValue>({
+export const notesContextDefaultValue: NotesContextValue = {
   notes: [],
 
   addNote: () => {},
   removeNote: () => {},
   updateNote: () => {},
   moveNote: () => {},
-});
+};
+
+const NotesContext = React.createContext<NotesContextValue>(
+  notesContextDefaultValue,
+);
 
 export default NotesContext;

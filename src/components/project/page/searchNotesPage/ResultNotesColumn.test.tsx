@@ -1,6 +1,7 @@
 import React from 'react';
 import NotesContext, {
   NotesContextValue,
+  notesContextDefaultValue,
 } from '../../../../context/NotesContext';
 import { render } from '../../../../test-util';
 import ResultNotesList from './ResultNotesColumn';
@@ -8,6 +9,7 @@ import { SearchNotesCriteria } from '../../../../services/notes';
 
 describe('<ResultNotesColumn>', () => {
   const notesContextValue: NotesContextValue = {
+    ...notesContextDefaultValue,
     notes: [
       {
         id: 'note1',
@@ -30,10 +32,6 @@ describe('<ResultNotesColumn>', () => {
         lastUpdated: new Date(),
       },
     ],
-    addNote: () => {},
-    removeNote: () => {},
-    updateNote: () => {},
-    moveNote: () => {},
   };
 
   const defaultCriteria: SearchNotesCriteria = {

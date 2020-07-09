@@ -9,13 +9,17 @@ type GenresContextValue = {
   moveGenre: (genre: Genre, destGenreId: string) => void;
 };
 
-const GenresContext = React.createContext<GenresContextValue>({
+export const genresContextDefaultValue: GenresContextValue = {
   genres: [],
 
   addGenre: () => {},
-  removeGenre: () => new Promise(resolve => resolve()),
+  removeGenre: () => new Promise(() => {}),
   updateGenre: () => {},
   moveGenre: () => {},
-});
+};
+
+const GenresContext = React.createContext<GenresContextValue>(
+  genresContextDefaultValue,
+);
 
 export default GenresContext;

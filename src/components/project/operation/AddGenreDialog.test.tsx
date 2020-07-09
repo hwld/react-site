@@ -1,21 +1,19 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
 import AddGenreDialog from './AddGenreDialog';
-import GenresContext from '../../../context/GenresContext';
+import GenresContext, {
+  genresContextDefaultValue,
+} from '../../../context/GenresContext';
 import { Genre } from '../../../services/genres';
 
 describe('<AddGenreDialog>', () => {
   test('ジャンル追加処理が適切に呼び出される', () => {
     const addGenre = jest.fn((genre: Genre) => genre);
-    const others = jest.fn();
     const { getByTestId, getByLabelText } = render(
       <GenresContext.Provider
         value={{
-          genres: [],
+          ...genresContextDefaultValue,
           addGenre,
-          removeGenre: others,
-          updateGenre: others,
-          moveGenre: others,
         }}
       >
         <AddGenreDialog parentGenreId="genre1" />

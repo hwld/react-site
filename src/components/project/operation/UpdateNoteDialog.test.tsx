@@ -1,8 +1,10 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { render } from '../../../test-util';
-import { Note, NoteField } from '../../../services/notes';
-import NotesContext from '../../../context/NotesContext';
+import { NoteField } from '../../../services/notes';
+import NotesContext, {
+  notesContextDefaultValue,
+} from '../../../context/NotesContext';
 import UpdateNoteDialog from './UpdateNoteDialog';
 
 describe('<UpdateNoteDialog>', () => {
@@ -11,15 +13,11 @@ describe('<UpdateNoteDialog>', () => {
       id,
       noteField,
     }));
-    const others = jest.fn();
     const { getByTestId, getByLabelText } = render(
       <NotesContext.Provider
         value={{
-          notes: [],
-          addNote: others,
-          removeNote: others,
+          ...notesContextDefaultValue,
           updateNote,
-          moveNote: others,
         }}
       >
         <UpdateNoteDialog

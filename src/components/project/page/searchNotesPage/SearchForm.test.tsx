@@ -2,7 +2,9 @@ import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
 import SearchForm from './SearchForm';
 import { SearchNotesCriteria } from '../../../../services/notes';
-import GenresContext from '../../../../context/GenresContext';
+import GenresContext, {
+  genresContextDefaultValue,
+} from '../../../../context/GenresContext';
 
 describe('<SearchForm />', () => {
   test('検索処理が正しく呼び出される', () => {
@@ -10,6 +12,7 @@ describe('<SearchForm />', () => {
     const { getByLabelText, getByTestId } = render(
       <GenresContext.Provider
         value={{
+          ...genresContextDefaultValue,
           genres: [
             {
               genreName: 'testGenreName',
@@ -19,10 +22,6 @@ describe('<SearchForm />', () => {
               creationDate: new Date(),
             },
           ],
-          addGenre: () => {},
-          removeGenre: () => new Promise(() => {}),
-          updateGenre: () => {},
-          moveGenre: () => {},
         }}
       >
         <SearchForm search={search} />

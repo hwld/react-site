@@ -1,8 +1,12 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
 import MoveNotesDialog from './MoveNotesDialog';
-import GenresContext from '../../../context/GenresContext';
-import NotesContext from '../../../context/NotesContext';
+import GenresContext, {
+  genresContextDefaultValue,
+} from '../../../context/GenresContext';
+import NotesContext, {
+  notesContextDefaultValue,
+} from '../../../context/NotesContext';
 
 describe('<MoveNotesDialog>', () => {
   test('メモの移動処理が正しく呼び出される', () => {
@@ -10,11 +14,10 @@ describe('<MoveNotesDialog>', () => {
       nodeId,
       destGenreId,
     }));
-    const others = jest.fn();
-
     const { getByTestId } = render(
       <GenresContext.Provider
         value={{
+          ...genresContextDefaultValue,
           genres: [
             {
               genreName: 'testGenreName',
@@ -24,18 +27,11 @@ describe('<MoveNotesDialog>', () => {
               childrenGenreIds: [],
             },
           ],
-          addGenre: others,
-          removeGenre: others,
-          moveGenre: others,
-          updateGenre: others,
         }}
       >
         <NotesContext.Provider
           value={{
-            notes: [],
-            addNote: others,
-            removeNote: others,
-            updateNote: others,
+            ...notesContextDefaultValue,
             moveNote,
           }}
         >

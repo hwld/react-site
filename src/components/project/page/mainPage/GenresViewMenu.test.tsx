@@ -1,20 +1,19 @@
 import React from 'react';
 import GenresViewMenu from './GenresViewMenu';
 import { render, fireEvent, within } from '../../../../test-util';
-import GenresContext from '../../../../context/GenresContext';
+import GenresContext, {
+  genresContextDefaultValue,
+} from '../../../../context/GenresContext';
 
 describe('<GenresViewMenu>', () => {
   test('親子関係にあるジャンルを削除すると、子以下の削除がスキップされる', () => {
     const removeGenre = jest.fn();
-    const others = jest.fn();
+
     const { getByTestId } = render(
       <GenresContext.Provider
         value={{
-          genres: [],
-          addGenre: others,
+          ...genresContextDefaultValue,
           removeGenre,
-          updateGenre: others,
-          moveGenre: others,
         }}
       >
         <GenresViewMenu

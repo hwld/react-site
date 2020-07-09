@@ -3,10 +3,12 @@ import { render } from '../../../../test-util';
 import NotesView from './NotesView';
 import NotesContext, {
   NotesContextValue,
+  notesContextDefaultValue,
 } from '../../../../context/NotesContext';
 
 describe('<NotesView>', () => {
   const notesContextValue: NotesContextValue = {
+    ...notesContextDefaultValue,
     notes: [
       {
         id: 'note1',
@@ -29,10 +31,6 @@ describe('<NotesView>', () => {
         lastUpdated: new Date(),
       },
     ],
-    addNote: () => {},
-    removeNote: () => {},
-    updateNote: () => {},
-    moveNote: () => {},
   };
 
   test('単一選択されているジャンルのメモが表示される', () => {

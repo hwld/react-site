@@ -1,20 +1,18 @@
 import React from 'react';
 import RemoveNoteDialog from './RemoveNoteDialog';
 import { render, fireEvent } from '../../../test-util';
-import NotesContext from '../../../context/NotesContext';
+import NotesContext, {
+  notesContextDefaultValue,
+} from '../../../context/NotesContext';
 
 describe('<RemoveNoteDialog>', () => {
   test('メモの削除処理が正しく呼び出される', () => {
     const removeNote = jest.fn();
-    const others = jest.fn();
     const { getByTestId } = render(
       <NotesContext.Provider
         value={{
-          notes: [],
-          addNote: others,
+          ...notesContextDefaultValue,
           removeNote,
-          updateNote: others,
-          moveNote: others,
         }}
       >
         <RemoveNoteDialog targetNoteIds={['note1']} />
