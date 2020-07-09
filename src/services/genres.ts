@@ -2,6 +2,7 @@ import firebase from 'firebase/app';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useCallback, useMemo } from 'react';
 import { db } from './firebaseConfig';
+import { Note, NoteField, NoteInfo } from './notes';
 
 export interface GenreField {
   genreName: string;
@@ -44,21 +45,6 @@ const useGenres = (uid: string) => {
       .doc()
       .collection('damy');
   }, [uid]);
-
-  const notesRef = useMemo(() => {
-    if (uid !== '') {
-      return db
-        .collection('users')
-        .doc(`${uid}`)
-        .collection('notes');
-    }
-
-    return db
-      .collection('users')
-      .doc()
-      .collection('damy');
-  }, [uid]);
-
   const [genresCollection] = useCollection(genresRef);
   const genres = useMemo(() => {
     if (!genresCollection) {
@@ -78,16 +64,48 @@ const useGenres = (uid: string) => {
     });
   }, [genresCollection]);
 
-  // 指定されたIdのジャンルの子ノードのidを再帰的に取得し、Promiseの配列にして返す.
+  const notesRef = useMemo(() => {
+    if (uid !== '') {
+      return db
+        .collection('users')
+        .doc(`${uid}`)
+        .collection('notes');
+    }
+
+    return db
+      .collection('users')
+      .doc()
+      .collection('damy');
+  }, [uid]);
+  const [notesCollection] = useCollection(notesRef);
+  const notes = useMemo(() => {
+    if (!notesCollection) {
+      return [];
+    }
+
+    return notesCollection.docs.map(noteDoc => {
+      const data = noteDoc.data();
+
+      // Note型のDate関連だけTimestampからDateに変換したい.
+      const noteOtherThanDate = data as NoteField & NoteInfo;
+      const creationDate: Date = data.creationDate.toDate();
+      const lastUpdated: Date = data.lastUpdated.toDate();
+
+      const note: Note = { ...noteOtherThanDate, creationDate, lastUpdated };
+
+      return note;
+    });
+  }, [notesCollection]);
+
+  // 指定されたIdのジャンルの子ノードのidを再帰的に取得する.
   const fetchAllChildrenGenreIds = useCallback(
-    async (parentId: string) => {
-      const parentGenre = (await genresRef.doc(parentId).get()).data();
+    (parentId: string) => {
+      const parentGenre = genres.find(genre => genre.id === parentId);
       if (!parentGenre) return [];
 
-      // data()の戻り値にうまく形を付けたいけど取り敢えず後回しにした.
-      const childrenIds: string[] = parentGenre.childrenGenreIds;
+      const childrenIds = parentGenre.childrenGenreIds;
 
-      const promiseGrandChildrenIds = childrenIds.map(id => {
+      const grandChildrenIds: string[] = childrenIds.flatMap(id => {
         if (id !== '') {
           return fetchAllChildrenGenreIds(id);
         }
@@ -95,35 +113,23 @@ const useGenres = (uid: string) => {
         return [];
       });
 
-      // 明示的に型を指定しないとanyになってしまう.
-      const grandChildrenIds: string[] = (
-        await Promise.all(promiseGrandChildrenIds)
-      ).flat();
-
       return [...childrenIds, ...grandChildrenIds];
     },
-    [genresRef],
+    [genres],
   );
 
   // 指定されたジャンルIdのメモをPromiseの配列にして全て返す
   const fetchAllNotesInGenreIds = useCallback(
-    async (genreIds: string[]) => {
-      const promiseNoteIds = genreIds.map(async genreId => {
-        const deletedNotes: string[] = [];
+    (genreIds: string[]) => {
+      return genreIds.flatMap(genreId => {
+        const notesIdInGenre = notes
+          .filter(note => note.genreId === genreId)
+          .map(note => note.id);
 
-        const noteDocs = await notesRef
-          .where('genreId', '==', `${genreId}`)
-          .get();
-        noteDocs.forEach(note => {
-          deletedNotes.push(note.data().id);
-        });
-
-        return deletedNotes;
+        return notesIdInGenre;
       });
-
-      return (await Promise.all(promiseNoteIds)).flat();
     },
-    [notesRef],
+    [notes],
   );
 
   const addGenre = useCallback(
@@ -150,8 +156,8 @@ const useGenres = (uid: string) => {
   );
 
   const removeGenre = useCallback(
-    async (id: string) => {
-      const childrenIds = await fetchAllChildrenGenreIds(id);
+    (id: string) => {
+      const childrenIds = fetchAllChildrenGenreIds(id);
       const deletedGenreIds = [id, ...childrenIds];
 
       // genreを削除する
@@ -159,7 +165,8 @@ const useGenres = (uid: string) => {
         genresRef.doc(genreId).delete();
       });
 
-      const deletedNotes = await fetchAllNotesInGenreIds(deletedGenreIds);
+      // noteを削除する
+      const deletedNotes = fetchAllNotesInGenreIds(deletedGenreIds);
       deletedNotes.forEach(noteId => {
         notesRef.doc(noteId).delete();
       });

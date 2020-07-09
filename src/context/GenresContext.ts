@@ -4,7 +4,7 @@ import { Genre } from '../services/genres';
 type GenresContextValue = {
   genres: Genre[];
   addGenre: (genre: Genre) => void;
-  removeGenre: (id: string) => Promise<void>;
+  removeGenre: (id: string) => void;
   updateGenre: (genre: Genre) => void;
   moveGenre: (genre: Genre, destGenreId: string) => void;
 };
@@ -13,7 +13,7 @@ export const genresContextDefaultValue: GenresContextValue = {
   genres: [],
 
   addGenre: () => {},
-  removeGenre: () => new Promise(() => {}),
+  removeGenre: () => {},
   updateGenre: () => {},
   moveGenre: () => {},
 };
