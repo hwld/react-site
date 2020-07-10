@@ -21,7 +21,7 @@ const LoadingText = styled(Typography)`
 
 const Loading: React.FC<LoadingProps> = () => {
   return (
-    <Background>
+    <Background data-testid="loadingPage">
       <CircularProgress
         size="5rem"
         color="secondary"

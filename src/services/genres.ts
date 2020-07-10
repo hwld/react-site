@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useCallback, useMemo } from 'react';
 import { db } from './firebaseConfig';
-import { Note, NoteField, NoteInfo } from './notes';
+import { useNotes } from './notes';
 
 export interface GenreField {
   genreName: string;
@@ -33,18 +33,12 @@ export const createDefaultGenre = () => {
 
 const useGenres = (uid: string) => {
   const genresRef = useMemo(() => {
-    if (uid !== '') {
-      return db
-        .collection('users')
-        .doc(`${uid}`)
-        .collection('genres');
-    }
-
     return db
       .collection('users')
-      .doc()
-      .collection('damy');
+      .doc(`${uid !== '' ? uid : 'tmp'}`)
+      .collection('genres');
   }, [uid]);
+
   const [genresCollection] = useCollection(genresRef);
   const genres = useMemo(() => {
     if (!genresCollection) {
@@ -64,38 +58,7 @@ const useGenres = (uid: string) => {
     });
   }, [genresCollection]);
 
-  const notesRef = useMemo(() => {
-    if (uid !== '') {
-      return db
-        .collection('users')
-        .doc(`${uid}`)
-        .collection('notes');
-    }
-
-    return db
-      .collection('users')
-      .doc()
-      .collection('damy');
-  }, [uid]);
-  const [notesCollection] = useCollection(notesRef);
-  const notes = useMemo(() => {
-    if (!notesCollection) {
-      return [];
-    }
-
-    return notesCollection.docs.map(noteDoc => {
-      const data = noteDoc.data();
-
-      // Note型のDate関連だけTimestampからDateに変換したい.
-      const noteOtherThanDate = data as NoteField & NoteInfo;
-      const creationDate: Date = data.creationDate.toDate();
-      const lastUpdated: Date = data.lastUpdated.toDate();
-
-      const note: Note = { ...noteOtherThanDate, creationDate, lastUpdated };
-
-      return note;
-    });
-  }, [notesCollection]);
+  const { notes, removeNote } = useNotes(uid);
 
   // 指定されたIdのジャンルの子ノードのidを再帰的に取得する.
   const fetchAllChildrenGenreIds = useCallback(
@@ -168,10 +131,10 @@ const useGenres = (uid: string) => {
       // noteを削除する
       const deletedNotes = fetchAllNotesInGenreIds(deletedGenreIds);
       deletedNotes.forEach(noteId => {
-        notesRef.doc(noteId).delete();
+        removeNote(noteId);
       });
     },
-    [fetchAllChildrenGenreIds, fetchAllNotesInGenreIds, genresRef, notesRef],
+    [fetchAllChildrenGenreIds, fetchAllNotesInGenreIds, genresRef, removeNote],
   );
 
   const updateGenre = useCallback(

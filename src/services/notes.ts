@@ -31,17 +31,10 @@ export interface SearchNotesCriteria {
 
 const useNotes = (uid: string) => {
   const notesRef = useMemo(() => {
-    if (uid !== '') {
-      return db
-        .collection('users')
-        .doc(`${uid}`)
-        .collection('notes');
-    }
-
     return db
       .collection('users')
-      .doc()
-      .collection('damy');
+      .doc(`${uid !== '' ? uid : 'tmp'}`)
+      .collection('notes');
   }, [uid]);
 
   const [notesCollection] = useCollection(notesRef);

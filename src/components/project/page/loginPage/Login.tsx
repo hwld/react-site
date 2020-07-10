@@ -40,7 +40,7 @@ const Login: React.FC = () => {
   }, []);
 
   return (
-    <Background>
+    <Background data-testid="loginPage">
       <LoginForm>
         <LoginIcon />
         <input
