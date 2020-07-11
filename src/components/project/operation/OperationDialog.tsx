@@ -85,7 +85,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
   };
 
   return (
-    <div data-testid={dataTestId}>
+    <span data-testid={dataTestId}>
       {activator()}
       <StyledDialog
         fullWidth
@@ -124,7 +124,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
           </Button>
         </DialogActions>
       </StyledDialog>
-    </div>
+    </span>
   );
 };
 
