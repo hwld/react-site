@@ -1,13 +1,11 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
-import GenresContext from './context/GenresContext';
-import NotesContext from './context/NotesContext';
-
+import { NotesContextProvider } from './context/NotesContext';
+import { GenresContextProvider } from './context/GenresContext';
 import { useNotes } from './services/notes';
 import { useGenres } from './services/genres';
 import { useCurrentUserId } from './services/auth';
-
 import AppRouter from './AppRouter';
 
 const App: React.FC = () => {
@@ -18,17 +16,17 @@ const App: React.FC = () => {
   const { notes, addNote, removeNote, updateNote, moveNote } = useNotes(userId);
 
   return (
-    <GenresContext.Provider
+    <GenresContextProvider
       value={{ genres, addGenre, removeGenre, updateGenre, moveGenre }}
     >
-      <NotesContext.Provider
+      <NotesContextProvider
         value={{ notes, addNote, removeNote, updateNote, moveNote }}
       >
         <BrowserRouter>
           <AppRouter userId={userId} userLoading={loading} />
         </BrowserRouter>
-      </NotesContext.Provider>
-    </GenresContext.Provider>
+      </NotesContextProvider>
+    </GenresContextProvider>
   );
 };
 

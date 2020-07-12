@@ -3,8 +3,9 @@ import { render, dragAndDrop } from '../../../test-util';
 import List from '../../ui/List/List';
 import GenreTreeItem from '../../project/ui/GenreTreeItem';
 import ListItem from '../../ui/List/ListItem';
-import NotesContext, {
+import {
   notesContextDefaultValue,
+  NotesContextProvider,
 } from '../../../context/NotesContext';
 
 describe('<GenreTreeItem> with <List>', () => {
@@ -12,7 +13,7 @@ describe('<GenreTreeItem> with <List>', () => {
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
     return (
-      <NotesContext.Provider
+      <NotesContextProvider
         value={{
           ...notesContextDefaultValue,
           moveNote: onDrop,
@@ -26,7 +27,7 @@ describe('<GenreTreeItem> with <List>', () => {
           <ListItem itemId="listItem" />
         </List>
         <GenreTreeItem nodeId="treeItem" genreName="treeItem" />
-      </NotesContext.Provider>
+      </NotesContextProvider>
     );
   };
   test('ListItemがGenreTreeItemにドロップ可能', () => {

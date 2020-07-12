@@ -23,4 +23,13 @@ const NotesContext = React.createContext<NotesContextValue>(
   notesContextDefaultValue,
 );
 
+export const NotesContextProvider: React.FC<{ value: NotesContextValue }> = ({
+  children,
+  value,
+}) => {
+  return (
+    <NotesContext.Provider value={value}>{children}</NotesContext.Provider>
+  );
+};
+
 export default NotesContext;

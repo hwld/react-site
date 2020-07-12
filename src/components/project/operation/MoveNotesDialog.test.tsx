@@ -4,8 +4,9 @@ import MoveNotesDialog from './MoveNotesDialog';
 import GenresContext, {
   genresContextDefaultValue,
 } from '../../../context/GenresContext';
-import NotesContext, {
+import {
   notesContextDefaultValue,
+  NotesContextProvider,
 } from '../../../context/NotesContext';
 
 describe('<MoveNotesDialog>', () => {
@@ -29,14 +30,14 @@ describe('<MoveNotesDialog>', () => {
           ],
         }}
       >
-        <NotesContext.Provider
+        <NotesContextProvider
           value={{
             ...notesContextDefaultValue,
             moveNote,
           }}
         >
           <MoveNotesDialog sourceNoteIds={['noteId']} />
-        </NotesContext.Provider>
+        </NotesContextProvider>
       </GenresContext.Provider>,
     );
 

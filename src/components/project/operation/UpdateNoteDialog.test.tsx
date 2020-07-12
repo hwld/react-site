@@ -2,8 +2,9 @@ import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { render } from '../../../test-util';
 import { NoteField } from '../../../services/notes';
-import NotesContext, {
+import {
   notesContextDefaultValue,
+  NotesContextProvider,
 } from '../../../context/NotesContext';
 import UpdateNoteDialog from './UpdateNoteDialog';
 
@@ -14,7 +15,7 @@ describe('<UpdateNoteDialog>', () => {
       noteField,
     }));
     const { getByTestId, getByLabelText } = render(
-      <NotesContext.Provider
+      <NotesContextProvider
         value={{
           ...notesContextDefaultValue,
           updateNote,
@@ -32,7 +33,7 @@ describe('<UpdateNoteDialog>', () => {
             lastUpdated: new Date(),
           }}
         />
-      </NotesContext.Provider>,
+      </NotesContextProvider>,
     );
 
     fireEvent.click(getByTestId('activatorButton'));

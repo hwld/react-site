@@ -1,9 +1,10 @@
 import React from 'react';
 import { render } from '../../../../test-util';
 import NotesView from './NotesView';
-import NotesContext, {
+import {
   NotesContextValue,
   notesContextDefaultValue,
+  NotesContextProvider,
 } from '../../../../context/NotesContext';
 
 describe('<NotesView>', () => {
@@ -35,9 +36,9 @@ describe('<NotesView>', () => {
 
   test('単一選択されているジャンルのメモが表示される', () => {
     const { queryByText } = render(
-      <NotesContext.Provider value={notesContextValue}>
+      <NotesContextProvider value={notesContextValue}>
         <NotesView selectedGenreIds={['genre1']} />
-      </NotesContext.Provider>,
+      </NotesContextProvider>,
     );
     expect(queryByText(/title1/)).toBeTruthy();
     expect(queryByText(/text1/)).toBeTruthy();
@@ -51,9 +52,9 @@ describe('<NotesView>', () => {
   });
   test('複数選択されているジャンルのメモが表示される', () => {
     const { queryByText } = render(
-      <NotesContext.Provider value={notesContextValue}>
+      <NotesContextProvider value={notesContextValue}>
         <NotesView selectedGenreIds={['genre1', 'genre2']} />
-      </NotesContext.Provider>,
+      </NotesContextProvider>,
     );
     expect(queryByText(/title1/)).toBeTruthy();
     expect(queryByText(/text1/)).toBeTruthy();

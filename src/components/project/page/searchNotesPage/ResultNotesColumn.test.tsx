@@ -1,7 +1,8 @@
 import React from 'react';
-import NotesContext, {
+import {
   NotesContextValue,
   notesContextDefaultValue,
+  NotesContextProvider,
 } from '../../../../context/NotesContext';
 import { render } from '../../../../test-util';
 import ResultNotesList from './ResultNotesColumn';
@@ -44,70 +45,70 @@ describe('<ResultNotesColumn>', () => {
 
   test('ジャンルIDで検索可能', () => {
     const { queryAllByText } = render(
-      <NotesContext.Provider value={notesContextValue}>
+      <NotesContextProvider value={notesContextValue}>
         <ResultNotesList
           searchCriteria={{
             ...defaultCriteria,
             genreId: 'genre1',
           }}
         />
-      </NotesContext.Provider>,
+      </NotesContextProvider>,
     );
     expect(queryAllByText(/title1/)).toBeTruthy();
   });
 
   test('タイトルで検索可能', () => {
     const { queryAllByText } = render(
-      <NotesContext.Provider value={notesContextValue}>
+      <NotesContextProvider value={notesContextValue}>
         <ResultNotesList
           searchCriteria={{
             ...defaultCriteria,
             title: 'title1',
           }}
         />
-      </NotesContext.Provider>,
+      </NotesContextProvider>,
     );
     expect(queryAllByText(/title1/)).toBeTruthy();
   });
 
   test('メモで検索可能', () => {
     const { queryAllByText } = render(
-      <NotesContext.Provider value={notesContextValue}>
+      <NotesContextProvider value={notesContextValue}>
         <ResultNotesList
           searchCriteria={{
             ...defaultCriteria,
             text: 'text1',
           }}
         />
-      </NotesContext.Provider>,
+      </NotesContextProvider>,
     );
     expect(queryAllByText(/text1/)).toBeTruthy();
   });
 
   test('著者名で検索可能', () => {
     const { queryAllByText } = render(
-      <NotesContext.Provider value={notesContextValue}>
+      <NotesContextProvider value={notesContextValue}>
         <ResultNotesList
           searchCriteria={{
             ...defaultCriteria,
             authorName: 'authorName1',
           }}
         />
-      </NotesContext.Provider>,
+      </NotesContextProvider>,
     );
     expect(queryAllByText(/authorName1/)).toBeTruthy();
   });
 
   test('書籍名で検索可能', () => {
     const { queryAllByText } = render(
-      <NotesContext.Provider value={notesContextValue}>
+      <NotesContextProvider value={notesContextValue}>
         <ResultNotesList
           searchCriteria={{
             ...defaultCriteria,
             bookName: 'bookName1',
           }}
         />
-      </NotesContext.Provider>,
+      </NotesContextProvider>,
     );
     expect(queryAllByText(/bookName1/)).toBeTruthy();
   });

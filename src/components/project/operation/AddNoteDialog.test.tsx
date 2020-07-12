@@ -1,8 +1,9 @@
 import React from 'react';
 import { Note } from '../../../services/notes';
 import { render, fireEvent } from '../../../test-util';
-import NotesContext, {
+import {
   notesContextDefaultValue,
+  NotesContextProvider,
 } from '../../../context/NotesContext';
 import AddNoteDialog from './AddNoteDialog';
 
@@ -10,7 +11,7 @@ describe('<AddNoteDialog>', () => {
   test('ノート追加処理が適切に呼び出される', () => {
     const addNote = jest.fn((note: Note) => note);
     const { getByLabelText, getByTestId } = render(
-      <NotesContext.Provider
+      <NotesContextProvider
         value={{
           ...notesContextDefaultValue,
           notes: [
@@ -29,7 +30,7 @@ describe('<AddNoteDialog>', () => {
         }}
       >
         <AddNoteDialog genreId="genre1" />
-      </NotesContext.Provider>,
+      </NotesContextProvider>,
     );
 
     // ダイアログ表示

@@ -22,4 +22,13 @@ const GenresContext = React.createContext<GenresContextValue>(
   genresContextDefaultValue,
 );
 
+export const GenresContextProvider: React.FC<{ value: GenresContextValue }> = ({
+  children,
+  value,
+}) => {
+  return (
+    <GenresContext.Provider value={value}>{children}</GenresContext.Provider>
+  );
+};
+
 export default GenresContext;
