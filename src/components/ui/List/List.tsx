@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { List as MuiList } from '@material-ui/core';
 import styled from 'styled-components';
-import ListContext from './ListContext';
+import { ListContextProvider } from './ListContext';
 
 const StyledMuiList = styled(MuiList)`
   padding-top: 0;
@@ -44,11 +44,11 @@ const List: React.FC<ListProps> = ({
   }, []);
 
   return (
-    <ListContext.Provider
+    <ListContextProvider
       value={{ selectedIds, isDrag, selectItem, removeItemId }}
     >
       <StyledMuiList className={className}>{children}</StyledMuiList>
-    </ListContext.Provider>
+    </ListContextProvider>
   );
 };
 

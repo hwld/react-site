@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
-import TreeViewContext, { TreeNode } from './TreeViewContext';
+import { TreeNode, TreeViewContextProvider } from './TreeViewContext';
 import { ItemTypes } from '../ItemTypes';
 
 const Tree = styled.ul`
@@ -107,7 +107,7 @@ const TreeView: React.FC<TreeViewProps> = ({
   }, []);
 
   return (
-    <TreeViewContext.Provider
+    <TreeViewContextProvider
       value={{
         multiple,
         nodes,
@@ -130,7 +130,7 @@ const TreeView: React.FC<TreeViewProps> = ({
       >
         {children}
       </Tree>
-    </TreeViewContext.Provider>
+    </TreeViewContextProvider>
   );
 };
 

@@ -15,6 +15,13 @@ const ListContext = React.createContext<ListContextValue>({
   removeItemId: () => {},
 });
 
+export const ListContextProvider: React.FC<{ value: ListContextValue }> = ({
+  children,
+  value,
+}) => {
+  return <ListContext.Provider value={value}>{children}</ListContext.Provider>;
+};
+
 if (process.env.NODE_ENV !== 'production') {
   ListContext.displayName = 'TreeViewContext';
 }

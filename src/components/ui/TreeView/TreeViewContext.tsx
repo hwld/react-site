@@ -38,6 +38,16 @@ const TreeViewContext = React.createContext<TreeViewContextValue>({
   onDrop: () => {},
 });
 
+export const TreeViewContextProvider: React.FC<{
+  value: TreeViewContextValue;
+}> = ({ children, value }) => {
+  return (
+    <TreeViewContext.Provider value={value}>
+      {children}
+    </TreeViewContext.Provider>
+  );
+};
+
 if (process.env.NODE_ENV !== 'production') {
   TreeViewContext.displayName = 'TreeViewContext';
 }
