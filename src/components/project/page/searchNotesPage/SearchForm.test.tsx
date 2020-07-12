@@ -2,15 +2,16 @@ import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
 import SearchForm from './SearchForm';
 import { SearchNotesCriteria } from '../../../../services/notes';
-import GenresContext, {
+import {
   genresContextDefaultValue,
+  GenresContextProvider,
 } from '../../../../context/GenresContext';
 
 describe('<SearchForm />', () => {
   test('検索処理が正しく呼び出される', () => {
     const search = jest.fn((criteria: SearchNotesCriteria) => criteria);
     const { getByLabelText, getByTestId } = render(
-      <GenresContext.Provider
+      <GenresContextProvider
         value={{
           ...genresContextDefaultValue,
           genres: [
@@ -25,7 +26,7 @@ describe('<SearchForm />', () => {
         }}
       >
         <SearchForm search={search} />
-      </GenresContext.Provider>,
+      </GenresContextProvider>,
     );
 
     fireEvent.click(getByTestId('activator'));

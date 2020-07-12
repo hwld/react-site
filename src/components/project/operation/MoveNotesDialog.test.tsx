@@ -1,8 +1,9 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
 import MoveNotesDialog from './MoveNotesDialog';
-import GenresContext, {
+import {
   genresContextDefaultValue,
+  GenresContextProvider,
 } from '../../../context/GenresContext';
 import {
   notesContextDefaultValue,
@@ -16,7 +17,7 @@ describe('<MoveNotesDialog>', () => {
       destGenreId,
     }));
     const { getByTestId } = render(
-      <GenresContext.Provider
+      <GenresContextProvider
         value={{
           ...genresContextDefaultValue,
           genres: [
@@ -38,7 +39,7 @@ describe('<MoveNotesDialog>', () => {
         >
           <MoveNotesDialog sourceNoteIds={['noteId']} />
         </NotesContextProvider>
-      </GenresContext.Provider>,
+      </GenresContextProvider>,
     );
 
     // ダイアログを開く

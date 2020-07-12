@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { render, dragAndDrop } from '../../../../test-util';
 import GenresView from './GenresView';
 import { Genre } from '../../../../services/genres';
-import GenresContext, {
+import {
   genresContextDefaultValue,
+  GenresContextProvider,
 } from '../../../../context/GenresContext';
 
 describe('<GenresView>', () => {
@@ -13,7 +14,7 @@ describe('<GenresView>', () => {
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
     return (
-      <GenresContext.Provider
+      <GenresContextProvider
         value={{
           ...genresContextDefaultValue,
           genres: [
@@ -39,7 +40,7 @@ describe('<GenresView>', () => {
           selectedGenreIds={selectedIds}
           onGenreSelect={setSelectedIds}
         />
-      </GenresContext.Provider>
+      </GenresContextProvider>
     );
   };
   test('コンテキストに含まれるmoveGenreが正しく呼び出されている', () => {

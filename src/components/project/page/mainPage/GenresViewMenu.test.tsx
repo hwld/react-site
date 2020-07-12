@@ -1,8 +1,9 @@
 import React from 'react';
 import GenresViewMenu from './GenresViewMenu';
 import { render, fireEvent, within } from '../../../../test-util';
-import GenresContext, {
+import {
   genresContextDefaultValue,
+  GenresContextProvider,
 } from '../../../../context/GenresContext';
 
 describe('<GenresViewMenu>', () => {
@@ -10,7 +11,7 @@ describe('<GenresViewMenu>', () => {
     const removeGenre = jest.fn();
 
     const { getByTestId } = render(
-      <GenresContext.Provider
+      <GenresContextProvider
         value={{
           ...genresContextDefaultValue,
           removeGenre,
@@ -42,7 +43,7 @@ describe('<GenresViewMenu>', () => {
           ]}
           selectedGenreIds={['parent', 'child', 'grandChild']}
         />
-      </GenresContext.Provider>,
+      </GenresContextProvider>,
     );
 
     fireEvent.click(

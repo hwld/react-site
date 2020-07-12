@@ -1,22 +1,23 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
 import RemoveGenreDialog from './RemoveGenreDIalog';
-import GenresContext, {
+import {
   genresContextDefaultValue,
+  GenresContextProvider,
 } from '../../../context/GenresContext';
 
 describe('<RemoveGenreDialog>', () => {
   test('ジャンルの削除処理が正しく呼ばれる', () => {
     const removeGenre = jest.fn();
     const { getByTestId } = render(
-      <GenresContext.Provider
+      <GenresContextProvider
         value={{
           ...genresContextDefaultValue,
           removeGenre,
         }}
       >
         <RemoveGenreDialog targetGenreIds={['genre1']} />
-      </GenresContext.Provider>,
+      </GenresContextProvider>,
     );
 
     fireEvent.click(getByTestId('activatorButton'));

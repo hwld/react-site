@@ -1,8 +1,9 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
 import AddGenreDialog from './AddGenreDialog';
-import GenresContext, {
+import {
   genresContextDefaultValue,
+  GenresContextProvider,
 } from '../../../context/GenresContext';
 import { Genre } from '../../../services/genres';
 
@@ -10,14 +11,14 @@ describe('<AddGenreDialog>', () => {
   test('ジャンル追加処理が適切に呼び出される', () => {
     const addGenre = jest.fn((genre: Genre) => genre);
     const { getByTestId, getByLabelText } = render(
-      <GenresContext.Provider
+      <GenresContextProvider
         value={{
           ...genresContextDefaultValue,
           addGenre,
         }}
       >
         <AddGenreDialog parentGenreId="genre1" />
-      </GenresContext.Provider>,
+      </GenresContextProvider>,
     );
 
     // ダイアログ表示
