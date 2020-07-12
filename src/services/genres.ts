@@ -81,15 +81,13 @@ const useGenres = (uid: string) => {
     [genres],
   );
 
-  // 指定されたジャンルIdのメモをPromiseの配列にして全て返す
+  // 指定されたジャンルIdのメモidを配列にして全て返す
   const fetchAllNotesInGenreIds = useCallback(
     (genreIds: string[]) => {
       return genreIds.flatMap(genreId => {
-        const notesIdInGenre = notes
+        return notes
           .filter(note => note.genreId === genreId)
           .map(note => note.id);
-
-        return notesIdInGenre;
       });
     },
     [notes],

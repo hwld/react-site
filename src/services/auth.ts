@@ -9,16 +9,15 @@ const useCurrentUserId = () => {
   return { userId, loading, error };
 };
 
-const login = () => {
-  return auth
-    .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-    .then(result => {
-      if (result.user) {
-        return result.user.uid;
-      }
+const login = async () => {
+  const result = await auth.signInWithPopup(
+    new firebase.auth.GoogleAuthProvider(),
+  );
+  if (result.user) {
+    return result.user.uid;
+  }
 
-      return null;
-    });
+  return null;
 };
 
 const logout = () => {
