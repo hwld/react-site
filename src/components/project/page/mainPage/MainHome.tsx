@@ -6,7 +6,7 @@ import NotesView from './NotesView';
 import MainHeader from './MainHeader';
 import Drawer from '../../../ui/Drawer/Drawer';
 import GenresView from './GenresView';
-import MobileContext from '../../../../context/MobileContext';
+import { MobileContextProvider } from '../../../../context/MobileContext';
 
 const Background = styled.div`
   display: flex;
@@ -31,7 +31,7 @@ const MainHome: React.FC = () => {
   };
 
   return (
-    <MobileContext.Provider value={{ isMobile }}>
+    <MobileContextProvider value={{ isMobile }}>
       <Background data-testid="mainPage">
         <MainHeader
           onMenuClick={() => setIsOpen(state => !state)}
@@ -51,7 +51,7 @@ const MainHome: React.FC = () => {
         </Drawer>
         <RightNotesView selectedGenreIds={selectedGenreIds} />
       </Background>
-    </MobileContext.Provider>
+    </MobileContextProvider>
   );
 };
 

@@ -7,7 +7,7 @@ import SearchColumn from './SearchColumn';
 import ResultNotesColumn from './ResultNotesColumn';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import Drawer from '../../../ui/Drawer/Drawer';
-import MobileContext from '../../../../context/MobileContext';
+import { MobileContextProvider } from '../../../../context/MobileContext';
 
 const Background = styled.div`
   display: flex;
@@ -42,7 +42,7 @@ const SearchHome: React.FC<{}> = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
-    <MobileContext.Provider value={{ isMobile }}>
+    <MobileContextProvider value={{ isMobile }}>
       <Background data-testid="searchNotestPage">
         <SearchHeader onMenuClick={() => setIsOpen(state => !state)} />
         <Drawer
@@ -56,7 +56,7 @@ const SearchHome: React.FC<{}> = () => {
         </Drawer>
         <RightResultNotesColumn searchCriteria={searchCriteria} />
       </Background>
-    </MobileContext.Provider>
+    </MobileContextProvider>
   );
 };
 
