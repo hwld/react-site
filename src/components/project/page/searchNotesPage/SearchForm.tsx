@@ -1,7 +1,15 @@
 import React, { useContext, useState } from 'react';
-import { Typography, TextField, Button } from '@material-ui/core';
-import AutoComplete from '@material-ui/lab/Autocomplete';
+import {
+  Typography,
+  TextField,
+  Button,
+  InputAdornment,
+  IconButton,
+} from '@material-ui/core';
+import AutoComplete, { AutocompleteProps } from '@material-ui/lab/Autocomplete';
 import styled from 'styled-components';
+import ClearIcon from '@material-ui/icons/Clear';
+import { UseAutocompleteProps } from '@material-ui/lab/useAutocomplete';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import GenresContext from '../../../../context/GenresContext';
 import NotesContext from '../../../../context/NotesContext';
@@ -19,6 +27,23 @@ const CriteriaContent = styled.div`
   margin-top: 20px;
   display: flex;
   justify-content: center;
+`;
+
+// https://github.com/styled-components/styled-components/issues/1803
+// よくわからないけど、styledでラップするとgenericが解決できないっぽい
+// AutoCompleteのgenericはoptionの型っぽいので無理やりstringに固定して使う.
+// Optionの型を変更すると動かなくなる
+const StringAutoComplete = AutoComplete as React.FC<
+  AutocompleteProps<string> & UseAutocompleteProps<string>
+>;
+const CriteriaAutoComplete = styled(StringAutoComplete)`
+  width: 100%;
+  & .MuiAutocomplete-popupIndicator {
+    color: ${props => props.theme.palette.secondary.main};
+  }
+  & .MuiAutocomplete-clearIndicator {
+    color: ${props => props.theme.palette.secondary.main};
+  }
 `;
 
 const CriteriaTextField = styled(TextField)`
@@ -110,7 +135,7 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
       <CriteriaContent>
         <CriteriaTextField
           id="searchFormGenreName"
-          inputProps={{ readOnly: true }}
+          InputProps={{ readOnly: true }}
           label="ジャンル名"
           value={targetGenreName}
           color="secondary"
@@ -121,6 +146,19 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
       <CriteriaContent>
         <CriteriaTextField
           id="searchFormTitle"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => {
+                    setTargetTitle('');
+                  }}
+                >
+                  <ClearIcon color="secondary" />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
           label="タイトル"
           value={targetTitle}
           onChange={changeTargetTitle}
@@ -132,6 +170,19 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
       <CriteriaContent>
         <CriteriaTextField
           id="searchFormText"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => {
+                    setTargetText('');
+                  }}
+                >
+                  <ClearIcon color="secondary" />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
           label="メモ"
           value={targetText}
           onChange={changeTargetText}
@@ -141,13 +192,9 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
         />
       </CriteriaContent>
       <CriteriaContent>
-        <AutoComplete
-          // styled-componentsで使うと型がおかしくなるのでインラインで書いた
-          style={{ width: '100%' }}
-          freeSolo
+        <CriteriaAutoComplete
           options={authorNameList}
           onChange={selectTargetAuthorName}
-          disableClearable
           renderInput={params => (
             <CriteriaTextField
               {...params}
@@ -163,13 +210,9 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
         />
       </CriteriaContent>
       <CriteriaContent>
-        <AutoComplete
-          // styled-componentsで使うと型がおかしくなるのでインラインで書いた
-          style={{ width: '100%' }}
-          freeSolo
+        <CriteriaAutoComplete
           options={bookNameList}
           onChange={selectTargetBookName}
-          disableClearable
           renderInput={params => (
             <CriteriaTextField
               {...params}
