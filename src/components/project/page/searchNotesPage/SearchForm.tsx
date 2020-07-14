@@ -38,10 +38,8 @@ const StringAutoComplete = AutoComplete as React.FC<
 >;
 const CriteriaAutoComplete = styled(StringAutoComplete)`
   width: 100%;
-  & .MuiAutocomplete-popupIndicator {
-    color: ${props => props.theme.palette.secondary.main};
-  }
-  & .MuiAutocomplete-clearIndicator {
+  & .MuiAutocomplete-popupIndicator,
+  .MuiAutocomplete-clearIndicator {
     color: ${props => props.theme.palette.secondary.main};
   }
 `;
@@ -107,7 +105,7 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
   };
 
   const selectTargetAuthorName = (event: object, value: string | null) => {
-    if (value) setTargetAuthorName(value);
+    setTargetAuthorName(value || '');
   };
   const changeTargetAuthorName = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -116,7 +114,7 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
   };
 
   const selectTargetBookName = (event: object, value: string | null) => {
-    if (value) setTargetBookName(value);
+    setTargetBookName(value || '');
   };
   const changeTargetBookName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTargetBookName(event.target.value);
@@ -135,13 +133,29 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
       <CriteriaContent>
         <CriteriaTextField
           id="searchFormGenreName"
-          InputProps={{ readOnly: true }}
+          InputProps={{
+            readOnly: true,
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => {
+                    selectGenreId('');
+                  }}
+                >
+                  <ClearIcon color="secondary" />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
           label="ジャンル名"
           value={targetGenreName}
           color="secondary"
           variant="filled"
         />
-        <SelectGenreDialog selectGenreId={selectGenreId} />
+        <SelectGenreDialog
+          defaultSelectedGenreId={targetGenreId}
+          selectGenreId={selectGenreId}
+        />
       </CriteriaContent>
       <CriteriaContent>
         <CriteriaTextField
@@ -193,6 +207,7 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
       </CriteriaContent>
       <CriteriaContent>
         <CriteriaAutoComplete
+          data-testid="authorNameField"
           options={authorNameList}
           onChange={selectTargetAuthorName}
           renderInput={params => (
@@ -200,7 +215,6 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
               {...params}
               id="searchFormAuthorName"
               label="著者名"
-              value={targetAuthorName}
               onChange={changeTargetAuthorName}
               color="secondary"
               variant="filled"
@@ -211,6 +225,7 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
       </CriteriaContent>
       <CriteriaContent>
         <CriteriaAutoComplete
+          data-testid="bookNameField"
           options={bookNameList}
           onChange={selectTargetBookName}
           renderInput={params => (
@@ -218,7 +233,6 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
               {...params}
               id="searchFormBookName"
               label="書籍名"
-              value={targetBookName}
               onChange={changeTargetBookName}
               color="secondary"
               variant="filled"

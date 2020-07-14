@@ -10,16 +10,18 @@ import styled from 'styled-components';
 import GenreTreeList from '../../ui/GenreTreeList';
 import GenresContext from '../../../../context/GenresContext';
 
-interface SelectGenreButtonprops {
-  selectGenreId: (id: string) => void;
-}
-
 const StyledGenreTreeList = styled(GenreTreeList)`
   height: 50vh;
 `;
 
+interface SelectGenreButtonprops {
+  selectGenreId: (id: string) => void;
+  defaultSelectedGenreId: string;
+}
+
 const SelectGenreButton: React.FC<SelectGenreButtonprops> = ({
   selectGenreId,
+  defaultSelectedGenreId,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,6 +29,7 @@ const SelectGenreButton: React.FC<SelectGenreButtonprops> = ({
   const [selectedGenreId, setSelectedGenreId] = useState('');
 
   const openDialog = () => {
+    setSelectedGenreId(defaultSelectedGenreId);
     setIsOpen(true);
   };
 

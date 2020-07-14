@@ -43,7 +43,7 @@ const SearchHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
         <IconButton edge="start" onClick={onMenuClick} data-testid="menuButton">
           <MenuIcon />
         </IconButton>
-        <AppTitle variant="h5">検索モード</AppTitle>
+        <AppTitle variant="h5">検索</AppTitle>
         <Tooltip title={<Typography>ホームに戻る</Typography>}>
           <IconButton onClick={backHome}>
             <HomeIcon />
