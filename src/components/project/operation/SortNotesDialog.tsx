@@ -15,7 +15,7 @@ interface SortNotesDialogProps {
 
 const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
   sort,
-  defaultSortOrder = { targetField: 'creationDate', order: 'asc' },
+  defaultSortOrder = { targetField: 'createdAt', order: 'asc' },
   disabled,
   size,
 }) => {

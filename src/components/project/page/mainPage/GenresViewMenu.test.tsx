@@ -24,21 +24,21 @@ describe('<GenresViewMenu>', () => {
               id: 'parent',
               parentGenreId: '',
               childrenGenreIds: ['child'],
-              creationDate: new Date(),
+              createdAt: new Date(),
             },
             {
               genreName: 'child',
               id: 'child',
               parentGenreId: 'parent',
               childrenGenreIds: ['grandChild'],
-              creationDate: new Date(),
+              createdAt: new Date(),
             },
             {
               genreName: 'grandChild',
               id: 'grandChild',
               parentGenreId: 'child',
               childrenGenreIds: [''],
-              creationDate: new Date(),
+              createdAt: new Date(),
             },
           ]}
           selectedGenreIds={['parent', 'child', 'grandChild']}

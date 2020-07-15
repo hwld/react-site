@@ -19,8 +19,8 @@ describe('<ResultNotesColumn>', () => {
         text: 'text1',
         authorName: 'authorName1',
         bookName: 'bookName1',
-        creationDate: new Date(),
-        lastUpdated: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: 'note2',
@@ -29,8 +29,8 @@ describe('<ResultNotesColumn>', () => {
         text: 'text1',
         authorName: 'authorName1',
         bookName: 'bookName1',
-        creationDate: new Date(),
-        lastUpdated: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ],
   };

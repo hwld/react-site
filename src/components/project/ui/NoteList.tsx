@@ -17,7 +17,7 @@ interface NoteListProps {
 
 const NoteList: React.FC<NoteListProps> = ({
   notes,
-  notesSortOrder = { targetField: 'creationDate', order: 'asc' },
+  notesSortOrder = { targetField: 'createdAt', order: 'asc' },
   selectedNoteIds = [],
   onNotesSelect,
   searchCriteria,

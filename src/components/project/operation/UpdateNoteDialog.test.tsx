@@ -29,8 +29,8 @@ describe('<UpdateNoteDialog>', () => {
             text: 'text',
             authorName: 'authorName',
             bookName: 'bookName',
-            creationDate: new Date(),
-            lastUpdated: new Date(),
+            createdAt: new Date(),
+            updatedAt: new Date(),
           }}
         />
       </NotesContextProvider>,

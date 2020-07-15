@@ -18,8 +18,8 @@ describe('<NotesView>', () => {
         text: 'text1',
         authorName: 'authorName1',
         bookName: 'bookName1',
-        creationDate: new Date(),
-        lastUpdated: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         id: 'note2',
@@ -28,8 +28,8 @@ describe('<NotesView>', () => {
         text: 'text2',
         authorName: 'authorName2',
         bookName: 'bookName2',
-        creationDate: new Date(),
-        lastUpdated: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ],
   };

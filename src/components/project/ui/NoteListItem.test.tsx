@@ -13,8 +13,8 @@ describe('<NoteListItem>', () => {
           text: 'text1',
           authorName: 'author1',
           bookName: 'book1',
-          creationDate: new Date(),
-          lastUpdated: new Date(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
         }}
         searchCriteria={{
           genreId: '',

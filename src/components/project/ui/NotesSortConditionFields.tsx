@@ -24,16 +24,16 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
   onChangeOrder,
 }) => {
   // 型を保証したくてこう書いた. もっと上手な書き方がありそう.
-  const creationDate: NotesSortOrder['targetField'] = 'creationDate';
-  const lastUpdated: NotesSortOrder['targetField'] = 'lastUpdated';
+  const createdAt: NotesSortOrder['targetField'] = 'createdAt';
+  const updatedAt: NotesSortOrder['targetField'] = 'updatedAt';
   const title: NotesSortOrder['targetField'] = 'title';
   const text: NotesSortOrder['targetField'] = 'text';
   const authorName: NotesSortOrder['targetField'] = 'authorName';
   const bookName: NotesSortOrder['targetField'] = 'bookName';
   const isTargetField = (str: string): str is NotesSortOrder['targetField'] => {
     return (
-      str === creationDate ||
-      str === lastUpdated ||
+      str === createdAt ||
+      str === updatedAt ||
       str === title ||
       str === text ||
       str === authorName ||
@@ -71,20 +71,20 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
       <Typography>並び替え対象</Typography>
       <RadioGroup row name="targetField" onChange={changeTargetField}>
         <FormControlLabel
-          value={creationDate}
-          checked={notesSortOrder.targetField === creationDate}
+          value={createdAt}
+          checked={notesSortOrder.targetField === createdAt}
           control={<Radio color="secondary" />}
           label="作成日"
           labelPlacement="end"
-          data-testid="creationDate"
+          data-testid="createdAt"
         />
         <FormControlLabel
-          value={lastUpdated}
-          checked={notesSortOrder.targetField === lastUpdated}
+          value={updatedAt}
+          checked={notesSortOrder.targetField === updatedAt}
           control={<Radio color="secondary" />}
           label="最終更新日"
           labelPlacement="end"
-          data-testid="lastUpdated"
+          data-testid="updatedAt"
         />
         <FormControlLabel
           value={title}

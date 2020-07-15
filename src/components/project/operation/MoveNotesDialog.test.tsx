@@ -23,7 +23,7 @@ describe('<MoveNotesDialog>', () => {
           genres: [
             {
               genreName: 'testGenreName',
-              creationDate: new Date(),
+              createdAt: new Date(),
               id: 'testGenre',
               parentGenreId: '',
               childrenGenreIds: [],

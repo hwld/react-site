@@ -36,10 +36,10 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
   // そのうち並び順を指定できるようにするかも.
   const genresCompareFunction = useCallback(() => {
     return (genreA: Genre, genreB: Genre) => {
-      if (genreA.creationDate.getTime() > genreB.creationDate.getTime()) {
+      if (genreA.createdAt.getTime() > genreB.createdAt.getTime()) {
         return 1;
       }
-      if (genreA.creationDate.getTime() < genreB.creationDate.getTime()) {
+      if (genreA.createdAt.getTime() < genreB.createdAt.getTime()) {
         return -1;
       }
 

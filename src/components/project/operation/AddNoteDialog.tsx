@@ -30,8 +30,8 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
     addNote({
       id: '',
       genreId,
-      creationDate: new Date(),
-      lastUpdated: new Date(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
       title: note.title,
       text: note.text,
       authorName: note.authorName,

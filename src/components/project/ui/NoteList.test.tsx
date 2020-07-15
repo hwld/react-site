@@ -12,8 +12,8 @@ describe('<NoteList>', () => {
       text: 'test-text1',
       authorName: 'test-authorName1',
       bookName: 'test-bookName1',
-      creationDate: new Date(2000, 6, 1),
-      lastUpdated: new Date(2000, 7, 1),
+      createdAt: new Date(2000, 6, 1),
+      updatedAt: new Date(2000, 7, 1),
     },
     {
       id: 'note2',
@@ -22,8 +22,8 @@ describe('<NoteList>', () => {
       text: 'test-text2',
       authorName: 'test-authorName2',
       bookName: 'test-bookName2',
-      creationDate: new Date(2000, 7, 1),
-      lastUpdated: new Date(2000, 6, 1),
+      createdAt: new Date(2000, 7, 1),
+      updatedAt: new Date(2000, 6, 1),
     },
   ];
   test('渡したノートがすべて表示される', () => {
@@ -136,7 +136,7 @@ describe('<NoteList>', () => {
     const { getAllByTestId, rerender } = render(
       <NoteList
         notes={notes}
-        notesSortOrder={{ targetField: 'creationDate', order: 'asc' }}
+        notesSortOrder={{ targetField: 'createdAt', order: 'asc' }}
       />,
     );
     expect(getAllByTestId('title')[0].textContent).toMatch(/test-title1/);
@@ -145,7 +145,7 @@ describe('<NoteList>', () => {
     rerender(
       <NoteList
         notes={notes}
-        notesSortOrder={{ targetField: 'creationDate', order: 'desc' }}
+        notesSortOrder={{ targetField: 'createdAt', order: 'desc' }}
       />,
     );
 
@@ -156,7 +156,7 @@ describe('<NoteList>', () => {
     const { getAllByTestId, rerender } = render(
       <NoteList
         notes={notes}
-        notesSortOrder={{ targetField: 'lastUpdated', order: 'asc' }}
+        notesSortOrder={{ targetField: 'updatedAt', order: 'asc' }}
       />,
     );
     expect(getAllByTestId('title')[0].textContent).toMatch(/test-title2/);
@@ -165,7 +165,7 @@ describe('<NoteList>', () => {
     rerender(
       <NoteList
         notes={notes}
-        notesSortOrder={{ targetField: 'lastUpdated', order: 'desc' }}
+        notesSortOrder={{ targetField: 'updatedAt', order: 'desc' }}
       />,
     );
 

@@ -20,7 +20,7 @@ describe('<SearchForm />', () => {
               id: 'testGenreId',
               childrenGenreIds: [],
               parentGenreId: '',
-              creationDate: new Date(),
+              createdAt: new Date(),
             },
           ],
         }}

@@ -9,7 +9,7 @@ export interface GenreField {
 }
 
 export interface GenreDate {
-  creationDate: Date;
+  createdAt: Date;
 }
 
 export interface GenreInfo {
@@ -24,7 +24,7 @@ export type Genre = GenreField & GenreDate & GenreInfo;
 export const createDefaultGenre = () => {
   return {
     id: '',
-    creationDate: new Date(),
+    createdAt: new Date(),
     genreName: '',
     parentGenreId: '',
     childrenGenreIds: [],
@@ -48,11 +48,11 @@ const useGenres = (uid: string) => {
     return genresCollection.docs.map(genreDoc => {
       const data = genreDoc.data();
 
-      // Genre型のcreationDateだけTimestampからDateに変換したい
+      // Genre型のcreatedAtだけTimestampからDateに変換したい
       const genreOtherThanDate = data as GenreField & GenreInfo;
-      const creationDate: Date = data.creationDate.toDate();
+      const createdAt: Date = data.createdAt.toDate();
 
-      const genre: Genre = { ...genreOtherThanDate, creationDate };
+      const genre: Genre = { ...genreOtherThanDate, createdAt };
 
       return genre;
     });
@@ -110,7 +110,7 @@ const useGenres = (uid: string) => {
       newGenreRef.set({
         ...genre,
         id: newGenreRef.id,
-        creationDate: firebase.firestore.Timestamp.fromDate(new Date()),
+        createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
       });
     },
     [genresRef],

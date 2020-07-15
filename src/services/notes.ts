@@ -10,8 +10,8 @@ export interface NoteField {
 }
 
 export interface NoteDate {
-  creationDate: Date;
-  lastUpdated: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface NoteInfo {
@@ -48,10 +48,10 @@ const useNotes = (uid: string) => {
 
       // Note型のDate関連だけTimestampからDateに変換したい.
       const noteOtherThanDate = data as NoteField & NoteInfo;
-      const creationDate: Date = data.creationDate.toDate();
-      const lastUpdated: Date = data.lastUpdated.toDate();
+      const createdAt: Date = data.createdAt.toDate();
+      const updatedAt: Date = data.updatedAt.toDate();
 
-      const note: Note = { ...noteOtherThanDate, creationDate, lastUpdated };
+      const note: Note = { ...noteOtherThanDate, createdAt, updatedAt };
 
       return note;
     });
@@ -64,8 +64,8 @@ const useNotes = (uid: string) => {
       newNoteRef.set({
         ...note,
         id: newNoteRef.id,
-        creationDate: firebase.firestore.Timestamp.fromDate(new Date()),
-        lastUpdated: firebase.firestore.Timestamp.fromDate(new Date()),
+        createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+        updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
       });
     },
     [notesRef],
@@ -82,7 +82,7 @@ const useNotes = (uid: string) => {
     (id: string, noteField: NoteField) => {
       notesRef.doc(id).update({
         ...noteField,
-        lastUpdated: firebase.firestore.Timestamp.fromDate(new Date()),
+        updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
       });
     },
     [notesRef],
@@ -92,7 +92,7 @@ const useNotes = (uid: string) => {
     (noteId: string, destGenreId: string) => {
       notesRef.doc(noteId).update({
         genreId: destGenreId,
-        lastUpdated: firebase.firestore.Timestamp.fromDate(new Date()),
+        updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
       });
     },
     [notesRef],

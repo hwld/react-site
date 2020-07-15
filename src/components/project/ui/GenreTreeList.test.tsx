@@ -7,21 +7,21 @@ describe('<GenreTreeList>', () => {
   const genres: Genre[] = [
     {
       genreName: 'parent1',
-      creationDate: new Date(),
+      createdAt: new Date(),
       id: 'parent1',
       parentGenreId: '',
       childrenGenreIds: ['child1-1'],
     },
     {
       genreName: 'child1-1',
-      creationDate: new Date(),
+      createdAt: new Date(),
       id: 'child1-1',
       parentGenreId: 'parent1',
       childrenGenreIds: [''],
     },
     {
       genreName: 'parent2',
-      creationDate: new Date(),
+      createdAt: new Date(),
       id: 'parent2',
       parentGenreId: '',
       childrenGenreIds: [''],

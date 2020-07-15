@@ -21,7 +21,7 @@ describe('<UpdateGenreDialog>', () => {
           defaultGenre={{
             genreName: 'testGenre',
             id: 'testGenre',
-            creationDate: new Date(),
+            createdAt: new Date(),
             parentGenreId: '',
             childrenGenreIds: [],
           }}

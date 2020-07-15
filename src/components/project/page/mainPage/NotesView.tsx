@@ -26,7 +26,7 @@ const NotesView: React.FC<NotesViewProps> = ({
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
 
   const [notesSortOrder, setNotesSortOrder] = useState<NotesSortOrder>({
-    targetField: 'creationDate',
+    targetField: 'createdAt',
     order: 'asc',
   });
 
