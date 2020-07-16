@@ -49,6 +49,10 @@ const CriteriaTextField = styled(TextField)`
   .MuiFormLabel-root {
     color: ${props => props.theme.palette.secondary.main};
   }
+
+  & .MuiFilledInput-input:-webkit-autofill {
+    box-shadow: 0 0 0 100px ${props => props.theme.palette.primary.main}e5 inset;
+  }
 `;
 
 const CriteriaAction = styled.div`
@@ -150,7 +154,7 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
           label="ジャンル名"
           value={targetGenreName}
           color="secondary"
-          variant="filled"
+          variant="outlined"
         />
         <SelectGenreDialog
           defaultSelectedGenreId={targetGenreId}
