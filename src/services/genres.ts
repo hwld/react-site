@@ -121,6 +121,15 @@ const useGenres = (uid: string) => {
       const childrenIds = fetchAllChildrenGenreIds(id);
       const deletedGenreIds = [id, ...childrenIds];
 
+      // 指定されたジャンルの親がrootじゃない場合、childrenからジャンルを削除する
+      const genre = genres.find(g => g.id === id);
+      if (!genre) throw Error('存在しないジャンルの削除');
+      if (genre.parentGenreId !== '') {
+        genresRef.doc(genre.parentGenreId).update({
+          childrenGenreIds: firebase.firestore.FieldValue.arrayRemove(genre.id),
+        });
+      }
+
       // genreを削除する
       deletedGenreIds.forEach(genreId => {
         genresRef.doc(genreId).delete();
@@ -132,7 +141,13 @@ const useGenres = (uid: string) => {
         removeNote(noteId);
       });
     },
-    [fetchAllChildrenGenreIds, fetchAllNotesInGenreIds, genresRef, removeNote],
+    [
+      fetchAllChildrenGenreIds,
+      fetchAllNotesInGenreIds,
+      genres,
+      genresRef,
+      removeNote,
+    ],
   );
 
   const updateGenre = useCallback(
