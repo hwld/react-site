@@ -10,12 +10,6 @@ import SearchNoteIcon from '@material-ui/icons/Search';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import styled from 'styled-components';
-import { logout } from '../../../../services/auth';
-
-interface HeaderProps {
-  onMenuClick: () => void;
-  onGoSearchMode: () => void;
-}
 
 const TopLayerHeader = styled(MuiAppBar)`
   width: 100%;
@@ -27,11 +21,17 @@ const AppTitle = styled(Typography)`
   flex-grow: 1;
 `;
 
-const MainHeader: React.FC<HeaderProps> = ({ onMenuClick, onGoSearchMode }) => {
-  const onLogout = () => {
-    logout();
-  };
+type MainHeaderProps = {
+  onMenuClick: () => void;
+  onGoSearchMode: () => void;
+  onLogout: () => Promise<void>;
+};
 
+const MainHeader: React.FC<MainHeaderProps> = ({
+  onMenuClick,
+  onGoSearchMode,
+  onLogout,
+}) => {
   return (
     <TopLayerHeader position="absolute">
       <Toolbar>

@@ -7,6 +7,7 @@ import MainHeader from './MainHeader';
 import Drawer from '../../../ui/Drawer/Drawer';
 import GenresView from './GenresView';
 import { MobileContextProvider } from '../../../../context/MobileContext';
+import { logout } from '../../../../services/auth';
 
 const Background = styled.div`
   display: flex;
@@ -14,15 +15,10 @@ const Background = styled.div`
   background-color: ${props => props.theme.palette.primary.dark};
 `;
 
-const RightNotesView = styled(NotesView)`
-  flex: 1;
-`;
-
 const MainHome: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [selectedGenreIds, setSelectedGenreIds] = useState<string[]>([]);
   const history = useHistory();
-
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
@@ -36,6 +32,7 @@ const MainHome: React.FC = () => {
         <MainHeader
           onMenuClick={() => setIsOpen(state => !state)}
           onGoSearchMode={goSearchMode}
+          onLogout={logout}
         />
         <Drawer
           width={isMobile ? '80' : '30'}
@@ -49,7 +46,7 @@ const MainHome: React.FC = () => {
             selectedGenreIds={selectedGenreIds}
           />
         </Drawer>
-        <RightNotesView selectedGenreIds={selectedGenreIds} />
+        <NotesView selectedGenreIds={selectedGenreIds} />
       </Background>
     </MobileContextProvider>
   );

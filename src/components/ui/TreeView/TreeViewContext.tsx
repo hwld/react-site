@@ -21,7 +21,7 @@ type TreeViewContextValue = {
   selectIds: (ids: string[]) => void;
   setExpanded: (id: string, isExpand: boolean) => void;
   isDrag: boolean;
-  onDrop: (sourceIds: string[], targetId: string) => void;
+  onDrop: (sourceId: string, targetId: string) => void;
 };
 
 const TreeViewContext = React.createContext<TreeViewContextValue>({

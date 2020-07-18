@@ -4,6 +4,7 @@ import { Toolbar, Divider } from '@material-ui/core';
 
 const ViewRoot = styled.div`
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;

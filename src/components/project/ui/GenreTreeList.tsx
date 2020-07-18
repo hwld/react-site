@@ -7,21 +7,21 @@ import GenreTreeItem from './GenreTreeItem';
 
 export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
 
-interface GenreTreeListProps {
-  multiple?: boolean;
-  genres: Genre[];
-  selectedGenreIds?: string[];
-  onGenreSelect?: (selectedId: string[]) => void;
-  isDrag?: boolean;
-  onDrop?: (sourceIds: string[], targetId: string) => void;
-  className?: string;
-}
-
 const StyledTreeView = styled(TreeView)`
   height: 100%;
   overflow: auto;
   word-break: keep-all;
 `;
+
+type GenreTreeListProps = {
+  genres: Genre[];
+  className?: string;
+  multiple?: boolean;
+  selectedGenreIds?: string[];
+  onGenreSelect?: (selectedId: string[]) => void;
+  isDrag?: boolean;
+  onDrop?: (sourceId: string, targetId: string) => void;
+};
 
 const GenreTreeList: React.FC<GenreTreeListProps> = ({
   multiple,

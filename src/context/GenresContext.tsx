@@ -6,7 +6,7 @@ type GenresContextValue = {
   addGenre: (genre: Genre) => void;
   removeGenre: (id: string) => void;
   updateGenre: (genre: Genre) => void;
-  moveGenre: (genre: Genre, destGenreId: string) => void;
+  moveGenre: (genreId: string, destGenreId: string) => void;
 };
 
 export const genresContextDefaultValue: GenresContextValue = {

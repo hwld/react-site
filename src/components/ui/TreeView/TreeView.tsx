@@ -18,7 +18,7 @@ interface TreeViewProps {
   multiple?: boolean;
   selectedIds?: string[];
   onNodeSelect?: (id: string[]) => void;
-  onDrop?: (sourceIds: string[], targetId: string) => void;
+  onDrop?: (sourceId: string, targetId: string) => void;
 }
 
 const TreeView: React.FC<TreeViewProps> = ({
@@ -59,7 +59,7 @@ const TreeView: React.FC<TreeViewProps> = ({
     },
     drop: (item, monitor) => {
       if (!monitor.didDrop()) {
-        onDrop(selectedIds, '');
+        selectedIds.forEach(id => onDrop(id, ''));
       }
     },
   });

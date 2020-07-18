@@ -158,32 +158,35 @@ const useGenres = (uid: string) => {
   );
 
   const moveGenre = useCallback(
-    (genre: Genre, destGenreId: string | '') => {
+    (genreId: string, destGenreId: string | '') => {
+      const sourceGenre = genres.find(genre => genre.id === genreId);
+      if (!sourceGenre) {
+        throw Error('ジャンルが存在しません');
+      }
+
       // 移動元ジャンルの親がrootじゃない場合、childrenから移動元ジャンルを削除する
-      if (genre.parentGenreId !== '') {
-        genresRef.doc(genre.parentGenreId).update({
-          childrenGenreIds: firebase.firestore.FieldValue.arrayRemove(genre.id),
+      if (sourceGenre.parentGenreId !== '') {
+        genresRef.doc(sourceGenre.parentGenreId).update({
+          childrenGenreIds: firebase.firestore.FieldValue.arrayRemove(
+            sourceGenre.id,
+          ),
         });
       }
 
-      // 移動元ジャンルの親を移動先ジャンルに設定
-      // 親がルート
-      if (destGenreId === '') {
-        genresRef.doc(genre.id).update({
-          parentGenreId: '',
-        });
-      } else {
-        genresRef.doc(genre.id).update({
-          parentGenreId: destGenreId,
-        });
+      genresRef.doc(sourceGenre.id).update({
+        parentGenreId: destGenreId,
+      });
 
-        // 親がルートでなければchildrenも設定する
+      // 移動先がルートでなければchildrenも設定する
+      if (destGenreId !== '') {
         genresRef.doc(destGenreId).update({
-          childrenGenreIds: firebase.firestore.FieldValue.arrayUnion(genre.id),
+          childrenGenreIds: firebase.firestore.FieldValue.arrayUnion(
+            sourceGenre.id,
+          ),
         });
       }
     },
-    [genresRef],
+    [genres, genresRef],
   );
 
   return { genres, addGenre, removeGenre, updateGenre, moveGenre };
