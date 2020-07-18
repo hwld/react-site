@@ -9,7 +9,7 @@ import {
 
 describe('<GenresView>', () => {
   const GenreViewTest: React.FC<{
-    moveGenre: (sourceGenre: Genre, destGenreId: string) => {};
+    moveGenre: (sourceGenreId: string, destGenreId: string) => {};
   }> = ({ moveGenre }) => {
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
@@ -44,8 +44,8 @@ describe('<GenresView>', () => {
     );
   };
   test('コンテキストに含まれるmoveGenreが正しく呼び出されている', () => {
-    const moveGenre = jest.fn((sourceGenre: Genre, destGenreId: string) => ({
-      sourceGenre,
+    const moveGenre = jest.fn((sourceGenreId: string, destGenreId: string) => ({
+      sourceGenreId,
       destGenreId,
     }));
     const { getByTestId } = render(<GenreViewTest moveGenre={moveGenre} />);

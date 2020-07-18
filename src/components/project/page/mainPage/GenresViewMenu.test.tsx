@@ -14,11 +14,7 @@ describe('<GenresViewMenu>', () => {
       <GenresContextProvider
         value={{
           ...genresContextDefaultValue,
-          removeGenre,
-        }}
-      >
-        <GenresViewMenu
-          genres={[
+          genres: [
             {
               genreName: 'parent',
               id: 'parent',
@@ -40,9 +36,11 @@ describe('<GenresViewMenu>', () => {
               childrenGenreIds: [''],
               createdAt: new Date(),
             },
-          ]}
-          selectedGenreIds={['parent', 'child', 'grandChild']}
-        />
+          ],
+          removeGenre,
+        }}
+      >
+        <GenresViewMenu selectedGenreIds={['parent', 'child', 'grandChild']} />
       </GenresContextProvider>,
     );
 

@@ -14,18 +14,19 @@ describe('<UpdateGenreDialog>', () => {
       <GenresContextProvider
         value={{
           ...genresContextDefaultValue,
+          genres: [
+            {
+              genreName: 'testGenre',
+              id: 'testGenre',
+              createdAt: new Date(),
+              parentGenreId: '',
+              childrenGenreIds: [],
+            },
+          ],
           updateGenre,
         }}
       >
-        <UpdateGenreDialog
-          defaultGenre={{
-            genreName: 'testGenre',
-            id: 'testGenre',
-            createdAt: new Date(),
-            parentGenreId: '',
-            childrenGenreIds: [],
-          }}
-        />
+        <UpdateGenreDialog defaultGenreId="testGenre" />
       </GenresContextProvider>,
     );
     fireEvent.click(getByTestId('activatorButton'));

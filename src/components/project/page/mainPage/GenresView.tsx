@@ -3,6 +3,7 @@ import GenreTreeList from '../../ui/GenreTreeList';
 import GenresContext from '../../../../context/GenresContext';
 import ContentColumn from '../../ui/ContentColumn';
 import GenreViewMenu from './GenresViewMenu';
+import NotesContext from '../../../../context/NotesContext';
 
 type GenresViewProps = {
   onGenreSelect: (selectedId: string[]) => void;
@@ -16,13 +17,12 @@ const GenresView: React.FC<GenresViewProps> = ({
   className,
 }) => {
   const { genres, moveGenre } = useContext(GenresContext);
+  const { moveNote } = useContext(NotesContext);
 
   return (
     <ContentColumn
       className={className}
-      footerMenu={
-        <GenreViewMenu genres={genres} selectedGenreIds={selectedGenreIds} />
-      }
+      footerMenu={<GenreViewMenu selectedGenreIds={selectedGenreIds} />}
     >
       <GenreTreeList
         multiple
@@ -30,7 +30,8 @@ const GenresView: React.FC<GenresViewProps> = ({
         selectedGenreIds={selectedGenreIds}
         onGenreSelect={onGenreSelect}
         isDrag
-        onDrop={moveGenre}
+        onGenreDrop={moveGenre}
+        onNoteDrop={moveNote}
       />
     </ContentColumn>
   );

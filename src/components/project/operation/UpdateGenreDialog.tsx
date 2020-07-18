@@ -2,34 +2,38 @@ import React, { useState, useContext } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import GenresContext from '../../../context/GenresContext';
-import { Genre } from '../../../services/genres';
+import { Genre, createDefaultGenre } from '../../../services/genres';
 import OperationDialog from './OperationDialog';
 import EditGenreField from '../ui/EditGenreFields';
 
 interface UpdateGenreDialogProps {
   disabled?: boolean;
-  defaultGenre: Genre;
+  defaultGenreId: string;
   size?: SvgIconProps['fontSize'];
 }
 
 const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
   disabled,
-  defaultGenre,
+  defaultGenreId,
   size,
 }) => {
-  const [genre, setGenre] = useState(defaultGenre);
-  const { updateGenre } = useContext(GenresContext);
+  const [newGenre, setNewGenre] = useState<Genre>(createDefaultGenre());
+  const { genres, updateGenre } = useContext(GenresContext);
 
   const update = () => {
-    updateGenre(genre);
+    updateGenre(newGenre);
   };
 
   const setDefaultGenreName = () => {
-    setGenre(defaultGenre);
+    const defaultGenre = genres.find(genre => genre.id === defaultGenreId);
+    if (!defaultGenre) {
+      throw Error('存在しないジャンル');
+    }
+    setNewGenre(defaultGenre);
   };
 
   const changeGenreName = (genreName: string) => {
-    setGenre(state => ({ ...state, genreName }));
+    setNewGenre(state => ({ ...state, genreName }));
   };
 
   return (
@@ -39,13 +43,13 @@ const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
       activatorDisabled={disabled}
       doneText="変更"
       onDone={update}
-      doneDisabled={genre.genreName === ''}
+      doneDisabled={newGenre.genreName === ''}
       onOpen={setDefaultGenreName}
       data-testid="updateGenreDialog"
     >
       <DialogTitle>ジャンルの編集</DialogTitle>
       <DialogContent>
-        <EditGenreField genre={genre} onChange={changeGenreName} />
+        <EditGenreField genre={newGenre} onChange={changeGenreName} />
       </DialogContent>
     </OperationDialog>
   );

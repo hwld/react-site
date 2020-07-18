@@ -16,7 +16,6 @@ describe('<GenreTreeItem> with <List>', () => {
       <NotesContextProvider
         value={{
           ...notesContextDefaultValue,
-          moveNote: onDrop,
         }}
       >
         <List
@@ -26,7 +25,11 @@ describe('<GenreTreeItem> with <List>', () => {
         >
           <ListItem itemId="listItem" />
         </List>
-        <GenreTreeItem nodeId="treeItem" genreName="treeItem" />
+        <GenreTreeItem
+          nodeId="treeItem"
+          genreName="treeItem"
+          onNoteDrop={onDrop}
+        />
       </NotesContextProvider>
     );
   };
