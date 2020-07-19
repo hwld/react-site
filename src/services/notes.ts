@@ -29,6 +29,10 @@ export interface SearchNotesCriteria {
   bookName: string;
 }
 
+const defaultSearchNotesCriteria = () => {
+  return { genreId: '', title: '', text: '', authorName: '', bookName: '' };
+};
+
 const useNotes = (uid: string) => {
   const notesRef = useMemo(() => {
     return db
@@ -101,4 +105,4 @@ const useNotes = (uid: string) => {
   return { notes, addNote, removeNote, updateNote, moveNote };
 };
 
-export { useNotes };
+export { useNotes, defaultSearchNotesCriteria };

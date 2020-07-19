@@ -5,10 +5,10 @@ import NotesContext from '../../../../context/NotesContext';
 import NoteList from '../../ui/NoteList';
 import MobileContext from '../../../../context/MobileContext';
 
-interface SearchNotesListProps {
+type SearchNotesListProps = {
   searchCriteria: SearchNotesCriteria;
   className?: string;
-}
+};
 
 const ResultNotesList: React.FC<SearchNotesListProps> = ({
   searchCriteria,

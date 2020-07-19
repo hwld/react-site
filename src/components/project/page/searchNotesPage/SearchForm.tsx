@@ -62,9 +62,9 @@ const CriteriaAction = styled.div`
   margin-top: 20px;
 `;
 
-interface SearchFormprops {
+type SearchFormprops = {
   search: (criteria: SearchNotesCriteria) => void;
-}
+};
 
 const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
   const { genres } = useContext(GenresContext);
@@ -100,14 +100,23 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
     ),
   );
 
+  // タイトル
   const changeTargetTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTargetTitle(event.target.value);
   };
+  const clearTargetTitle = () => {
+    setTargetTitle('');
+  };
 
+  // 本文
   const changeTargetText = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTargetText(event.target.value);
   };
+  const clearTargetText = () => {
+    setTargetText('');
+  };
 
+  // 著者名
   const selectTargetAuthorName = (event: object, value: string | null) => {
     setTargetAuthorName(value || '');
   };
@@ -117,6 +126,7 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
     setTargetAuthorName(event.target.value);
   };
 
+  // 書籍名
   const selectTargetBookName = (event: object, value: string | null) => {
     setTargetBookName(value || '');
   };
@@ -124,11 +134,15 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
     setTargetBookName(event.target.value);
   };
 
+  // ジャンル
   const selectGenreId = (id: string) => {
     setTargetGenreId(id);
     let genreName = genres.find(genre => genre.id === id)?.genreName;
     if (!genreName) genreName = '';
     setTargetGenreName(genreName);
+  };
+  const clearSelectGenreId = () => {
+    selectGenreId('');
   };
 
   return (
@@ -141,11 +155,7 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
             readOnly: true,
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton
-                  onClick={() => {
-                    selectGenreId('');
-                  }}
-                >
+                <IconButton onClick={clearSelectGenreId}>
                   <ClearIcon color="secondary" />
                 </IconButton>
               </InputAdornment>
@@ -167,11 +177,7 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton
-                  onClick={() => {
-                    setTargetTitle('');
-                  }}
-                >
+                <IconButton onClick={clearTargetTitle}>
                   <ClearIcon color="secondary" />
                 </IconButton>
               </InputAdornment>
@@ -191,11 +197,7 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton
-                  onClick={() => {
-                    setTargetText('');
-                  }}
-                >
+                <IconButton onClick={clearTargetText}>
                   <ClearIcon color="secondary" />
                 </IconButton>
               </InputAdornment>

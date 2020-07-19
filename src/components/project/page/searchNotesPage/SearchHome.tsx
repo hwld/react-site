@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
 import { useTheme, useMediaQuery } from '@material-ui/core';
 import SearchHeader from './SearchHeader';
 import SearchColumn from './SearchColumn';
 import ResultNotesColumn from './ResultNotesColumn';
-import { SearchNotesCriteria } from '../../../../services/notes';
+import {
+  SearchNotesCriteria,
+  defaultSearchNotesCriteria,
+} from '../../../../services/notes';
 import Drawer from '../../../ui/Drawer/Drawer';
 import { MobileContextProvider } from '../../../../context/MobileContext';
+import { logout } from '../../../../services/auth';
 
 const Background = styled.div`
   display: flex;
@@ -21,40 +24,40 @@ const Background = styled.div`
   background-color: ${props => props.theme.palette.primary.dark};
 `;
 
-const RightResultNotesColumn = styled(ResultNotesColumn)`
-  flex: 1;
-`;
-
 const SearchHome: React.FC<{}> = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [searchCriteria, setSearchCriteria] = useState<SearchNotesCriteria>({
-    genreId: '',
-    title: '',
-    text: '',
-    authorName: '',
-    bookName: '',
-  });
-  const setCriterial = (criteria: SearchNotesCriteria) => {
-    setSearchCriteria(criteria);
-  };
-
+  const [searchCriteria, setSearchCriteria] = useState<SearchNotesCriteria>(
+    defaultSearchNotesCriteria,
+  );
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+
+  const invertDrawer = () => {
+    setIsOpen(state => !state);
+  };
+
+  const openDrawer = () => {
+    setIsOpen(true);
+  };
+
+  const closeDrawer = () => {
+    setIsOpen(false);
+  };
 
   return (
     <MobileContextProvider value={{ isMobile }}>
       <Background data-testid="searchNotestPage">
-        <SearchHeader onMenuClick={() => setIsOpen(state => !state)} />
+        <SearchHeader onMenuClick={invertDrawer} onLogout={logout} />
         <Drawer
           width={isMobile ? '80' : '30'}
           isPresistent={!isMobile}
           open={isOpen}
-          onOpen={() => setIsOpen(true)}
-          onClose={() => setIsOpen(false)}
+          onOpen={openDrawer}
+          onClose={closeDrawer}
         >
-          <SearchColumn setCriteria={setCriterial} />
+          <SearchColumn setCriteria={setSearchCriteria} />
         </Drawer>
-        <RightResultNotesColumn searchCriteria={searchCriteria} />
+        <ResultNotesColumn searchCriteria={searchCriteria} />
       </Background>
     </MobileContextProvider>
   );

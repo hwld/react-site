@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import NotesContext from '../../../../context/NotesContext';
 import NoteList from '../../ui/NoteList';
@@ -17,26 +17,16 @@ const NotesView: React.FC<NotesViewProps> = ({
   className,
 }) => {
   const { isMobile } = useContext(MobileContext);
-
   const { notes } = useContext(NotesContext);
-  const viewNotes = notes.filter(note =>
-    selectedGenreIds.includes(note.genreId),
-  );
-
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
-
   const [notesSortOrder, setNotesSortOrder] = useState<NotesSortOrder>({
     targetField: 'createdAt',
     order: 'asc',
   });
 
-  const sortNotes = (order: NotesSortOrder) => {
-    setNotesSortOrder(order);
-  };
-
-  const selectNoteIds = useCallback((ids: string[]) => {
-    setSelectedNoteIds(ids);
-  }, []);
+  const viewNotes = notes.filter(note =>
+    selectedGenreIds.includes(note.genreId),
+  );
 
   const notesContent = () => {
     return selectedGenreIds.length !== 0 ? (
@@ -44,9 +34,9 @@ const NotesView: React.FC<NotesViewProps> = ({
         <NoteList
           isDrag
           notes={viewNotes}
-          notesSortOrder={notesSortOrder}
           selectedNoteIds={selectedNoteIds}
-          onNotesSelect={selectNoteIds}
+          onNotesSelect={setSelectedNoteIds}
+          notesSortOrder={notesSortOrder}
         />
       </>
     ) : (
@@ -65,7 +55,7 @@ const NotesView: React.FC<NotesViewProps> = ({
           selectedGenreIds={selectedGenreIds}
           selectedNoteIds={selectedNoteIds}
           defaultNotesSortOrder={notesSortOrder}
-          sortNotes={sortNotes}
+          sortNotes={setNotesSortOrder}
         />
       }
     >

@@ -11,11 +11,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { logout } from '../../../../services/auth';
-
-interface HeaderProps {
-  onMenuClick: () => void;
-}
 
 const TopLayerHeader = styled(MuiAppBar)`
   z-index: ${props => props.theme.zIndex.drawer + 1};
@@ -26,12 +21,13 @@ const AppTitle = styled(Typography)`
   flex-grow: 1;
 `;
 
-const SearchHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
-  const history = useHistory();
+type HeaderProps = {
+  onMenuClick: () => void;
+  onLogout: () => Promise<void>;
+};
 
-  const onLogout = () => {
-    logout();
-  };
+const SearchHeader: React.FC<HeaderProps> = ({ onMenuClick, onLogout }) => {
+  const history = useHistory();
 
   const backHome = () => {
     history.replace('/home');

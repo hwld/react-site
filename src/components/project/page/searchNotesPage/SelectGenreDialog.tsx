@@ -14,10 +14,10 @@ const StyledGenreTreeList = styled(GenreTreeList)`
   height: 50vh;
 `;
 
-interface SelectGenreButtonprops {
+type SelectGenreButtonprops = {
   selectGenreId: (id: string) => void;
   defaultSelectedGenreId: string;
-}
+};
 
 const SelectGenreButton: React.FC<SelectGenreButtonprops> = ({
   selectGenreId,

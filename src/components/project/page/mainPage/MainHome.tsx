@@ -22,6 +22,18 @@ const MainHome: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
+  const invertDrawer = () => {
+    setIsOpen(state => !state);
+  };
+
+  const openDrawer = () => {
+    setIsOpen(true);
+  };
+
+  const closeDrawer = () => {
+    setIsOpen(false);
+  };
+
   const goSearchMode = () => {
     history.replace('/search');
   };
@@ -30,7 +42,7 @@ const MainHome: React.FC = () => {
     <MobileContextProvider value={{ isMobile }}>
       <Background data-testid="mainPage">
         <MainHeader
-          onMenuClick={() => setIsOpen(state => !state)}
+          onMenuClick={invertDrawer}
           onGoSearchMode={goSearchMode}
           onLogout={logout}
         />
@@ -38,8 +50,8 @@ const MainHome: React.FC = () => {
           width={isMobile ? '80' : '30'}
           isPresistent={!isMobile}
           open={isOpen}
-          onOpen={() => setIsOpen(true)}
-          onClose={() => setIsOpen(false)}
+          onOpen={openDrawer}
+          onClose={closeDrawer}
         >
           <GenresView
             onGenreSelect={setSelectedGenreIds}
