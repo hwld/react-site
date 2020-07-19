@@ -25,11 +25,11 @@ const GenresView: React.FC<GenresViewProps> = ({
       footerMenu={<GenreViewMenu selectedGenreIds={selectedGenreIds} />}
     >
       <GenreTreeList
+        draggable
         multiple
         genres={genres}
         selectedGenreIds={selectedGenreIds}
         onGenreSelect={onGenreSelect}
-        isDrag
         onGenreDrop={moveGenre}
         onNoteDrop={moveNote}
       />

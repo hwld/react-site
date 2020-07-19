@@ -19,7 +19,7 @@ type GenreTreeListProps = {
   multiple?: boolean;
   selectedGenreIds?: string[];
   onGenreSelect?: (selectedId: string[]) => void;
-  isDrag?: boolean;
+  draggable?: boolean;
   onGenreDrop?: (sourceId: string, targetId: string) => void;
   onNoteDrop?: (noteId: string, destGenreId: string) => void;
 };
@@ -29,7 +29,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
   genres,
   selectedGenreIds = [],
   onGenreSelect = () => {},
-  isDrag = false,
+  draggable = false,
   onGenreDrop,
   onNoteDrop,
   className,
@@ -107,8 +107,8 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
       multiple={multiple}
       className={className}
       selectedIds={selectedGenreIds}
-      onNodeSelect={onGenreSelect}
-      isDrag={isDrag}
+      onSelect={onGenreSelect}
+      draggable={draggable}
       onDrop={onGenreDrop}
     >
       {genres.length !== 0 ? (

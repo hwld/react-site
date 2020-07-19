@@ -19,7 +19,7 @@ describe('<GenreTreeItem> with <List>', () => {
         }}
       >
         <List
-          isDrag
+          draggable
           selectedIds={selectedIds}
           onSelect={ids => setSelectedIds(ids)}
         >

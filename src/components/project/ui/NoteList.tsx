@@ -12,7 +12,7 @@ type NoteListProps = {
   selectedNoteIds?: string[];
   searchCriteria?: SearchNotesCriteria;
   className?: string;
-  isDrag?: boolean;
+  draggable?: boolean;
 };
 
 const NoteList: React.FC<NoteListProps> = ({
@@ -22,7 +22,7 @@ const NoteList: React.FC<NoteListProps> = ({
   onNotesSelect,
   searchCriteria,
   className,
-  isDrag = false,
+  draggable = false,
 }) => {
   const isDate = useCallback((arg: string | Date): arg is Date => {
     return arg != null && typeof arg !== 'string';
@@ -82,7 +82,7 @@ const NoteList: React.FC<NoteListProps> = ({
 
   return (
     <List
-      isDrag={isDrag}
+      draggable={draggable}
       className={className}
       selectedIds={selectedNoteIds}
       onSelect={onNotesSelect}

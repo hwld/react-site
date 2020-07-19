@@ -32,7 +32,7 @@ const NotesView: React.FC<NotesViewProps> = ({
     return selectedGenreIds.length !== 0 ? (
       <>
         <NoteList
-          isDrag
+          draggable
           notes={viewNotes}
           selectedNoteIds={selectedNoteIds}
           onNotesSelect={setSelectedNoteIds}

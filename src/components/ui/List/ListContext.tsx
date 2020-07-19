@@ -2,14 +2,14 @@ import * as React from 'react';
 
 type ListContextValue = {
   selectedIds: string[];
-  isDrag: boolean;
+  draggable: boolean;
   selectItem: (ids: string[]) => void;
   removeItemId: (id: string) => void;
 };
 
 const ListContext = React.createContext<ListContextValue>({
   selectedIds: [],
-  isDrag: false,
+  draggable: false,
 
   selectItem: () => {},
   removeItemId: () => {},

@@ -8,12 +8,12 @@ describe('<TreeView>', () => {
     test('選択状態のアイテムを削除すると、選択状態から除外される', () => {
       const nodeSelect = jest.fn();
       const { rerender } = render(
-        <TreeView selectedIds={['item']} onNodeSelect={nodeSelect}>
+        <TreeView selectedIds={['item']} onSelect={nodeSelect}>
           <TreeItem label="item" nodeId="item" />
         </TreeView>,
       );
 
-      rerender(<TreeView selectedIds={['item']} onNodeSelect={nodeSelect} />);
+      rerender(<TreeView selectedIds={['item']} onSelect={nodeSelect} />);
 
       expect(nodeSelect.mock.calls.length).toBe(1);
       expect(nodeSelect.mock.calls[0][0]).toEqual([]);
@@ -60,9 +60,9 @@ describe('<TreeView>', () => {
       return (
         <TreeView
           multiple={multiple}
-          isDrag
+          draggable
           onDrop={onDrop}
-          onNodeSelect={ids => setSelectedIds(ids)}
+          onSelect={ids => setSelectedIds(ids)}
           selectedIds={selectedIds}
         >
           <TreeItem label="parent" nodeId="parent">

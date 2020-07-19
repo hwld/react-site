@@ -12,7 +12,7 @@ type ListProps = {
   className?: string;
   selectedIds?: string[];
   onSelect?: (ids: string[]) => void;
-  isDrag?: boolean;
+  draggable?: boolean;
 };
 
 const List: React.FC<ListProps> = ({
@@ -20,7 +20,7 @@ const List: React.FC<ListProps> = ({
   className,
   selectedIds = [],
   onSelect = () => {},
-  isDrag = false,
+  draggable = false,
 }) => {
   const [internalSelectedIds, setInternalSelectedIds] = useState(selectedIds);
 
@@ -45,7 +45,7 @@ const List: React.FC<ListProps> = ({
 
   return (
     <ListContextProvider
-      value={{ selectedIds, isDrag, selectItem, removeItemId }}
+      value={{ selectedIds, draggable, selectItem, removeItemId }}
     >
       <StyledMuiList className={className}>{children}</StyledMuiList>
     </ListContextProvider>

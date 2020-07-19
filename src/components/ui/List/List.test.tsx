@@ -39,7 +39,7 @@ describe('<List>', () => {
       return (
         <>
           <List
-            isDrag
+            draggable
             selectedIds={selectedIds}
             onSelect={ids => setSelectedIds(ids)}
           >

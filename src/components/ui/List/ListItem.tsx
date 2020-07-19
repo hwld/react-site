@@ -14,7 +14,7 @@ type ListItemProps = {
 };
 
 const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
-  const { selectedIds, isDrag, selectItem, removeItemId } = useContext(
+  const { selectedIds, draggable, selectItem, removeItemId } = useContext(
     ListContext,
   );
 
@@ -51,7 +51,7 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
   };
 
   return (
-    <div ref={isDrag ? drag : null} data-testid={`dragLayer-${itemId}`}>
+    <div ref={draggable ? drag : null} data-testid={`dragLayer-${itemId}`}>
       <MuiListItem
         button
         onClick={setSelectedIds}

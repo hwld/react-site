@@ -87,7 +87,7 @@ const TreeItem: React.FC<TreeItemProps> = ({
     selectedIds,
     selectIds,
     setExpanded,
-    isDrag,
+    draggable,
     onDrop,
   } = useContext(TreeViewContext);
 
@@ -258,7 +258,7 @@ const TreeItem: React.FC<TreeItemProps> = ({
           data-testid={`dropLayer-${nodeId}`}
         >
           <TreeItemDragLayer
-            ref={isDrag ? drag : null}
+            ref={draggable ? drag : null}
             isDragging={isDragging}
             data-testid={`dragLayer-${nodeId}`}
           >

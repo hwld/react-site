@@ -13,43 +13,43 @@ const Tree = styled.ul`
 `;
 
 type TreeViewProps = {
-  isDrag?: boolean;
+  draggable?: boolean;
   className?: string;
   multiple?: boolean;
   selectedIds?: string[];
-  onNodeSelect?: (ids: string[]) => void;
+  onSelect?: (ids: string[]) => void;
   onDrop?: (sourceId: string, targetId: string) => void;
 };
 
 const TreeView: React.FC<TreeViewProps> = ({
-  isDrag = false,
+  draggable = false,
   children,
   className,
   multiple = false,
   selectedIds = [],
-  onNodeSelect = () => {},
+  onSelect = () => {},
   onDrop = () => {},
 }) => {
   const [nodes, setNodes] = useState<TreeNode[]>([]);
 
   // 選択状態のItemが削除されたときに、それを除いた選択状態を返す
-  // これとonNodeSelectを使って、内部と外部の選択状態の同期をとる.
+  // これとonSelectを使って、内部と外部の選択状態の同期をとる.
   // 内部の状態をいちいち用意しているのは、Itemの破棄のときだけにremoveNodeを動かしたいので、依存リストにpropsを含めたくなかったから.
   const [internalSelectedIds, setInternalSelectedIds] = useState(selectedIds);
 
   // 内部の選択状態と外部の選択状態の同期
   useEffect(() => {
     if (selectedIds.length !== internalSelectedIds.length) {
-      onNodeSelect(internalSelectedIds);
+      onSelect(internalSelectedIds);
     }
-  }, [internalSelectedIds, onNodeSelect, selectedIds]);
+  }, [internalSelectedIds, onSelect, selectedIds]);
 
   const selectIds = useCallback(
     (ids: string[]) => {
-      onNodeSelect(ids);
+      onSelect(ids);
       setInternalSelectedIds(ids);
     },
-    [onNodeSelect],
+    [onSelect],
   );
 
   const clearSelectedIds = () => {
@@ -121,7 +121,7 @@ const TreeView: React.FC<TreeViewProps> = ({
         selectedIds,
         selectIds,
         setExpanded,
-        isDrag,
+        draggable,
         onDrop,
       }}
     >
