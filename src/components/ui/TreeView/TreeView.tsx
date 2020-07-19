@@ -12,14 +12,14 @@ const Tree = styled.ul`
   margin-bottom: 0;
 `;
 
-interface TreeViewProps {
+type TreeViewProps = {
   isDrag?: boolean;
   className?: string;
   multiple?: boolean;
   selectedIds?: string[];
   onNodeSelect?: (ids: string[]) => void;
   onDrop?: (sourceId: string, targetId: string) => void;
-}
+};
 
 const TreeView: React.FC<TreeViewProps> = ({
   isDrag = false,
@@ -51,6 +51,10 @@ const TreeView: React.FC<TreeViewProps> = ({
     },
     [onNodeSelect],
   );
+
+  const clearSelectedIds = () => {
+    selectIds([]);
+  };
 
   const [, drop] = useDrop({
     accept: ItemTypes.TreeItem,
@@ -121,13 +125,7 @@ const TreeView: React.FC<TreeViewProps> = ({
         onDrop,
       }}
     >
-      <Tree
-        onClick={() => {
-          selectIds([]);
-        }}
-        className={className}
-        ref={drop}
-      >
+      <Tree onClick={clearSelectedIds} className={className} ref={drop}>
         {children}
       </Tree>
     </TreeViewContextProvider>

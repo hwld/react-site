@@ -64,12 +64,12 @@ const TreeItemGroup = styled.li`
   padding-inline-start: 10px;
 `;
 
-interface TreeItemProps {
+type TreeItemProps = {
   label: string;
   nodeId: string;
   canDrop?: boolean;
   isDropOver?: boolean;
-}
+};
 
 const TreeItem: React.FC<TreeItemProps> = ({
   children,

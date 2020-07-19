@@ -8,12 +8,12 @@ const StyledMuiList = styled(MuiList)`
   padding-bottom: 0;
 `;
 
-interface ListProps {
+type ListProps = {
   className?: string;
   selectedIds?: string[];
   onSelect?: (ids: string[]) => void;
   isDrag?: boolean;
-}
+};
 
 const List: React.FC<ListProps> = ({
   children,

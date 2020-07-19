@@ -4,13 +4,13 @@ import { useDrag, DragPreviewImage } from 'react-dnd';
 import ListContext from './ListContext';
 import { ItemTypes } from '../ItemTypes';
 
-interface ListItemProps {
-  itemId: string;
-}
-
 export type ListItemDropType = {
   type: string;
   ids: string[];
+};
+
+type ListItemProps = {
+  itemId: string;
 };
 
 const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
