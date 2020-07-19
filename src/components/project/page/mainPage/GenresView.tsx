@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import GenreTreeList from '../../ui/GenreTreeList';
-import GenresContext from '../../../../context/GenresContext';
 import ContentColumn from '../../ui/ContentColumn';
 import GenreViewMenu from './GenresViewMenu';
-import NotesContext from '../../../../context/NotesContext';
+import { useGenresContext } from '../../../../context/GenresContext';
+import { useNotesContext } from '../../../../context/NotesContext';
 
 type GenresViewProps = {
   onGenreSelect: (selectedId: string[]) => void;
@@ -16,8 +16,8 @@ const GenresView: React.FC<GenresViewProps> = ({
   selectedGenreIds,
   className,
 }) => {
-  const { genres, moveGenre } = useContext(GenresContext);
-  const { moveNote } = useContext(NotesContext);
+  const { genres, moveGenre } = useGenresContext();
+  const { moveNote } = useNotesContext();
 
   return (
     <ContentColumn

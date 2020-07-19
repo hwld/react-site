@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import AddNoteIcon from '@material-ui/icons/NoteAdd';
 import { DialogContent, DialogTitle, SvgIconProps } from '@material-ui/core';
-import NotesContext from '../../../context/NotesContext';
+import { useNotesContext } from '../../../context/NotesContext';
 import { NoteField } from '../../../services/notes';
 import OperationDialog from './OperationDialog';
 import EditNoteField from '../ui/EditNoteFields';
@@ -24,7 +24,7 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
     bookName: '',
   });
 
-  const { addNote } = useContext(NotesContext);
+  const { addNote } = useNotesContext();
 
   const add = () => {
     addNote({

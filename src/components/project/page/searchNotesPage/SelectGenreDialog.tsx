@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Dialog,
@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import styled from 'styled-components';
 import GenreTreeList from '../../ui/GenreTreeList';
-import GenresContext from '../../../../context/GenresContext';
+import { useGenresContext } from '../../../../context/GenresContext';
 
 const StyledGenreTreeList = styled(GenreTreeList)`
   height: 50vh;
@@ -25,7 +25,7 @@ const SelectGenreButton: React.FC<SelectGenreButtonprops> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { genres } = useContext(GenresContext);
+  const { genres } = useGenresContext();
   const [selectedGenreId, setSelectedGenreId] = useState('');
 
   const openDialog = () => {

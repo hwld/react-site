@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import { Note, NoteField } from '../services/notes';
 
 export type NotesContextValue = {
@@ -32,4 +33,4 @@ export const NotesContextProvider: React.FC<{ value: NotesContextValue }> = ({
   );
 };
 
-export default NotesContext;
+export const useNotesContext = () => useContext(NotesContext);

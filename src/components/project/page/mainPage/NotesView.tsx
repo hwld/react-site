@@ -1,11 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Alert from '@material-ui/lab/Alert';
-import NotesContext from '../../../../context/NotesContext';
 import NoteList from '../../ui/NoteList';
 import { NotesSortOrder } from '../../ui/NotesSortConditionFields';
 import ContentColumn from '../../ui/ContentColumn';
 import NotesViewMenu from './NotesViewMenu';
-import MobileContext from '../../../../context/MobileContext';
+import { useMobileContext } from '../../../../context/MobileContext';
+import { useNotesContext } from '../../../../context/NotesContext';
 
 interface NotesViewProps {
   selectedGenreIds: string[];
@@ -16,8 +16,8 @@ const NotesView: React.FC<NotesViewProps> = ({
   selectedGenreIds,
   className,
 }) => {
-  const { isMobile } = useContext(MobileContext);
-  const { notes } = useContext(NotesContext);
+  const { isMobile } = useMobileContext();
+  const { notes } = useNotesContext();
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
   const [notesSortOrder, setNotesSortOrder] = useState<NotesSortOrder>({
     targetField: 'createdAt',

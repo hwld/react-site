@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import { Genre } from '../services/genres';
 
 type GenresContextValue = {
@@ -31,4 +32,4 @@ export const GenresContextProvider: React.FC<{ value: GenresContextValue }> = ({
   );
 };
 
-export default GenresContext;
+export const useGenresContext = () => useContext(GenresContext);

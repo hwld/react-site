@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
 import DeleteNoteIcon from '@material-ui/icons/Delete';
-import NotesContext from '../../../context/NotesContext';
+import { useNotesContext } from '../../../context/NotesContext';
 import OperationDialog from './OperationDialog';
 
 type RemoveNoteDialogProps = {
@@ -15,7 +15,7 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
   targetNoteIds,
   size,
 }) => {
-  const { removeNote } = useContext(NotesContext);
+  const { removeNote } = useNotesContext();
 
   const remove = () => {
     targetNoteIds.forEach(id => removeNote(id));

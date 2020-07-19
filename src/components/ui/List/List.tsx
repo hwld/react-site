@@ -39,8 +39,8 @@ const List: React.FC<ListProps> = ({
     [onSelect],
   );
 
-  const removeItemId = useCallback((id: string) => {
-    setInternalSelectedIds(ids => ids.filter(selectId => selectId !== id));
+  const removeItemId = useCallback((targetId: string) => {
+    setInternalSelectedIds(ids => ids.filter(id => id !== targetId));
   }, []);
 
   return (

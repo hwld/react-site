@@ -13,8 +13,8 @@ const Tree = styled.ul`
 `;
 
 type TreeViewProps = {
-  draggable?: boolean;
   className?: string;
+  draggable?: boolean;
   multiple?: boolean;
   selectedIds?: string[];
   onSelect?: (ids: string[]) => void;

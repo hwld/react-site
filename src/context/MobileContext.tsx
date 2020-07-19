@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useContext } from 'react';
 
 type MobileContextValue = {
   isMobile: boolean;
@@ -17,4 +18,4 @@ export const MobileContextProvider: React.FC<{ value: MobileContextValue }> = ({
   );
 };
 
-export default MobileContext;
+export const useMobileContext = () => useContext(MobileContext);

@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import DeleteGenreIcon from '@material-ui/icons/Delete';
-import GenresContext from '../../../context/GenresContext';
+import { useGenresContext } from '../../../context/GenresContext';
 import OperationDialog from './OperationDialog';
 
 type RemoveGenreDialogProps = {
@@ -15,7 +15,7 @@ const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
   targetGenreIds,
   size,
 }) => {
-  const { genres, removeGenre } = useContext(GenresContext);
+  const { genres, removeGenre } = useGenresContext();
 
   const remove = () => {
     // 親子関係にあるジャンルを削除しようとしたときに、子を削除対象から外す

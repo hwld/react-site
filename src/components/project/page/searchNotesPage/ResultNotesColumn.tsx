@@ -1,9 +1,9 @@
-import React, { useContext, useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import ContentColumn from '../../ui/ContentColumn';
 import { SearchNotesCriteria } from '../../../../services/notes';
-import NotesContext from '../../../../context/NotesContext';
+import { useNotesContext } from '../../../../context/NotesContext';
+import { useMobileContext } from '../../../../context/MobileContext';
 import NoteList from '../../ui/NoteList';
-import MobileContext from '../../../../context/MobileContext';
 
 type SearchNotesListProps = {
   searchCriteria: SearchNotesCriteria;
@@ -14,9 +14,9 @@ const ResultNotesList: React.FC<SearchNotesListProps> = ({
   searchCriteria,
   className,
 }) => {
-  const { isMobile } = useContext(MobileContext);
+  const { isMobile } = useMobileContext();
 
-  const { notes } = useContext(NotesContext);
+  const { notes } = useNotesContext();
 
   const getSearchNotes = useCallback(
     (criteria: SearchNotesCriteria) => {

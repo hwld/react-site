@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import AutoComplete from '@material-ui/lab/Autocomplete';
-import NotesContext from '../../../context/NotesContext';
 import { NoteField } from '../../../services/notes';
+import { useNotesContext } from '../../../context/NotesContext';
 
 const FormField = styled.div`
   margin-top: 20px;
@@ -27,7 +27,7 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
   defaultNote,
   onChange,
 }) => {
-  const { notes } = useContext(NotesContext);
+  const { notes } = useNotesContext();
   const { title, text, bookName, authorName } = defaultNote;
 
   const changeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {

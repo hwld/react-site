@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Typography,
   TextField,
@@ -11,9 +11,10 @@ import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
 import { UseAutocompleteProps } from '@material-ui/lab/useAutocomplete';
 import { SearchNotesCriteria } from '../../../../services/notes';
-import GenresContext from '../../../../context/GenresContext';
-import NotesContext from '../../../../context/NotesContext';
+import { useGenresContext } from '../../../../context/GenresContext';
+
 import SelectGenreDialog from './SelectGenreDialog';
+import { useNotesContext } from '../../../../context/NotesContext';
 
 const Root = styled.div`
   padding: 16px 24px;
@@ -67,8 +68,8 @@ type SearchFormprops = {
 };
 
 const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
-  const { genres } = useContext(GenresContext);
-  const { notes } = useContext(NotesContext);
+  const { genres } = useGenresContext();
+  const { notes } = useNotesContext();
 
   const [targetGenreId, setTargetGenreId] = useState('');
   const [targetGenreName, setTargetGenreName] = useState('');

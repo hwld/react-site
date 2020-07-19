@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import GenresContext from '../../../context/GenresContext';
+
 import { Genre, createDefaultGenre } from '../../../services/genres';
 import OperationDialog from './OperationDialog';
 import EditGenreField from '../ui/EditGenreFields';
+import { useGenresContext } from '../../../context/GenresContext';
 
 type UpdateGenreDialogProps = {
   disabled?: boolean;
@@ -18,7 +19,7 @@ const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
   size,
 }) => {
   const [newGenre, setNewGenre] = useState<Genre>(createDefaultGenre());
-  const { genres, updateGenre } = useContext(GenresContext);
+  const { genres, updateGenre } = useGenresContext();
 
   const update = () => {
     updateGenre(newGenre);
