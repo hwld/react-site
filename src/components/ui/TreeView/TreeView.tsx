@@ -17,7 +17,7 @@ interface TreeViewProps {
   className?: string;
   multiple?: boolean;
   selectedIds?: string[];
-  onNodeSelect?: (id: string[]) => void;
+  onNodeSelect?: (ids: string[]) => void;
   onDrop?: (sourceId: string, targetId: string) => void;
 }
 

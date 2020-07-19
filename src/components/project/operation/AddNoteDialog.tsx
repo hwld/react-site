@@ -6,11 +6,11 @@ import { NoteField } from '../../../services/notes';
 import OperationDialog from './OperationDialog';
 import EditNoteField from '../ui/EditNoteFields';
 
-interface AddNoteDialogProps {
+type AddNoteDialogProps = {
   disabled?: boolean;
   genreId: string;
   size?: SvgIconProps['fontSize'];
-}
+};
 
 const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   disabled,

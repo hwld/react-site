@@ -6,11 +6,6 @@ import { Note, SearchNotesCriteria } from '../../../services/notes';
 import RemoveNoteDialog from '../operation/RemoveNoteDialog';
 import UpdateNoteDialog from '../operation/UpdateNoteDialog';
 
-interface NoteListItemProps {
-  note: Note;
-  searchCriteria?: SearchNotesCriteria;
-}
-
 const GridContainer = styled.div`
   width: 100%;
   display: grid;
@@ -51,6 +46,10 @@ const HighlightSpan = styled.span`
   color: ${props => props.theme.palette.primary.main};
 `;
 
+type NoteListItemProps = {
+  note: Note;
+  searchCriteria?: SearchNotesCriteria;
+};
 const NoteListItem: React.FC<NoteListItemProps> = ({
   note,
   searchCriteria,

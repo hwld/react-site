@@ -12,16 +12,16 @@ import GenresContext from '../../../context/GenresContext';
 import GenreTreeList from '../ui/GenreTreeList';
 import NotesContext from '../../../context/NotesContext';
 
-interface MoveNotesDialogProps {
-  disabled?: boolean;
-  sourceNoteIds: string[];
-  size?: SvgIconProps['fontSize'];
-}
-
 const StyledGenreTreeList = styled(GenreTreeList)`
   height: 50vh;
   background-color: ${props => props.theme.palette.primary.dark};
 `;
+
+type MoveNotesDialogProps = {
+  disabled?: boolean;
+  sourceNoteIds: string[];
+  size?: SvgIconProps['fontSize'];
+};
 
 const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
   disabled,
@@ -41,6 +41,10 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
     setDestGenreId(ids[0] || '');
   };
 
+  const clearDestGenre = () => {
+    setDestGenreId('');
+  };
+
   return (
     <OperationDialog
       tooltipText="メモを移動"
@@ -48,9 +52,7 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
       activatorDisabled={disabled}
       doneText="移動"
       onDone={moveNotes}
-      onClose={() => {
-        setDestGenreId('');
-      }}
+      onOpen={clearDestGenre}
       data-testid="moveNotesDialog"
     >
       <DialogTitle>メモの移動</DialogTitle>

@@ -3,17 +3,17 @@ import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import { GenreField } from '../../../services/genres';
 
-interface EditGenreFieldProps {
-  genre: GenreField;
-  onChange: (genreName: string) => void;
-}
-
 const StyledTextField = styled(TextField)`
   & label.Mui-focused,
   .MuiFormLabel-root {
     color: ${props => props.theme.palette.secondary.main};
   }
 `;
+
+type EditGenreFieldProps = {
+  genre: GenreField;
+  onChange: (genreName: string) => void;
+};
 
 const EditGenreField: React.FC<EditGenreFieldProps> = ({ genre, onChange }) => {
   const { genreName } = genre;

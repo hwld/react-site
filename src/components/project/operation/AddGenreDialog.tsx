@@ -6,11 +6,11 @@ import EditGenreField from '../ui/EditGenreFields';
 import GenresContext from '../../../context/GenresContext';
 import { GenreField } from '../../../services/genres';
 
-interface AddGenreDialogProps {
+type AddGenreDialogProps = {
   disabled?: boolean;
   parentGenreId: string;
   size?: SvgIconProps['fontSize'];
-}
+};
 
 const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
   disabled,

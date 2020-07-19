@@ -24,7 +24,7 @@ const StyledIconButton = styled(IconButton)`
   }
 `;
 
-interface OperationDialogProps {
+type OperationDialogProps = {
   activatorDisabled?: boolean;
   activatorIcon: JSX.Element;
   doneText?: string;
@@ -34,7 +34,7 @@ interface OperationDialogProps {
   onClose?: () => void;
   tooltipText: string;
   'data-testid'?: string;
-}
+};
 
 const OperationDialog: React.FC<OperationDialogProps> = ({
   children,
@@ -50,6 +50,10 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const stopPropagation = (event: React.MouseEvent<{}>) => {
+    event.stopPropagation();
+  };
+
   const openDialog = () => {
     setIsOpen(true);
     if (onOpen) onOpen();
@@ -58,6 +62,22 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
   const closeDialog = () => {
     setIsOpen(false);
     if (onClose) onClose();
+  };
+
+  const handleClickActivator = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    openDialog();
+  };
+
+  const handleDone = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    if (onDone) onDone();
+    closeDialog();
+  };
+
+  const handleCancel = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    closeDialog();
   };
 
   // ToolTipの子コンポーネントにdisable属性をつけるとエラーが出るのでifで分岐させる
@@ -72,10 +92,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
     return (
       <Tooltip title={<Typography>{tooltipText}</Typography>}>
         <StyledIconButton
-          onClick={event => {
-            event.stopPropagation();
-            openDialog();
-          }}
+          onClick={handleClickActivator}
           data-testid="activatorButton"
         >
           {activatorIcon}
@@ -93,18 +110,14 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
         onClose={closeDialog}
         maxWidth="sm"
         // ダイアログ外をクリックするとクリックイベントが伝搬してしまうため、ここで防ぐ
-        onClick={event => event.stopPropagation()}
+        onClick={stopPropagation}
         data-testid="dialog"
       >
         {children}
         <DialogActions>
           <Button
             disabled={doneDisabled}
-            onClick={event => {
-              event.stopPropagation();
-              if (onDone) onDone();
-              closeDialog();
-            }}
+            onClick={handleDone}
             variant="contained"
             color="secondary"
             data-testid="doneButton"
@@ -112,10 +125,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
             {doneText || '完了'}
           </Button>
           <Button
-            onClick={event => {
-              event.stopPropagation();
-              closeDialog();
-            }}
+            onClick={handleCancel}
             variant="contained"
             color="secondary"
             data-testid="cancelButton"

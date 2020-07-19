@@ -12,11 +12,11 @@ export interface NotesSortOrder {
   order: 'asc' | 'desc';
 }
 
-interface NotesSortConditionFieldProps {
+type NotesSortConditionFieldProps = {
   notesSortOrder: NotesSortOrder;
   onChangeTargetField: (targetField: NotesSortOrder['targetField']) => void;
   onChangeOrder: (order: NotesSortOrder['order']) => void;
-}
+};
 
 const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
   notesSortOrder,

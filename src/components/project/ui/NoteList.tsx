@@ -5,7 +5,7 @@ import NoteListItem from './NoteListItem';
 import List from '../../ui/List/List';
 import { NotesSortOrder } from './NotesSortConditionFields';
 
-interface NoteListProps {
+type NoteListProps = {
   notes: Note[];
   notesSortOrder?: NotesSortOrder;
   onNotesSelect?: (selectedIds: string[]) => void;
@@ -13,7 +13,7 @@ interface NoteListProps {
   searchCriteria?: SearchNotesCriteria;
   className?: string;
   isDrag?: boolean;
-}
+};
 
 const NoteList: React.FC<NoteListProps> = ({
   notes,

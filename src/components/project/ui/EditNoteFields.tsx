@@ -16,31 +16,35 @@ const FormTextField = styled(TextField)`
   }
 `;
 
-interface EditNoteFieldProps {
+type EditNoteFieldProps = {
   defaultNote: NoteField;
   authorNameList?: string[];
   bookNameList?: string[];
   onChange: (fieldName: keyof NoteField, value: string) => void;
-}
+};
 
 const EditNoteField: React.FC<EditNoteFieldProps> = ({
   defaultNote,
   onChange,
 }) => {
+  const { notes } = useContext(NotesContext);
   const { title, text, bookName, authorName } = defaultNote;
 
   const changeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange('title', event.target.value);
   };
+
   const changeText = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange('text', event.target.value);
   };
+
   const changeSelectBookName = (event: object, value: string | null) => {
     if (value) onChange('bookName', value);
   };
   const changeBookName = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange('bookName', event.target.value);
   };
+
   const changeSelectAuthorName = (event: object, value: string | null) => {
     if (value) onChange('authorName', value);
   };
@@ -48,7 +52,6 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
     onChange('authorName', event.target.value);
   };
 
-  const { notes } = useContext(NotesContext);
   // 重複のないリストを作成
   const authorNameList = Array.from(
     new Set(

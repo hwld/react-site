@@ -4,11 +4,11 @@ import DeleteGenreIcon from '@material-ui/icons/Delete';
 import GenresContext from '../../../context/GenresContext';
 import OperationDialog from './OperationDialog';
 
-interface RemoveGenreDialogProps {
+type RemoveGenreDialogProps = {
   disabled?: boolean;
   targetGenreIds: string[];
   size?: SvgIconProps['fontSize'];
-}
+};
 
 const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
   disabled,

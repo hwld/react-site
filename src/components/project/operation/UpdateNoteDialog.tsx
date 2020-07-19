@@ -6,10 +6,10 @@ import NotesContext from '../../../context/NotesContext';
 import OperationDialog from './OperationDialog';
 import EditNoteField from '../ui/EditNoteFields';
 
-interface UpdateNoteDialogProps {
+type UpdateNoteDialogProps = {
   defaultNote: Note;
   size?: SvgIconProps['fontSize'];
-}
+};
 
 const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
   defaultNote,

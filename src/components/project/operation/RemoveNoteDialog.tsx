@@ -4,11 +4,11 @@ import DeleteNoteIcon from '@material-ui/icons/Delete';
 import NotesContext from '../../../context/NotesContext';
 import OperationDialog from './OperationDialog';
 
-interface RemoveNoteDialogProps {
+type RemoveNoteDialogProps = {
   disabled?: boolean;
   targetNoteIds: string[];
   size?: SvgIconProps['fontSize'];
-}
+};
 
 const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
   disabled,

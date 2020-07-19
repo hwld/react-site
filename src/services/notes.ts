@@ -29,7 +29,7 @@ export interface SearchNotesCriteria {
   bookName: string;
 }
 
-const defaultSearchNotesCriteria = () => {
+const createDefaultSearchNotesCriteria = () => {
   return { genreId: '', title: '', text: '', authorName: '', bookName: '' };
 };
 
@@ -105,4 +105,4 @@ const useNotes = (uid: string) => {
   return { notes, addNote, removeNote, updateNote, moveNote };
 };
 
-export { useNotes, defaultSearchNotesCriteria };
+export { useNotes, createDefaultSearchNotesCriteria };

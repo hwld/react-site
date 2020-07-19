@@ -107,9 +107,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
       multiple={multiple}
       className={className}
       selectedIds={selectedGenreIds}
-      onNodeSelect={(id: string[]) => {
-        onGenreSelect(id);
-      }}
+      onNodeSelect={onGenreSelect}
       isDrag={isDrag}
       onDrop={onGenreDrop}
     >

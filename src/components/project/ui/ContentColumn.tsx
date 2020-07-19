@@ -29,11 +29,11 @@ const FooterMenu = styled(Toolbar)`
   }
 `;
 
-interface ContentColumnProps {
+type ContentColumnProps = {
   className?: string;
   footerMenu?: ReactNode;
   fixedFooter?: boolean;
-}
+};
 
 const ContentColumn: React.FC<ContentColumnProps> = ({
   children,

@@ -6,12 +6,12 @@ import NotesSortConditionField, {
 } from '../ui/NotesSortConditionFields';
 import OperationDialog from './OperationDialog';
 
-interface SortNotesDialogProps {
+type SortNotesDialogProps = {
   sort: (order: NotesSortOrder) => void;
   defaultSortOrder?: NotesSortOrder;
   disabled?: boolean;
   size?: SvgIconProps['fontSize'];
-}
+};
 
 const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
   sort,
