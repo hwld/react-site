@@ -5,11 +5,14 @@ import {
   genresContextDefaultValue,
   GenresContextProvider,
 } from '../../../context/GenresContext';
-import { Genre } from '../../../services/genres';
+import { GenreField } from '../../../services/genres';
 
 describe('<AddGenreDialog>', () => {
   test('ジャンル追加処理が適切に呼び出される', () => {
-    const addGenre = jest.fn((genre: Genre) => genre);
+    const addGenre = jest.fn((parentId: string, genreField: GenreField) => ({
+      parentId,
+      genreField,
+    }));
     const { getByTestId, getByLabelText } = render(
       <GenresContextProvider
         value={{
@@ -34,6 +37,6 @@ describe('<AddGenreDialog>', () => {
 
     // ジャンルの追加が呼び出されているか
     expect(addGenre.mock.calls.length).toBe(1);
-    expect(addGenre.mock.calls[0][0].genreName).toBe('TestGenreName');
+    expect(addGenre.mock.calls[0][1].genreName).toBe('TestGenreName');
   });
 });

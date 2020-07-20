@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { Genre } from '../services/genres';
+import { Genre, GenreField } from '../services/genres';
 
 type GenresContextValue = {
   genres: Genre[];
-  addGenre: (genre: Genre) => void;
+  addGenre: (parentGenreId: string, genreField: GenreField) => void;
   removeGenre: (id: string) => void;
-  updateGenre: (genre: Genre) => void;
+  updateGenre: (genre: GenreField & { id: string }) => void;
   moveGenre: (genreId: string, destGenreId: string) => void;
 };
 

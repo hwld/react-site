@@ -4,22 +4,31 @@ import { useCallback, useMemo } from 'react';
 import { db } from './firebaseConfig';
 import { useNotes } from './notes';
 
-export interface GenreField {
+export type GenreField = {
   genreName: string;
-}
+};
 
-export interface GenreDate {
+export type GenreDate = {
   createdAt: Date;
-}
+};
 
-export interface GenreInfo {
+type FirestoreGenreDate = {
+  createdAt: firebase.firestore.Timestamp;
+};
+
+export type GenreInfo = {
   id: string;
   parentGenreId: string;
   // 直接の子ジャンルのみをもたせる
   childrenGenreIds: string[];
-}
+};
 
 export type Genre = GenreField & GenreDate & GenreInfo;
+type FirestoreGenre = GenreField & FirestoreGenreDate & GenreInfo;
+
+const defaultGenreField = () => {
+  return { genreName: '' };
+};
 
 export const createDefaultGenre = () => {
   return {
@@ -49,7 +58,7 @@ const useGenres = (uid: string) => {
       const data = genreDoc.data();
 
       // Genre型のcreatedAtだけTimestampからDateに変換したい
-      const genreOtherThanDate = data as GenreField & GenreInfo;
+      const genreOtherThanDate = data as Genre;
       const createdAt: Date = data.createdAt.toDate();
 
       const genre: Genre = { ...genreOtherThanDate, createdAt };
@@ -94,12 +103,12 @@ const useGenres = (uid: string) => {
   );
 
   const addGenre = useCallback(
-    (genre: Genre) => {
+    (parentGenreId: string, genreField: GenreField) => {
       const newGenreRef = genresRef.doc();
 
-      if (genre.parentGenreId !== '') {
+      if (parentGenreId !== '') {
         // 親ジャンルの子ジャンルidのリストを更新する
-        const parentGenreRef = genresRef.doc(genre.parentGenreId);
+        const parentGenreRef = genresRef.doc(parentGenreId);
         parentGenreRef.update({
           childrenGenreIds: firebase.firestore.FieldValue.arrayUnion(
             newGenreRef.id,
@@ -107,11 +116,14 @@ const useGenres = (uid: string) => {
         });
       }
 
-      newGenreRef.set({
-        ...genre,
+      const newGenre: FirestoreGenre = {
+        genreName: genreField.genreName,
+        parentGenreId,
+        childrenGenreIds: [],
         id: newGenreRef.id,
         createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
-      });
+      };
+      newGenreRef.set(newGenre);
     },
     [genresRef],
   );
@@ -151,8 +163,13 @@ const useGenres = (uid: string) => {
   );
 
   const updateGenre = useCallback(
-    (genre: Genre) => {
-      genresRef.doc(genre.id).update({ ...genre });
+    (genre: GenreField & { id: string }) => {
+      // スプレッド演算子使うと genreにGenre型のサブタイプが渡されたときに更新したくないプロパティまで更新される
+      const newGenre: GenreField = {
+        genreName: genre.genreName,
+      };
+
+      genresRef.doc(genre.id).update(newGenre);
     },
     [genresRef],
   );
@@ -192,4 +209,4 @@ const useGenres = (uid: string) => {
   return { genres, addGenre, removeGenre, updateGenre, moveGenre };
 };
 
-export { useGenres };
+export { useGenres, defaultGenreField };

@@ -14,12 +14,18 @@ export interface NoteDate {
   updatedAt: Date;
 }
 
+interface FirestoreNoteDate {
+  createdAt: firebase.firestore.Timestamp;
+  updatedAt: firebase.firestore.Timestamp;
+}
+
 export interface NoteInfo {
   id: string;
   genreId: string;
 }
 
 export type Note = NoteField & NoteDate & NoteInfo;
+type FirestoreNote = NoteField & FirestoreNoteDate & NoteInfo;
 
 export interface SearchNotesCriteria {
   genreId: string;
@@ -31,6 +37,10 @@ export interface SearchNotesCriteria {
 
 const createDefaultSearchNotesCriteria = () => {
   return { genreId: '', title: '', text: '', authorName: '', bookName: '' };
+};
+
+const createDefaultNoteField = () => {
+  return { title: '', text: '', authorName: '', bookName: '' };
 };
 
 const useNotes = (uid: string) => {
@@ -62,15 +72,20 @@ const useNotes = (uid: string) => {
   }, [notesCollection]);
 
   const addNote = useCallback(
-    (note: Note) => {
+    (genreId: string, noteField: NoteField) => {
       const newNoteRef = notesRef.doc();
 
-      newNoteRef.set({
-        ...note,
+      const newNote: FirestoreNote = {
         id: newNoteRef.id,
+        genreId,
+        title: noteField.title,
+        text: noteField.text,
+        authorName: noteField.authorName,
+        bookName: noteField.bookName,
         createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
         updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
-      });
+      };
+      newNoteRef.set(newNote);
     },
     [notesRef],
   );
@@ -83,9 +98,16 @@ const useNotes = (uid: string) => {
   );
 
   const updateNote = useCallback(
-    (id: string, noteField: NoteField) => {
-      notesRef.doc(id).update({
-        ...noteField,
+    (note: NoteField & { id: string }) => {
+      const newNote: NoteField = {
+        title: note.title,
+        text: note.text,
+        authorName: note.authorName,
+        bookName: note.bookName,
+      };
+
+      notesRef.doc(note.id).update({
+        ...newNote,
         updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
       });
     },
@@ -105,4 +127,4 @@ const useNotes = (uid: string) => {
   return { notes, addNote, removeNote, updateNote, moveNote };
 };
 
-export { useNotes, createDefaultSearchNotesCriteria };
+export { useNotes, createDefaultSearchNotesCriteria, createDefaultNoteField };

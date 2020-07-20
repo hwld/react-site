@@ -19,7 +19,7 @@ const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
   const { updateNote } = useNotesContext();
 
   const update = () => {
-    updateNote(note.id, note);
+    updateNote(note);
   };
 
   const setDefaultNote = () => {

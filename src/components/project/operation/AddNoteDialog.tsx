@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AddNoteIcon from '@material-ui/icons/NoteAdd';
 import { DialogContent, DialogTitle, SvgIconProps } from '@material-ui/core';
 import { useNotesContext } from '../../../context/NotesContext';
-import { NoteField } from '../../../services/notes';
+import { NoteField, createDefaultNoteField } from '../../../services/notes';
 import OperationDialog from './OperationDialog';
 import EditNoteField from '../ui/EditNoteFields';
 
@@ -17,34 +17,22 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   genreId,
   size,
 }) => {
-  const [note, setNote] = useState<NoteField>({
-    title: '',
-    text: '',
-    authorName: '',
-    bookName: '',
-  });
+  const [noteField, setNoteField] = useState<NoteField>(
+    createDefaultNoteField(),
+  );
 
   const { addNote } = useNotesContext();
 
   const add = () => {
-    addNote({
-      id: '',
-      genreId,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      title: note.title,
-      text: note.text,
-      authorName: note.authorName,
-      bookName: note.bookName,
-    });
+    addNote(genreId, noteField);
   };
 
   const clearField = () => {
-    setNote({ title: '', text: '', authorName: '', bookName: '' });
+    setNoteField(createDefaultNoteField());
   };
 
   const changeNoteField = (fieldName: keyof NoteField, value: string) => {
-    setNote(state => ({ ...state, [fieldName]: value }));
+    setNoteField(state => ({ ...state, [fieldName]: value }));
   };
 
   return (
@@ -54,13 +42,13 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
       activatorDisabled={disabled}
       doneText="追加"
       onDone={add}
-      doneDisabled={note.text.length === 0}
+      doneDisabled={noteField.text.length === 0}
       onOpen={clearField}
       data-testid="addNoteDialog"
     >
       <DialogTitle>メモの追加</DialogTitle>
       <DialogContent>
-        <EditNoteField defaultNote={note} onChange={changeNoteField} />
+        <EditNoteField defaultNote={noteField} onChange={changeNoteField} />
       </DialogContent>
     </OperationDialog>
   );

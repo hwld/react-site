@@ -4,7 +4,7 @@ import AddGenreIcon from '@material-ui/icons/CreateNewFolder';
 import OperationDialog from './OperationDialog';
 import EditGenreField from '../ui/EditGenreFields';
 import { useGenresContext } from '../../../context/GenresContext';
-import { GenreField } from '../../../services/genres';
+import { GenreField, defaultGenreField } from '../../../services/genres';
 
 type AddGenreDialogProps = {
   disabled?: boolean;
@@ -18,26 +18,18 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
   size,
 }) => {
   const { addGenre } = useGenresContext();
-  const [genre, setGenre] = useState<GenreField>({
-    genreName: '',
-  });
+  const [genreField, setGenreField] = useState<GenreField>(defaultGenreField());
 
   const add = () => {
-    addGenre({
-      id: '',
-      createdAt: new Date(),
-      genreName: genre.genreName,
-      parentGenreId: parentGenreId || '',
-      childrenGenreIds: [],
-    });
+    addGenre(parentGenreId, genreField);
   };
 
   const clearField = () => {
-    setGenre({ genreName: '' });
+    setGenreField({ genreName: '' });
   };
 
   const changeGenreName = (text: string) => {
-    setGenre({ genreName: text });
+    setGenreField({ genreName: text });
   };
 
   return (
@@ -47,13 +39,13 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
       activatorDisabled={disabled}
       doneText="追加"
       onDone={add}
-      doneDisabled={genre.genreName.length === 0}
+      doneDisabled={genreField.genreName.length === 0}
       onOpen={clearField}
       data-testid="addGenreDialog"
     >
       <DialogTitle>ジャンルの追加</DialogTitle>
       <DialogContent>
-        <EditGenreField genre={genre} onChange={changeGenreName} />
+        <EditGenreField genre={genreField} onChange={changeGenreName} />
       </DialogContent>
     </OperationDialog>
   );

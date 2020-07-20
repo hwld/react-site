@@ -5,9 +5,9 @@ import { Note, NoteField } from '../services/notes';
 export type NotesContextValue = {
   notes: Note[];
 
-  addNote: (note: Note) => void;
+  addNote: (genreId: string, noteField: NoteField) => void;
   removeNote: (id: string) => void;
-  updateNote: (id: string, noteField: NoteField) => void;
+  updateNote: (note: NoteField & { id: string }) => void;
   moveNote: (noteId: string, destGenreId: string) => void;
 };
 
