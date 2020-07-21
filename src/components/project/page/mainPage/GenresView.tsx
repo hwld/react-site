@@ -17,7 +17,7 @@ const GenresView: React.FC<GenresViewProps> = ({
   className,
 }) => {
   const { genres, moveGenre } = useGenresContext();
-  const { moveNote } = useNotesContext();
+  const { moveNotes } = useNotesContext();
 
   return (
     <ContentColumn
@@ -31,7 +31,7 @@ const GenresView: React.FC<GenresViewProps> = ({
         selectedGenreIds={selectedGenreIds}
         onGenreSelect={onGenreSelect}
         onGenreDrop={moveGenre}
-        onNoteDrop={moveNote}
+        onNotesDrop={moveNotes}
       />
     </ContentColumn>
   );

@@ -67,7 +67,7 @@ const useGenres = (uid: string) => {
     });
   }, [genresCollection]);
 
-  const { notes, removeNote } = useNotes(uid);
+  const { notes, removeNotes } = useNotes(uid);
 
   // 指定されたIdのジャンルの子ノードのidを再帰的に取得する.
   const fetchAllChildrenGenreIds = useCallback(
@@ -149,16 +149,14 @@ const useGenres = (uid: string) => {
 
       // noteを削除する
       const deletedNotes = fetchAllNotesInGenreIds(deletedGenreIds);
-      deletedNotes.forEach(noteId => {
-        removeNote(noteId);
-      });
+      removeNotes(deletedNotes);
     },
     [
       fetchAllChildrenGenreIds,
       fetchAllNotesInGenreIds,
       genres,
       genresRef,
-      removeNote,
+      removeNotes,
     ],
   );
 

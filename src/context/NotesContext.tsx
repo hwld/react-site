@@ -6,18 +6,18 @@ export type NotesContextValue = {
   notes: Note[];
 
   addNote: (genreId: string, noteField: NoteField) => void;
-  removeNote: (id: string) => void;
+  removeNotes: (ids: string[]) => void;
   updateNote: (note: NoteField & { id: string }) => void;
-  moveNote: (noteId: string, destGenreId: string) => void;
+  moveNotes: (noteIds: string[], destGenreId: string) => void;
 };
 
 export const notesContextDefaultValue: NotesContextValue = {
   notes: [],
 
   addNote: () => {},
-  removeNote: () => {},
+  removeNotes: () => {},
   updateNote: () => {},
-  moveNote: () => {},
+  moveNotes: () => {},
 };
 
 const NotesContext = React.createContext<NotesContextValue>(

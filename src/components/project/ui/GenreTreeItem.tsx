@@ -7,22 +7,20 @@ import { ItemTypes } from '../../ui/ItemTypes';
 type GenreTreeItemProps = {
   nodeId: string;
   genreName: string;
-  onNoteDrop?: (noteId: string, destGenreId: string) => void;
+  onNotesDrop?: (noteIds: string[], destGenreId: string) => void;
 };
 
 const GenreTreeItem: React.FC<GenreTreeItemProps> = ({
   children,
   nodeId,
   genreName,
-  onNoteDrop = () => {},
+  onNotesDrop = () => {},
 }) => {
   const [{ isDropOver, canDrop }, drop] = useDrop({
     accept: ItemTypes.ListItem,
     drop(item: ListItemDropType, monitor) {
       if (!monitor.didDrop()) {
-        item.ids.forEach(id => {
-          onNoteDrop(id, nodeId);
-        });
+        onNotesDrop(item.ids, nodeId);
       }
     },
     canDrop: (item, monitor) => {

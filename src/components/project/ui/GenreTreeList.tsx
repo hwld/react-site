@@ -21,7 +21,7 @@ type GenreTreeListProps = {
   onGenreSelect?: (selectedId: string[]) => void;
   draggable?: boolean;
   onGenreDrop?: (sourceId: string, targetId: string) => void;
-  onNoteDrop?: (noteId: string, destGenreId: string) => void;
+  onNotesDrop?: (noteIds: string[], destGenreId: string) => void;
 };
 
 const GenreTreeList: React.FC<GenreTreeListProps> = ({
@@ -31,7 +31,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
   onGenreSelect = () => {},
   draggable = false,
   onGenreDrop,
-  onNoteDrop,
+  onNotesDrop,
   className,
 }) => {
   // 同じ親を持つgenreを作成順に並び替える.
@@ -76,7 +76,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
           nodeId={genreTreeNode.id}
           genreName={genreTreeNode.genreName}
           key={genreTreeNode.id}
-          onNoteDrop={onNoteDrop}
+          onNotesDrop={onNotesDrop}
         >
           {genreTreeNode.childrenGenres.length === 0
             ? null
@@ -86,7 +86,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
         </GenreTreeItem>
       );
     },
-    [onNoteDrop],
+    [onNotesDrop],
   );
 
   const genreTreeItems = useMemo(() => {
