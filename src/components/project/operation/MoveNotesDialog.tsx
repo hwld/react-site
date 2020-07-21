@@ -31,10 +31,10 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
   const { genres } = useGenresContext();
   const [destGenreId, setDestGenreId] = useState('');
 
-  const { moveNote } = useNotesContext();
+  const { moveNotes } = useNotesContext();
 
-  const moveNotes = () => {
-    sourceNoteIds.forEach(id => moveNote(id, destGenreId));
+  const move = () => {
+    moveNotes(sourceNoteIds, destGenreId);
   };
 
   const selectGenre = (ids: string[]) => {
@@ -51,7 +51,7 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
       activatorIcon={<MoveNoteIcon fontSize={size} />}
       activatorDisabled={disabled}
       doneText="移動"
-      onDone={moveNotes}
+      onDone={move}
       onOpen={clearDestGenre}
       data-testid="moveNotesDialog"
     >

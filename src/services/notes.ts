@@ -90,9 +90,13 @@ const useNotes = (uid: string) => {
     [notesRef],
   );
 
-  const removeNote = useCallback(
-    (id: string) => {
-      notesRef.doc(id).delete();
+  const removeNotes = useCallback(
+    (ids: string[]) => {
+      const batch = db.batch();
+      ids.forEach(id => {
+        batch.delete(notesRef.doc(id));
+      });
+      batch.commit();
     },
     [notesRef],
   );
@@ -114,17 +118,21 @@ const useNotes = (uid: string) => {
     [notesRef],
   );
 
-  const moveNote = useCallback(
-    (noteId: string, destGenreId: string) => {
-      notesRef.doc(noteId).update({
-        genreId: destGenreId,
-        updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
-      });
+  const moveNotes = useCallback(
+    (noteIds: string[], destGenreId: string) => {
+      const batch = db.batch();
+      noteIds.forEach(id =>
+        batch.update(notesRef.doc(id), {
+          genreId: destGenreId,
+          updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
+        }),
+      );
+      batch.commit();
     },
     [notesRef],
   );
 
-  return { notes, addNote, removeNote, updateNote, moveNote };
+  return { notes, addNote, removeNotes, updateNote, moveNotes };
 };
 
 export { useNotes, createDefaultSearchNotesCriteria, createDefaultNoteField };

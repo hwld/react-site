@@ -28,7 +28,7 @@ describe('<GenreTreeItem> with <List>', () => {
         <GenreTreeItem
           nodeId="treeItem"
           genreName="treeItem"
-          onNoteDrop={onDrop}
+          onNotesDrop={onDrop}
         />
       </NotesContextProvider>
     );
@@ -43,7 +43,7 @@ describe('<GenreTreeItem> with <List>', () => {
     );
 
     expect(onDrop.mock.calls.length).toBe(1);
-    expect(onDrop.mock.calls[0][0]).toBe('listItem');
+    expect(onDrop.mock.calls[0][0]).toEqual(['listItem']);
     expect(onDrop.mock.calls[0][1]).toBe('treeItem');
   });
 });

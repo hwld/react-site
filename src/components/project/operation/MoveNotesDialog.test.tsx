@@ -12,10 +12,7 @@ import {
 
 describe('<MoveNotesDialog>', () => {
   test('メモの移動処理が正しく呼び出される', () => {
-    const moveNote = jest.fn((nodeId: string, destGenreId: string) => ({
-      nodeId,
-      destGenreId,
-    }));
+    const moveNotes = jest.fn();
     const { getByTestId } = render(
       <GenresContextProvider
         value={{
@@ -34,7 +31,7 @@ describe('<MoveNotesDialog>', () => {
         <NotesContextProvider
           value={{
             ...notesContextDefaultValue,
-            moveNote,
+            moveNotes,
           }}
         >
           <MoveNotesDialog sourceNoteIds={['noteId']} />
@@ -51,7 +48,7 @@ describe('<MoveNotesDialog>', () => {
     // 移動させる
     fireEvent.click(getByTestId('doneButton'));
 
-    expect(moveNote.mock.calls[0][0]).toBe('noteId');
-    expect(moveNote.mock.calls[0][1]).toBe('testGenre');
+    expect(moveNotes.mock.calls[0][0]).toEqual(['noteId']);
+    expect(moveNotes.mock.calls[0][1]).toBe('testGenre');
   });
 });

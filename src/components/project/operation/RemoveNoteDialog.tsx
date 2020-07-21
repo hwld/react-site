@@ -15,10 +15,10 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
   targetNoteIds,
   size,
 }) => {
-  const { removeNote } = useNotesContext();
+  const { removeNotes } = useNotesContext();
 
   const remove = () => {
-    targetNoteIds.forEach(id => removeNote(id));
+    removeNotes(targetNoteIds);
   };
 
   return (

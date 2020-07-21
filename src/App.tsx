@@ -13,14 +13,16 @@ const App: React.FC = () => {
   const { genres, addGenre, removeGenre, updateGenre, moveGenre } = useGenres(
     userId,
   );
-  const { notes, addNote, removeNote, updateNote, moveNote } = useNotes(userId);
+  const { notes, addNote, removeNotes, updateNote, moveNotes } = useNotes(
+    userId,
+  );
 
   return (
     <GenresContextProvider
       value={{ genres, addGenre, removeGenre, updateGenre, moveGenre }}
     >
       <NotesContextProvider
-        value={{ notes, addNote, removeNote, updateNote, moveNote }}
+        value={{ notes, addNote, removeNotes, updateNote, moveNotes }}
       >
         <BrowserRouter>
           <AppRouter userId={userId} userLoading={loading} />

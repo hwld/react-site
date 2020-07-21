@@ -10,9 +10,8 @@ import UpdateNoteDialog from './UpdateNoteDialog';
 
 describe('<UpdateNoteDialog>', () => {
   test('ノートの更新処理が適切に呼び出される', () => {
-    const updateNote = jest.fn((id: string, noteField: NoteField) => ({
-      id,
-      noteField,
+    const updateNote = jest.fn((note: NoteField & { id: string }) => ({
+      note,
     }));
     const { getByTestId, getByLabelText } = render(
       <NotesContextProvider
@@ -54,10 +53,10 @@ describe('<UpdateNoteDialog>', () => {
     fireEvent.click(getByTestId('doneButton'));
 
     expect(updateNote.mock.calls.length).toBe(1);
-    expect(updateNote.mock.calls[0][0]).toBe('id');
-    expect(updateNote.mock.calls[0][1].title).toBe('updatedTitle');
-    expect(updateNote.mock.calls[0][1].text).toBe('updatedText');
-    expect(updateNote.mock.calls[0][1].authorName).toBe('updatedAuthorName');
-    expect(updateNote.mock.calls[0][1].bookName).toBe('updatedBookName');
+    expect(updateNote.mock.calls[0][0].id).toBe('id');
+    expect(updateNote.mock.calls[0][0].title).toBe('updatedTitle');
+    expect(updateNote.mock.calls[0][0].text).toBe('updatedText');
+    expect(updateNote.mock.calls[0][0].authorName).toBe('updatedAuthorName');
+    expect(updateNote.mock.calls[0][0].bookName).toBe('updatedBookName');
   });
 });
