@@ -128,28 +128,35 @@ const useGenres = (uid: string) => {
     [genresRef],
   );
 
-  const removeGenre = useCallback(
-    (id: string) => {
-      const childrenIds = fetchAllChildrenGenreIds(id);
-      const deletedGenreIds = [id, ...childrenIds];
+  const removeGenres = useCallback(
+    (ids: string[]) => {
+      const batch = db.batch();
+      const childrenIds = ids.flatMap(id => fetchAllChildrenGenreIds(id));
+      const deletedGenreIds = Array.from(new Set([...ids, ...childrenIds]));
 
-      // 指定されたジャンルの親がrootじゃない場合、childrenからジャンルを削除する
-      const genre = genres.find(g => g.id === id);
-      if (!genre) throw Error('存在しないジャンルの削除');
-      if (genre.parentGenreId !== '') {
-        genresRef.doc(genre.parentGenreId).update({
-          childrenGenreIds: firebase.firestore.FieldValue.arrayRemove(genre.id),
+      // 指定されたジャンルの親がrootじゃない場合,親のchildrenからジャンルを削除する
+      const genreIds = deletedGenreIds.filter(id => !childrenIds.includes(id));
+      genres
+        .filter(genre => genreIds.includes(genre.id))
+        .forEach(genre => {
+          if (genre.parentGenreId !== '') {
+            batch.update(genresRef.doc(genre.parentGenreId), {
+              childrenGenreIds: firebase.firestore.FieldValue.arrayRemove(
+                genre.id,
+              ),
+            });
+          }
         });
-      }
 
       // genreを削除する
-      deletedGenreIds.forEach(genreId => {
-        genresRef.doc(genreId).delete();
+      deletedGenreIds.forEach(id => {
+        batch.delete(genresRef.doc(id));
       });
 
       // noteを削除する
-      const deletedNotes = fetchAllNotesInGenreIds(deletedGenreIds);
-      removeNotes(deletedNotes);
+      removeNotes(fetchAllNotesInGenreIds(deletedGenreIds));
+
+      batch.commit();
     },
     [
       fetchAllChildrenGenreIds,
@@ -204,7 +211,7 @@ const useGenres = (uid: string) => {
     [genres, genresRef],
   );
 
-  return { genres, addGenre, removeGenre, updateGenre, moveGenre };
+  return { genres, addGenre, removeGenres, updateGenre, moveGenre };
 };
 
 export { useGenres, defaultGenreField };

@@ -5,7 +5,7 @@ import { Genre, GenreField } from '../services/genres';
 type GenresContextValue = {
   genres: Genre[];
   addGenre: (parentGenreId: string, genreField: GenreField) => void;
-  removeGenre: (id: string) => void;
+  removeGenres: (id: string[]) => void;
   updateGenre: (genre: GenreField & { id: string }) => void;
   moveGenre: (genreId: string, destGenreId: string) => void;
 };
@@ -14,7 +14,7 @@ export const genresContextDefaultValue: GenresContextValue = {
   genres: [],
 
   addGenre: () => {},
-  removeGenre: () => {},
+  removeGenres: () => {},
   updateGenre: () => {},
   moveGenre: () => {},
 };

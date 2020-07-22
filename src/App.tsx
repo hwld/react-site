@@ -10,7 +10,7 @@ import AppRouter from './AppRouter';
 
 const App: React.FC = () => {
   const { userId, loading } = useCurrentUserId();
-  const { genres, addGenre, removeGenre, updateGenre, moveGenre } = useGenres(
+  const { genres, addGenre, removeGenres, updateGenre, moveGenre } = useGenres(
     userId,
   );
   const { notes, addNote, removeNotes, updateNote, moveNotes } = useNotes(
@@ -19,7 +19,7 @@ const App: React.FC = () => {
 
   return (
     <GenresContextProvider
-      value={{ genres, addGenre, removeGenre, updateGenre, moveGenre }}
+      value={{ genres, addGenre, removeGenres, updateGenre, moveGenre }}
     >
       <NotesContextProvider
         value={{ notes, addNote, removeNotes, updateNote, moveNotes }}
