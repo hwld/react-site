@@ -20,7 +20,7 @@ type GenreTreeListProps = {
   selectedGenreIds?: string[];
   onGenreSelect?: (selectedId: string[]) => void;
   draggable?: boolean;
-  onGenreDrop?: (sourceId: string, targetId: string) => void;
+  onGenreDrop?: (sourceId: string[], targetId: string) => void;
   onNotesDrop?: (noteIds: string[], destGenreId: string) => void;
 };
 

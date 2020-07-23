@@ -132,6 +132,7 @@ const useGenres = (uid: string) => {
     (ids: string[]) => {
       const batch = db.batch();
       const childrenIds = ids.flatMap(id => fetchAllChildrenGenreIds(id));
+      // 親子関係にあるジャンルを削除しようとした場合に重複するので排除する
       const deletedGenreIds = Array.from(new Set([...ids, ...childrenIds]));
 
       // 指定されたジャンルの親がrootじゃない場合,親のchildrenからジャンルを削除する
@@ -179,39 +180,40 @@ const useGenres = (uid: string) => {
     [genresRef],
   );
 
-  const moveGenre = useCallback(
-    (genreId: string, destGenreId: string | '') => {
-      const sourceGenre = genres.find(genre => genre.id === genreId);
-      if (!sourceGenre) {
-        throw Error('ジャンルが存在しません');
-      }
+  const moveGenres = useCallback(
+    (ids: string[], destGenreId: string | '') => {
+      const batch = db.batch();
+      const sourceGenres = genres.filter(genre => ids.includes(genre.id));
 
-      // 移動元ジャンルの親がrootじゃない場合、childrenから移動元ジャンルを削除する
-      if (sourceGenre.parentGenreId !== '') {
-        genresRef.doc(sourceGenre.parentGenreId).update({
-          childrenGenreIds: firebase.firestore.FieldValue.arrayRemove(
-            sourceGenre.id,
-          ),
-        });
-      }
+      sourceGenres.forEach(genre => {
+        // 移動元のジャンルの親がrootじゃない場合、childrenから移動元のジャンルを削除する
+        if (genre.parentGenreId !== '') {
+          batch.update(genresRef.doc(genre.parentGenreId), {
+            childrenGenreIds: firebase.firestore.FieldValue.arrayRemove(
+              genre.id,
+            ),
+          });
+        }
 
-      genresRef.doc(sourceGenre.id).update({
-        parentGenreId: destGenreId,
+        // ジャンルの移動
+        batch.update(genresRef.doc(genre.id), { parentGenreId: destGenreId });
+
+        // 移動先ジャンルがrootでなければchildrenを設定する
+        if (destGenreId !== '') {
+          batch.update(genresRef.doc(destGenreId), {
+            childrenGenreIds: firebase.firestore.FieldValue.arrayUnion(
+              genre.id,
+            ),
+          });
+        }
       });
 
-      // 移動先がルートでなければchildrenも設定する
-      if (destGenreId !== '') {
-        genresRef.doc(destGenreId).update({
-          childrenGenreIds: firebase.firestore.FieldValue.arrayUnion(
-            sourceGenre.id,
-          ),
-        });
-      }
+      batch.commit();
     },
     [genres, genresRef],
   );
 
-  return { genres, addGenre, removeGenres, updateGenre, moveGenre };
+  return { genres, addGenre, removeGenres, updateGenre, moveGenres };
 };
 
 export { useGenres, defaultGenreField };

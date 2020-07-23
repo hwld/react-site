@@ -90,10 +90,10 @@ describe('<TreeView>', () => {
       );
 
       expect(onDrop.mock.calls.length).toBe(2);
-      expect(onDrop.mock.calls[0][0]).toEqual('grandChild');
+      expect(onDrop.mock.calls[0][0]).toEqual(['grandChild']);
       expect(onDrop.mock.calls[0][1]).toEqual('child');
 
-      expect(onDrop.mock.calls[1][0]).toEqual('grandChild');
+      expect(onDrop.mock.calls[1][0]).toEqual(['grandChild']);
       expect(onDrop.mock.calls[1][1]).toEqual('parent');
     });
 
@@ -127,12 +127,9 @@ describe('<TreeView>', () => {
         getByTestId('dropLayer-parent'),
       );
 
-      expect(onDrop.mock.calls.length).toBe(2);
-      expect(onDrop.mock.calls[0][0]).toEqual('child');
+      expect(onDrop.mock.calls.length).toBe(1);
+      expect(onDrop.mock.calls[0][0]).toEqual(['child', 'grandChild']);
       expect(onDrop.mock.calls[0][1]).toBe('parent');
-
-      expect(onDrop.mock.calls[1][0]).toEqual('grandChild');
-      expect(onDrop.mock.calls[1][1]).toBe('parent');
     });
   });
 });

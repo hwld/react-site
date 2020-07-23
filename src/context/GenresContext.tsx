@@ -7,7 +7,7 @@ type GenresContextValue = {
   addGenre: (parentGenreId: string, genreField: GenreField) => void;
   removeGenres: (id: string[]) => void;
   updateGenre: (genre: GenreField & { id: string }) => void;
-  moveGenre: (genreId: string, destGenreId: string) => void;
+  moveGenres: (genreId: string[], destGenreId: string) => void;
 };
 
 export const genresContextDefaultValue: GenresContextValue = {
@@ -16,7 +16,7 @@ export const genresContextDefaultValue: GenresContextValue = {
   addGenre: () => {},
   removeGenres: () => {},
   updateGenre: () => {},
-  moveGenre: () => {},
+  moveGenres: () => {},
 };
 
 const GenresContext = React.createContext<GenresContextValue>(

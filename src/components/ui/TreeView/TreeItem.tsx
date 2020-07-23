@@ -167,7 +167,7 @@ const TreeItem: React.FC<TreeItemProps> = ({
     },
     drop: (item, monitor) => {
       if (!monitor.didDrop()) {
-        selectedIds.forEach(id => onDrop(id, nodeId));
+        onDrop(selectedIds, nodeId);
       }
     },
   });

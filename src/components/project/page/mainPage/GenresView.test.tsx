@@ -9,8 +9,8 @@ import {
 
 describe('<GenresView>', () => {
   const GenreViewTest: React.FC<{
-    moveGenre: (sourceGenreId: string, destGenreId: string) => {};
-  }> = ({ moveGenre }) => {
+    moveGenres: (sourceGenreId: string[], destGenreId: string) => {};
+  }> = ({ moveGenres }) => {
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
     return (
@@ -33,7 +33,7 @@ describe('<GenresView>', () => {
               createdAt: new Date(),
             },
           ],
-          moveGenre,
+          moveGenres,
         }}
       >
         <GenresView
@@ -44,15 +44,17 @@ describe('<GenresView>', () => {
     );
   };
   test('コンテキストに含まれるmoveGenreが正しく呼び出されている', () => {
-    const moveGenre = jest.fn((sourceGenreId: string, destGenreId: string) => ({
-      sourceGenreId,
-      destGenreId,
-    }));
-    const { getByTestId } = render(<GenreViewTest moveGenre={moveGenre} />);
+    const moveGenres = jest.fn(
+      (sourceGenreIds: string[], destGenreId: string) => ({
+        sourceGenreIds,
+        destGenreId,
+      }),
+    );
+    const { getByTestId } = render(<GenreViewTest moveGenres={moveGenres} />);
     dragAndDrop(
       getByTestId('dragLayer-genre2'),
       getByTestId('dropLayer-genre1'),
     );
-    expect(moveGenre.mock.calls.length).toBe(1);
+    expect(moveGenres.mock.calls.length).toBe(1);
   });
 });
