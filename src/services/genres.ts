@@ -23,8 +23,13 @@ export type GenreInfo = {
   childrenGenreIds: string[];
 };
 
+type FirestoreGenreInfo = {
+  id: string;
+  parentGenreId: string;
+};
+
 export type Genre = GenreField & GenreDate & GenreInfo;
-type FirestoreGenre = GenreField & FirestoreGenreDate & GenreInfo;
+type FirestoreGenre = GenreField & FirestoreGenreDate & FirestoreGenreInfo;
 
 const defaultGenreField = () => {
   return { genreName: '' };
@@ -47,47 +52,66 @@ const useGenres = (uid: string) => {
       .doc(`${uid !== '' ? uid : 'tmp'}`)
       .collection('genres');
   }, [uid]);
-
   const [genresCollection] = useCollection(genresRef);
-  const genres = useMemo(() => {
+
+  const getAllGenres = useCallback(() => {
     if (!genresCollection) {
-      return [];
+      return Promise.resolve([]);
     }
 
-    return genresCollection.docs.map(genreDoc => {
-      const data = genreDoc.data();
+    return Promise.all(
+      genresCollection.docs.map(async genreDoc => {
+        const data = genreDoc.data() as FirestoreGenre;
 
-      // Genre型のcreatedAtだけTimestampからDateに変換したい
-      const genreOtherThanDate = data as Genre;
-      const createdAt: Date = data.createdAt.toDate();
+        // 子ジャンルを取得
+        const childrenCollection = await genreDoc.ref
+          .collection('childrenGenres')
+          .get();
+        const childrenGenreIds = childrenCollection.docs.map(doc => doc.id);
 
-      const genre: Genre = { ...genreOtherThanDate, createdAt };
+        // Genre型のcreatedAtだけTimestampからDateに変換したい
+        const createdAt: Date = data.createdAt.toDate();
 
-      return genre;
-    });
+        const genre: Genre = {
+          id: data.id,
+          genreName: data.genreName,
+          parentGenreId: data.parentGenreId,
+          createdAt,
+          childrenGenreIds,
+        };
+
+        return genre;
+      }),
+    );
   }, [genresCollection]);
 
   const { notes, removeNotes } = useNotes(uid);
 
   // 指定されたIdのジャンルの子ノードのidを再帰的に取得する.
   const fetchAllChildrenGenreIds = useCallback(
-    (parentId: string) => {
-      const parentGenre = genres.find(genre => genre.id === parentId);
+    async (parentId: string) => {
+      const parentGenre = (await getAllGenres()).find(
+        genre => genre.id === parentId,
+      );
       if (!parentGenre) return [];
 
       const childrenIds = parentGenre.childrenGenreIds;
 
-      const grandChildrenIds: string[] = childrenIds.flatMap(id => {
-        if (id !== '') {
-          return fetchAllChildrenGenreIds(id);
-        }
+      const grandChildrenIds: string[] = (
+        await Promise.all(
+          childrenIds.map(id => {
+            if (id !== '') {
+              return fetchAllChildrenGenreIds(id);
+            }
 
-        return [];
-      });
+            return Promise.resolve([]);
+          }),
+        )
+      ).flat();
 
       return [...childrenIds, ...grandChildrenIds];
     },
-    [genres],
+    [getAllGenres],
   );
 
   // 指定されたジャンルIdのメモidを配列にして全て返す
@@ -109,17 +133,15 @@ const useGenres = (uid: string) => {
       if (parentGenreId !== '') {
         // 親ジャンルの子ジャンルidのリストを更新する
         const parentGenreRef = genresRef.doc(parentGenreId);
-        parentGenreRef.update({
-          childrenGenreIds: firebase.firestore.FieldValue.arrayUnion(
-            newGenreRef.id,
-          ),
-        });
+        parentGenreRef
+          .collection('childrenGenres')
+          .doc(newGenreRef.id)
+          .set({});
       }
 
       const newGenre: FirestoreGenre = {
         genreName: genreField.genreName,
         parentGenreId,
-        childrenGenreIds: [],
         id: newGenreRef.id,
         createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
       };
@@ -129,30 +151,45 @@ const useGenres = (uid: string) => {
   );
 
   const removeGenres = useCallback(
-    (ids: string[]) => {
+    async (ids: string[]) => {
       const batch = db.batch();
-      const childrenIds = ids.flatMap(id => fetchAllChildrenGenreIds(id));
+      const childrenIds = (
+        await Promise.all(ids.map(id => fetchAllChildrenGenreIds(id)))
+      ).flat();
       // 親子関係にあるジャンルを削除しようとした場合に重複するので排除する
       const deletedGenreIds = Array.from(new Set([...ids, ...childrenIds]));
 
       // 指定されたジャンルの親がrootじゃない場合,親のchildrenからジャンルを削除する
       const genreIds = deletedGenreIds.filter(id => !childrenIds.includes(id));
-      genres
+      (await getAllGenres())
         .filter(genre => genreIds.includes(genre.id))
         .forEach(genre => {
           if (genre.parentGenreId !== '') {
-            batch.update(genresRef.doc(genre.parentGenreId), {
-              childrenGenreIds: firebase.firestore.FieldValue.arrayRemove(
-                genre.id,
-              ),
-            });
+            batch.delete(
+              genresRef
+                .doc(genre.parentGenreId)
+                .collection('childrenGenres')
+                .doc(genre.id),
+            );
           }
         });
 
       // genreを削除する
-      deletedGenreIds.forEach(id => {
-        batch.delete(genresRef.doc(id));
-      });
+      await Promise.all(
+        deletedGenreIds.map(async id => {
+          // genreのchildrenGenresサブコレクションを削除する
+          const childrenGenresRef = await genresRef
+            .doc(id)
+            .collection('childrenGenres')
+            .get();
+
+          childrenGenresRef.docs.forEach(genreDoc => {
+            batch.delete(genreDoc.ref);
+          });
+
+          batch.delete(genresRef.doc(id));
+        }),
+      );
 
       // noteを削除する
       removeNotes(fetchAllNotesInGenreIds(deletedGenreIds));
@@ -162,8 +199,8 @@ const useGenres = (uid: string) => {
     [
       fetchAllChildrenGenreIds,
       fetchAllNotesInGenreIds,
-      genres,
       genresRef,
+      getAllGenres,
       removeNotes,
     ],
   );
@@ -181,18 +218,21 @@ const useGenres = (uid: string) => {
   );
 
   const moveGenres = useCallback(
-    (ids: string[], destGenreId: string | '') => {
+    async (ids: string[], destGenreId: string | '') => {
       const batch = db.batch();
-      const sourceGenres = genres.filter(genre => ids.includes(genre.id));
+      const sourceGenres = (await getAllGenres()).filter(genre =>
+        ids.includes(genre.id),
+      );
 
       sourceGenres.forEach(genre => {
         // 移動元のジャンルの親がrootじゃない場合、childrenから移動元のジャンルを削除する
         if (genre.parentGenreId !== '') {
-          batch.update(genresRef.doc(genre.parentGenreId), {
-            childrenGenreIds: firebase.firestore.FieldValue.arrayRemove(
-              genre.id,
-            ),
-          });
+          batch.delete(
+            genresRef
+              .doc(genre.parentGenreId)
+              .collection('childrenGenres')
+              .doc(genre.id),
+          );
         }
 
         // ジャンルの移動
@@ -200,20 +240,22 @@ const useGenres = (uid: string) => {
 
         // 移動先ジャンルがrootでなければchildrenを設定する
         if (destGenreId !== '') {
-          batch.update(genresRef.doc(destGenreId), {
-            childrenGenreIds: firebase.firestore.FieldValue.arrayUnion(
-              genre.id,
-            ),
-          });
+          batch.set(
+            genresRef
+              .doc(destGenreId)
+              .collection('childrenGenres')
+              .doc(genre.id),
+            {},
+          );
         }
       });
 
       batch.commit();
     },
-    [genres, genresRef],
+    [genresRef, getAllGenres],
   );
 
-  return { genres, addGenre, removeGenres, updateGenre, moveGenres };
+  return { getAllGenres, addGenre, removeGenres, updateGenre, moveGenres };
 };
 
 export { useGenres, defaultGenreField };

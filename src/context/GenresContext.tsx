@@ -5,18 +5,18 @@ import { Genre, GenreField } from '../services/genres';
 type GenresContextValue = {
   genres: Genre[];
   addGenre: (parentGenreId: string, genreField: GenreField) => void;
-  removeGenres: (id: string[]) => void;
+  removeGenres: (id: string[]) => Promise<void>;
   updateGenre: (genre: GenreField & { id: string }) => void;
-  moveGenres: (genreId: string[], destGenreId: string) => void;
+  moveGenres: (genreId: string[], destGenreId: string) => Promise<void>;
 };
 
 export const genresContextDefaultValue: GenresContextValue = {
   genres: [],
 
   addGenre: () => {},
-  removeGenres: () => {},
+  removeGenres: () => Promise.resolve(),
   updateGenre: () => {},
-  moveGenres: () => {},
+  moveGenres: () => Promise.resolve(),
 };
 
 const GenresContext = React.createContext<GenresContextValue>(
