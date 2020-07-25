@@ -1,5 +1,5 @@
 import firebase from 'firebase/app';
-import { useCollection } from 'react-firebase-hooks/firestore';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useCallback, useMemo } from 'react';
 import { db } from './firebaseConfig';
 import { useNotes } from './notes';
@@ -48,22 +48,20 @@ const useGenres = (uid: string) => {
       .collection('genres');
   }, [uid]);
 
-  const [genresCollection] = useCollection(genresRef);
+  const [genresCollection] = useCollectionData<FirestoreGenre>(genresRef);
   const genres = useMemo(() => {
     if (!genresCollection) {
       return [];
     }
 
-    return genresCollection.docs.map(genreDoc => {
-      const data = genreDoc.data();
-
-      // Genre型のcreatedAtだけTimestampからDateに変換したい
-      const genreOtherThanDate = data as Genre;
-      const createdAt: Date = data.createdAt.toDate();
-
-      const genre: Genre = { ...genreOtherThanDate, createdAt };
-
-      return genre;
+    return genresCollection.map<Genre>(genre => {
+      return {
+        id: genre.id,
+        genreName: genre.genreName,
+        parentGenreId: genre.parentGenreId,
+        childrenGenreIds: genre.childrenGenreIds,
+        createdAt: genre.createdAt.toDate(),
+      };
     });
   }, [genresCollection]);
 

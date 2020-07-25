@@ -1,5 +1,8 @@
 import { useMemo, useCallback } from 'react';
-import { useCollection } from 'react-firebase-hooks/firestore';
+import {
+  useCollection,
+  useCollectionData,
+} from 'react-firebase-hooks/firestore';
 import { db, firebase } from './firebaseConfig';
 
 export interface NoteField {
@@ -51,23 +54,23 @@ const useNotes = (uid: string) => {
       .collection('notes');
   }, [uid]);
 
-  const [notesCollection] = useCollection(notesRef);
+  const [notesCollection] = useCollectionData<FirestoreNote>(notesRef);
   const notes = useMemo(() => {
     if (!notesCollection) {
       return [];
     }
 
-    return notesCollection.docs.map(noteDoc => {
-      const data = noteDoc.data();
-
-      // Note型のDate関連だけTimestampからDateに変換したい.
-      const noteOtherThanDate = data as NoteField & NoteInfo;
-      const createdAt: Date = data.createdAt.toDate();
-      const updatedAt: Date = data.updatedAt.toDate();
-
-      const note: Note = { ...noteOtherThanDate, createdAt, updatedAt };
-
-      return note;
+    return notesCollection.map<Note>(note => {
+      return {
+        id: note.id,
+        genreId: note.genreId,
+        title: note.title,
+        text: note.text,
+        authorName: note.authorName,
+        bookName: note.bookName,
+        createdAt: note.createdAt.toDate(),
+        updatedAt: note.updatedAt.toDate(),
+      };
     });
   }, [notesCollection]);
 
