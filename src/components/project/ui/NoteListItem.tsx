@@ -15,6 +15,7 @@ const GridContainer = styled.div`
 
 const NoteTextContainer = styled.div`
   padding-left: 20px;
+  word-break: break-all;
 `;
 
 const TitleText = styled(Typography)`

@@ -8,6 +8,14 @@ const StyledTextField = styled(TextField)`
   .MuiFormLabel-root {
     color: ${props => props.theme.palette.secondary.main};
   }
+
+  & .MuiFormHelperText-root {
+    font-size: large;
+  }
+
+  & .MuiFilledInput-input:-webkit-autofill {
+    box-shadow: 0 0 0 100px ${props => props.theme.palette.primary.main}e5 inset;
+  }
 `;
 
 type EditGenreFieldProps = {
@@ -24,6 +32,8 @@ const EditGenreField: React.FC<EditGenreFieldProps> = ({ genre, onChange }) => {
 
   return (
     <StyledTextField
+      inputProps={{ maxLength: 100 }}
+      placeholder="(100文字以内で入力してください)"
       id="EditGenreFieldsGenreName"
       label="ジャンル名"
       error={genreName.length === 0}

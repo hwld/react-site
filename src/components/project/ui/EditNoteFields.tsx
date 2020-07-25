@@ -14,6 +14,14 @@ const FormTextField = styled(TextField)`
   .MuiFormLabel-root {
     color: ${props => props.theme.palette.secondary.main};
   }
+
+  & .MuiFormHelperText-root {
+    font-size: large;
+  }
+
+  & .MuiFilledInput-input:-webkit-autofill {
+    box-shadow: 0 0 0 100px ${props => props.theme.palette.primary.main}e5 inset;
+  }
 `;
 
 type EditNoteFieldProps = {
@@ -68,6 +76,8 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
     <>
       <FormField>
         <FormTextField
+          inputProps={{ maxLength: 100 }}
+          placeholder="(100文字以内で入力してください)"
           id="editNoteFieldsTitle"
           label="タイトル"
           value={title}
@@ -79,8 +89,10 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
       </FormField>
       <FormField>
         <FormTextField
+          inputProps={{ maxLength: 10 }}
           id="editNoteFieldsNote"
           label="メモ"
+          placeholder="(5000文字以内で入力してください)"
           error={text.length === 0}
           helperText="※メモは必須項目です."
           value={text}
@@ -103,6 +115,8 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
           renderInput={params => (
             <FormTextField
               {...params}
+              inputProps={{ maxLength: 100 }}
+              placeholder="(100文字以内で入力してください)"
               label="著者名"
               value={authorName}
               onChange={changeAuthorName}
@@ -123,6 +137,8 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
           renderInput={params => (
             <FormTextField
               {...params}
+              inputProps={{ maxLength: 100 }}
+              placeholder="(100文字以内で入力してください)"
               label="書籍名"
               value={bookName}
               onChange={changeBookName}
