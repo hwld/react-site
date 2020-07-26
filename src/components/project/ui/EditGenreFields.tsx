@@ -32,7 +32,7 @@ const EditGenreField: React.FC<EditGenreFieldProps> = ({ genre, onChange }) => {
 
   return (
     <StyledTextField
-      inputProps={{ maxLength: 100, autocomplete: 'off' }}
+      inputProps={{ maxLength: 100, autoComplete: 'off' }}
       placeholder="(100文字以内で入力してください)"
       id="EditGenreFieldsGenreName"
       label="ジャンル名"
