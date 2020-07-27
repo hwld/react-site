@@ -17,6 +17,7 @@ const TopLayerHeader = styled(MuiAppBar)`
 `;
 
 const AppTitle = styled(Typography)`
+  font-weight: bold;
   color: ${props => props.theme.palette.text.secondary};
   flex-grow: 1;
 `;

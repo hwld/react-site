@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face{
+  font-family: 'Noto Sans JP';
+  src: local('Noto Sans JP'), url(./fonts/NotoSansJP-Regular.otf) format('opentype');
+  font-weight: normal;
+}
+
+@font-face{
+  font-family: 'Noto Sans JP';
+  src: local('Noto Sans JP'), url(./fonts/NotoSansJP-Bold.otf) format('opentype');
+  font-weight: 700;
+}

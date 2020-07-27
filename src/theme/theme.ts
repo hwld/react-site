@@ -38,6 +38,9 @@ const theme = createMuiTheme({
       color: 'primary',
     },
   },
+  typography: {
+    fontFamily: ['Noto Sans JP', 'sans-serif'].join(','),
+  },
 });
 
 export default theme;

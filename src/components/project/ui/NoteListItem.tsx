@@ -20,6 +20,7 @@ const NoteTextContainer = styled.div`
 
 const TitleText = styled(Typography)`
   font-size: 2em;
+  font-weight: bold;
 `;
 
 const NoteText = styled(Typography)`

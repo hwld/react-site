@@ -122,7 +122,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
             color="secondary"
             data-testid="doneButton"
           >
-            {doneText || '完了'}
+            <Typography color="textSecondary">{doneText || '完了'}</Typography>
           </Button>
           <Button
             onClick={handleCancel}
@@ -130,7 +130,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
             color="secondary"
             data-testid="cancelButton"
           >
-            中止
+            <Typography color="textSecondary">中止</Typography>
           </Button>
         </DialogActions>
       </StyledDialog>
