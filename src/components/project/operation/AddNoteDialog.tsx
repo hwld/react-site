@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AddNoteIcon from '@material-ui/icons/NoteAdd';
 import { DialogContent, DialogTitle, SvgIconProps } from '@material-ui/core';
 import { useNotesContext } from '../../../context/NotesContext';
-import { NoteField, createDefaultNoteField } from '../../../services/notes';
+import { NoteField, createDefaultNoteField } from '../../../repositories/notes';
 import OperationDialog from './OperationDialog';
 import EditNoteField from '../ui/EditNoteFields';
 

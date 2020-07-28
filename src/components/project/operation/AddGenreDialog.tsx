@@ -4,7 +4,7 @@ import AddGenreIcon from '@material-ui/icons/CreateNewFolder';
 import OperationDialog from './OperationDialog';
 import EditGenreField from '../ui/EditGenreFields';
 import { useGenresContext } from '../../../context/GenresContext';
-import { GenreField, defaultGenreField } from '../../../services/genres';
+import { GenreField, defaultGenreField } from '../../../repositories/genres';
 
 type AddGenreDialogProps = {
   disabled?: boolean;

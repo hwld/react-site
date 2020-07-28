@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { Genre, GenreField } from '../services/genres';
+import { Genre, GenreField } from '../repositories/genres';
 
 type GenresContextValue = {
   genres: Genre[];

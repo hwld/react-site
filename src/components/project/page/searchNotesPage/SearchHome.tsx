@@ -7,10 +7,10 @@ import ResultNotesColumn from './ResultNotesColumn';
 import {
   SearchNotesCriteria,
   createDefaultSearchNotesCriteria,
-} from '../../../../services/notes';
+} from '../../../../repositories/notes';
 import Drawer from '../../../ui/Drawer/Drawer';
 import { MobileContextProvider } from '../../../../context/MobileContext';
-import { logout } from '../../../../services/auth';
+import { logout } from '../../../../repositories/auth';
 
 const Background = styled.div`
   display: flex;

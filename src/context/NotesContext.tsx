@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { Note, NoteField } from '../services/notes';
+import { Note, NoteField } from '../repositories/notes';
 
 export type NotesContextValue = {
   notes: Note[];

@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { render } from '../../../test-util';
-import { NoteField } from '../../../services/notes';
+import { NoteField } from '../../../repositories/notes';
 import {
   notesContextDefaultValue,
   NotesContextProvider,

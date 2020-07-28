@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
 import Login from './Login';
-import { login } from '../../../../services/auth';
+import { login } from '../../../../repositories/auth';
 
-jest.mock('../../../../services/auth', () => {
+jest.mock('../../../../repositories/auth', () => {
   return {
     __esModule: true,
     login: jest.fn(() => new Promise(resolve => resolve())),

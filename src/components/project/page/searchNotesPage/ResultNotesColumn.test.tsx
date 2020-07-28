@@ -6,7 +6,7 @@ import {
 } from '../../../../context/NotesContext';
 import { render } from '../../../../test-util';
 import ResultNotesList from './ResultNotesColumn';
-import { SearchNotesCriteria } from '../../../../services/notes';
+import { SearchNotesCriteria } from '../../../../repositories/notes';
 
 describe('<ResultNotesColumn>', () => {
   const notesContextValue: NotesContextValue = {

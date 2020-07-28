@@ -7,7 +7,7 @@ import MainHeader from './MainHeader';
 import Drawer from '../../../ui/Drawer/Drawer';
 import GenresView from './GenresView';
 import { MobileContextProvider } from '../../../../context/MobileContext';
-import { logout } from '../../../../services/auth';
+import { logout } from '../../../../repositories/auth';
 
 const Background = styled.div`
   display: flex;

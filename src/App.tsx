@@ -3,9 +3,9 @@ import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import { NotesContextProvider } from './context/NotesContext';
 import { GenresContextProvider } from './context/GenresContext';
-import { useNotes } from './services/notes';
-import { useGenres } from './services/genres';
-import { useCurrentUserId } from './services/auth';
+import { useNotes } from './repositories/notes';
+import { useGenres } from './repositories/genres';
+import { useCurrentUserId } from './repositories/auth';
 import AppRouter from './AppRouter';
 
 const App: React.FC = () => {

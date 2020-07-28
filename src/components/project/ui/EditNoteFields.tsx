@@ -2,7 +2,7 @@ import React from 'react';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import AutoComplete from '@material-ui/lab/Autocomplete';
-import { NoteField } from '../../../services/notes';
+import { NoteField } from '../../../repositories/notes';
 import { useNotesContext } from '../../../context/NotesContext';
 
 const FormField = styled.div`

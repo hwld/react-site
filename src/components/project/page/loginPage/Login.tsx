@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import LockIcon from '@material-ui/icons/Lock';
 import styled from 'styled-components';
-import { login } from '../../../../services/auth';
+import { login } from '../../../../repositories/auth';
 
 const Background = styled.div`
   display: flex;
