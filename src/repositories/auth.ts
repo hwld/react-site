@@ -9,19 +9,24 @@ const useCurrentUserId = () => {
   return { userId, loading, error };
 };
 
-const login = async () => {
-  const result = await auth.signInWithPopup(
-    new firebase.auth.GoogleAuthProvider(),
-  );
-  if (result.user) {
-    return result.user.uid;
+const googleLogin = async () => {
+  try {
+    await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  } catch (error) {
+    window.console.log(error);
   }
+};
 
-  return null;
+const anonymousLogin = async () => {
+  try {
+    await auth.signInAnonymously();
+  } catch (error) {
+    window.console.log(error);
+  }
 };
 
 const logout = () => {
   return auth.signOut();
 };
 
-export { useCurrentUserId, login, logout };
+export { useCurrentUserId, googleLogin, anonymousLogin, logout };
