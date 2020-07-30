@@ -6,7 +6,7 @@ import { GenresContextProvider } from './context/GenresContext';
 import { useNotes } from './repositories/notes';
 import { useGenres } from './repositories/genres';
 import { useCurrentUserId } from './repositories/auth';
-import AppRouter from './AppRouter';
+import { AppRouter } from './AppRouter';
 
 const App: React.FC = () => {
   const { userId, loading } = useCurrentUserId();
@@ -32,4 +32,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export { App };

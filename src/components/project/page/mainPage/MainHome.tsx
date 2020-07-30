@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTheme, useMediaQuery } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import NotesView from './NotesView';
-import MainHeader from './MainHeader';
-import Drawer from '../../../ui/Drawer/Drawer';
-import GenresView from './GenresView';
+import { NotesView } from './NotesView';
+import { MainHeader } from './MainHeader';
+import { Drawer } from '../../../ui/Drawer/Drawer';
+import { GenresView } from './GenresView';
 import { MobileContextProvider } from '../../../../context/MobileContext';
 import { logout } from '../../../../repositories/auth';
 
@@ -64,4 +64,4 @@ const MainHome: React.FC = () => {
   );
 };
 
-export default MainHome;
+export { MainHome };

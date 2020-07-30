@@ -1,7 +1,7 @@
 import React from 'react';
-import GenreTreeList from '../../ui/GenreTreeList';
-import ContentColumn from '../../ui/ContentColumn';
-import GenreViewMenu from './GenresViewMenu';
+import { GenreTreeList } from '../../ui/GenreTreeList';
+import { ContentColumn } from '../../ui/ContentColumn';
+import { GenresViewMenu } from './GenresViewMenu';
 import { useGenresContext } from '../../../../context/GenresContext';
 import { useNotesContext } from '../../../../context/NotesContext';
 
@@ -22,7 +22,7 @@ const GenresView: React.FC<GenresViewProps> = ({
   return (
     <ContentColumn
       className={className}
-      footerMenu={<GenreViewMenu selectedGenreIds={selectedGenreIds} />}
+      footerMenu={<GenresViewMenu selectedGenreIds={selectedGenreIds} />}
     >
       <GenreTreeList
         draggable
@@ -37,4 +37,4 @@ const GenresView: React.FC<GenresViewProps> = ({
   );
 };
 
-export default GenresView;
+export { GenresView };

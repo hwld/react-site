@@ -142,4 +142,4 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
   );
 };
 
-export default NotesSortConditionField;
+export { NotesSortConditionField };

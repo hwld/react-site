@@ -1,7 +1,7 @@
 import React from 'react';
-import AddGenreDialog from '../../operation/AddGenreDialog';
-import RemoveGenreDialog from '../../operation/RemoveGenreDIalog';
-import UpdateGenreDialog from '../../operation/UpdateGenreDialog';
+import { AddGenreDialog } from '../../operation/AddGenreDialog';
+import { RemoveGenreDialog } from '../../operation/RemoveGenreDIalog';
+import { UpdateGenreDialog } from '../../operation/UpdateGenreDialog';
 
 interface GenresViewMenuProps {
   selectedGenreIds: string[];
@@ -28,4 +28,4 @@ const GenresViewMenu: React.FC<GenresViewMenuProps> = ({
   );
 };
 
-export default GenresViewMenu;
+export { GenresViewMenu };

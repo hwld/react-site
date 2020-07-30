@@ -31,4 +31,4 @@ const SearchHeader: React.FC<HeaderProps> = ({ onMenuClick, onLogout }) => {
   );
 };
 
-export default SearchHeader;
+export { SearchHeader };

@@ -8,14 +8,14 @@ import {
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import theme from './theme/theme';
+import { appTheme } from './theme/appTheme';
 import * as serviceWorker from './serviceWorker';
-import App from './App';
+import { App } from './App';
 
 ReactDOM.render(
   <StylesProvider injectFirst>
-    <MaterialThemeProvider theme={theme}>
-      <StyledThemeProvider theme={theme}>
+    <MaterialThemeProvider theme={appTheme}>
+      <StyledThemeProvider theme={appTheme}>
         <DndProvider backend={HTML5Backend}>
           <App />
         </DndProvider>

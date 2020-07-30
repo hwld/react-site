@@ -7,19 +7,19 @@ import {
   DialogActions,
 } from '@material-ui/core';
 import styled from 'styled-components';
-import GenreTreeList from '../../ui/GenreTreeList';
+import { GenreTreeList } from '../../ui/GenreTreeList';
 import { useGenresContext } from '../../../../context/GenresContext';
 
 const StyledGenreTreeList = styled(GenreTreeList)`
   height: 50vh;
 `;
 
-type SelectGenreButtonprops = {
+type SelectGenreDialogProps = {
   selectGenreId: (id: string) => void;
   defaultSelectedGenreId: string;
 };
 
-const SelectGenreButton: React.FC<SelectGenreButtonprops> = ({
+const SelectGenreDialog: React.FC<SelectGenreDialogProps> = ({
   selectGenreId,
   defaultSelectedGenreId,
 }) => {
@@ -83,4 +83,4 @@ const SelectGenreButton: React.FC<SelectGenreButtonprops> = ({
   );
 };
 
-export default SelectGenreButton;
+export { SelectGenreDialog };

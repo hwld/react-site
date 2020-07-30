@@ -161,4 +161,4 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
   );
 };
 
-export default EditNoteField;
+export { EditNoteField };

@@ -62,4 +62,4 @@ const GoogleLoginButton: React.FC<GoogleLoginButton> = ({ onLogin }) => {
   );
 };
 
-export default GoogleLoginButton;
+export { GoogleLoginButton };

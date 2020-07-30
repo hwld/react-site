@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Alert from '@material-ui/lab/Alert';
-import NoteList from '../../ui/NoteList';
+import { NoteList } from '../../ui/NoteList';
 import { NotesSortOrder } from '../../ui/NotesSortConditionFields';
-import ContentColumn from '../../ui/ContentColumn';
-import NotesViewMenu from './NotesViewMenu';
+import { ContentColumn } from '../../ui/ContentColumn';
+import { NotesViewMenu } from './NotesViewMenu';
 import { useMobileContext } from '../../../../context/MobileContext';
 import { useNotesContext } from '../../../../context/NotesContext';
 
@@ -64,4 +64,4 @@ const NotesView: React.FC<NotesViewProps> = ({
   );
 };
 
-export default NotesView;
+export { NotesView };

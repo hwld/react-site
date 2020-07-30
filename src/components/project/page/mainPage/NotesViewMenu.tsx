@@ -1,9 +1,9 @@
 import React from 'react';
 import { NotesSortOrder } from '../../ui/NotesSortConditionFields';
-import AddNoteDialog from '../../operation/AddNoteDialog';
-import RemoveNoteDialog from '../../operation/RemoveNoteDialog';
-import MoveNotesDialog from '../../operation/MoveNotesDialog';
-import SortNotesDialog from '../../operation/SortNotesDialog';
+import { AddNoteDialog } from '../../operation/AddNoteDialog';
+import { RemoveNoteDialog } from '../../operation/RemoveNoteDialog';
+import { MoveNotesDialog } from '../../operation/MoveNotesDialog';
+import { SortNotesDialog } from '../../operation/SortNotesDialog';
 
 interface NotesViewMenuProps {
   sortNotes: (order: NotesSortOrder) => void;
@@ -41,4 +41,4 @@ const NotesViewMenu: React.FC<NotesViewMenuProps> = ({
   );
 };
 
-export default NotesViewMenu;
+export { NotesViewMenu };

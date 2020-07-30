@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
 import SortNoteIcon from '@material-ui/icons/Sort';
-import NotesSortConditionField, {
+import {
+  NotesSortConditionField,
   NotesSortOrder,
 } from '../ui/NotesSortConditionFields';
-import OperationDialog from './OperationDialog';
+import { OperationDialog } from './OperationDialog';
 
 type SortNotesDialogProps = {
   sort: (order: NotesSortOrder) => void;
@@ -61,4 +62,4 @@ const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
   );
 };
 
-export default SortNotesDialog;
+export { SortNotesDialog };

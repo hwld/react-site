@@ -29,4 +29,4 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   );
 };
 
-export default MainHeader;
+export { MainHeader };

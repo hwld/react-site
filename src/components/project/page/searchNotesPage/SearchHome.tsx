@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTheme, useMediaQuery } from '@material-ui/core';
-import SearchHeader from './SearchHeader';
-import SearchColumn from './SearchColumn';
-import ResultNotesColumn from './ResultNotesColumn';
+import { SearchHeader } from './SearchHeader';
+import { SearchColumn } from './SearchColumn';
+import { ResultNotesColumn } from './ResultNotesColumn';
 import {
   SearchNotesCriteria,
   createDefaultSearchNotesCriteria,
 } from '../../../../repositories/notes';
-import Drawer from '../../../ui/Drawer/Drawer';
+import { Drawer } from '../../../ui/Drawer/Drawer';
 import { MobileContextProvider } from '../../../../context/MobileContext';
 import { logout } from '../../../../repositories/auth';
 
@@ -63,4 +63,4 @@ const SearchHome: React.FC<{}> = () => {
   );
 };
 
-export default SearchHome;
+export { SearchHome };

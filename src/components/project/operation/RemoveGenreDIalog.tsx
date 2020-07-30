@@ -2,7 +2,7 @@ import React from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import DeleteGenreIcon from '@material-ui/icons/Delete';
 import { useGenresContext } from '../../../context/GenresContext';
-import OperationDialog from './OperationDialog';
+import { OperationDialog } from './OperationDialog';
 
 type RemoveGenreDialogProps = {
   disabled?: boolean;
@@ -36,4 +36,4 @@ const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
   );
 };
 
-export default RemoveGenreDialog;
+export { RemoveGenreDialog };

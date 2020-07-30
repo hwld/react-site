@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '../../../test-util';
-import ContentColumn from './ContentColumn';
+import { ContentColumn } from './ContentColumn';
 
 describe('<ContentColumn>', () => {
   test('Content,Footerが表示される', () => {

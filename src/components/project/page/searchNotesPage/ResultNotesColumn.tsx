@@ -1,16 +1,16 @@
 import React, { useMemo, useCallback } from 'react';
-import ContentColumn from '../../ui/ContentColumn';
+import { ContentColumn } from '../../ui/ContentColumn';
 import { SearchNotesCriteria } from '../../../../repositories/notes';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { useMobileContext } from '../../../../context/MobileContext';
-import NoteList from '../../ui/NoteList';
+import { NoteList } from '../../ui/NoteList';
 
-type SearchNotesListProps = {
+type SearchNotesColumnProps = {
   searchCriteria: SearchNotesCriteria;
   className?: string;
 };
 
-const ResultNotesList: React.FC<SearchNotesListProps> = ({
+const ResultNotesColumn: React.FC<SearchNotesColumnProps> = ({
   searchCriteria,
   className,
 }) => {
@@ -78,4 +78,4 @@ const ResultNotesList: React.FC<SearchNotesListProps> = ({
     </ContentColumn>
   );
 };
-export default ResultNotesList;
+export { ResultNotesColumn };

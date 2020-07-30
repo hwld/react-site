@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import AddGenreIcon from '@material-ui/icons/CreateNewFolder';
-import OperationDialog from './OperationDialog';
-import EditGenreField from '../ui/EditGenreFields';
+import { OperationDialog } from './OperationDialog';
+import { EditGenreField } from '../ui/EditGenreFields';
 import { useGenresContext } from '../../../context/GenresContext';
 import { GenreField, defaultGenreField } from '../../../repositories/genres';
 
@@ -51,4 +51,4 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
   );
 };
 
-export default AddGenreDialog;
+export { AddGenreDialog };

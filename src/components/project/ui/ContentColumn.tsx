@@ -55,4 +55,4 @@ const ContentColumn: React.FC<ContentColumnProps> = ({
   );
 };
 
-export default ContentColumn;
+export { ContentColumn };

@@ -25,4 +25,4 @@ if (process.env.NODE_ENV !== 'production') {
   ListContext.displayName = 'TreeViewContext';
 }
 
-export default ListContext;
+export { ListContext };

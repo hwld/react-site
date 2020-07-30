@@ -47,4 +47,4 @@ const EditGenreField: React.FC<EditGenreFieldProps> = ({ genre, onChange }) => {
   );
 };
 
-export default EditGenreField;
+export { EditGenreField };

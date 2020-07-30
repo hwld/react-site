@@ -1,5 +1,5 @@
 import React from 'react';
-import OperationDialog from './OperationDialog';
+import { OperationDialog } from './OperationDialog';
 import {
   render,
   fireEvent,

@@ -52,4 +52,4 @@ if (process.env.NODE_ENV !== 'production') {
   TreeViewContext.displayName = 'TreeViewContext';
 }
 
-export default TreeViewContext;
+export { TreeViewContext };

@@ -3,8 +3,8 @@ import LockIcon from '@material-ui/icons/Lock';
 import styled from 'styled-components';
 import { CircularProgress } from '@material-ui/core';
 import { googleLogin, anonymousLogin } from '../../../../repositories/auth';
-import GoogleLoginButton from './GoogleLoginButton';
-import GuestLoginButton from './GuestLoginButton';
+import { GoogleLoginButton } from './GoogleLoginButton';
+import { GuestLoginButton } from './GuestLoginButton';
 
 const Background = styled.div`
   display: flex;
@@ -92,4 +92,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export { Login };

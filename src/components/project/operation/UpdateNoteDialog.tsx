@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { Note, NoteField } from '../../../repositories/notes';
-import OperationDialog from './OperationDialog';
-import EditNoteField from '../ui/EditNoteFields';
+import { OperationDialog } from './OperationDialog';
+import { EditNoteField } from '../ui/EditNoteFields';
 import { useNotesContext } from '../../../context/NotesContext';
 
 type UpdateNoteDialogProps = {
@@ -48,4 +48,4 @@ const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
   );
 };
 
-export default UpdateNoteDialog;
+export { UpdateNoteDialog };

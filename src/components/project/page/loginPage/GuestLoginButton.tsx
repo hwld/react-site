@@ -57,4 +57,4 @@ const GuestLoginButton: React.FC<GuestLoginButtonProps> = ({ onLogin }) => {
   );
 };
 
-export default GuestLoginButton;
+export { GuestLoginButton };

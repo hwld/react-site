@@ -1,10 +1,10 @@
 import React, { useMemo, useCallback } from 'react';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import ListItem from '../../ui/List/ListItem';
+import { ListItem } from '../../ui/List/ListItem';
 import { Note, SearchNotesCriteria } from '../../../repositories/notes';
-import RemoveNoteDialog from '../operation/RemoveNoteDialog';
-import UpdateNoteDialog from '../operation/UpdateNoteDialog';
+import { RemoveNoteDialog } from '../operation/RemoveNoteDialog';
+import { UpdateNoteDialog } from '../operation/UpdateNoteDialog';
 
 const GridContainer = styled.div`
   width: 100%;
@@ -126,4 +126,4 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
   );
 };
 
-export default NoteListItem;
+export { NoteListItem };

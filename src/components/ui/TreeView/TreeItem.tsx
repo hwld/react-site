@@ -10,7 +10,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { SvgIcon, Typography } from '@material-ui/core';
 import { useDrag, useDrop, DragPreviewImage } from 'react-dnd';
-import TreeViewContext from './TreeViewContext';
+import { TreeViewContext } from './TreeViewContext';
 import { ItemTypes } from '../ItemTypes';
 
 const TreeItemRoot = styled.ul`
@@ -297,4 +297,4 @@ const TreeItem: React.FC<TreeItemProps> = ({
   );
 };
 
-export default TreeItem;
+export { TreeItem };

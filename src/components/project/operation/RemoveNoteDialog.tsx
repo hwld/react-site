@@ -2,7 +2,7 @@ import React from 'react';
 import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
 import DeleteNoteIcon from '@material-ui/icons/Delete';
 import { useNotesContext } from '../../../context/NotesContext';
-import OperationDialog from './OperationDialog';
+import { OperationDialog } from './OperationDialog';
 
 type RemoveNoteDialogProps = {
   disabled?: boolean;
@@ -36,4 +36,4 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
   );
 };
 
-export default RemoveNoteDialog;
+export { RemoveNoteDialog };

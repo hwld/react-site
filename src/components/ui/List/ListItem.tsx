@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { ListItem as MuiListItem, Divider } from '@material-ui/core';
 import { useDrag, DragPreviewImage } from 'react-dnd';
-import ListContext from './ListContext';
+import { ListContext } from './ListContext';
 import { ItemTypes } from '../ItemTypes';
 
 export type ListItemDropType = {
@@ -69,4 +69,4 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
   );
 };
 
-export default ListItem;
+export { ListItem };

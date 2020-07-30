@@ -12,13 +12,13 @@ import {
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import theme from './theme/theme';
+import { appTheme } from './theme/appTheme';
 
 const AllProviders: React.FC = ({ children }) => {
   return (
     <StylesProvider injectFirst>
-      <MaterialThemeProvider theme={theme}>
-        <StyledThemeProvider theme={theme}>
+      <MaterialThemeProvider theme={appTheme}>
+        <StyledThemeProvider theme={appTheme}>
           <DndProvider backend={HTML5Backend}>{children}</DndProvider>
         </StyledThemeProvider>
       </MaterialThemeProvider>

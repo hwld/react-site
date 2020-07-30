@@ -138,4 +138,4 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
   );
 };
 
-export default OperationDialog;
+export { OperationDialog };

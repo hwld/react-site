@@ -3,8 +3,8 @@ import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { Genre, createDefaultGenre } from '../../../repositories/genres';
-import OperationDialog from './OperationDialog';
-import EditGenreField from '../ui/EditGenreFields';
+import { OperationDialog } from './OperationDialog';
+import { EditGenreField } from '../ui/EditGenreFields';
 import { useGenresContext } from '../../../context/GenresContext';
 
 type UpdateGenreDialogProps = {
@@ -56,4 +56,4 @@ const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
   );
 };
 
-export default UpdateGenreDialog;
+export { UpdateGenreDialog };

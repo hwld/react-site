@@ -7,9 +7,9 @@ import {
 } from '@material-ui/core';
 import MoveNoteIcon from '@material-ui/icons/Forward';
 import styled from 'styled-components';
-import OperationDialog from './OperationDialog';
+import { OperationDialog } from './OperationDialog';
 import { useGenresContext } from '../../../context/GenresContext';
-import GenreTreeList from '../ui/GenreTreeList';
+import { GenreTreeList } from '../ui/GenreTreeList';
 import { useNotesContext } from '../../../context/NotesContext';
 
 const StyledGenreTreeList = styled(GenreTreeList)`
@@ -70,4 +70,4 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
   );
 };
 
-export default MoveNotesDialog;
+export { MoveNotesDialog };

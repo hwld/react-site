@@ -47,4 +47,4 @@ const Drawer: React.FC<SwipeableDrawerProps & {
   );
 };
 
-export default Drawer;
+export { Drawer };

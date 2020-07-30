@@ -13,7 +13,7 @@ import { UseAutocompleteProps } from '@material-ui/lab/useAutocomplete';
 import { SearchNotesCriteria } from '../../../../repositories/notes';
 import { useGenresContext } from '../../../../context/GenresContext';
 
-import SelectGenreDialog from './SelectGenreDialog';
+import { SelectGenreDialog } from './SelectGenreDialog';
 import { useNotesContext } from '../../../../context/NotesContext';
 
 const Root = styled.div`
@@ -262,4 +262,4 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
   );
 };
 
-export default SearchForm;
+export { SearchForm };
