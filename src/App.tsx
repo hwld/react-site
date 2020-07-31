@@ -5,34 +5,35 @@ import { NotesContextProvider } from './context/NotesContext';
 import { GenresContextProvider } from './context/GenresContext';
 import { useNotes } from './repositories/notes';
 import { useGenres } from './repositories/genres';
-import { useCurrentUserId } from './repositories/auth';
+import { useAuth } from './repositories/auth';
 import { AppRouter } from './AppRouter';
+import { AuthContextProvider } from './context/AuthContext';
 
 const App: React.FC = () => {
-  const { userId, isAnonymous, loading } = useCurrentUserId();
+  const { user, authState, googleLogin, anonymousLogin, logout } = useAuth();
   const { genres, addGenre, removeGenres, updateGenre, moveGenres } = useGenres(
-    userId,
+    user.userId,
   );
   const { notes, addNote, removeNotes, updateNote, moveNotes } = useNotes(
-    userId,
+    user.userId,
   );
 
   return (
-    <GenresContextProvider
-      value={{ genres, addGenre, removeGenres, updateGenre, moveGenres }}
+    <AuthContextProvider
+      value={{ user, authState, googleLogin, anonymousLogin, logout }}
     >
-      <NotesContextProvider
-        value={{ notes, addNote, removeNotes, updateNote, moveNotes }}
+      <GenresContextProvider
+        value={{ genres, addGenre, removeGenres, updateGenre, moveGenres }}
       >
-        <BrowserRouter>
-          <AppRouter
-            userId={userId}
-            isAnonymous={isAnonymous}
-            userLoading={loading}
-          />
-        </BrowserRouter>
-      </NotesContextProvider>
-    </GenresContextProvider>
+        <NotesContextProvider
+          value={{ notes, addNote, removeNotes, updateNote, moveNotes }}
+        >
+          <BrowserRouter>
+            <AppRouter />
+          </BrowserRouter>
+        </NotesContextProvider>
+      </GenresContextProvider>
+    </AuthContextProvider>
   );
 };
 

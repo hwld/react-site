@@ -7,7 +7,7 @@ import { MainHeader } from './MainHeader';
 import { Drawer } from '../../../ui/Drawer/Drawer';
 import { GenresView } from './GenresView';
 import { MobileContextProvider } from '../../../../context/MobileContext';
-import { logout } from '../../../../repositories/auth';
+import { useAuthContext } from '../../../../context/AuthContext';
 
 const Background = styled.div`
   display: flex;
@@ -15,7 +15,8 @@ const Background = styled.div`
   background-color: ${props => props.theme.palette.primary.dark};
 `;
 
-const MainHome: React.FC<{ isAnonymous: boolean }> = ({ isAnonymous }) => {
+const MainHome: React.FC = () => {
+  const { user, logout } = useAuthContext();
   const [isOpen, setIsOpen] = useState(true);
   const [selectedGenreIds, setSelectedGenreIds] = useState<string[]>([]);
   const history = useHistory();
@@ -45,7 +46,7 @@ const MainHome: React.FC<{ isAnonymous: boolean }> = ({ isAnonymous }) => {
           onMenuClick={invertDrawer}
           onGoSearchMode={goSearchMode}
           onLogout={logout}
-          isAnonymous={isAnonymous}
+          isAnonymous={user.isAnonymous}
         />
         <Drawer
           width={isMobile ? '80' : '30'}

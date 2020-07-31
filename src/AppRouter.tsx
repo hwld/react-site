@@ -4,28 +4,21 @@ import { Loading } from './components/project/page/loadingPage/Loading';
 import { Login } from './components/project/page/loginPage/LoginHome';
 import { MainHome } from './components/project/page/mainPage/MainHome';
 import { SearchHome } from './components/project/page/searchNotesPage/SearchHome';
+import { useAuthContext } from './context/AuthContext';
 
-type AppRouterProps = {
-  userId: string;
-  isAnonymous: boolean;
-  userLoading: boolean;
-};
+const AppRouter: React.FC = () => {
+  const { user, authState } = useAuthContext();
 
-const AppRouter: React.FC<AppRouterProps> = ({
-  userId,
-  isAnonymous,
-  userLoading,
-}) => {
   return (
     <Switch>
-      {userLoading && <Loading />}
-      {userId === '' && <Login />}
+      {authState.loading && <Loading />}
+      {user.userId === '' && <Login />}
       <Route path="/home">
-        <MainHome isAnonymous={isAnonymous} />
+        <MainHome />
       </Route>
 
       <Route path="/search">
-        <SearchHome isAnonymous={isAnonymous} />
+        <SearchHome />
       </Route>
 
       <Redirect to="/home" />

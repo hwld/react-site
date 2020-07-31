@@ -10,7 +10,7 @@ import {
 } from '../../../../repositories/notes';
 import { Drawer } from '../../../ui/Drawer/Drawer';
 import { MobileContextProvider } from '../../../../context/MobileContext';
-import { logout } from '../../../../repositories/auth';
+import { useAuthContext } from '../../../../context/AuthContext';
 
 const Background = styled.div`
   display: flex;
@@ -24,7 +24,8 @@ const Background = styled.div`
   background-color: ${props => props.theme.palette.primary.dark};
 `;
 
-const SearchHome: React.FC<{ isAnonymous: boolean }> = ({ isAnonymous }) => {
+const SearchHome: React.FC = () => {
+  const { user, logout } = useAuthContext();
   const [isOpen, setIsOpen] = useState(true);
   const [searchCriteria, setSearchCriteria] = useState<SearchNotesCriteria>(
     createDefaultSearchNotesCriteria(),
@@ -50,7 +51,7 @@ const SearchHome: React.FC<{ isAnonymous: boolean }> = ({ isAnonymous }) => {
         <SearchHeader
           onMenuClick={invertDrawer}
           onLogout={logout}
-          isAnonymous={isAnonymous}
+          isAnonymous={user.isAnonymous}
         />
         <Drawer
           width={isMobile ? '80' : '30'}

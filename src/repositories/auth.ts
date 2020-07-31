@@ -1,33 +1,51 @@
 import firebase from 'firebase/app';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useCallback, useMemo } from 'react';
 import { auth } from './firebaseConfig';
 
-const useCurrentUserId = () => {
-  const [user, loading, error] = useAuthState(auth);
-  const userId = user ? user.uid : '';
-  const isAnonymous = user ? user.isAnonymous : false;
-
-  return { userId, isAnonymous, loading, error };
+export type AppUser = {
+  userId: string;
+  isAnonymous: boolean;
 };
 
-const googleLogin = async () => {
-  try {
-    await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-  } catch (error) {
-    window.console.log(error);
-  }
+export type AuthState = {
+  loading: boolean;
 };
 
-const anonymousLogin = async () => {
-  try {
-    await auth.signInAnonymously();
-  } catch (error) {
-    window.console.log(error);
-  }
+const useAuth = () => {
+  const [fUser, loading] = useAuthState(auth);
+  const user: AppUser = useMemo(
+    () => ({
+      userId: fUser ? fUser.uid : '',
+      isAnonymous: fUser ? fUser.isAnonymous : false,
+    }),
+    [fUser],
+  );
+  const authState: AuthState = useMemo(() => ({ loading }), [loading]);
+
+  const googleLogin = useCallback(async () => {
+    try {
+      await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    } catch (error) {
+      window.console.log(error);
+      throw new Error(error);
+    }
+  }, []);
+
+  const anonymousLogin = useCallback(async () => {
+    try {
+      await auth.signInAnonymously();
+    } catch (error) {
+      window.console.log(error);
+      throw new Error(error);
+    }
+  }, []);
+
+  const logout = useCallback(() => {
+    return auth.signOut();
+  }, []);
+
+  return { user, authState, googleLogin, anonymousLogin, logout };
 };
 
-const logout = () => {
-  return auth.signOut();
-};
-
-export { useCurrentUserId, googleLogin, anonymousLogin, logout };
+export { useAuth };

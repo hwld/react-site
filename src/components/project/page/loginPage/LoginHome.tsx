@@ -2,9 +2,9 @@ import React, { useCallback, useState } from 'react';
 import LockIcon from '@material-ui/icons/Lock';
 import styled from 'styled-components';
 import { CircularProgress } from '@material-ui/core';
-import { googleLogin, anonymousLogin } from '../../../../repositories/auth';
 import { GoogleLoginButton } from './GoogleLoginButton';
 import { GuestLoginButton } from './GuestLoginButton';
+import { useAuthContext } from '../../../../context/AuthContext';
 
 const Background = styled.div`
   display: flex;
@@ -53,21 +53,22 @@ const ListItem = styled.li`
 `;
 
 const Login: React.FC = () => {
+  const { googleLogin, anonymousLogin } = useAuthContext();
   const [loading, setLoading] = useState(false);
 
   const onGoogleLogin = useCallback(() => {
     setLoading(true);
-    googleLogin().then(() => {
+    googleLogin().catch(() => {
       setLoading(false);
     });
-  }, []);
+  }, [googleLogin]);
 
   const onAnonymousLogin = useCallback(() => {
     setLoading(true);
-    anonymousLogin().then(() => {
+    anonymousLogin().catch(() => {
       setLoading(false);
     });
-  }, []);
+  }, [anonymousLogin]);
 
   return (
     <Background data-testid="loginPage">
