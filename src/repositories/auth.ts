@@ -41,9 +41,13 @@ const useAuth = () => {
     }
   }, []);
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
+    if (user.isAnonymous && firebaseUser) {
+      await firebaseUser.delete();
+    }
+
     return auth.signOut();
-  }, []);
+  }, [firebaseUser, user.isAnonymous]);
 
   const linkWithGoogle = useCallback(() => {
     if (!firebaseUser) return;
