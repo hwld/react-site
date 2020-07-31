@@ -13,13 +13,13 @@ export type AuthState = {
 };
 
 const useAuth = () => {
-  const [fUser, loading] = useAuthState(auth);
+  const [firebaseUser, loading] = useAuthState(auth);
   const user: AppUser = useMemo(
     () => ({
-      userId: fUser ? fUser.uid : '',
-      isAnonymous: fUser ? fUser.isAnonymous : false,
+      userId: firebaseUser ? firebaseUser.uid : '',
+      isAnonymous: firebaseUser ? firebaseUser.isAnonymous : false,
     }),
-    [fUser],
+    [firebaseUser],
   );
   const authState: AuthState = useMemo(() => ({ loading }), [loading]);
 
@@ -45,7 +45,19 @@ const useAuth = () => {
     return auth.signOut();
   }, []);
 
-  return { user, authState, googleLogin, anonymousLogin, logout };
+  const linkWithGoogle = useCallback(() => {
+    if (!firebaseUser) return;
+    firebaseUser.linkWithPopup(new firebase.auth.GoogleAuthProvider());
+  }, [firebaseUser]);
+
+  return {
+    user,
+    authState,
+    googleLogin,
+    anonymousLogin,
+    logout,
+    linkWithGoogle,
+  };
 };
 
 export { useAuth };

@@ -8,6 +8,7 @@ type AuthContextValue = {
   googleLogin: () => Promise<void>;
   anonymousLogin: () => Promise<void>;
   logout: () => Promise<void>;
+  linkWithGoogle: () => void;
 };
 
 export const authContextDefaultValue: AuthContextValue = {
@@ -16,6 +17,7 @@ export const authContextDefaultValue: AuthContextValue = {
   googleLogin: () => Promise.resolve(),
   anonymousLogin: () => Promise.resolve(),
   logout: () => Promise.resolve(),
+  linkWithGoogle: () => {},
 };
 
 const AuthContext = React.createContext<AuthContextValue>(

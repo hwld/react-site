@@ -10,7 +10,14 @@ import { AppRouter } from './AppRouter';
 import { AuthContextProvider } from './context/AuthContext';
 
 const App: React.FC = () => {
-  const { user, authState, googleLogin, anonymousLogin, logout } = useAuth();
+  const {
+    user,
+    authState,
+    googleLogin,
+    anonymousLogin,
+    logout,
+    linkWithGoogle,
+  } = useAuth();
   const { genres, addGenre, removeGenres, updateGenre, moveGenres } = useGenres(
     user.userId,
   );
@@ -20,7 +27,14 @@ const App: React.FC = () => {
 
   return (
     <AuthContextProvider
-      value={{ user, authState, googleLogin, anonymousLogin, logout }}
+      value={{
+        user,
+        authState,
+        googleLogin,
+        anonymousLogin,
+        logout,
+        linkWithGoogle,
+      }}
     >
       <GenresContextProvider
         value={{ genres, addGenre, removeGenres, updateGenre, moveGenres }}
