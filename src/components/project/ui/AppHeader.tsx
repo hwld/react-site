@@ -5,6 +5,7 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import { TooltipIconButton } from '../../ui/TooltipIconButton';
 import { AccountLinkMenu } from './AccountLinkMenu';
+import { AccountSettingMenu } from './AccountSettingMenu';
 
 const AppTitle = styled(Typography)`
   font-weight: bold;
@@ -35,6 +36,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
         <AppTitle variant="h5">{title}</AppTitle>
         {menuItems}
         {isAnonymous && <AccountLinkMenu />}
+        {!isAnonymous && <AccountSettingMenu />}
         <TooltipIconButton
           tooltipText="ログアウト"
           icon={<ExitToApp />}

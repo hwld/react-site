@@ -17,6 +17,7 @@ const App: React.FC = () => {
     anonymousLogin,
     logout,
     linkWithGoogle,
+    deleteAccount,
   } = useAuth();
   const { genres, addGenre, removeGenres, updateGenre, moveGenres } = useGenres(
     user.userId,
@@ -34,6 +35,7 @@ const App: React.FC = () => {
         anonymousLogin,
         logout,
         linkWithGoogle,
+        deleteAccount,
       }}
     >
       <GenresContextProvider

@@ -54,6 +54,12 @@ const useAuth = () => {
     firebaseUser.linkWithPopup(new firebase.auth.GoogleAuthProvider());
   }, [firebaseUser]);
 
+  const deleteAccount = useCallback(() => {
+    if (firebaseUser) {
+      firebaseUser.delete();
+    }
+  }, [firebaseUser]);
+
   return {
     user,
     authState,
@@ -61,6 +67,7 @@ const useAuth = () => {
     anonymousLogin,
     logout,
     linkWithGoogle,
+    deleteAccount,
   };
 };
 

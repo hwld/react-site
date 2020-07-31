@@ -21,13 +21,18 @@ const AccountLinkMenu: React.FC<AccountLinkMenuProps> = () => {
 
   return (
     <>
-      {' '}
       <TooltipIconButton
         icon={<PersonAddIcon />}
         tooltipText="アカウントを紐付ける"
         onClick={openMenu}
       />
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={closeMenu}>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={closeMenu}
+        getContentAnchorEl={null}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
         <MenuItem>
           <GoogleLoginButton onLogin={linkWithGoogle} />
         </MenuItem>
