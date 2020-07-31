@@ -24,7 +24,7 @@ const Background = styled.div`
   background-color: ${props => props.theme.palette.primary.dark};
 `;
 
-const SearchHome: React.FC<{}> = () => {
+const SearchHome: React.FC<{ isAnonymous: boolean }> = ({ isAnonymous }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [searchCriteria, setSearchCriteria] = useState<SearchNotesCriteria>(
     createDefaultSearchNotesCriteria(),
@@ -47,7 +47,11 @@ const SearchHome: React.FC<{}> = () => {
   return (
     <MobileContextProvider value={{ isMobile }}>
       <Background data-testid="searchNotestPage">
-        <SearchHeader onMenuClick={invertDrawer} onLogout={logout} />
+        <SearchHeader
+          onMenuClick={invertDrawer}
+          onLogout={logout}
+          isAnonymous={isAnonymous}
+        />
         <Drawer
           width={isMobile ? '80' : '30'}
           isPresistent={!isMobile}

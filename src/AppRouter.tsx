@@ -7,20 +7,25 @@ import { SearchHome } from './components/project/page/searchNotesPage/SearchHome
 
 type AppRouterProps = {
   userId: string;
+  isAnonymous: boolean;
   userLoading: boolean;
 };
 
-const AppRouter: React.FC<AppRouterProps> = ({ userId, userLoading }) => {
+const AppRouter: React.FC<AppRouterProps> = ({
+  userId,
+  isAnonymous,
+  userLoading,
+}) => {
   return (
     <Switch>
       {userLoading && <Loading />}
       {userId === '' && <Login />}
       <Route path="/home">
-        <MainHome />
+        <MainHome isAnonymous={isAnonymous} />
       </Route>
 
       <Route path="/search">
-        <SearchHome />
+        <SearchHome isAnonymous={isAnonymous} />
       </Route>
 
       <Redirect to="/home" />

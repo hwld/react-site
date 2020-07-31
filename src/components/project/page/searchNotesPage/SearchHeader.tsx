@@ -7,9 +7,14 @@ import { TooltipIconButton } from '../../../ui/TooltipIconButton';
 type HeaderProps = {
   onMenuClick: () => void;
   onLogout: () => Promise<void>;
+  isAnonymous: boolean;
 };
 
-const SearchHeader: React.FC<HeaderProps> = ({ onMenuClick, onLogout }) => {
+const SearchHeader: React.FC<HeaderProps> = ({
+  onMenuClick,
+  onLogout,
+  isAnonymous,
+}) => {
   const history = useHistory();
 
   const backHome = () => {
@@ -18,6 +23,7 @@ const SearchHeader: React.FC<HeaderProps> = ({ onMenuClick, onLogout }) => {
 
   return (
     <AppHeader
+      title="検索"
       onMenuClick={onMenuClick}
       onLogout={onLogout}
       menuItems={
@@ -27,6 +33,7 @@ const SearchHeader: React.FC<HeaderProps> = ({ onMenuClick, onLogout }) => {
           onClick={backHome}
         />
       }
+      isAnonymous={isAnonymous}
     />
   );
 };

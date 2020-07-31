@@ -15,7 +15,7 @@ const Background = styled.div`
   background-color: ${props => props.theme.palette.primary.dark};
 `;
 
-const MainHome: React.FC = () => {
+const MainHome: React.FC<{ isAnonymous: boolean }> = ({ isAnonymous }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [selectedGenreIds, setSelectedGenreIds] = useState<string[]>([]);
   const history = useHistory();
@@ -45,6 +45,7 @@ const MainHome: React.FC = () => {
           onMenuClick={invertDrawer}
           onGoSearchMode={goSearchMode}
           onLogout={logout}
+          isAnonymous={isAnonymous}
         />
         <Drawer
           width={isMobile ? '80' : '30'}

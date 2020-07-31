@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
-import MainHome from './MainHome';
+import { MainHome } from './MainHome';
 
 describe('<MainHome>', () => {
   test('メインページが表示されている', () => {

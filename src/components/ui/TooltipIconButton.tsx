@@ -3,7 +3,7 @@ import { Tooltip, Typography, IconButton } from '@material-ui/core';
 
 type TooltipIconButtonProps = {
   tooltipText: string;
-  onClick: () => void;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   icon: React.ReactNode;
 };
 const TooltipIconButton: React.FC<TooltipIconButtonProps> = ({

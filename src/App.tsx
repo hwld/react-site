@@ -9,7 +9,7 @@ import { useCurrentUserId } from './repositories/auth';
 import { AppRouter } from './AppRouter';
 
 const App: React.FC = () => {
-  const { userId, loading } = useCurrentUserId();
+  const { userId, isAnonymous, loading } = useCurrentUserId();
   const { genres, addGenre, removeGenres, updateGenre, moveGenres } = useGenres(
     userId,
   );
@@ -25,7 +25,11 @@ const App: React.FC = () => {
         value={{ notes, addNote, removeNotes, updateNote, moveNotes }}
       >
         <BrowserRouter>
-          <AppRouter userId={userId} userLoading={loading} />
+          <AppRouter
+            userId={userId}
+            isAnonymous={isAnonymous}
+            userLoading={loading}
+          />
         </BrowserRouter>
       </NotesContextProvider>
     </GenresContextProvider>

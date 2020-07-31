@@ -5,8 +5,9 @@ import { auth } from './firebaseConfig';
 const useCurrentUserId = () => {
   const [user, loading, error] = useAuthState(auth);
   const userId = user ? user.uid : '';
+  const isAnonymous = user ? user.isAnonymous : false;
 
-  return { userId, loading, error };
+  return { userId, isAnonymous, loading, error };
 };
 
 const googleLogin = async () => {
