@@ -24,20 +24,11 @@ const useAuth = () => {
   const authState: AuthState = useMemo(() => ({ loading }), [loading]);
 
   const googleLogin = useCallback(async () => {
-    try {
-      await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-    } catch (error) {
-      throw new Error(error);
-    }
+    await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }, []);
 
   const anonymousLogin = useCallback(async () => {
-    try {
-      await auth.signInAnonymously();
-    } catch (error) {
-      window.console.log(error);
-      throw new Error(error);
-    }
+    await auth.signInAnonymously();
   }, []);
 
   const logout = useCallback(async () => {
@@ -47,8 +38,9 @@ const useAuth = () => {
   const linkWithGoogle = useCallback(async () => {
     if (!firebaseUser) return;
 
-    const googleProvider = new firebase.auth.GoogleAuthProvider();
-    const userCredential = await firebaseUser.linkWithPopup(googleProvider);
+    const userCredential = await firebaseUser.linkWithPopup(
+      new firebase.auth.GoogleAuthProvider(),
+    );
     logout();
 
     if (!userCredential.credential) return;

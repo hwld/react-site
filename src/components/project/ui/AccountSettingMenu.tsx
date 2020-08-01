@@ -14,7 +14,7 @@ import { useAuthContext } from '../../../context/AuthContext';
 
 type AccountSettingMenuProps = {};
 const AccountSettingMenu: React.FC<AccountSettingMenuProps> = () => {
-  const { deleteAccount } = useAuthContext();
+  const { googleLogin, deleteAccount } = useAuthContext();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState(false);
 
@@ -33,6 +33,21 @@ const AccountSettingMenu: React.FC<AccountSettingMenuProps> = () => {
   const closeDialog = () => {
     setOpen(false);
     closeMenu();
+  };
+
+  const clickDeleteButton = async () => {
+    try {
+      await googleLogin();
+      deleteAccount();
+    } catch (error) {
+      const { code }: firebase.auth.Error = error;
+      switch (code) {
+        case 'auth/requires-recent-login':
+          break;
+        default:
+          break;
+      }
+    }
   };
 
   return (
@@ -55,12 +70,14 @@ const AccountSettingMenu: React.FC<AccountSettingMenuProps> = () => {
           <DialogContent>
             アカウントを削除すると全てのデータが消えます.
           </DialogContent>
-          <DialogContent>よろしいですか?</DialogContent>
+          <DialogContent>
+            再度ログインを行ってアカウントを削除してください.
+          </DialogContent>
           <DialogActions>
             <Button
               variant="contained"
               color="secondary"
-              onClick={deleteAccount}
+              onClick={clickDeleteButton}
             >
               削除
             </Button>
