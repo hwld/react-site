@@ -6,6 +6,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { TooltipIconButton } from '../../ui/TooltipIconButton';
 import { AccountLinkMenu } from './AccountLinkMenu';
 import { AccountSettingMenu } from './AccountSettingMenu';
+import { useAuthContext } from '../../../context/AuthContext';
 
 const AppTitle = styled(Typography)`
   font-weight: bold;
@@ -16,17 +17,22 @@ const AppTitle = styled(Typography)`
 type AppHeaderProps = {
   title: string;
   onMenuClick: () => void;
-  onLogout: () => Promise<void>;
   menuItems: React.ReactNode;
-  isAnonymous: boolean;
 };
 const AppHeader: React.FC<AppHeaderProps> = ({
   title,
   onMenuClick,
-  onLogout,
   menuItems,
-  isAnonymous,
 }) => {
+  const { user, logout, deleteAccount } = useAuthContext();
+
+  const logoutAndDelete = () => {
+    if (user.isAnonymous) {
+      deleteAccount();
+    }
+    logout();
+  };
+
   return (
     <AppBar position="absolute">
       <Toolbar>
@@ -35,12 +41,12 @@ const AppHeader: React.FC<AppHeaderProps> = ({
         </IconButton>
         <AppTitle variant="h5">{title}</AppTitle>
         {menuItems}
-        {isAnonymous && <AccountLinkMenu />}
-        {!isAnonymous && <AccountSettingMenu />}
+        {user.isAnonymous && <AccountLinkMenu />}
+        {!user.isAnonymous && <AccountSettingMenu />}
         <TooltipIconButton
           tooltipText="ログアウト"
           icon={<ExitToApp />}
-          onClick={onLogout}
+          onClick={logoutAndDelete}
         />
       </Toolbar>
     </AppBar>

@@ -27,7 +27,6 @@ const useAuth = () => {
     try {
       await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     } catch (error) {
-      window.console.log(error);
       throw new Error(error);
     }
   }, []);
@@ -42,21 +41,23 @@ const useAuth = () => {
   }, []);
 
   const logout = useCallback(async () => {
-    if (user.isAnonymous && firebaseUser) {
-      await firebaseUser.delete();
-    }
-
     return auth.signOut();
-  }, [firebaseUser, user.isAnonymous]);
+  }, []);
 
-  const linkWithGoogle = useCallback(() => {
+  const linkWithGoogle = useCallback(async () => {
     if (!firebaseUser) return;
-    firebaseUser.linkWithPopup(new firebase.auth.GoogleAuthProvider());
-  }, [firebaseUser]);
 
-  const deleteAccount = useCallback(() => {
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
+    const userCredential = await firebaseUser.linkWithPopup(googleProvider);
+    logout();
+
+    if (!userCredential.credential) return;
+    auth.signInWithCredential(userCredential.credential);
+  }, [firebaseUser, logout]);
+
+  const deleteAccount = useCallback(async () => {
     if (firebaseUser) {
-      firebaseUser.delete();
+      await firebaseUser.delete();
     }
   }, [firebaseUser]);
 

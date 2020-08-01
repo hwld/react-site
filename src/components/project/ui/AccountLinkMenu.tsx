@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import { Menu, MenuItem } from '@material-ui/core';
+import {
+  Menu,
+  MenuItem,
+  Dialog,
+  DialogContent,
+  DialogActions,
+  Button,
+  DialogTitle,
+} from '@material-ui/core';
 import { TooltipIconButton } from '../../ui/TooltipIconButton';
 import { GoogleLoginButton } from '../page/loginPage/GoogleLoginButton';
 import { useAuthContext } from '../../../context/AuthContext';
@@ -11,12 +19,43 @@ const AccountLinkMenu: React.FC<AccountLinkMenuProps> = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { linkWithGoogle } = useAuthContext();
 
+  const [open, setOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
   const closeMenu = () => {
     setAnchorEl(null);
+  };
+
+  const openDialog = () => {
+    setOpen(true);
+  };
+  const closeDialog = () => {
+    setOpen(false);
+  };
+
+  const link = async () => {
+    try {
+      closeMenu();
+      await linkWithGoogle();
+    } catch (error) {
+      const { code }: firebase.auth.Error = error;
+      switch (code) {
+        case 'auth/credential-already-in-use':
+          setErrorMessage('アカウントはすでに使用されています');
+          openDialog();
+          break;
+        case 'auth/popup-closed-by-user':
+          break;
+        default:
+          setErrorMessage('不明なエラー');
+          openDialog();
+          break;
+      }
+    }
   };
 
   return (
@@ -34,9 +73,18 @@ const AccountLinkMenu: React.FC<AccountLinkMenuProps> = () => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
         <MenuItem>
-          <GoogleLoginButton onLogin={linkWithGoogle} />
+          <GoogleLoginButton onLogin={link} />
         </MenuItem>
       </Menu>
+      <Dialog open={open} onClose={closeDialog}>
+        <DialogTitle>アカウントの連携に失敗しました</DialogTitle>
+        <DialogContent>{errorMessage}</DialogContent>
+        <DialogActions>
+          <Button onClick={closeDialog} variant="contained" color="secondary">
+            閉じる
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

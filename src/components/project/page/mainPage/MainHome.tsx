@@ -7,7 +7,6 @@ import { MainHeader } from './MainHeader';
 import { Drawer } from '../../../ui/Drawer/Drawer';
 import { GenresView } from './GenresView';
 import { MobileContextProvider } from '../../../../context/MobileContext';
-import { useAuthContext } from '../../../../context/AuthContext';
 
 const Background = styled.div`
   display: flex;
@@ -16,7 +15,6 @@ const Background = styled.div`
 `;
 
 const MainHome: React.FC = () => {
-  const { user, logout } = useAuthContext();
   const [isOpen, setIsOpen] = useState(true);
   const [selectedGenreIds, setSelectedGenreIds] = useState<string[]>([]);
   const history = useHistory();
@@ -42,12 +40,7 @@ const MainHome: React.FC = () => {
   return (
     <MobileContextProvider value={{ isMobile }}>
       <Background data-testid="mainPage">
-        <MainHeader
-          onMenuClick={invertDrawer}
-          onGoSearchMode={goSearchMode}
-          onLogout={logout}
-          isAnonymous={user.isAnonymous}
-        />
+        <MainHeader onMenuClick={invertDrawer} onGoSearchMode={goSearchMode} />
         <Drawer
           width={isMobile ? '80' : '30'}
           isPresistent={!isMobile}

@@ -10,7 +10,6 @@ import {
 } from '../../../../repositories/notes';
 import { Drawer } from '../../../ui/Drawer/Drawer';
 import { MobileContextProvider } from '../../../../context/MobileContext';
-import { useAuthContext } from '../../../../context/AuthContext';
 
 const Background = styled.div`
   display: flex;
@@ -25,7 +24,6 @@ const Background = styled.div`
 `;
 
 const SearchHome: React.FC = () => {
-  const { user, logout } = useAuthContext();
   const [isOpen, setIsOpen] = useState(true);
   const [searchCriteria, setSearchCriteria] = useState<SearchNotesCriteria>(
     createDefaultSearchNotesCriteria(),
@@ -48,11 +46,7 @@ const SearchHome: React.FC = () => {
   return (
     <MobileContextProvider value={{ isMobile }}>
       <Background data-testid="searchNotestPage">
-        <SearchHeader
-          onMenuClick={invertDrawer}
-          onLogout={logout}
-          isAnonymous={user.isAnonymous}
-        />
+        <SearchHeader onMenuClick={invertDrawer} />
         <Drawer
           width={isMobile ? '80' : '30'}
           isPresistent={!isMobile}

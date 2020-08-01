@@ -6,15 +6,9 @@ import { TooltipIconButton } from '../../../ui/TooltipIconButton';
 
 type HeaderProps = {
   onMenuClick: () => void;
-  onLogout: () => Promise<void>;
-  isAnonymous: boolean;
 };
 
-const SearchHeader: React.FC<HeaderProps> = ({
-  onMenuClick,
-  onLogout,
-  isAnonymous,
-}) => {
+const SearchHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const history = useHistory();
 
   const backHome = () => {
@@ -25,7 +19,6 @@ const SearchHeader: React.FC<HeaderProps> = ({
     <AppHeader
       title="検索"
       onMenuClick={onMenuClick}
-      onLogout={onLogout}
       menuItems={
         <TooltipIconButton
           tooltipText="ホームに戻る"
@@ -33,7 +26,6 @@ const SearchHeader: React.FC<HeaderProps> = ({
           onClick={backHome}
         />
       }
-      isAnonymous={isAnonymous}
     />
   );
 };

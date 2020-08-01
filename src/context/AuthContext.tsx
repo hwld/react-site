@@ -8,7 +8,7 @@ type AuthContextValue = {
   googleLogin: () => Promise<void>;
   anonymousLogin: () => Promise<void>;
   logout: () => Promise<void>;
-  linkWithGoogle: () => void;
+  linkWithGoogle: () => Promise<void>;
   deleteAccount: () => void;
 };
 
@@ -18,7 +18,7 @@ export const authContextDefaultValue: AuthContextValue = {
   googleLogin: () => Promise.resolve(),
   anonymousLogin: () => Promise.resolve(),
   logout: () => Promise.resolve(),
-  linkWithGoogle: () => {},
+  linkWithGoogle: () => Promise.resolve(),
   deleteAccount: () => {},
 };
 
