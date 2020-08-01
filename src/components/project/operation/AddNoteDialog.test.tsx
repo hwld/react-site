@@ -5,7 +5,7 @@ import {
   notesContextDefaultValue,
   NotesContextProvider,
 } from '../../../context/NotesContext';
-import AddNoteDialog from './AddNoteDialog';
+import { AddNoteDialog } from './AddNoteDialog';
 
 describe('<AddNoteDialog>', () => {
   test('ノート追加処理が適切に呼び出される', () => {

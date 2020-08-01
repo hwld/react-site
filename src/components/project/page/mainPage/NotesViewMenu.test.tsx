@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '../../../../test-util';
-import NotesViewMenu from './NotesViewMenu';
+import { NotesViewMenu } from './NotesViewMenu';
 
 describe('NotesViewMenu', () => {
   test('すべてのメニューアイテムが存在する', () => {

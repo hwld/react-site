@@ -4,11 +4,13 @@ import { Loading } from './components/project/page/loadingPage/Loading';
 import { Login } from './components/project/page/loginPage/LoginHome';
 import { MainHome } from './components/project/page/mainPage/MainHome';
 import { SearchHome } from './components/project/page/searchNotesPage/SearchHome';
-import { useAuthContext } from './context/AuthContext';
+import { AppUser, AuthState } from './repositories/auth';
 
-const AppRouter: React.FC = () => {
-  const { user, authState } = useAuthContext();
-
+type AppRouterProps = {
+  user: AppUser;
+  authState: AuthState;
+};
+const AppRouter: React.FC<AppRouterProps> = ({ user, authState }) => {
   return (
     <Switch>
       {authState.loading && <Loading />}

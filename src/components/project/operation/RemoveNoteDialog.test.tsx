@@ -1,5 +1,5 @@
 import React from 'react';
-import RemoveNoteDialog from './RemoveNoteDialog';
+import { RemoveNoteDialog } from './RemoveNoteDialog';
 import { render, fireEvent } from '../../../test-util';
 import {
   notesContextDefaultValue,

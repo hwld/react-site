@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { fireEvent } from '@testing-library/react';
-import List from './List';
-import ListItem, { ListItemDropType } from './ListItem';
+import { List } from './List';
+import { ListItem, ListItemDropType } from './ListItem';
 import { render, dragAndDrop } from '../../../test-util';
 import { ItemTypes } from '../ItemTypes';
 

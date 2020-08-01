@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { render } from '../../../../test-util';
-import SearchHome from './SearchHome';
+import { SearchHome } from './SearchHome';
 
 describe('<SearchHome>', () => {
   test('ドロワーを開閉できる', () => {

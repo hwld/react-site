@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { render, dragAndDrop } from '../../../../test-util';
-import GenresView from './GenresView';
+import { GenresView } from './GenresView';
 import { Genre } from '../../../../repositories/genres';
 import {
   genresContextDefaultValue,

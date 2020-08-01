@@ -5,7 +5,7 @@ import {
   NotesContextProvider,
 } from '../../../../context/NotesContext';
 import { render } from '../../../../test-util';
-import ResultNotesList from './ResultNotesColumn';
+import { ResultNotesColumn } from './ResultNotesColumn';
 import { SearchNotesCriteria } from '../../../../repositories/notes';
 
 describe('<ResultNotesColumn>', () => {
@@ -46,7 +46,7 @@ describe('<ResultNotesColumn>', () => {
   test('ジャンルIDで検索可能', () => {
     const { queryAllByText } = render(
       <NotesContextProvider value={notesContextValue}>
-        <ResultNotesList
+        <ResultNotesColumn
           searchCriteria={{
             ...defaultCriteria,
             genreId: 'genre1',
@@ -60,7 +60,7 @@ describe('<ResultNotesColumn>', () => {
   test('タイトルで検索可能', () => {
     const { queryAllByText } = render(
       <NotesContextProvider value={notesContextValue}>
-        <ResultNotesList
+        <ResultNotesColumn
           searchCriteria={{
             ...defaultCriteria,
             title: 'title1',
@@ -74,7 +74,7 @@ describe('<ResultNotesColumn>', () => {
   test('メモで検索可能', () => {
     const { queryAllByText } = render(
       <NotesContextProvider value={notesContextValue}>
-        <ResultNotesList
+        <ResultNotesColumn
           searchCriteria={{
             ...defaultCriteria,
             text: 'text1',
@@ -88,7 +88,7 @@ describe('<ResultNotesColumn>', () => {
   test('著者名で検索可能', () => {
     const { queryAllByText } = render(
       <NotesContextProvider value={notesContextValue}>
-        <ResultNotesList
+        <ResultNotesColumn
           searchCriteria={{
             ...defaultCriteria,
             authorName: 'authorName1',
@@ -102,7 +102,7 @@ describe('<ResultNotesColumn>', () => {
   test('書籍名で検索可能', () => {
     const { queryAllByText } = render(
       <NotesContextProvider value={notesContextValue}>
-        <ResultNotesList
+        <ResultNotesColumn
           searchCriteria={{
             ...defaultCriteria,
             bookName: 'bookName1',

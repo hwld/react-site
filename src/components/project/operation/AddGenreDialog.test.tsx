@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
-import AddGenreDialog from './AddGenreDialog';
+import { AddGenreDialog } from './AddGenreDialog';
 import {
   genresContextDefaultValue,
   GenresContextProvider,

@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
+import { auth } from 'firebase';
 import { NotesContextProvider } from './context/NotesContext';
 import { GenresContextProvider } from './context/GenresContext';
 import { useNotes } from './repositories/notes';
@@ -45,7 +46,7 @@ const App: React.FC = () => {
           value={{ notes, addNote, removeNotes, updateNote, moveNotes }}
         >
           <BrowserRouter>
-            <AppRouter />
+            <AppRouter user={user} authState={authState} />
           </BrowserRouter>
         </NotesContextProvider>
       </GenresContextProvider>

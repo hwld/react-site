@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '../../../../test-util';
-import Loading from './Loading';
+import { Loading } from './Loading';
 
 describe('<Loading>', () => {
   test('Loading画面がが表示される', () => {

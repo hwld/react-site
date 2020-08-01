@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { render, fireEvent, dragAndDrop } from '../../../test-util';
-import TreeView from './TreeView';
-import TreeItem from './TreeItem';
+import { TreeView } from './TreeView';
+import { TreeItem } from './TreeItem';
 
 describe('<TreeView>', () => {
   describe('選択関係', () => {

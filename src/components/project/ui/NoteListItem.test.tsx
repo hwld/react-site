@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '../../../test-util';
-import NoteListItem from './NoteListItem';
+import { NoteListItem } from './NoteListItem';
 
 describe('<NoteListItem>', () => {
   test('検索結果のハイライトが当てられている', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '../../../../test-util';
-import NotesView from './NotesView';
+import { NotesView } from './NotesView';
 import {
   NotesContextValue,
   notesContextDefaultValue,

@@ -1,5 +1,5 @@
 import React from 'react';
-import Drawer from './Drawer';
+import { Drawer } from './Drawer';
 import { render } from '../../../test-util';
 
 describe('<Draer>', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
-import MoveNotesDialog from './MoveNotesDialog';
+import { MoveNotesDialog } from './MoveNotesDialog';
 import {
   genresContextDefaultValue,
   GenresContextProvider,
