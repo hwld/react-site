@@ -1,8 +1,34 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { Note, NoteField } from '../repositories/notes';
 
-export type NotesContextValue = {
+export type NoteField = {
+  title: string;
+  text: string;
+  authorName: string;
+  bookName: string;
+};
+
+export type NoteDate = {
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type NoteInfo = {
+  id: string;
+  genreId: string;
+};
+
+export type Note = NoteField & NoteDate & NoteInfo;
+
+export interface SearchNotesCriteria {
+  genreId: string;
+  title: string;
+  text: string;
+  authorName: string;
+  bookName: string;
+}
+
+export type NotesService = {
   notes: Note[];
 
   addNote: (genreId: string, noteField: NoteField) => void;
@@ -11,20 +37,16 @@ export type NotesContextValue = {
   moveNotes: (noteIds: string[], destGenreId: string) => void;
 };
 
-export const notesContextDefaultValue: NotesContextValue = {
+const NotesContext = React.createContext<NotesService>({
   notes: [],
 
   addNote: () => {},
   removeNotes: () => {},
   updateNote: () => {},
   moveNotes: () => {},
-};
+});
 
-const NotesContext = React.createContext<NotesContextValue>(
-  notesContextDefaultValue,
-);
-
-export const NotesContextProvider: React.FC<{ value: NotesContextValue }> = ({
+export const NotesContextProvider: React.FC<{ value: NotesService }> = ({
   children,
   value,
 }) => {

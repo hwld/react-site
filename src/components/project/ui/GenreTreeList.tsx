@@ -2,8 +2,8 @@ import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import Alert from '@material-ui/lab/Alert';
 import { TreeView } from '../../ui/TreeView/TreeView';
-import { Genre } from '../../../repositories/genres';
 import { GenreTreeItem } from './GenreTreeItem';
+import { Genre } from '../../../context/GenresContext';
 
 export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
 

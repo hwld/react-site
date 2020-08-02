@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo } from 'react';
 import Alert from '@material-ui/lab/Alert';
-import { Note, SearchNotesCriteria } from '../../../repositories/notes';
 import { NoteListItem } from './NoteListItem';
 import { List } from '../../ui/List/List';
 import { NotesSortOrder } from './NotesSortConditionFields';
+import { Note, SearchNotesCriteria } from '../../../context/NotesContext';
 
 type NoteListProps = {
   notes: Note[];

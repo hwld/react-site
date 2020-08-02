@@ -5,7 +5,7 @@ import {
   genresContextDefaultValue,
   GenresContextProvider,
 } from '../../../context/GenresContext';
-import { Genre } from '../../../repositories/genres';
+import { Genre } from '../../../services/genres';
 
 describe('<UpdateGenreDialog>', () => {
   test('ジャンル更新処理が適切に呼び出される', () => {

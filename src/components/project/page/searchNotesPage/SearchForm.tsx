@@ -10,11 +10,12 @@ import AutoComplete, { AutocompleteProps } from '@material-ui/lab/Autocomplete';
 import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
 import { UseAutocompleteProps } from '@material-ui/lab/useAutocomplete';
-import { SearchNotesCriteria } from '../../../../repositories/notes';
 import { useGenresContext } from '../../../../context/GenresContext';
-
 import { SelectGenreDialog } from './SelectGenreDialog';
-import { useNotesContext } from '../../../../context/NotesContext';
+import {
+  useNotesContext,
+  SearchNotesCriteria,
+} from '../../../../context/NotesContext';
 
 const Root = styled.div`
   padding: 16px 24px;

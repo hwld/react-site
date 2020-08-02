@@ -2,15 +2,7 @@ import firebase from 'firebase/app';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCallback, useMemo } from 'react';
 import { auth } from './firebaseConfig';
-
-export type AppUser = {
-  userId: string;
-  isAnonymous: boolean;
-};
-
-export type AuthState = {
-  loading: boolean;
-};
+import { AppUser, AuthState } from '../context/AuthContext';
 
 const useAuth = () => {
   const [firebaseUser, loading] = useAuthState(auth);

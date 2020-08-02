@@ -3,24 +3,10 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useCallback, useMemo } from 'react';
 import { db } from './firebaseConfig';
 import { useNotes } from './notes';
-
-export type GenreField = {
-  genreName: string;
-};
-
-export type GenreDate = {
-  createdAt: Date;
-};
+import { GenreField, Genre } from '../context/GenresContext';
 
 type FirestoreGenreDate = {
   createdAt: firebase.firestore.Timestamp;
-};
-
-export type GenreInfo = {
-  id: string;
-  parentGenreId: string;
-  // 直接の子ジャンルのみをもたせる
-  childrenGenreIds: string[];
 };
 
 type FirestoreGenreInfo = {
@@ -30,24 +16,9 @@ type FirestoreGenreInfo = {
   childrenGenreRefs: firebase.firestore.DocumentReference[];
 };
 
-export type Genre = GenreField & GenreDate & GenreInfo;
 type FirestoreGenre = GenreField & FirestoreGenreDate & FirestoreGenreInfo;
 
-const defaultGenreField = () => {
-  return { genreName: '' };
-};
-
-export const createDefaultGenre = () => {
-  return {
-    id: '',
-    createdAt: new Date(),
-    genreName: '',
-    parentGenreId: '',
-    childrenGenreIds: [],
-  };
-};
-
-const useGenres = (uid: string) => {
+export const useGenres = (uid: string) => {
   const genresRef = useMemo(() => {
     return db
       .collection('users')
@@ -224,5 +195,3 @@ const useGenres = (uid: string) => {
 
   return { genres, addGenre, removeGenres, updateGenre, moveGenres };
 };
-
-export { useGenres, defaultGenreField };

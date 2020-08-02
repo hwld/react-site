@@ -1,11 +1,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { render } from '../../../test-util';
-import { NoteField } from '../../../repositories/notes';
-import {
-  notesContextDefaultValue,
-  NotesContextProvider,
-} from '../../../context/NotesContext';
+import { NoteField, NotesContextProvider } from '../../../context/NotesContext';
 import { UpdateNoteDialog } from './UpdateNoteDialog';
 
 describe('<UpdateNoteDialog>', () => {
@@ -16,8 +12,11 @@ describe('<UpdateNoteDialog>', () => {
     const { getByTestId, getByLabelText } = render(
       <NotesContextProvider
         value={{
-          ...notesContextDefaultValue,
+          notes: [],
+          addNote: () => {},
+          removeNotes: () => {},
           updateNote,
+          moveNotes: () => {},
         }}
       >
         <UpdateNoteDialog

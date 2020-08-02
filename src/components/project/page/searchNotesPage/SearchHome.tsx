@@ -4,12 +4,9 @@ import { useTheme, useMediaQuery } from '@material-ui/core';
 import { SearchHeader } from './SearchHeader';
 import { SearchColumn } from './SearchColumn';
 import { ResultNotesColumn } from './ResultNotesColumn';
-import {
-  SearchNotesCriteria,
-  createDefaultSearchNotesCriteria,
-} from '../../../../repositories/notes';
 import { Drawer } from '../../../ui/Drawer/Drawer';
 import { MobileContextProvider } from '../../../../context/MobileContext';
+import { SearchNotesCriteria } from '../../../../context/NotesContext';
 
 const Background = styled.div`
   display: flex;
@@ -25,9 +22,13 @@ const Background = styled.div`
 
 const SearchHome: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [searchCriteria, setSearchCriteria] = useState<SearchNotesCriteria>(
-    createDefaultSearchNotesCriteria(),
-  );
+  const [searchCriteria, setSearchCriteria] = useState<SearchNotesCriteria>({
+    genreId: '',
+    title: '',
+    text: '',
+    authorName: '',
+    bookName: '',
+  });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 

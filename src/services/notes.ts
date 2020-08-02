@@ -1,27 +1,11 @@
 import { useMemo, useCallback } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db, firebase } from './firebaseConfig';
-
-export type NoteField = {
-  title: string;
-  text: string;
-  authorName: string;
-  bookName: string;
-};
-
-export type NoteDate = {
-  createdAt: Date;
-  updatedAt: Date;
-};
+import { NoteField, Note } from '../context/NotesContext';
 
 type FirestoreNoteDate = {
   createdAt: firebase.firestore.Timestamp;
   updatedAt: firebase.firestore.Timestamp;
-};
-
-export type NoteInfo = {
-  id: string;
-  genreId: string;
 };
 
 type FirestoreNoteInfo = {
@@ -29,26 +13,9 @@ type FirestoreNoteInfo = {
   genreRef: firebase.firestore.DocumentReference;
 };
 
-export type Note = NoteField & NoteDate & NoteInfo;
 type FirestoreNote = NoteField & FirestoreNoteDate & FirestoreNoteInfo;
 
-export interface SearchNotesCriteria {
-  genreId: string;
-  title: string;
-  text: string;
-  authorName: string;
-  bookName: string;
-}
-
-const createDefaultSearchNotesCriteria = () => {
-  return { genreId: '', title: '', text: '', authorName: '', bookName: '' };
-};
-
-const createDefaultNoteField = () => {
-  return { title: '', text: '', authorName: '', bookName: '' };
-};
-
-const useNotes = (uid: string) => {
+export const useNotes = (uid: string) => {
   const notesRef = useMemo(() => {
     return db
       .collection('users')
@@ -146,5 +113,3 @@ const useNotes = (uid: string) => {
 
   return { notes, addNote, removeNotes, updateNote, moveNotes };
 };
-
-export { useNotes, createDefaultSearchNotesCriteria, createDefaultNoteField };

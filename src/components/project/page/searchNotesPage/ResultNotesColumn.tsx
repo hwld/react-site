@@ -1,7 +1,9 @@
 import React, { useMemo, useCallback } from 'react';
 import { ContentColumn } from '../../ui/ContentColumn';
-import { SearchNotesCriteria } from '../../../../repositories/notes';
-import { useNotesContext } from '../../../../context/NotesContext';
+import {
+  useNotesContext,
+  SearchNotesCriteria,
+} from '../../../../context/NotesContext';
 import { useMobileContext } from '../../../../context/MobileContext';
 import { NoteList } from '../../ui/NoteList';
 

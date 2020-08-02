@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '../../../test-util';
 import { GenreTreeList } from './GenreTreeList';
-import { Genre } from '../../../repositories/genres';
+import { Genre } from '../../../services/genres';
 
 describe('<GenreTreeList>', () => {
   const genres: Genre[] = [

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import AddNoteIcon from '@material-ui/icons/NoteAdd';
 import { DialogContent, DialogTitle, SvgIconProps } from '@material-ui/core';
-import { useNotesContext } from '../../../context/NotesContext';
-import { NoteField, createDefaultNoteField } from '../../../repositories/notes';
+import { useNotesContext, NoteField } from '../../../context/NotesContext';
 import { OperationDialog } from './OperationDialog';
 import { EditNoteField } from '../ui/EditNoteFields';
 
@@ -17,9 +16,13 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   genreId,
   size,
 }) => {
-  const [noteField, setNoteField] = useState<NoteField>(
-    createDefaultNoteField(),
-  );
+  const defaultNoteField = () => ({
+    title: '',
+    text: '',
+    authorName: '',
+    bookName: '',
+  });
+  const [noteField, setNoteField] = useState<NoteField>(defaultNoteField());
 
   const { addNote } = useNotesContext();
 
@@ -28,7 +31,7 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   };
 
   const clearField = () => {
-    setNoteField(createDefaultNoteField());
+    setNoteField(defaultNoteField());
   };
 
   const changeNoteField = (fieldName: keyof NoteField, value: string) => {

@@ -1,8 +1,24 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { Genre, GenreField } from '../repositories/genres';
 
-type GenresContextValue = {
+export type GenreField = {
+  genreName: string;
+};
+
+export type GenreDate = {
+  createdAt: Date;
+};
+
+export type GenreInfo = {
+  id: string;
+  parentGenreId: string;
+  // 直接の子ジャンルのみをもたせる
+  childrenGenreIds: string[];
+};
+
+export type Genre = GenreField & GenreDate & GenreInfo;
+
+type GenresService = {
   genres: Genre[];
   addGenre: (parentGenreId: string, genreField: GenreField) => void;
   removeGenres: (id: string[]) => void;
@@ -10,20 +26,16 @@ type GenresContextValue = {
   moveGenres: (genreId: string[], destGenreId: string) => void;
 };
 
-export const genresContextDefaultValue: GenresContextValue = {
+const GenresContext = React.createContext<GenresService>({
   genres: [],
 
   addGenre: () => {},
   removeGenres: () => {},
   updateGenre: () => {},
   moveGenres: () => {},
-};
+});
 
-const GenresContext = React.createContext<GenresContextValue>(
-  genresContextDefaultValue,
-);
-
-export const GenresContextProvider: React.FC<{ value: GenresContextValue }> = ({
+export const GenresContextProvider: React.FC<{ value: GenresService }> = ({
   children,
   value,
 }) => {

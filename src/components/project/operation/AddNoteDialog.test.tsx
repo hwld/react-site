@@ -1,5 +1,5 @@
 import React from 'react';
-import { Note, NoteField } from '../../../repositories/notes';
+import { Note, NoteField } from '../../../services/notes';
 import { render, fireEvent } from '../../../test-util';
 import {
   notesContextDefaultValue,

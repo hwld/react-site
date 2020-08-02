@@ -1,8 +1,16 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { AppUser, AuthState } from '../repositories/auth';
 
-type AuthContextValue = {
+export type AppUser = {
+  userId: string;
+  isAnonymous: boolean;
+};
+
+export type AuthState = {
+  loading: boolean;
+};
+
+type AuthService = {
   user: AppUser;
   authState: AuthState;
   googleLogin: () => Promise<void>;
@@ -12,7 +20,7 @@ type AuthContextValue = {
   deleteAccount: () => void;
 };
 
-export const authContextDefaultValue: AuthContextValue = {
+const AuthContext = React.createContext<AuthService>({
   user: { userId: '', isAnonymous: false },
   authState: { loading: false },
   googleLogin: () => Promise.resolve(),
@@ -20,14 +28,10 @@ export const authContextDefaultValue: AuthContextValue = {
   logout: () => Promise.resolve(),
   linkWithGoogle: () => Promise.resolve(),
   deleteAccount: () => {},
-};
-
-const AuthContext = React.createContext<AuthContextValue>(
-  authContextDefaultValue,
-);
+});
 
 export const AuthContextProvider: React.FC<{
-  value: AuthContextValue;
+  value: AuthService;
 }> = ({ children, value }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
