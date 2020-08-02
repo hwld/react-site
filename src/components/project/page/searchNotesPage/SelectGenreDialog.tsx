@@ -5,6 +5,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Typography,
 } from '@material-ui/core';
 import styled from 'styled-components';
 import { GenreTreeList } from '../../ui/GenreTreeList';
@@ -72,10 +73,10 @@ const SelectGenreDialog: React.FC<SelectGenreDialogProps> = ({
             color="secondary"
             data-testid="selectButton"
           >
-            選択
+            <Typography color="textSecondary">選択</Typography>
           </Button>
           <Button onClick={closeDialog} variant="contained" color="secondary">
-            中止
+            <Typography color="textSecondary">中止</Typography>
           </Button>
         </DialogActions>
       </Dialog>

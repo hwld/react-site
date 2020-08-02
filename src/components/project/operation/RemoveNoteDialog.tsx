@@ -1,5 +1,10 @@
 import React from 'react';
-import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
+import {
+  DialogTitle,
+  DialogContent,
+  SvgIconProps,
+  DialogContentText,
+} from '@material-ui/core';
 import DeleteNoteIcon from '@material-ui/icons/Delete';
 import { useNotesContext } from '../../../context/NotesContext';
 import { OperationDialog } from './OperationDialog';
@@ -31,7 +36,11 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
       data-testid="removeNoteDialog"
     >
       <DialogTitle>メモの削除</DialogTitle>
-      <DialogContent>削除してよろしいですか?</DialogContent>
+      <DialogContent>
+        <DialogContentText color="textPrimary">
+          削除してよろしいですか?
+        </DialogContentText>
+      </DialogContent>
     </OperationDialog>
   );
 };

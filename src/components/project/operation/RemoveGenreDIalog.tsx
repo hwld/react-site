@@ -1,5 +1,10 @@
 import React from 'react';
-import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
+import {
+  SvgIconProps,
+  DialogTitle,
+  DialogContentText,
+  DialogContent,
+} from '@material-ui/core';
 import DeleteGenreIcon from '@material-ui/icons/Delete';
 import { useGenresContext } from '../../../context/GenresContext';
 import { OperationDialog } from './OperationDialog';
@@ -31,7 +36,11 @@ const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
       data-testid="removeGenreDialog"
     >
       <DialogTitle>ジャンルの削除</DialogTitle>
-      <DialogContent>削除してよろしいですか？</DialogContent>
+      <DialogContent>
+        <DialogContentText color="textPrimary">
+          削除してよろしいですか？
+        </DialogContentText>
+      </DialogContent>
     </OperationDialog>
   );
 };

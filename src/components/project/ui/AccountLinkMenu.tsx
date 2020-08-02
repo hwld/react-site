@@ -8,6 +8,8 @@ import {
   DialogActions,
   Button,
   DialogTitle,
+  DialogContentText,
+  Typography,
 } from '@material-ui/core';
 import { TooltipIconButton } from '../../ui/TooltipIconButton';
 import { GoogleLoginButton } from '../page/loginPage/GoogleLoginButton';
@@ -78,10 +80,14 @@ const AccountLinkMenu: React.FC<AccountLinkMenuProps> = () => {
       </Menu>
       <Dialog open={open} onClose={closeDialog}>
         <DialogTitle>アカウントの連携に失敗しました</DialogTitle>
-        <DialogContent>{errorMessage}</DialogContent>
+        <DialogContent>
+          <DialogContentText color="textPrimary">
+            {errorMessage}
+          </DialogContentText>
+        </DialogContent>
         <DialogActions>
           <Button onClick={closeDialog} variant="contained" color="secondary">
-            閉じる
+            <Typography color="textSecondary">閉じる</Typography>
           </Button>
         </DialogActions>
       </Dialog>

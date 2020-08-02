@@ -8,6 +8,8 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  DialogContentText,
+  Typography,
 } from '@material-ui/core';
 import { TooltipIconButton } from '../../ui/TooltipIconButton';
 import { useAuthContext } from '../../../context/AuthContext';
@@ -68,10 +70,12 @@ const AccountSettingMenu: React.FC<AccountSettingMenuProps> = () => {
         <Dialog open={open} onClose={closeDialog}>
           <DialogTitle>アカウントの削除</DialogTitle>
           <DialogContent>
-            アカウントを削除すると全てのデータが消えます.
-          </DialogContent>
-          <DialogContent>
-            再度ログインを行ってアカウントを削除してください.
+            <DialogContentText color="textPrimary">
+              アカウントを削除すると全てのデータが消えます.
+            </DialogContentText>
+            <DialogContentText color="textPrimary">
+              再度ログインを行ってアカウントを削除してください.
+            </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button
@@ -79,10 +83,10 @@ const AccountSettingMenu: React.FC<AccountSettingMenuProps> = () => {
               color="secondary"
               onClick={clickDeleteButton}
             >
-              削除
+              <Typography color="textSecondary">削除</Typography>
             </Button>
             <Button variant="contained" color="secondary" onClick={closeDialog}>
-              中止
+              <Typography color="textSecondary">中止</Typography>
             </Button>
           </DialogActions>
         </Dialog>
