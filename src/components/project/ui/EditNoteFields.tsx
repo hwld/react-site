@@ -3,7 +3,8 @@ import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import AutoComplete from '@material-ui/lab/Autocomplete';
 
-import { useNotesContext, NoteField } from '../../../context/NotesContext';
+import { useNotesContext } from '../../../context/NotesContext';
+import { NoteField } from '../../../types/note';
 
 const FormField = styled.div`
   margin-top: 20px;

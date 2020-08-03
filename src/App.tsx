@@ -3,21 +3,21 @@ import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import { NotesContextProvider } from './context/NotesContext';
 import { GenresContextProvider } from './context/GenresContext';
-import { useNotes } from './services/notes';
-import { useGenres } from './services/genres';
-import { useAuth } from './services/auth';
+import { useNoteStoreService } from './services/useNoteStoreService';
+import { useGenreStoreService } from './services/useGenreStoreService';
+import { useAuthService } from './services/useAuthService';
 import { AppRouter } from './AppRouter';
 import { AuthContextProvider } from './context/AuthContext';
 
 const App: React.FC = () => {
-  const authService = useAuth();
-  const genresService = useGenres(authService.user.userId);
-  const notesService = useNotes(authService.user.userId);
+  const authService = useAuthService();
+  const genreService = useGenreStoreService(authService.user.userId);
+  const noteService = useNoteStoreService(authService.user.userId);
 
   return (
     <AuthContextProvider value={authService}>
-      <GenresContextProvider value={genresService}>
-        <NotesContextProvider value={notesService}>
+      <GenresContextProvider value={genreService}>
+        <NotesContextProvider value={noteService}>
           <BrowserRouter>
             <AppRouter
               user={authService.user}

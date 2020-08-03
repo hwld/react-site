@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { render, dragAndDrop } from '../../../../test-util';
 import { GenresView } from './GenresView';
-import { Genre } from '../../../../services/genres';
+import { Genre } from '../../../../services/useGenreStoreService';
 import {
   genresContextDefaultValue,
   GenresContextProvider,

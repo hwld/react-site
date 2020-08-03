@@ -6,7 +6,7 @@ import { SearchColumn } from './SearchColumn';
 import { ResultNotesColumn } from './ResultNotesColumn';
 import { Drawer } from '../../../ui/Drawer/Drawer';
 import { MobileContextProvider } from '../../../../context/MobileContext';
-import { SearchNotesCriteria } from '../../../../context/NotesContext';
+import { SearchNotesCriteria } from '../../../../types/note';
 
 const Background = styled.div`
   display: flex;

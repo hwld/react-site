@@ -3,7 +3,8 @@ import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import AddGenreIcon from '@material-ui/icons/CreateNewFolder';
 import { OperationDialog } from './OperationDialog';
 import { EditGenreField } from '../ui/EditGenreFields';
-import { useGenresContext, GenreField } from '../../../context/GenresContext';
+import { useGenresContext } from '../../../context/GenresContext';
+import { GenreField } from '../../../types/genre';
 
 type AddGenreDialogProps = {
   disabled?: boolean;

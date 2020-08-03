@@ -1,7 +1,7 @@
 import React from 'react';
 import { ContentColumn } from '../../ui/ContentColumn';
 import { SearchForm } from './SearchForm';
-import { SearchNotesCriteria } from '../../../../context/NotesContext';
+import { SearchNotesCriteria } from '../../../../types/note';
 
 type SearchColumnProps = {
   setCriteria: (criteria: SearchNotesCriteria) => void;

@@ -1,24 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-
-export type AppUser = {
-  userId: string;
-  isAnonymous: boolean;
-};
-
-export type AuthState = {
-  loading: boolean;
-};
-
-type AuthService = {
-  user: AppUser;
-  authState: AuthState;
-  googleLogin: () => Promise<void>;
-  anonymousLogin: () => Promise<void>;
-  logout: () => Promise<void>;
-  linkWithGoogle: () => Promise<void>;
-  deleteAccount: () => void;
-};
+import { AuthService } from '../types/auth';
 
 const AuthContext = React.createContext<AuthService>({
   user: { userId: '', isAnonymous: false },

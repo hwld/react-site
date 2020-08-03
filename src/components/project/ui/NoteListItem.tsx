@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ListItem } from '../../ui/List/ListItem';
 import { RemoveNoteDialog } from '../operation/RemoveNoteDialog';
 import { UpdateNoteDialog } from '../operation/UpdateNoteDialog';
-import { Note, SearchNotesCriteria } from '../../../context/NotesContext';
+import { Note, SearchNotesCriteria } from '../../../types/note';
 
 const GridContainer = styled.div`
   width: 100%;

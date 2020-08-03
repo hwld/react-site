@@ -1,32 +1,8 @@
 import * as React from 'react';
 import { useContext } from 'react';
+import { GenreStoreService } from '../types/genre';
 
-export type GenreField = {
-  genreName: string;
-};
-
-export type GenreDate = {
-  createdAt: Date;
-};
-
-export type GenreInfo = {
-  id: string;
-  parentGenreId: string;
-  // 直接の子ジャンルのみをもたせる
-  childrenGenreIds: string[];
-};
-
-export type Genre = GenreField & GenreDate & GenreInfo;
-
-type GenresService = {
-  genres: Genre[];
-  addGenre: (parentGenreId: string, genreField: GenreField) => void;
-  removeGenres: (id: string[]) => void;
-  updateGenre: (genre: GenreField & { id: string }) => void;
-  moveGenres: (genreId: string[], destGenreId: string) => void;
-};
-
-const GenresContext = React.createContext<GenresService>({
+const GenresContext = React.createContext<GenreStoreService>({
   genres: [],
 
   addGenre: () => {},
@@ -35,7 +11,7 @@ const GenresContext = React.createContext<GenresService>({
   moveGenres: () => {},
 });
 
-export const GenresContextProvider: React.FC<{ value: GenresService }> = ({
+export const GenresContextProvider: React.FC<{ value: GenreStoreService }> = ({
   children,
   value,
 }) => {

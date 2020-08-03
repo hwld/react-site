@@ -12,10 +12,8 @@ import ClearIcon from '@material-ui/icons/Clear';
 import { UseAutocompleteProps } from '@material-ui/lab/useAutocomplete';
 import { useGenresContext } from '../../../../context/GenresContext';
 import { SelectGenreDialog } from './SelectGenreDialog';
-import {
-  useNotesContext,
-  SearchNotesCriteria,
-} from '../../../../context/NotesContext';
+import { useNotesContext } from '../../../../context/NotesContext';
+import { SearchNotesCriteria } from '../../../../types/note';
 
 const Root = styled.div`
   padding: 16px 24px;

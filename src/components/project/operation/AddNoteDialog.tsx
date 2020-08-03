@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import AddNoteIcon from '@material-ui/icons/NoteAdd';
 import { DialogContent, DialogTitle, SvgIconProps } from '@material-ui/core';
-import { useNotesContext, NoteField } from '../../../context/NotesContext';
+import { useNotesContext } from '../../../context/NotesContext';
 import { OperationDialog } from './OperationDialog';
 import { EditNoteField } from '../ui/EditNoteFields';
+import { NoteField } from '../../../types/note';
 
 type AddNoteDialogProps = {
   disabled?: boolean;

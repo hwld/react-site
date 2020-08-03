@@ -1,7 +1,7 @@
 import { useMemo, useCallback } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db, firebase } from './firebaseConfig';
-import { NoteField, Note } from '../context/NotesContext';
+import { NoteField, Note, NoteStoreService } from '../types/note';
 
 type FirestoreNoteDate = {
   createdAt: firebase.firestore.Timestamp;
@@ -15,7 +15,7 @@ type FirestoreNoteInfo = {
 
 type FirestoreNote = NoteField & FirestoreNoteDate & FirestoreNoteInfo;
 
-export const useNotes = (uid: string) => {
+export const useNoteStoreService = (uid: string): NoteStoreService => {
   const notesRef = useMemo(() => {
     return db
       .collection('users')

@@ -2,9 +2,9 @@ import firebase from 'firebase/app';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCallback, useMemo } from 'react';
 import { auth } from './firebaseConfig';
-import { AppUser, AuthState } from '../context/AuthContext';
+import { AppUser, AuthState } from '../types/auth';
 
-const useAuth = () => {
+export const useAuthService = () => {
   const [firebaseUser, loading] = useAuthState(auth);
   const user: AppUser = useMemo(
     () => ({
@@ -55,5 +55,3 @@ const useAuth = () => {
     deleteAccount,
   };
 };
-
-export { useAuth };

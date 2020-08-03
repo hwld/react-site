@@ -1,11 +1,9 @@
 import React, { useMemo, useCallback } from 'react';
 import { ContentColumn } from '../../ui/ContentColumn';
-import {
-  useNotesContext,
-  SearchNotesCriteria,
-} from '../../../../context/NotesContext';
+import { useNotesContext } from '../../../../context/NotesContext';
 import { useMobileContext } from '../../../../context/MobileContext';
 import { NoteList } from '../../ui/NoteList';
+import { SearchNotesCriteria } from '../../../../types/note';
 
 type SearchNotesColumnProps = {
   searchCriteria: SearchNotesCriteria;
