@@ -114,6 +114,7 @@ export const useGenreStoreService = (uid: string): GenreStoreService => {
       const childrenIds = ids.flatMap(id => fetchAllChildrenGenreIds(id));
       // 親子関係にあるジャンルを削除しようとした場合に重複するので排除する
       const deletedGenreIds = Array.from(new Set([...ids, ...childrenIds]));
+      console.log(deletedGenreIds);
 
       // 指定されたジャンルの親がrootじゃない場合,親のchildrenからジャンルを削除する
       const genreIds = deletedGenreIds.filter(id => !childrenIds.includes(id));
@@ -175,15 +176,20 @@ export const useGenreStoreService = (uid: string): GenreStoreService => {
           });
         }
 
-        // ジャンルの移動
-        batch.update(genresRef.doc(genre.id), { parentGenreId: destGenreId });
-
-        // 移動先ジャンルがrootでなければchildrenを設定する
+        // 移動先ジャンルがrootでなければchildrenを設定して、移動先ジャンルのrefをparentGenreRefに設定
         if (destGenreId !== '') {
           batch.update(genresRef.doc(destGenreId), {
             childrenGenreRefs: firebase.firestore.FieldValue.arrayUnion(
               genresRef.doc(genre.id),
             ),
+          });
+          batch.update(genresRef.doc(genre.id), {
+            parentGenreRef: genresRef.doc(destGenreId),
+          });
+        } else {
+          // 移動先ジャンルがrootの場合は自分自身をparentGenreRefに設定
+          batch.update(genresRef.doc(genre.id), {
+            parentGenreRef: genresRef.doc(genre.id),
           });
         }
       });
