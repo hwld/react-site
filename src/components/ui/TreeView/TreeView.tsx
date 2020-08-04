@@ -69,8 +69,11 @@ const TreeView: React.FC<TreeViewProps> = ({
   });
 
   // TreeItemの初回レンダリング時にだけ動かしたいので、依存しないようにする
-  const addNodeId = useCallback((id: string) => {
-    setNodes(state => [...state, { id, expanded: true, childrenId: [] }]);
+  const addNodeId = useCallback((id: string, element: HTMLElement) => {
+    setNodes(state => [
+      ...state,
+      { id, expanded: true, childrenId: [], element },
+    ]);
   }, []);
 
   // TreeItemの破棄の時にだけ動かしたいので、依存しないようにする
@@ -88,7 +91,12 @@ const TreeView: React.FC<TreeViewProps> = ({
         ...state
           .filter(s => s.id === id)
           .map(
-            (s): TreeNode => ({ id: s.id, expanded: s.expanded, childrenId }),
+            (s): TreeNode => ({
+              id: s.id,
+              expanded: s.expanded,
+              childrenId,
+              element: s.element,
+            }),
           ),
       ];
     });
@@ -102,6 +110,7 @@ const TreeView: React.FC<TreeViewProps> = ({
             id: node.id,
             expanded: isExpand,
             childrenId: node.childrenId,
+            element: node.element,
           };
         }
 

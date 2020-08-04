@@ -95,13 +95,16 @@ const TreeItem: React.FC<TreeItemProps> = ({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    addNodeId(nodeId);
+    // レンダリングのあとで動くのでrefはnullにならない?
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    addNodeId(nodeId, ref.current!);
 
     return () => {
       removeNodeId(nodeId);
     };
   }, [addNodeId, nodeId, removeNodeId]);
 
+  // TreeItemをラップする場合、nodeIdがないと正しく動かない.
   useEffect(() => {
     const getAllChildrenId = (childrenNode: React.ReactNode) => {
       const childrenId: string[] = [];
