@@ -97,7 +97,7 @@ const TreeItem: React.FC<TreeItemProps> = ({
   useEffect(() => {
     // レンダリングのあとで動くのでrefはnullにならない?
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    addNodeId(nodeId, ref.current!);
+    addNodeId(nodeId);
 
     return () => {
       removeNodeId(nodeId);

@@ -4,7 +4,6 @@ export type TreeNode = {
   id: string;
   expanded: boolean;
   childrenId: string[];
-  element: HTMLElement;
 };
 
 export type ParentIdWithChildrenId = {
@@ -15,7 +14,7 @@ export type ParentIdWithChildrenId = {
 type TreeViewContextValue = {
   multiple: boolean;
   nodes: TreeNode[];
-  addNodeId: (id: string, element: HTMLElement) => void;
+  addNodeId: (id: string) => void;
   addNodeChildrenId: (id: string, children: string[]) => void;
   removeNodeId: (id: string) => void;
   selectedIds: string[];
