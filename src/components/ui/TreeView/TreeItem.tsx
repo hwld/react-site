@@ -10,6 +10,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { SvgIcon, Typography } from '@material-ui/core';
 import { useDrag, useDrop, DragPreviewImage } from 'react-dnd';
+import { TreeView } from '@material-ui/lab';
 import { TreeViewContext } from './TreeViewContext';
 import { ItemTypes } from '../ItemTypes';
 
