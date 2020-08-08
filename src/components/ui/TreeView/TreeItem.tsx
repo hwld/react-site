@@ -106,15 +106,15 @@ const TreeItem: React.FC<TreeItemProps> = ({
 
   // TreeItemをラップする場合、nodeIdがないと正しく動かない.
   useEffect(() => {
-    const getAllChildrenId = (childrenNode: React.ReactNode) => {
+    const getDescendantsId = (node: React.ReactNode) => {
       const childrenId: string[] = [];
-      React.Children.forEach(childrenNode, child => {
+      React.Children.forEach(node, child => {
         if (React.isValidElement(child)) {
           if (child.props.nodeId) {
             childrenId.push(child.props.nodeId);
           }
           if (child.props.children) {
-            childrenId.push(...getAllChildrenId(child.props.children));
+            childrenId.push(...getDescendantsId(child.props.children));
           }
         }
       });
@@ -122,7 +122,7 @@ const TreeItem: React.FC<TreeItemProps> = ({
       return childrenId;
     };
 
-    addNodeChildrenId(nodeId, getAllChildrenId(children));
+    addNodeChildrenId(nodeId, getDescendantsId(children));
 
     // 子ノードが追加されていたら、展開する
     const childrenCount = React.Children.count(children);

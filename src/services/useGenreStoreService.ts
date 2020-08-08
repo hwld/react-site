@@ -46,8 +46,8 @@ export const useGenreStoreService = (uid: string): GenreStoreService => {
 
   const { notes, removeNotes } = useNoteStoreService(uid);
 
-  // 指定されたIdのジャンルの子ノードのidを再帰的に取得する.
-  const fetchAllChildrenGenreIds = useCallback(
+  // 指定されたIdのジャンルの子孫ノードのidを再帰的に取得する.
+  const fetchDescendantsGenreIds = useCallback(
     (parentId: string) => {
       const parentGenre = genres.find(genre => genre.id === parentId);
       if (!parentGenre) return [];
@@ -56,7 +56,7 @@ export const useGenreStoreService = (uid: string): GenreStoreService => {
 
       const grandChildrenIds: string[] = childrenIds.flatMap(id => {
         if (id !== '') {
-          return fetchAllChildrenGenreIds(id);
+          return fetchDescendantsGenreIds(id);
         }
 
         return [];
@@ -111,10 +111,9 @@ export const useGenreStoreService = (uid: string): GenreStoreService => {
   const removeGenres = useCallback(
     (ids: string[]) => {
       const batch = db.batch();
-      const childrenIds = ids.flatMap(id => fetchAllChildrenGenreIds(id));
+      const childrenIds = ids.flatMap(id => fetchDescendantsGenreIds(id));
       // 親子関係にあるジャンルを削除しようとした場合に重複するので排除する
       const deletedGenreIds = Array.from(new Set([...ids, ...childrenIds]));
-      console.log(deletedGenreIds);
 
       // 指定されたジャンルの親がrootじゃない場合,親のchildrenからジャンルを削除する
       const genreIds = deletedGenreIds.filter(id => !childrenIds.includes(id));
@@ -141,8 +140,8 @@ export const useGenreStoreService = (uid: string): GenreStoreService => {
       batch.commit();
     },
     [
-      fetchAllChildrenGenreIds,
       fetchAllNotesInGenreIds,
+      fetchDescendantsGenreIds,
       genres,
       genresRef,
       removeNotes,
