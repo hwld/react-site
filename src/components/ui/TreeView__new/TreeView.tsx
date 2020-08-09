@@ -31,13 +31,13 @@ type TreeViewProps = WithStyles<typeof styles> & {
   disableSelection?: boolean;
   multiSelect?: boolean;
   expanded?: string[];
-  onNodeSelect?: (event: React.SyntheticEvent, ids: string[]) => void;
+  onNodeSelect?: (ids: string[]) => void;
   selected?: string[];
   draggable?: boolean;
   onDrop?: (sourceId: string[], targetId: string) => void;
 };
 
-const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
+const UnStyledTreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
   function TreeView(props, ref) {
     const {
       children,
@@ -50,7 +50,6 @@ const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
       expanded: expandedProp,
       onNodeSelect,
       selected: selectedProp,
-      ...other
     } = props;
     const [tabbable, setTabbable] = React.useState<string | null>(null);
     const [focusedNodeId, setFocusedNodeId] = React.useState<string | null>(
@@ -240,7 +239,7 @@ const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
       }
 
       if (onNodeSelect) {
-        onNodeSelect(event, base);
+        onNodeSelect(base);
       }
 
       setSelectedState(base);
@@ -267,7 +266,7 @@ const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
       );
 
       if (onNodeSelect) {
-        onNodeSelect(event, newSelected);
+        onNodeSelect(newSelected);
       }
 
       setSelectedState(newSelected);
@@ -285,17 +284,18 @@ const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
       }
 
       if (onNodeSelect) {
-        onNodeSelect(event, newSelected);
+        onNodeSelect(newSelected);
       }
 
       setSelectedState(newSelected);
     };
 
     const handleSingleSelect = (event: React.SyntheticEvent, value: string) => {
-      const newSelected = [value];
+      const newSelected =
+        selected.length === 1 && selected[0] === value ? [] : [value];
 
       if (onNodeSelect) {
-        onNodeSelect(event, newSelected);
+        onNodeSelect(newSelected);
       }
 
       setSelectedState(newSelected);
@@ -306,20 +306,16 @@ const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
       id: string,
       multiple = false,
     ) => {
-      if (id) {
-        if (multiple) {
-          handleMultipleSelect(event, id);
-        } else {
-          handleSingleSelect(event, id);
-        }
-        lastSelectedNode.current = id;
-        lastSelectionWasRange.current = false;
-        currentRangeSelection.current = [];
-
-        return true;
+      if (multiple) {
+        handleMultipleSelect(event, id);
+      } else {
+        handleSingleSelect(event, id);
       }
+      lastSelectedNode.current = id;
+      lastSelectionWasRange.current = false;
+      currentRangeSelection.current = [];
 
-      return false;
+      return true;
     };
 
     const selectRange = (
@@ -511,6 +507,16 @@ const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
       }
     }, [expanded, childrenCalculated, isExpanded, children]);
 
+    const [removedNode, setRemovedNode] = React.useState<string>('');
+    // 削除されたノードが選択状態のときに解除する
+    React.useEffect(() => {
+      if (onNodeSelect && removedNode !== '') {
+        const newSelected = selected.filter(id => id !== removedNode);
+        onNodeSelect(newSelected);
+        setRemovedNode('');
+      }
+    }, [onNodeSelect, removedNode, selected]);
+
     const noopSelection = () => {
       return false;
     };
@@ -546,6 +552,7 @@ const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
           getParent,
           addNodeToNodeMap,
           removeNodeFromNodeMap,
+          setRemovedNode,
         }}
       >
         <ul
@@ -553,8 +560,6 @@ const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
           aria-multiselectable={multiSelect}
           className={clsx(classes.root, className)}
           ref={ref}
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          {...other}
         >
           {children}
         </ul>
@@ -563,4 +568,6 @@ const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
   },
 );
 
-export default withStyles(styles, { name: 'MuiTreeView' })(TreeView);
+export const TreeView = withStyles(styles, { name: 'MuiTreeView' })(
+  UnStyledTreeView,
+);
