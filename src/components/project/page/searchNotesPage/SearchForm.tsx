@@ -34,7 +34,8 @@ const CriteriaContent = styled.div`
 // AutoCompleteのgenericはoptionの型っぽいので無理やりstringに固定して使う.
 // Optionの型を変更すると動かなくなる
 const StringAutoComplete = AutoComplete as React.FC<
-  AutocompleteProps<string> & UseAutocompleteProps<string>
+  AutocompleteProps<string, false, false, false> &
+    UseAutocompleteProps<string, false, false, false>
 >;
 const CriteriaAutoComplete = styled(StringAutoComplete)`
   width: 100%;
