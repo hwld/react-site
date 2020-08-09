@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
-import { TreeItem } from '../../ui/TreeView/TreeItem';
+// import { TreeItem } from '../../ui/TreeView/TreeItem';
+import { TreeItem } from '../../ui/TreeView__new/TreeItem';
 import { ListItemDropType } from '../../ui/List/ListItem';
 import { ItemTypes } from '../../ui/ItemTypes';
 

@@ -1,7 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import Alert from '@material-ui/lab/Alert';
-import { TreeView } from '../../ui/TreeView/TreeView';
+// import { TreeView } from '../../ui/TreeView/TreeView';
+import { TreeView } from '../../ui/TreeView__new/TreeView';
 import { GenreTreeItem } from './GenreTreeItem';
 import { Genre } from '../../../types/genre';
 
@@ -104,10 +105,10 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
 
   return (
     <StyledTreeView
-      multiple={multiple}
+      multiSelect={multiple}
       className={className}
-      selectedIds={selectedGenreIds}
-      onSelect={onGenreSelect}
+      selected={selectedGenreIds}
+      onNodeSelect={onGenreSelect}
       draggable={draggable}
       onDrop={onGenreDrop}
     >
