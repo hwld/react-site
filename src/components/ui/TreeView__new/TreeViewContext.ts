@@ -11,11 +11,8 @@ type TreeViewContextValue = {
   isExpanded: (id: string) => boolean;
   isFocused: (id: string) => boolean;
   isSelected: (id: string) => boolean;
-  selectNode: (
-    event: React.SyntheticEvent,
-    id: string,
-    multiple?: boolean,
-  ) => boolean;
+  isDescendantOfSelected: (id: string) => boolean;
+  selectNode: (id: string | null, multiple?: boolean) => boolean;
   selectRange: (
     event: React.SyntheticEvent,
     nodes: {
@@ -35,6 +32,9 @@ type TreeViewContextValue = {
   getParent: (id: string) => string | null | undefined;
   addNodeToNodeMap: (id: string, childrenIds: string[]) => void;
   removeNodeFromNodeMap: (id: string) => void;
+  setRemovedNode: (id: string) => void;
+  draggable: boolean;
+  dropToSelected: (targetId: string) => void;
 };
 
 /**
@@ -51,6 +51,7 @@ const TreeViewContext = React.createContext<TreeViewContextValue>({
   isExpanded: () => false,
   isFocused: () => false,
   isSelected: () => false,
+  isDescendantOfSelected: () => false,
   selectNode: () => false,
   selectRange: () => false,
   selectNextNode: () => false,
@@ -63,6 +64,9 @@ const TreeViewContext = React.createContext<TreeViewContextValue>({
   getParent: () => null,
   addNodeToNodeMap: () => {},
   removeNodeFromNodeMap: () => {},
+  setRemovedNode: () => {},
+  draggable: false,
+  dropToSelected: () => {},
 });
 
 if (process.env.NODE_ENV !== 'production') {

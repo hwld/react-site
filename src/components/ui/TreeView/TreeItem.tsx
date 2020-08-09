@@ -10,7 +10,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { SvgIcon, Typography } from '@material-ui/core';
 import { useDrag, useDrop, DragPreviewImage } from 'react-dnd';
-import { TreeView } from '@material-ui/lab';
 import { TreeViewContext } from './TreeViewContext';
 import { ItemTypes } from '../ItemTypes';
 
@@ -96,7 +95,6 @@ const TreeItem: React.FC<TreeItemProps> = ({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // レンダリングのあとで動くのでrefはnullにならない?
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     addNodeId(nodeId);
 
@@ -161,7 +159,7 @@ const TreeItem: React.FC<TreeItemProps> = ({
         const parentWithChild = nodes.find(node => node.id === parentId);
 
         if (!parentWithChild) {
-          throw new Error('存在しないジャンル');
+          throw new Error('存在しないノード');
         }
 
         return parentWithChild.childrenId.includes(nodeId);

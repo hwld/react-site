@@ -13,7 +13,24 @@ import { useForkRef } from '@material-ui/core/utils';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import clsx from 'clsx';
+import { useDrag, useDrop, DragPreviewImage } from 'react-dnd';
+import styled from 'styled-components';
 import TreeViewContext from './TreeViewContext';
+import { ItemTypes } from '../ItemTypes';
+
+const DropLayer = styled.div<{
+  canDrop?: boolean;
+  isDropOver?: boolean;
+}>`
+  background-color: ${props =>
+    props.canDrop && props.isDropOver
+      ? props.theme.palette.secondary.main
+      : ''};
+`;
+
+const DragLayer = styled.div<{ isDragging?: boolean }>`
+  opacity: ${props => (props.isDragging ? 0.5 : 1)};
+`;
 
 export const styles = (theme: Theme) => ({
   /* Styles applied to the root element. */
@@ -23,18 +40,18 @@ export const styles = (theme: Theme) => ({
     padding: 0,
     outline: 0,
     WebkitTapHighlightColor: 'transparent',
-    '&:focus > $content $label': {
+    '&:focus > div > div > div > $content $label': {
       backgroundColor: theme.palette.action.hover,
     },
-    '&$selected > $content $label': {
+    '&$selected > div > div > div > $content $label': {
       backgroundColor: fade(
-        theme.palette.primary.main,
+        theme.palette.secondary.main,
         theme.palette.action.selectedOpacity,
       ),
     },
-    '&$selected > $content $label:hover, &$selected:focus > $content $label': {
+    '&$selected > div > div > div >  $content $label:hover, &$selected:focus > div > div > div > $content $label': {
       backgroundColor: fade(
-        theme.palette.primary.main,
+        theme.palette.secondary.main,
         theme.palette.action.selectedOpacity +
           theme.palette.action.hoverOpacity,
       ),
@@ -64,18 +81,24 @@ export const styles = (theme: Theme) => ({
   /* Styles applied to the tree node icon and collapse/expand icon. */
   iconContainer: {
     marginRight: 4,
-    width: 15,
+    width: 30,
     display: 'flex',
     flexShrink: 0,
     justifyContent: 'center',
     '& svg': {
-      fontSize: 18,
+      fontSize: 30,
+    },
+    '&:focus': {
+      outline: 'none',
     },
   },
   /* Styles applied to the label element. */
   label: {
     width: '100%',
     paddingLeft: 4,
+    paddingTop: 5,
+    paddingBottom: 5,
+    fontSize: 16,
     // position: 'relative',
     '&:hover': {
       backgroundColor: theme.palette.action.hover,
@@ -95,9 +118,17 @@ type TreeItemProps = WithStyles<typeof styles> & {
   isDropOver?: boolean;
 };
 
-const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
+const UnStyledTreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
   function TreeItem(props, ref) {
-    const { children, className, classes, label, nodeId, ...other } = props;
+    const {
+      children,
+      className,
+      classes,
+      label,
+      nodeId,
+      isDropOver,
+      canDrop,
+    } = props;
 
     const {
       focus,
@@ -117,11 +148,15 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
       isExpanded,
       isFocused,
       isSelected,
+      isDescendantOfSelected,
       isTabbable,
       multiSelect,
       getParent,
       addNodeToNodeMap,
       removeNodeFromNodeMap,
+      setRemovedNode,
+      draggable,
+      dropToSelected,
     } = React.useContext(TreeViewContext);
 
     const nodeRef = React.useRef<HTMLLIElement>(null);
@@ -138,6 +173,9 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
     const theme = useTheme();
 
     const icon = () => {
+      if (!expandable) {
+        return <></>;
+      }
       if (!expanded) {
         return <ExpandMoreIcon color="secondary" />;
       }
@@ -145,12 +183,33 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
       return <ChevronRightIcon color="secondary" />;
     };
 
-    const handleClick = (
+    const handleContentClick = (
       event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     ) => {
+      event.stopPropagation();
+
       if (!focused) {
         focus(nodeId);
       }
+
+      const multiple =
+        multiSelect && (event.shiftKey || event.ctrlKey || event.metaKey);
+
+      if (multiple) {
+        if (event.shiftKey) {
+          selectRange(event, { end: nodeId });
+        } else {
+          selectNode(nodeId, true);
+        }
+      } else {
+        selectNode(nodeId);
+      }
+    };
+
+    const handleIconClick = (
+      event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    ) => {
+      event.stopPropagation();
 
       const multiple =
         multiSelect && (event.shiftKey || event.ctrlKey || event.metaKey);
@@ -162,16 +221,6 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
         !(multiple && isExpanded(nodeId))
       ) {
         toggleExpansion(event, nodeId);
-      }
-
-      if (multiple) {
-        if (event.shiftKey) {
-          selectRange(event, { end: nodeId });
-        } else {
-          selectNode(event, nodeId, true);
-        }
-      } else {
-        selectNode(event, nodeId);
       }
     };
 
@@ -224,18 +273,24 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
 
       switch (key) {
         case ' ':
-          if (nodeRef.current === event.currentTarget) {
-            if (multiSelect && event.shiftKey) {
-              flag = selectRange(event, { end: nodeId });
-            } else if (multiSelect) {
-              flag = selectNode(event, nodeId, true);
-            } else {
-              flag = selectNode(event, nodeId);
-            }
+          if (nodeRef.current === event.currentTarget && expandable) {
+            toggleExpansion(event);
+            flag = true;
           }
           event.stopPropagation();
           break;
         case 'Enter':
+          if (nodeRef.current === event.currentTarget) {
+            if (multiSelect && event.shiftKey) {
+              flag = selectRange(event, { end: nodeId });
+            } else if (multiSelect && event.ctrlKey) {
+              flag = selectNode(nodeId, true);
+            } else {
+              flag = selectNode(nodeId);
+            }
+          }
+          event.stopPropagation();
+          break;
           if (nodeRef.current === event.currentTarget && expandable) {
             toggleExpansion(event);
             flag = true;
@@ -321,11 +376,12 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
       if (removeNodeFromNodeMap) {
         return () => {
           removeNodeFromNodeMap(nodeId);
+          setRemovedNode(nodeId);
         };
       }
 
       return undefined;
-    }, [nodeId, removeNodeFromNodeMap]);
+    }, [nodeId, removeNodeFromNodeMap, setRemovedNode]);
 
     React.useEffect(() => {
       const reference = nodeRef.current;
@@ -342,6 +398,41 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
       ariaSelected = true;
     }
 
+    const [{ isDragging }, drag, preview] = useDrag({
+      item: { type: ItemTypes.TreeItem },
+      collect: monitor => ({
+        isDragging: !!monitor.isDragging(),
+      }),
+      begin: () => {
+        if (!isSelected(nodeId)) {
+          selectNode(nodeId);
+        }
+      },
+      end: (item, monitor) => {
+        if (monitor.didDrop()) {
+          selectNode(null);
+        }
+      },
+    });
+
+    const [{ isDropOverInner, canDropInner }, drop] = useDrop({
+      accept: ItemTypes.TreeItem,
+      collect: monitor => ({
+        isDropOverInner: monitor.isOver(),
+        canDropInner: monitor.canDrop(),
+      }),
+      canDrop: () => {
+        return (
+          !isDragging && !isSelected(nodeId) && !isDescendantOfSelected(nodeId)
+        );
+      },
+      drop: (item, monitor) => {
+        if (!monitor.didDrop()) {
+          dropToSelected(nodeId);
+        }
+      },
+    });
+
     return (
       <li
         className={clsx(classes.root, className, {
@@ -355,22 +446,39 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
         aria-selected={ariaSelected}
         ref={handleRef}
         tabIndex={tabbable ? 0 : -1}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...other}
       >
-        <div
-          className={classes.content}
-          onClick={handleClick}
-          onMouseDown={handleMouseDown}
-          ref={contentRef}
-        >
-          <div onClick={() => {}} className={classes.iconContainer}>
-            {icon()}
-          </div>
-          <Typography component="div" className={classes.label}>
-            {label}
-          </Typography>
-        </div>
+        <DropLayer isDropOver={isDropOver} canDrop={canDrop}>
+          <DropLayer
+            ref={drop}
+            isDropOver={isDropOverInner}
+            canDrop={canDropInner}
+          >
+            <DragLayer ref={draggable ? drag : null} isDragging={isDragging}>
+              <div
+                className={classes.content}
+                onClick={handleContentClick}
+                onMouseDown={handleMouseDown}
+                ref={contentRef}
+              >
+                <div
+                  onClick={handleIconClick}
+                  className={classes.iconContainer}
+                  // click時にfocusが外側のdivにつかないようにする.
+                  tabIndex={-1}
+                >
+                  {icon()}
+                </div>
+                <Typography component="div" className={classes.label}>
+                  {label}
+                </Typography>
+              </div>
+              <DragPreviewImage
+                connect={preview}
+                src={`${process.env.PUBLIC_URL}/folder.svg`}
+              />
+            </DragLayer>
+          </DropLayer>
+        </DropLayer>
         {children && (
           <Collapse
             unmountOnExit
@@ -386,4 +494,6 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
   },
 );
 
-export default withStyles(styles, { name: 'MuiTreeItem' })(TreeItem);
+export const TreeItem = withStyles(styles, { name: 'MuiTreeItem' })(
+  UnStyledTreeItem,
+);

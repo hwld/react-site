@@ -3,7 +3,14 @@ import { withStyles } from '@material-ui/core/styles';
 import { useControlled } from '@material-ui/core/utils';
 import { WithStyles } from '@material-ui/styles';
 import clsx from 'clsx';
+import { useDrop } from 'react-dnd';
+import styled from 'styled-components';
 import TreeViewContext from './TreeViewContext';
+import { ItemTypes } from '../ItemTypes';
+
+const DropLayer = styled.div`
+  height: 100%;
+`;
 
 export const styles = {
   /* Styles applied to the root element. */
@@ -50,6 +57,8 @@ const UnStyledTreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
       expanded: expandedProp,
       onNodeSelect,
       selected: selectedProp,
+      draggable = false,
+      onDrop = () => {},
     } = props;
     const [tabbable, setTabbable] = React.useState<string | null>(null);
     const [focusedNodeId, setFocusedNodeId] = React.useState<string | null>(
@@ -75,24 +84,6 @@ const UnStyledTreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
       name: 'TreeView',
       state: 'selected',
     });
-
-    /*
-     * Status Helpers
-     */
-    const isExpanded = React.useCallback(
-      (id: string) =>
-        Array.isArray(expanded) ? expanded.indexOf(id) !== -1 : false,
-      [expanded],
-    );
-
-    const isSelected = React.useCallback(
-      (id: string) =>
-        Array.isArray(selected) ? selected.indexOf(id) !== -1 : selected === id,
-      [selected],
-    );
-
-    const isTabbable = (id: string) => tabbable === id;
-    const isFocused = (id: string) => focusedNodeId === id;
 
     /*
      * Node Helpers
@@ -129,6 +120,48 @@ const UnStyledTreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
 
       return visibleNodes.current.slice(start, end + 1);
     };
+
+    const getAllDescendants = React.useCallback((id: string): string[] => {
+      const node = nodeMap.current.get(id);
+      if (!node) {
+        return [];
+      }
+
+      const descendants = node.children.flatMap(childId =>
+        getAllDescendants(childId),
+      );
+
+      return [...node.children, ...descendants];
+    }, []);
+
+    /*
+     * Status Helpers
+     */
+    const isExpanded = React.useCallback(
+      (id: string) =>
+        Array.isArray(expanded) ? expanded.indexOf(id) !== -1 : false,
+      [expanded],
+    );
+
+    const isSelected = React.useCallback(
+      (id: string) =>
+        Array.isArray(selected) ? selected.indexOf(id) !== -1 : selected === id,
+      [selected],
+    );
+
+    const isDescendantOfSelected = React.useCallback(
+      (id: string) => {
+        const descendantsOfSelected = selected.flatMap(selectedId =>
+          getAllDescendants(selectedId),
+        );
+
+        return descendantsOfSelected.includes(id);
+      },
+      [getAllDescendants, selected],
+    );
+
+    const isTabbable = (id: string) => tabbable === id;
+    const isFocused = (id: string) => focusedNodeId === id;
 
     /*
      * Focus Helpers
@@ -272,10 +305,7 @@ const UnStyledTreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
       setSelectedState(newSelected);
     };
 
-    const handleMultipleSelect = (
-      event: React.SyntheticEvent,
-      value: string,
-    ) => {
+    const handleMultipleSelect = (value: string) => {
       let newSelected: string[] = [];
       if (selected.indexOf(value) !== -1) {
         newSelected = selected.filter(id => id !== value);
@@ -290,7 +320,7 @@ const UnStyledTreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
       setSelectedState(newSelected);
     };
 
-    const handleSingleSelect = (event: React.SyntheticEvent, value: string) => {
+    const handleSingleSelect = (value: string) => {
       const newSelected =
         selected.length === 1 && selected[0] === value ? [] : [value];
 
@@ -301,15 +331,19 @@ const UnStyledTreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
       setSelectedState(newSelected);
     };
 
-    const selectNode = (
-      event: React.SyntheticEvent,
-      id: string,
-      multiple = false,
-    ) => {
-      if (multiple) {
-        handleMultipleSelect(event, id);
+    const clearSelect = () => {
+      if (onNodeSelect) {
+        onNodeSelect([]);
+      }
+    };
+
+    const selectNode = (id: string | null, multiple = false) => {
+      if (!id) {
+        clearSelect();
+      } else if (multiple) {
+        handleMultipleSelect(id);
       } else {
-        handleSingleSelect(event, id);
+        handleSingleSelect(id);
       }
       lastSelectedNode.current = id;
       lastSelectionWasRange.current = false;
@@ -386,6 +420,29 @@ const UnStyledTreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
 
     const selectAllNodes = (event: React.SyntheticEvent) =>
       selectRange(event, { start: getFirstNode(), end: getLastNode() });
+
+    /*
+     * Drop and Drag
+     */
+
+    const dropToSelected = React.useCallback(
+      (targetId: string) => {
+        onDrop(selected, targetId);
+      },
+      [onDrop, selected],
+    );
+
+    const [, dropRef] = useDrop({
+      accept: ItemTypes.TreeItem,
+      canDrop: (item, monitor) => {
+        return monitor.isOver({ shallow: true });
+      },
+      drop: (item, monitor) => {
+        if (!monitor.didDrop()) {
+          dropToSelected('');
+        }
+      },
+    });
 
     /*
      * Mapping Helpers
@@ -507,15 +564,19 @@ const UnStyledTreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
       }
     }, [expanded, childrenCalculated, isExpanded, children]);
 
-    const [removedNode, setRemovedNode] = React.useState<string>('');
+    const [removedNodes, setRemovedNodes] = React.useState<string[]>([]);
+    const setRemovedNode = React.useCallback((id: string) => {
+      setRemovedNodes(nodes => [...nodes, id]);
+    }, []);
+
     // 削除されたノードが選択状態のときに解除する
     React.useEffect(() => {
-      if (onNodeSelect && removedNode !== '') {
-        const newSelected = selected.filter(id => id !== removedNode);
+      if (onNodeSelect && removedNodes.length !== 0) {
+        const newSelected = selected.filter(id => !removedNodes.includes(id));
         onNodeSelect(newSelected);
-        setRemovedNode('');
+        setRemovedNodes([]);
       }
-    }, [onNodeSelect, removedNode, selected]);
+    }, [onNodeSelect, removedNodes, selected]);
 
     const noopSelection = () => {
       return false;
@@ -534,6 +595,7 @@ const UnStyledTreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
           isExpanded,
           isFocused,
           isSelected,
+          isDescendantOfSelected,
           selectNode: disableSelection ? noopSelection : selectNode,
           selectRange: disableSelection ? noopSelection : selectRange,
           selectNextNode: disableSelection ? noopSelection : selectNextNode,
@@ -553,16 +615,22 @@ const UnStyledTreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
           addNodeToNodeMap,
           removeNodeFromNodeMap,
           setRemovedNode,
+          draggable,
+          dropToSelected,
         }}
       >
-        <ul
-          role="tree"
-          aria-multiselectable={multiSelect}
-          className={clsx(classes.root, className)}
-          ref={ref}
-        >
-          {children}
-        </ul>
+        <DropLayer ref={dropRef}>
+          <ul
+            role="tree"
+            aria-multiselectable={multiSelect}
+            className={clsx(classes.root, className)}
+            onClick={event => !disableSelection && selectNode(null)}
+            onKeyDown={() => {}}
+            ref={ref}
+          >
+            {children}
+          </ul>
+        </DropLayer>
       </TreeViewContext.Provider>
     );
   },
