@@ -2,13 +2,7 @@
 import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
-import {
-  fade,
-  withStyles,
-  useTheme,
-  Theme,
-  WithStyles,
-} from '@material-ui/core/styles';
+import { fade, withStyles, Theme, WithStyles } from '@material-ui/core/styles';
 import { useForkRef } from '@material-ui/core/utils';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -99,7 +93,7 @@ export const styles = (theme: Theme) => ({
     paddingLeft: 4,
     paddingTop: 5,
     paddingBottom: 5,
-    fontSize: 16,
+    fontSize: '1rem',
     // position: 'relative',
     '&:hover': {
       backgroundColor: theme.palette.action.hover,
@@ -154,7 +148,6 @@ const UnStyledTreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
       isDescendantOfSelected,
       isTabbable,
       multiSelect,
-      getParent,
       addNodeToNodeMap,
       removeNodeFromNodeMap,
       setRemovedNode,
@@ -173,7 +166,6 @@ const UnStyledTreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
     const focused = isFocused ? isFocused(nodeId) : false;
     const tabbable = isTabbable ? isTabbable(nodeId) : false;
     const selected = isSelected ? isSelected(nodeId) : false;
-    const theme = useTheme();
 
     const icon = () => {
       if (!expandable) {
@@ -233,35 +225,6 @@ const UnStyledTreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
       if (event.shiftKey || event.ctrlKey || event.metaKey) {
         event.preventDefault();
       }
-    };
-
-    const handleNextArrow = (event: React.KeyboardEvent<HTMLLIElement>) => {
-      if (expandable) {
-        if (expanded) {
-          focusNextNode(nodeId);
-        } else {
-          toggleExpansion(event);
-        }
-      }
-
-      return true;
-    };
-
-    const handlePreviousArrow = (event: React.KeyboardEvent<HTMLLIElement>) => {
-      if (expanded) {
-        toggleExpansion(event, nodeId);
-
-        return true;
-      }
-
-      const parent = getParent(nodeId);
-      if (parent) {
-        focus(parent);
-
-        return true;
-      }
-
-      return false;
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLLIElement>) => {
