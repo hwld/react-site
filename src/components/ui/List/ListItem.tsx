@@ -1,8 +1,15 @@
 import React, { useContext, useEffect } from 'react';
 import { ListItem as MuiListItem, Divider } from '@material-ui/core';
 import { useDrag, DragPreviewImage } from 'react-dnd';
+import styled from 'styled-components';
 import { ListContext } from './ListContext';
 import { ItemTypes } from '../ItemTypes';
+
+const StyledMuiListItem = styled(MuiListItem)`
+  &.Mui-focusVisible {
+    background-color: ${props => props.theme.palette.action.hover};
+  }
+`;
 
 export type ListItemDropType = {
   type: string;
@@ -52,14 +59,14 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
 
   return (
     <div ref={draggable ? drag : null} data-testid={`dragLayer-${itemId}`}>
-      <MuiListItem
+      <StyledMuiListItem
         button
         onClick={setSelectedIds}
         selected={selectedIds.includes(itemId)}
         data-testid={`selectLayer-${itemId}`}
       >
         {children}
-      </MuiListItem>
+      </StyledMuiListItem>
       <Divider />
       <DragPreviewImage
         connect={preview}

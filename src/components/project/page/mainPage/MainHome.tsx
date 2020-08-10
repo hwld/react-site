@@ -42,7 +42,7 @@ const MainHome: React.FC = () => {
       <Background data-testid="mainPage">
         <MainHeader onMenuClick={invertDrawer} onGoSearchMode={goSearchMode} />
         <Drawer
-          width={isMobile ? '80' : '30'}
+          width={isMobile ? '80' : '40'}
           isPresistent={!isMobile}
           open={isOpen}
           onOpen={openDrawer}
