@@ -45,13 +45,13 @@ export const styles = (theme: Theme) => ({
     },
     '&$selected > div > div > div > $content $label': {
       backgroundColor: fade(
-        theme.palette.secondary.main,
+        theme.palette.action.selected,
         theme.palette.action.selectedOpacity,
       ),
     },
     '&$selected > div > div > div >  $content $label:hover, &$selected:focus > div > div > div > $content $label': {
       backgroundColor: fade(
-        theme.palette.secondary.main,
+        theme.palette.action.selected,
         theme.palette.action.selectedOpacity +
           theme.palette.action.hoverOpacity,
       ),
@@ -116,6 +116,7 @@ type TreeItemProps = WithStyles<typeof styles> & {
   nodeId: string;
   canDrop?: boolean;
   isDropOver?: boolean;
+  onKeyDown?: (event: React.KeyboardEvent) => void;
 };
 
 const UnStyledTreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
@@ -128,6 +129,7 @@ const UnStyledTreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
       nodeId,
       isDropOver,
       canDrop,
+      onKeyDown,
     } = props;
 
     const {
@@ -305,20 +307,6 @@ const UnStyledTreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
           focusPreviousNode(nodeId);
           flag = true;
           break;
-        case 'ArrowRight':
-          if (theme.direction === 'rtl') {
-            flag = handlePreviousArrow(event);
-          } else {
-            flag = handleNextArrow(event);
-          }
-          break;
-        case 'ArrowLeft':
-          if (theme.direction === 'rtl') {
-            flag = handleNextArrow(event);
-          } else {
-            flag = handlePreviousArrow(event);
-          }
-          break;
         case 'Home':
           if (multiSelect && ctrlPressed && event.shiftKey) {
             rangeSelectToFirst(event, nodeId);
@@ -345,6 +333,10 @@ const UnStyledTreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
       if (flag) {
         event.preventDefault();
         event.stopPropagation();
+      }
+
+      if (onKeyDown) {
+        onKeyDown(event);
       }
     };
 

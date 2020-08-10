@@ -18,7 +18,8 @@ const appTheme = createMuiTheme({
       secondary: '#303030',
     },
     action: {
-      selected: 'rgba(255,255,255,0.4)',
+      selected: 'rgba(118,118,118,1)',
+      selectedOpacity: 0.6,
       hover: 'rgba(0,0,0,0.26)',
       disabled: 'rgba(0,0,0,0.26)',
     },

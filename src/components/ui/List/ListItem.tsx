@@ -2,13 +2,42 @@ import React, { useContext, useEffect } from 'react';
 import { ListItem as MuiListItem, Divider } from '@material-ui/core';
 import { useDrag, DragPreviewImage } from 'react-dnd';
 import styled from 'styled-components';
+import { fade } from '@material-ui/core/styles';
 import { ListContext } from './ListContext';
 import { ItemTypes } from '../ItemTypes';
 
+const ListItemRoot = styled.div``;
+
 const StyledMuiListItem = styled(MuiListItem)`
   &.Mui-focusVisible {
-    background-color: ${props => props.theme.palette.action.hover};
+    background-color: transparent;
   }
+
+  &.Mui-selected {
+    background-color: ${props =>
+      fade(
+        props.theme.palette.action.selected,
+        props.theme.palette.action.selectedOpacity,
+      )};
+  }
+
+  &.Mui-selected.Mui-focusVisible,
+  &.Mui-selected:hover {
+    background-color: ${props =>
+      fade(
+        props.theme.palette.action.selected,
+        props.theme.palette.action.selectedOpacity +
+          props.theme.palette.action.hoverOpacity,
+      )};
+  }
+`;
+
+// MuiListItemのselectedを使うとfocusと同じレイヤーにselectedがあたって、focusされたときに色が完全に変わってしまう
+const SelectLayer = styled.div<{ selected: boolean }>`
+  background-color: ${props =>
+    props.selected ? props.theme.palette.action.selected : 'transparent'};
+  width: 100%;
+  height: 100%;
 `;
 
 export type ListItemDropType = {
@@ -58,7 +87,10 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
   };
 
   return (
-    <div ref={draggable ? drag : null} data-testid={`dragLayer-${itemId}`}>
+    <ListItemRoot
+      ref={draggable ? drag : null}
+      data-testid={`dragLayer-${itemId}`}
+    >
       <StyledMuiListItem
         button
         onClick={setSelectedIds}
@@ -72,7 +104,7 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
         connect={preview}
         src={`${process.env.PUBLIC_URL}/note.svg`}
       />
-    </div>
+    </ListItemRoot>
   );
 };
 
