@@ -5,6 +5,9 @@ type ListContextValue = {
   selectedIds: string[];
   selectItem: (ids: string[]) => void;
   removeItemId: (id: string) => void;
+  isFocused: (id: string) => boolean;
+  focuseNextItem: (id: string) => void;
+  focusePrevItem: (id: string) => void;
 };
 
 const ListContext = React.createContext<ListContextValue>({
@@ -12,6 +15,9 @@ const ListContext = React.createContext<ListContextValue>({
   selectedIds: [],
   selectItem: () => {},
   removeItemId: () => {},
+  isFocused: () => false,
+  focuseNextItem: () => {},
+  focusePrevItem: () => {},
 });
 
 export const ListContextProvider: React.FC<{ value: ListContextValue }> = ({

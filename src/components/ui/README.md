@@ -4,9 +4,10 @@
   
 * List
   * ListItem
+    * ラップするときに重複しないitemIdプロパティを指定しないと正しく動かない.
   * ListContext
 
 * TreeView
   * TreeItem
-    * ラップするときにnodeIdプロパティを指定しないと正しく動かない.
+    * ラップするときに重複しないnodeIdプロパティを指定しないと正しく動かない.
   * TreeContext

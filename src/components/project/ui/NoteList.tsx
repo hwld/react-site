@@ -74,6 +74,7 @@ const NoteList: React.FC<NoteListProps> = ({
       .map(note => (
         <NoteListItem
           note={note}
+          itemId={note.id}
           key={note.id}
           searchCriteria={searchCriteria}
         />

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { ListItem as MuiListItem, Divider } from '@material-ui/core';
 import { useDrag, DragPreviewImage } from 'react-dnd';
 import styled from 'styled-components';
@@ -10,7 +10,7 @@ const ListItemRoot = styled.div``;
 
 const StyledMuiListItem = styled(MuiListItem)`
   &.Mui-focusVisible {
-    background-color: transparent;
+    background-color: ${props => props.theme.palette.action.hover};
   }
 
   &.Mui-selected {
@@ -22,6 +22,7 @@ const StyledMuiListItem = styled(MuiListItem)`
   }
 
   &.Mui-selected.Mui-focusVisible,
+  &.Mui-selected:focus,
   &.Mui-selected:hover {
     background-color: ${props =>
       fade(
@@ -30,14 +31,6 @@ const StyledMuiListItem = styled(MuiListItem)`
           props.theme.palette.action.hoverOpacity,
       )};
   }
-`;
-
-// MuiListItemのselectedを使うとfocusと同じレイヤーにselectedがあたって、focusされたときに色が完全に変わってしまう
-const SelectLayer = styled.div<{ selected: boolean }>`
-  background-color: ${props =>
-    props.selected ? props.theme.palette.action.selected : 'transparent'};
-  width: 100%;
-  height: 100%;
 `;
 
 export type ListItemDropType = {
@@ -50,15 +43,17 @@ type ListItemProps = {
 };
 
 const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
-  const { selectedIds, draggable, selectItem, removeItemId } = useContext(
-    ListContext,
-  );
+  const {
+    selectedIds,
+    draggable,
+    selectItem,
+    removeItemId,
+    isFocused,
+    focuseNextItem,
+    focusePrevItem,
+  } = useContext(ListContext);
 
-  useEffect(() => {
-    return () => {
-      removeItemId(itemId);
-    };
-  }, [itemId, removeItemId]);
+  const itemRef = useRef<HTMLDivElement>(null);
 
   const [, drag, preview] = useDrag({
     item: { type: ItemTypes.ListItem, ids: [...selectedIds] },
@@ -78,13 +73,42 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
     },
   });
 
-  const setSelectedIds = () => {
+  const handleClick = () => {
     if (!selectedIds.includes(itemId)) {
       selectItem([...selectedIds, itemId]);
     } else {
       selectItem(selectedIds.filter(id => id !== itemId));
     }
   };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    switch (event.key) {
+      case 'ArrowUp': {
+        focusePrevItem(itemId);
+        break;
+      }
+      case 'ArrowDown': {
+        focuseNextItem(itemId);
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      removeItemId(itemId);
+    };
+  }, [itemId, removeItemId]);
+
+  useEffect(() => {
+    const ref = itemRef.current;
+    if (ref && isFocused(itemId)) {
+      ref.focus();
+    }
+  }, [isFocused, itemId]);
 
   return (
     <ListItemRoot
@@ -93,7 +117,8 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
     >
       <StyledMuiListItem
         button
-        onClick={setSelectedIds}
+        onClick={handleClick}
+        onKeyDown={handleKeyDown}
         selected={selectedIds.includes(itemId)}
         data-testid={`selectLayer-${itemId}`}
       >

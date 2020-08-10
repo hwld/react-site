@@ -50,10 +50,12 @@ const HighlightSpan = styled.span`
 
 type NoteListItemProps = {
   note: Note;
+  itemId: string;
   searchCriteria?: SearchNotesCriteria;
 };
 const NoteListItem: React.FC<NoteListItemProps> = ({
   note,
+  itemId,
   searchCriteria,
 }) => {
   const getHighlightedText = useCallback((text: string, highlight: string) => {
@@ -101,7 +103,7 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
   }, [getHighlightedText, note.bookName, searchCriteria]);
 
   return (
-    <ListItem itemId={note.id}>
+    <ListItem itemId={itemId}>
       <GridContainer>
         <NoteTextContainer>
           <TitleText variant="h4">
@@ -118,7 +120,7 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
           </MetaData>
         </NoteTextContainer>
         <div>
-          <RemoveNoteDialog targetNoteIds={[note.id]} />
+          <RemoveNoteDialog targetNoteIds={[itemId]} />
           <UpdateNoteDialog defaultNote={note} />
         </div>
       </GridContainer>
