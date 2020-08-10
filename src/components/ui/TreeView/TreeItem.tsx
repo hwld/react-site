@@ -52,6 +52,7 @@ export const styles = (theme: Theme) => ({
     '&$selected > div > div > div >  $content $label:hover, &$selected:focus > div > div > div > $content $label': {
       backgroundColor: fade(
         theme.palette.action.selected,
+        // 1を超えるとバグる
         theme.palette.action.selectedOpacity +
           theme.palette.action.hoverOpacity,
       ),

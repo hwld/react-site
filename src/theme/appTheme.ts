@@ -21,7 +21,7 @@ const appTheme = createMuiTheme({
       selected: 'rgba(118,118,118,1)',
       selectedOpacity: 0.7,
       hover: 'rgba(0,0,0,0.26)',
-      hoverOpacity: 0.5,
+      hoverOpacity: 0.3,
       disabled: 'rgba(0,0,0,0.26)',
     },
   },

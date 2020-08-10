@@ -116,6 +116,7 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
       data-testid={`dragLayer-${itemId}`}
     >
       <StyledMuiListItem
+        ref={itemRef}
         button
         onClick={handleClick}
         onKeyDown={handleKeyDown}
