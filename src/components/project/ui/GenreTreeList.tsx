@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, forwardRef } from 'react';
 import styled from 'styled-components';
 import Alert from '@material-ui/lab/Alert';
 import { TreeView } from '../../ui/TreeView/TreeView';
@@ -24,16 +24,22 @@ type GenreTreeListProps = {
   onNotesDrop?: (noteIds: string[], destGenreId: string) => void;
 };
 
-const GenreTreeList: React.FC<GenreTreeListProps> = ({
-  multiple,
-  genres,
-  selectedGenreIds = [],
-  onGenreSelect = () => {},
-  draggable = false,
-  onGenreDrop,
-  onNotesDrop,
-  className,
-}) => {
+export const GenreTreeList = forwardRef<
+  HTMLUListElement,
+  React.PropsWithChildren<GenreTreeListProps>
+>(function GenreTreeList(
+  {
+    multiple,
+    genres,
+    selectedGenreIds = [],
+    onGenreSelect = () => {},
+    draggable = false,
+    onGenreDrop,
+    onNotesDrop,
+    className,
+  },
+  ref,
+) {
   // 同じ親を持つgenreを作成順に並び替える.
   // そのうち並び順を指定できるようにするかも.
   const genresCompareFunction = useCallback(() => {
@@ -110,6 +116,7 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
       onNodeSelect={onGenreSelect}
       draggable={draggable}
       onDrop={onGenreDrop}
+      ref={ref}
     >
       {genres.length !== 0 ? (
         genreTreeItems
@@ -118,6 +125,4 @@ const GenreTreeList: React.FC<GenreTreeListProps> = ({
       )}
     </StyledTreeView>
   );
-};
-
-export { GenreTreeList };
+});

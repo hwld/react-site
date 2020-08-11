@@ -49,8 +49,7 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
     selectItem,
     removeItemId,
     isFocused,
-    focuseNextItem,
-    focusePrevItem,
+    focus,
   } = useContext(ListContext);
 
   const itemRef = useRef<HTMLDivElement>(null);
@@ -74,26 +73,14 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
   });
 
   const handleClick = () => {
+    if (!isFocused(itemId)) {
+      focus(itemId);
+    }
+
     if (!selectedIds.includes(itemId)) {
       selectItem([...selectedIds, itemId]);
     } else {
       selectItem(selectedIds.filter(id => id !== itemId));
-    }
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    switch (event.key) {
-      case 'ArrowUp': {
-        focusePrevItem(itemId);
-        break;
-      }
-      case 'ArrowDown': {
-        focuseNextItem(itemId);
-        break;
-      }
-      default: {
-        break;
-      }
     }
   };
 
@@ -119,9 +106,9 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
         ref={itemRef}
         button
         onClick={handleClick}
-        onKeyDown={handleKeyDown}
         selected={selectedIds.includes(itemId)}
         data-testid={`selectLayer-${itemId}`}
+        tabIndex={-1}
       >
         {children}
       </StyledMuiListItem>

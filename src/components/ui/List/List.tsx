@@ -13,15 +13,23 @@ type ListProps = {
   selectedIds?: string[];
   onSelect?: (ids: string[]) => void;
   draggable?: boolean;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
 };
 
-const List: React.FC<ListProps> = ({
-  children,
-  className,
-  selectedIds = [],
-  onSelect = () => {},
-  draggable = false,
-}) => {
+export const List = React.forwardRef<
+  HTMLUListElement,
+  React.PropsWithChildren<ListProps>
+>(function List(
+  {
+    children,
+    className,
+    selectedIds = [],
+    onSelect = () => {},
+    draggable = false,
+    onKeyDown = () => {},
+  },
+  ref,
+) {
   const [internalSelectedIds, setInternalSelectedIds] = useState(selectedIds);
   const [focusedId, setFocusedId] = useState<string | null>(null);
 
@@ -58,6 +66,28 @@ const List: React.FC<ListProps> = ({
   };
   const focusePrevItem = (id: string) => {
     focus(getPrevItem(id));
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
+    if (!focusedId) {
+      return;
+    }
+
+    switch (event.key) {
+      case 'ArrowUp': {
+        focusePrevItem(focusedId);
+        break;
+      }
+      case 'ArrowDown': {
+        focuseNextItem(focusedId);
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+
+    onKeyDown(event);
   };
 
   // 内部の選択状態と外部の選択状態を同時に設定する
@@ -103,13 +133,19 @@ const List: React.FC<ListProps> = ({
         selectItem,
         removeItemId,
         isFocused,
+        focus,
         focuseNextItem,
         focusePrevItem,
       }}
     >
-      <StyledMuiList className={className}>{children}</StyledMuiList>
+      <StyledMuiList
+        className={className}
+        ref={ref}
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+      >
+        {children}
+      </StyledMuiList>
     </ListContextProvider>
   );
-};
-
-export { List };
+});

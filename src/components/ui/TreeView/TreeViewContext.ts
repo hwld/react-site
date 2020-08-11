@@ -30,7 +30,11 @@ type TreeViewContextValue = {
   isTabbable: (id: string) => boolean;
   multiSelect: boolean;
   getParent: (id: string) => string | null | undefined;
-  addNodeToNodeMap: (id: string, childrenIds: string[]) => void;
+  addNodeToNodeMap: (
+    id: string,
+    childrenIds: string[],
+    expandable: boolean,
+  ) => void;
   removeNodeFromNodeMap: (id: string) => void;
   setRemovedNode: (id: string) => void;
   draggable: boolean;
