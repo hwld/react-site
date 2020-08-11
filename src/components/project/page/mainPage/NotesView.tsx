@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef, PropsWithChildren } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import { NoteList } from '../../ui/NoteList';
 import { NotesSortOrder } from '../../ui/NotesSortConditionFields';
@@ -10,12 +10,13 @@ import { useNotesContext } from '../../../../context/NotesContext';
 interface NotesViewProps {
   selectedGenreIds: string[];
   className?: string;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
 }
 
-const NotesView: React.FC<NotesViewProps> = ({
-  selectedGenreIds,
-  className,
-}) => {
+export const NotesView = forwardRef<
+  HTMLUListElement,
+  PropsWithChildren<NotesViewProps>
+>(function NotesView({ selectedGenreIds, className, onKeyDown }, ref) {
   const { isMobile } = useMobileContext();
   const { notes } = useNotesContext();
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
@@ -36,7 +37,9 @@ const NotesView: React.FC<NotesViewProps> = ({
           notes={viewNotes}
           selectedNoteIds={selectedNoteIds}
           onNotesSelect={setSelectedNoteIds}
+          onKeyDown={onKeyDown}
           notesSortOrder={notesSortOrder}
+          ref={ref}
         />
       </>
     ) : (
@@ -62,6 +65,4 @@ const NotesView: React.FC<NotesViewProps> = ({
       {notesContent()}
     </ContentColumn>
   );
-};
-
-export { NotesView };
+});

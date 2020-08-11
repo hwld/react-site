@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef, PropsWithChildren } from 'react';
 import { GenreTreeList } from '../../ui/GenreTreeList';
 import { ContentColumn } from '../../ui/ContentColumn';
 import { GenresViewMenu } from './GenresViewMenu';
@@ -7,15 +7,18 @@ import { useNotesContext } from '../../../../context/NotesContext';
 
 type GenresViewProps = {
   onGenreSelect: (selectedId: string[]) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
   selectedGenreIds: string[];
   className?: string;
 };
 
-const GenresView: React.FC<GenresViewProps> = ({
-  onGenreSelect,
-  selectedGenreIds,
-  className,
-}) => {
+export const GenresView = forwardRef<
+  HTMLUListElement,
+  PropsWithChildren<GenresViewProps>
+>(function GenresView(
+  { onGenreSelect, selectedGenreIds, className, onKeyDown },
+  ref,
+) {
   const { genres, moveGenres } = useGenresContext();
   const { moveNotes } = useNotesContext();
 
@@ -32,9 +35,9 @@ const GenresView: React.FC<GenresViewProps> = ({
         onGenreSelect={onGenreSelect}
         onGenreDrop={moveGenres}
         onNotesDrop={moveNotes}
+        onKeyDown={onKeyDown}
+        ref={ref}
       />
     </ContentColumn>
   );
-};
-
-export { GenresView };
+});

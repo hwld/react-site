@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, forwardRef } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import { NoteListItem } from './NoteListItem';
 import { List } from '../../ui/List/List';
@@ -9,21 +9,29 @@ type NoteListProps = {
   notes: Note[];
   notesSortOrder?: NotesSortOrder;
   onNotesSelect?: (selectedIds: string[]) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
   selectedNoteIds?: string[];
   searchCriteria?: SearchNotesCriteria;
   className?: string;
   draggable?: boolean;
 };
 
-const NoteList: React.FC<NoteListProps> = ({
-  notes,
-  notesSortOrder = { targetField: 'createdAt', order: 'asc' },
-  selectedNoteIds = [],
-  onNotesSelect,
-  searchCriteria,
-  className,
-  draggable = false,
-}) => {
+export const NoteList = forwardRef<
+  HTMLUListElement,
+  React.PropsWithChildren<NoteListProps>
+>(function NoteList(
+  {
+    notes,
+    notesSortOrder = { targetField: 'updatedAt', order: 'asc' },
+    selectedNoteIds = [],
+    onNotesSelect,
+    onKeyDown,
+    searchCriteria,
+    className,
+    draggable = false,
+  },
+  ref,
+) {
   const isDate = useCallback((arg: string | Date): arg is Date => {
     return arg != null && typeof arg !== 'string';
   }, []);
@@ -87,6 +95,8 @@ const NoteList: React.FC<NoteListProps> = ({
       className={className}
       selectedIds={selectedNoteIds}
       onSelect={onNotesSelect}
+      onKeyDown={onKeyDown}
+      ref={ref}
     >
       {notes.length !== 0 ? (
         listItems
@@ -97,6 +107,4 @@ const NoteList: React.FC<NoteListProps> = ({
       )}
     </List>
   );
-};
-
-export { NoteList };
+});

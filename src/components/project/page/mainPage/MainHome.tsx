@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useTheme, useMediaQuery } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
@@ -17,6 +17,8 @@ const Background = styled.div`
 const MainHome: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [selectedGenreIds, setSelectedGenreIds] = useState<string[]>([]);
+  const genresViewRef = useRef<HTMLUListElement | null>(null);
+  const notesViewRef = useRef<HTMLUListElement | null>(null);
   const history = useHistory();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
@@ -37,6 +39,36 @@ const MainHome: React.FC = () => {
     history.replace('/search');
   };
 
+  const handleGenresViewKeyDown = (
+    event: React.KeyboardEvent<HTMLUListElement>,
+  ) => {
+    switch (event.key) {
+      case 'ArrowRight': {
+        if (notesViewRef.current) {
+          notesViewRef.current.focus();
+        }
+        break;
+      }
+      default:
+        break;
+    }
+  };
+
+  const handleNotesViewKeyDown = (
+    event: React.KeyboardEvent<HTMLUListElement>,
+  ) => {
+    switch (event.key) {
+      case 'ArrowLeft': {
+        if (genresViewRef.current) {
+          genresViewRef.current.focus();
+        }
+        break;
+      }
+      default:
+        break;
+    }
+  };
+
   return (
     <MobileContextProvider value={{ isMobile }}>
       <Background data-testid="mainPage">
@@ -51,9 +83,15 @@ const MainHome: React.FC = () => {
           <GenresView
             onGenreSelect={setSelectedGenreIds}
             selectedGenreIds={selectedGenreIds}
+            onKeyDown={handleGenresViewKeyDown}
+            ref={genresViewRef}
           />
         </Drawer>
-        <NotesView selectedGenreIds={selectedGenreIds} />
+        <NotesView
+          selectedGenreIds={selectedGenreIds}
+          onKeyDown={handleNotesViewKeyDown}
+          ref={notesViewRef}
+        />
       </Background>
     </MobileContextProvider>
   );

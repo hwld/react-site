@@ -13,12 +13,14 @@ type RemoveNoteDialogProps = {
   disabled?: boolean;
   targetNoteIds: string[];
   size?: SvgIconProps['fontSize'];
+  tabIndex?: number;
 };
 
 const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
   disabled,
   targetNoteIds,
   size,
+  tabIndex,
 }) => {
   const { removeNotes } = useNotesContext();
 
@@ -34,6 +36,7 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
       doneText="削除"
       onDone={remove}
       data-testid="removeNoteDialog"
+      tabIndex={tabIndex}
     >
       <DialogTitle>メモの削除</DialogTitle>
       <DialogContent>

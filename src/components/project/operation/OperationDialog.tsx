@@ -34,6 +34,7 @@ type OperationDialogProps = {
   onClose?: () => void;
   tooltipText: string;
   'data-testid'?: string;
+  tabIndex?: number;
 };
 
 const OperationDialog: React.FC<OperationDialogProps> = ({
@@ -47,6 +48,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
   onClose,
   tooltipText,
   'data-testid': dataTestId,
+  tabIndex,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -84,13 +86,20 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
   const activator = () => {
     if (activatorDisabled)
       return (
-        <StyledIconButton disabled data-testid="activatorButton">
+        <StyledIconButton
+          disabled
+          data-testid="activatorButton"
+          tabIndex={tabIndex}
+        >
           {activatorIcon}
         </StyledIconButton>
       );
 
     return (
-      <Tooltip title={<Typography>{tooltipText}</Typography>}>
+      <Tooltip
+        title={<Typography>{tooltipText}</Typography>}
+        tabIndex={tabIndex}
+      >
         <StyledIconButton
           onClick={handleClickActivator}
           data-testid="activatorButton"

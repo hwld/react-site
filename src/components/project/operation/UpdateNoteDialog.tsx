@@ -9,11 +9,13 @@ import { Note, NoteField } from '../../../types/note';
 type UpdateNoteDialogProps = {
   defaultNote: Note;
   size?: SvgIconProps['fontSize'];
+  tabIndex?: number;
 };
 
 const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
   defaultNote,
   size,
+  tabIndex,
 }) => {
   const [note, setNote] = useState(defaultNote);
   const { updateNote } = useNotesContext();
@@ -39,6 +41,7 @@ const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
       doneDisabled={note.text.length === 0}
       onOpen={setDefaultNote}
       data-testid="updateNoteDialog"
+      tabIndex={tabIndex}
     >
       <DialogTitle>メモの編集</DialogTitle>
       <DialogContent>

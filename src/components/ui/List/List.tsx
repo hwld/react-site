@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { ListContextProvider } from './ListContext';
 
 const StyledMuiList = styled(MuiList)`
+  height: 100%;
   padding-top: 0;
   padding-bottom: 0;
 `;
@@ -13,15 +14,23 @@ type ListProps = {
   selectedIds?: string[];
   onSelect?: (ids: string[]) => void;
   draggable?: boolean;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
 };
 
-const List: React.FC<ListProps> = ({
-  children,
-  className,
-  selectedIds = [],
-  onSelect = () => {},
-  draggable = false,
-}) => {
+export const List = React.forwardRef<
+  HTMLUListElement,
+  React.PropsWithChildren<ListProps>
+>(function List(
+  {
+    children,
+    className,
+    selectedIds = [],
+    onSelect = () => {},
+    draggable = false,
+    onKeyDown = () => {},
+  },
+  ref,
+) {
   const [internalSelectedIds, setInternalSelectedIds] = useState(selectedIds);
   const [focusedId, setFocusedId] = useState<string | null>(null);
 
@@ -47,17 +56,62 @@ const List: React.FC<ListProps> = ({
     return null;
   };
 
+  const getFirstItem = () => {
+    if (itemIds.current.length !== 0) {
+      return itemIds.current[0];
+    }
+
+    return null;
+  };
+
   const focus = (id: string | null) => {
     if (id) {
       setFocusedId(id);
     }
   };
 
-  const focuseNextItem = (id: string) => {
+  const blur = () => {
+    setFocusedId(null);
+  };
+
+  const focusNextItem = (id: string) => {
     focus(getNextItem(id));
   };
-  const focusePrevItem = (id: string) => {
+  const focusPrevItem = (id: string) => {
     focus(getPrevItem(id));
+  };
+  const focusFirstNode = () => focus(getFirstItem());
+
+  const handleFocus = () => {
+    if (!focusedId) {
+      if (selectedIds.length !== 0) {
+        focus(selectedIds[0]);
+      } else {
+        focusFirstNode();
+      }
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
+    switch (event.key) {
+      case 'ArrowUp': {
+        if (focusedId) {
+          focusPrevItem(focusedId);
+        }
+        break;
+      }
+      case 'ArrowDown': {
+        if (focusedId) {
+          focusNextItem(focusedId);
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+
+    onKeyDown(event);
   };
 
   // 内部の選択状態と外部の選択状態を同時に設定する
@@ -95,6 +149,12 @@ const List: React.FC<ListProps> = ({
     itemIds.current = newItemIds;
   }, [children]);
 
+  useEffect(() => {
+    if (focusedId && !itemIds.current.includes(focusedId)) {
+      blur();
+    }
+  }, [children, focusedId]);
+
   return (
     <ListContextProvider
       value={{
@@ -103,13 +163,20 @@ const List: React.FC<ListProps> = ({
         selectItem,
         removeItemId,
         isFocused,
-        focuseNextItem,
-        focusePrevItem,
+        focus,
+        focusNextItem,
+        focusPrevItem,
       }}
     >
-      <StyledMuiList className={className}>{children}</StyledMuiList>
+      <StyledMuiList
+        className={className}
+        ref={ref}
+        onKeyDown={handleKeyDown}
+        onFocus={handleFocus}
+        tabIndex={0}
+      >
+        {children}
+      </StyledMuiList>
     </ListContextProvider>
   );
-};
-
-export { List };
+});
