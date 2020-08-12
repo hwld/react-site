@@ -59,6 +59,7 @@ export const ListItem = React.forwardRef<
     removeItemId,
     isFocused,
     focus,
+    unFocus,
   } = useContext(ListContext);
 
   const itemRef = useRef<HTMLDivElement>(null);
@@ -118,6 +119,9 @@ export const ListItem = React.forwardRef<
         onKeyDown={onKeyDown}
         onFocus={(event: React.FocusEvent<HTMLDivElement>) => {
           event.stopPropagation();
+        }}
+        onBlur={() => {
+          unFocus(itemId);
         }}
         selected={selectedIds.includes(itemId)}
         data-testid={`selectLayer-${itemId}`}

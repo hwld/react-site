@@ -74,6 +74,12 @@ export const List = React.forwardRef<
     setFocusedId(null);
   };
 
+  const unFocus = (id: string | null) => {
+    if (id && focusedId === id) {
+      blur();
+    }
+  };
+
   const focusNextItem = (id: string) => {
     focus(getNextItem(id));
   };
@@ -165,6 +171,7 @@ export const List = React.forwardRef<
         removeItemId,
         isFocused,
         focus,
+        unFocus,
         focusNextItem,
         focusPrevItem,
       }}
