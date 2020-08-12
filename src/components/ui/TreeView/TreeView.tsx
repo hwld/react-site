@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, Theme } from '@material-ui/core/styles';
 import { useControlled } from '@material-ui/core/utils';
 import { WithStyles } from '@material-ui/styles';
 import clsx from 'clsx';
@@ -12,14 +12,14 @@ const DropLayer = styled.div`
   height: 100%;
 `;
 
-export const styles = {
+export const styles = (theme: Theme) => ({
   /* Styles applied to the root element. */
   root: {
     padding: 0,
     margin: 0,
     listStyle: 'none',
   },
-};
+});
 
 function arrayDiff<T>(arr1: T[], arr2: T[]) {
   if (arr1.length !== arr2.length) return true;
