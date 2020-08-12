@@ -116,6 +116,9 @@ export const ListItem = React.forwardRef<
         button
         onClick={handleClick}
         onKeyDown={onKeyDown}
+        onFocus={(event: React.FocusEvent<HTMLDivElement>) => {
+          event.stopPropagation();
+        }}
         selected={selectedIds.includes(itemId)}
         data-testid={`selectLayer-${itemId}`}
         tabIndex={-1}

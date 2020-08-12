@@ -82,6 +82,7 @@ export const List = React.forwardRef<
   };
   const focusFirstNode = () => focus(getFirstItem());
 
+  // ListItemのfocusイベントをstopPropagationを使って伝搬させないようにしていることが前提
   const handleFocus = () => {
     if (!focusedId) {
       if (selectedIds.length !== 0) {
@@ -151,7 +152,7 @@ export const List = React.forwardRef<
 
   useEffect(() => {
     if (focusedId && !itemIds.current.includes(focusedId)) {
-      focus(getFirstItem());
+      blur();
     }
   }, [children, focusedId]);
 
