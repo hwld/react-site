@@ -151,7 +151,7 @@ export const List = React.forwardRef<
 
   useEffect(() => {
     if (focusedId && !itemIds.current.includes(focusedId)) {
-      blur();
+      focus(getFirstItem());
     }
   }, [children, focusedId]);
 

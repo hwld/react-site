@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, PropsWithChildren, forwardRef } from 'react';
 import styled from 'styled-components';
 import {
   Dialog,
@@ -37,19 +37,25 @@ type OperationDialogProps = {
   tabIndex?: number;
 };
 
-const OperationDialog: React.FC<OperationDialogProps> = ({
-  children,
-  activatorIcon,
-  activatorDisabled,
-  doneText,
-  onDone,
-  doneDisabled,
-  onOpen,
-  onClose,
-  tooltipText,
-  'data-testid': dataTestId,
-  tabIndex,
-}) => {
+export const OperationDialog = forwardRef<
+  HTMLButtonElement,
+  PropsWithChildren<OperationDialogProps>
+>(function OperationDialog(
+  {
+    children,
+    activatorIcon,
+    activatorDisabled,
+    doneText,
+    onDone,
+    doneDisabled,
+    onOpen,
+    onClose,
+    tooltipText,
+    'data-testid': dataTestId,
+    tabIndex,
+  },
+  ref,
+) {
   const [isOpen, setIsOpen] = useState(false);
 
   const stopPropagation = (event: React.MouseEvent<{}>) => {
@@ -90,6 +96,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
           disabled
           data-testid="activatorButton"
           tabIndex={tabIndex}
+          ref={ref}
         >
           {activatorIcon}
         </StyledIconButton>
@@ -103,6 +110,7 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
         <StyledIconButton
           onClick={handleClickActivator}
           data-testid="activatorButton"
+          ref={ref}
         >
           {activatorIcon}
         </StyledIconButton>
@@ -145,6 +153,4 @@ const OperationDialog: React.FC<OperationDialogProps> = ({
       </StyledDialog>
     </span>
   );
-};
-
-export { OperationDialog };
+});

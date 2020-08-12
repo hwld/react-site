@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef, PropsWithChildren } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { OperationDialog } from './OperationDialog';
@@ -12,11 +12,10 @@ type UpdateNoteDialogProps = {
   tabIndex?: number;
 };
 
-const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
-  defaultNote,
-  size,
-  tabIndex,
-}) => {
+export const UpdateNoteDialog = forwardRef<
+  HTMLButtonElement,
+  PropsWithChildren<UpdateNoteDialogProps>
+>(function UpdateNoteDialog({ defaultNote, size, tabIndex }, ref) {
   const [note, setNote] = useState(defaultNote);
   const { updateNote } = useNotesContext();
 
@@ -42,6 +41,7 @@ const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
       onOpen={setDefaultNote}
       data-testid="updateNoteDialog"
       tabIndex={tabIndex}
+      ref={ref}
     >
       <DialogTitle>メモの編集</DialogTitle>
       <DialogContent>
@@ -49,6 +49,4 @@ const UpdateNoteDialog: React.FC<UpdateNoteDialogProps> = ({
       </DialogContent>
     </OperationDialog>
   );
-};
-
-export { UpdateNoteDialog };
+});

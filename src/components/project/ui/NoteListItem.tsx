@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useRef, createRef } from 'react';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { ListItem } from '../../ui/List/ListItem';
@@ -58,6 +58,50 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
   itemId,
   searchCriteria,
 }) => {
+  const refs = useRef<
+    [
+      React.RefObject<HTMLDivElement>,
+      React.RefObject<HTMLButtonElement>,
+      React.RefObject<HTMLButtonElement>,
+    ]
+  >([createRef(), createRef(), createRef()]);
+
+  //
+  const focusIndex = useRef<number>(0);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    switch (event.key) {
+      case 'ArrowRight': {
+        if (focusIndex.current + 1 < refs.current.length) {
+          const nextRef = refs.current[focusIndex.current + 1].current;
+          if (nextRef) {
+            nextRef.focus();
+            focusIndex.current += 1;
+          }
+        }
+        break;
+      }
+      case 'ArrowLeft': {
+        if (focusIndex.current > 0) {
+          const prevRef = refs.current[focusIndex.current - 1].current;
+          if (prevRef) {
+            prevRef.focus();
+            focusIndex.current -= 1;
+          }
+          event.stopPropagation();
+        }
+        break;
+      }
+      case 'ArrowUp':
+      case 'ArrowDown': {
+        focusIndex.current = 0;
+        break;
+      }
+      default:
+        break;
+    }
+  };
+
   const getHighlightedText = useCallback((text: string, highlight: string) => {
     const parts = text.split(new RegExp(`(${highlight})`));
 
@@ -103,7 +147,7 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
   }, [getHighlightedText, note.bookName, searchCriteria]);
 
   return (
-    <ListItem itemId={itemId}>
+    <ListItem itemId={itemId} onKeyDown={handleKeyDown} ref={refs.current[0]}>
       <GridContainer>
         <NoteTextContainer>
           <TitleText variant="h4">
@@ -120,8 +164,16 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
           </MetaData>
         </NoteTextContainer>
         <div>
-          <RemoveNoteDialog targetNoteIds={[itemId]} tabIndex={-1} />
-          <UpdateNoteDialog defaultNote={note} tabIndex={-1} />
+          <RemoveNoteDialog
+            targetNoteIds={[itemId]}
+            tabIndex={-1}
+            ref={refs.current[1]}
+          />
+          <UpdateNoteDialog
+            defaultNote={note}
+            tabIndex={-1}
+            ref={refs.current[2]}
+          />
         </div>
       </GridContainer>
     </ListItem>

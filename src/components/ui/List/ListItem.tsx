@@ -1,5 +1,9 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { ListItem as MuiListItem, Divider } from '@material-ui/core';
+import {
+  ListItem as MuiListItem,
+  Divider,
+  useForkRef,
+} from '@material-ui/core';
 import { useDrag, DragPreviewImage } from 'react-dnd';
 import styled from 'styled-components';
 import { fade } from '@material-ui/core/styles';
@@ -41,9 +45,13 @@ export type ListItemDropType = {
 
 type ListItemProps = {
   itemId: string;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 };
 
-const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
+export const ListItem = React.forwardRef<
+  HTMLDivElement,
+  React.PropsWithChildren<ListItemProps>
+>(function ListItem({ children, itemId, onKeyDown }, ref) {
   const {
     selectedIds,
     draggable,
@@ -54,6 +62,7 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
   } = useContext(ListContext);
 
   const itemRef = useRef<HTMLDivElement>(null);
+  const handleRef = useForkRef(itemRef, ref);
 
   const [, drag, preview] = useDrag({
     item: { type: ItemTypes.ListItem, ids: [...selectedIds] },
@@ -92,9 +101,8 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
   }, [itemId, removeItemId]);
 
   useEffect(() => {
-    const ref = itemRef.current;
-    if (ref && isFocused(itemId)) {
-      ref.focus();
+    if (itemRef.current && isFocused(itemId)) {
+      itemRef.current.focus();
     }
   }, [isFocused, itemId]);
 
@@ -104,9 +112,10 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
       data-testid={`dragLayer-${itemId}`}
     >
       <StyledMuiListItem
-        ref={itemRef}
+        ref={handleRef}
         button
         onClick={handleClick}
+        onKeyDown={onKeyDown}
         selected={selectedIds.includes(itemId)}
         data-testid={`selectLayer-${itemId}`}
         tabIndex={-1}
@@ -120,6 +129,4 @@ const ListItem: React.FC<ListItemProps> = ({ children, itemId }) => {
       />
     </ListItemRoot>
   );
-};
-
-export { ListItem };
+});

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef, PropsWithChildren } from 'react';
 import {
   DialogTitle,
   DialogContent,
@@ -16,12 +16,10 @@ type RemoveNoteDialogProps = {
   tabIndex?: number;
 };
 
-const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
-  disabled,
-  targetNoteIds,
-  size,
-  tabIndex,
-}) => {
+export const RemoveNoteDialog = forwardRef<
+  HTMLButtonElement,
+  PropsWithChildren<RemoveNoteDialogProps>
+>(function RemoveNoteDialog({ disabled, targetNoteIds, size, tabIndex }, ref) {
   const { removeNotes } = useNotesContext();
 
   const remove = () => {
@@ -37,6 +35,7 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
       onDone={remove}
       data-testid="removeNoteDialog"
       tabIndex={tabIndex}
+      ref={ref}
     >
       <DialogTitle>メモの削除</DialogTitle>
       <DialogContent>
@@ -46,6 +45,4 @@ const RemoveNoteDialog: React.FC<RemoveNoteDialogProps> = ({
       </DialogContent>
     </OperationDialog>
   );
-};
-
-export { RemoveNoteDialog };
+});
