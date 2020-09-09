@@ -48,6 +48,10 @@ const HighlightSpan = styled.span`
   color: ${props => props.theme.palette.primary.main};
 `;
 
+const MenuContainer = styled.div`
+  line-height: 60px;
+`;
+
 type NoteListItemProps = {
   note: Note;
   itemId: string;
@@ -163,7 +167,7 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
             </MetaText>
           </MetaData>
         </NoteTextContainer>
-        <div>
+        <MenuContainer>
           <RemoveNoteDialog
             targetNoteIds={[itemId]}
             tabIndex={-1}
@@ -174,7 +178,7 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
             tabIndex={-1}
             ref={refs.current[2]}
           />
-        </div>
+        </MenuContainer>
       </GridContainer>
     </ListItem>
   );
