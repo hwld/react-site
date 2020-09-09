@@ -101,8 +101,8 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
           color="secondary"
           variant="filled"
           fullWidth
-          rowsMax="6"
-          rows="6"
+          rowsMax="10"
+          rows="10"
           multiline
         />
       </FormField>
