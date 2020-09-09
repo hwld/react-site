@@ -9,20 +9,25 @@ const ViewRoot = styled.div`
   flex-direction: column;
 `;
 
-const Header = styled(Toolbar)``;
+const Header = styled(Toolbar)`
+  height: 48px;
+`;
 
 const Content = styled.div`
-  height: 88%;
+  /* 100%からheaderとfooterの高さを引く */
+  height: calc(100% - 48px - 48px);
   overflow: auto;
 `;
 
 const FooterMenu = styled(Toolbar)`
+  height: 48px;
   display: flex;
   justify-content: center;
   flex: 1;
   background-color: ${props => props.theme.palette.secondary.main};
 
-  &.fixed {
+  /* モバイル版では画面の下に張り付かせるためにpositionをfixedにする */
+  &.mobile {
     position: fixed;
     width: 100%;
     bottom: 0;
@@ -32,23 +37,23 @@ const FooterMenu = styled(Toolbar)`
 type ContentColumnProps = {
   className?: string;
   footerMenu?: ReactNode;
-  fixedFooter?: boolean;
+  isMobile?: boolean;
 };
 
 const ContentColumn: React.FC<ContentColumnProps> = ({
   children,
   className,
   footerMenu,
-  fixedFooter = false,
+  isMobile = false,
 }) => {
   return (
     <ViewRoot className={className}>
       <Header data-testid="header" />
       <Divider />
 
-      <Content>{children}</Content>
+      <Content className={isMobile ? 'mobile' : ''}>{children}</Content>
 
-      <FooterMenu className={fixedFooter ? 'fixed' : ''} data-testid="footer">
+      <FooterMenu className={isMobile ? 'mobile' : ''} data-testid="footer">
         {footerMenu}
       </FooterMenu>
     </ViewRoot>

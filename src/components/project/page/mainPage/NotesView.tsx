@@ -52,7 +52,7 @@ export const NotesView = forwardRef<
   return (
     <ContentColumn
       className={className}
-      fixedFooter={isMobile}
+      isMobile={isMobile}
       footerMenu={
         <NotesViewMenu
           selectedGenreIds={selectedGenreIds}
