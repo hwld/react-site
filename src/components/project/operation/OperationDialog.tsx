@@ -1,4 +1,9 @@
-import React, { useState, PropsWithChildren, forwardRef } from 'react';
+import React, {
+  useState,
+  PropsWithChildren,
+  forwardRef,
+  BaseSyntheticEvent,
+} from 'react';
 import styled from 'styled-components';
 import {
   Dialog,
@@ -58,7 +63,7 @@ export const OperationDialog = forwardRef<
 ) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const stopPropagation = (event: React.MouseEvent<{}>) => {
+  const stopPropagation = (event: BaseSyntheticEvent<{}>) => {
     event.stopPropagation();
   };
 
@@ -128,6 +133,10 @@ export const OperationDialog = forwardRef<
         maxWidth="sm"
         // ダイアログ外をクリックするとクリックイベントが伝搬してしまうため、ここで防ぐ
         onClick={stopPropagation}
+        // ダイアログ内のフォーカスイベントを外に出さない
+        onFocus={stopPropagation}
+        // ダイアログ内のキーボードイベントを外に出さない
+        onKeyDown={stopPropagation}
         data-testid="dialog"
       >
         {children}

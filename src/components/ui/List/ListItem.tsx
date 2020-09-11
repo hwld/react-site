@@ -10,8 +10,6 @@ import { fade } from '@material-ui/core/styles';
 import { ListContext } from './ListContext';
 import { ItemTypes } from '../ItemTypes';
 
-const ListItemRoot = styled.div``;
-
 const StyledMuiListItem = styled(MuiListItem)`
   &.Mui-focusVisible,
   &:focus {
@@ -108,10 +106,7 @@ export const ListItem = React.forwardRef<
   }, [isFocused, itemId]);
 
   return (
-    <ListItemRoot
-      ref={draggable ? drag : null}
-      data-testid={`dragLayer-${itemId}`}
-    >
+    <div ref={draggable ? drag : null} data-testid={`dragLayer-${itemId}`}>
       <StyledMuiListItem
         ref={handleRef}
         button
@@ -119,6 +114,7 @@ export const ListItem = React.forwardRef<
         onKeyDown={onKeyDown}
         onFocus={(event: React.FocusEvent<HTMLDivElement>) => {
           event.stopPropagation();
+          focus(itemId);
         }}
         onBlur={() => {
           unFocus(itemId);
@@ -134,6 +130,6 @@ export const ListItem = React.forwardRef<
         connect={preview}
         src={`${process.env.PUBLIC_URL}/note.svg`}
       />
-    </ListItemRoot>
+    </div>
   );
 });
