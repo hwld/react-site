@@ -46,22 +46,6 @@ const ResultNotesColumn: React.FC<SearchNotesColumnProps> = ({
 
             return note.text.includes(criteria.text);
           })
-          // 著者名での検索
-          .filter(note => {
-            if (criteria.authorName === '') {
-              return true;
-            }
-
-            return note.authorName === criteria.authorName;
-          })
-          // 書籍名での検索
-          .filter(note => {
-            if (criteria.bookName === '') {
-              return true;
-            }
-
-            return note.bookName === criteria.bookName;
-          })
       );
     },
     [notes],

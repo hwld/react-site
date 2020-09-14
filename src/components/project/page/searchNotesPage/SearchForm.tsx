@@ -6,13 +6,10 @@ import {
   InputAdornment,
   IconButton,
 } from '@material-ui/core';
-import AutoComplete, { AutocompleteProps } from '@material-ui/lab/Autocomplete';
 import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
-import { UseAutocompleteProps } from '@material-ui/lab/useAutocomplete';
 import { useGenresContext } from '../../../../context/GenresContext';
 import { SelectGenreDialog } from './SelectGenreDialog';
-import { useNotesContext } from '../../../../context/NotesContext';
 import { SearchNotesCriteria } from '../../../../types/note';
 
 const Root = styled.div`
@@ -27,22 +24,6 @@ const CriteriaContent = styled.div`
   margin-top: 20px;
   display: flex;
   justify-content: center;
-`;
-
-// https://github.com/styled-components/styled-components/issues/1803
-// よくわからないけど、styledでラップするとgenericが解決できないっぽい
-// AutoCompleteのgenericはoptionの型っぽいので無理やりstringに固定して使う.
-// Optionの型を変更すると動かなくなる
-const StringAutoComplete = AutoComplete as React.FC<
-  AutocompleteProps<string, false, false, false> &
-    UseAutocompleteProps<string, false, false, false>
->;
-const CriteriaAutoComplete = styled(StringAutoComplete)`
-  width: 100%;
-  & .MuiAutocomplete-popupIndicator,
-  .MuiAutocomplete-clearIndicator {
-    color: ${props => props.theme.palette.secondary.main};
-  }
 `;
 
 const CriteriaTextField = styled(TextField)`
@@ -69,37 +50,20 @@ type SearchFormprops = {
 
 const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
   const { genres } = useGenresContext();
-  const { notes } = useNotesContext();
 
   const [targetGenreId, setTargetGenreId] = useState('');
   const [targetGenreName, setTargetGenreName] = useState('');
 
   const [targetTitle, setTargetTitle] = useState('');
   const [targetText, setTargetText] = useState('');
-  const [targetAuthorName, setTargetAuthorName] = useState('');
-  const [targetBookName, setTargetBookName] = useState('');
 
   const onSearch = () => {
     search({
       genreId: targetGenreId,
       title: targetTitle,
       text: targetText,
-      authorName: targetAuthorName,
-      bookName: targetBookName,
     });
   };
-
-  // 重複のないリストを作成
-  const authorNameList = Array.from(
-    new Set(
-      notes.filter(note => note.authorName !== '').map(note => note.authorName),
-    ),
-  );
-  const bookNameList = Array.from(
-    new Set(
-      notes.filter(note => note.bookName !== '').map(note => note.bookName),
-    ),
-  );
 
   // タイトル
   const changeTargetTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,24 +79,6 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
   };
   const clearTargetText = () => {
     setTargetText('');
-  };
-
-  // 著者名
-  const selectTargetAuthorName = (event: object, value: string | null) => {
-    setTargetAuthorName(value || '');
-  };
-  const changeTargetAuthorName = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setTargetAuthorName(event.target.value);
-  };
-
-  // 書籍名
-  const selectTargetBookName = (event: object, value: string | null) => {
-    setTargetBookName(value || '');
-  };
-  const changeTargetBookName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTargetBookName(event.target.value);
   };
 
   // ジャンル
@@ -210,42 +156,6 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
           color="secondary"
           variant="filled"
           fullWidth
-        />
-      </CriteriaContent>
-      <CriteriaContent>
-        <CriteriaAutoComplete
-          data-testid="authorNameField"
-          options={authorNameList}
-          onChange={selectTargetAuthorName}
-          renderInput={params => (
-            <CriteriaTextField
-              {...params}
-              id="searchFormAuthorName"
-              label="著者名"
-              onChange={changeTargetAuthorName}
-              color="secondary"
-              variant="filled"
-              fullWidth
-            />
-          )}
-        />
-      </CriteriaContent>
-      <CriteriaContent>
-        <CriteriaAutoComplete
-          data-testid="bookNameField"
-          options={bookNameList}
-          onChange={selectTargetBookName}
-          renderInput={params => (
-            <CriteriaTextField
-              {...params}
-              id="searchFormBookName"
-              label="書籍名"
-              onChange={changeTargetBookName}
-              color="secondary"
-              variant="filled"
-              fullWidth
-            />
-          )}
         />
       </CriteriaContent>
       <CriteriaAction>

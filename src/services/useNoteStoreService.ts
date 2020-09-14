@@ -42,8 +42,6 @@ export const useNoteStoreService = (uid: string): NoteStoreService => {
         genreId: note.genreRef.id,
         title: note.title,
         text: note.text,
-        authorName: note.authorName,
-        bookName: note.bookName,
         createdAt: note.createdAt.toDate(),
         updatedAt: note.updatedAt.toDate(),
       };
@@ -59,8 +57,6 @@ export const useNoteStoreService = (uid: string): NoteStoreService => {
         genreRef: genresRef.doc(genreId),
         title: noteField.title,
         text: noteField.text,
-        authorName: noteField.authorName,
-        bookName: noteField.bookName,
         createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
         updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
       };
@@ -85,8 +81,6 @@ export const useNoteStoreService = (uid: string): NoteStoreService => {
       const newNote: NoteField = {
         title: note.title,
         text: note.text,
-        authorName: note.authorName,
-        bookName: note.bookName,
       };
 
       notesRef.doc(note.id).update({

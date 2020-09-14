@@ -32,16 +32,17 @@ const NoteText = styled(Typography)`
   margin-bottom: 20px;
 `;
 
-const MetaData = styled.div`
-  display: grid;
-  grid-template-columns: 50% 50%;
-  margin-top: 1em;
-`;
+// TODO: 更新日、作成日を表示するときに使うかも
+// const MetaData = styled.div`
+//   display: grid;
+//   grid-template-columns: 50% 50%;
+//   margin-top: 1em;
+// `;
 
-const MetaText = styled(Typography)`
-  font-size: 1em;
-  color: #c0c0c0;
-`;
+// const MetaText = styled(Typography)`
+//   font-size: 1em;
+//   color: #c0c0c0;
+// `;
 
 const HighlightSpan = styled.span`
   background-color: ${props => props.theme.palette.secondary.light};
@@ -137,19 +138,6 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
     return getHighlightedText(note.text, searchCriteria.text);
   }, [getHighlightedText, note.text, searchCriteria]);
 
-  const authorName = useMemo(() => {
-    if (!searchCriteria || searchCriteria.authorName === '')
-      return note.authorName;
-
-    return getHighlightedText(note.authorName, searchCriteria.authorName);
-  }, [getHighlightedText, note.authorName, searchCriteria]);
-
-  const bookName = useMemo(() => {
-    if (!searchCriteria || searchCriteria.bookName === '') return note.bookName;
-
-    return getHighlightedText(note.bookName, searchCriteria.bookName);
-  }, [getHighlightedText, note.bookName, searchCriteria]);
-
   return (
     <ListItem itemId={itemId} onKeyDown={handleKeyDown} ref={refs.current[0]}>
       <GridContainer>
@@ -158,14 +146,6 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
             <span data-testid="title">{title}</span>
           </TitleText>
           <NoteText data-testid="text">{text}</NoteText>
-          <MetaData>
-            <MetaText>
-              著者名:<span data-testid="authorName">{authorName}</span>
-            </MetaText>
-            <MetaText>
-              書籍名:<span data-testid="bookName">{bookName}</span>
-            </MetaText>
-          </MetaData>
         </NoteTextContainer>
         <MenuContainer>
           <RemoveNoteDialog

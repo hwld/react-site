@@ -28,16 +28,9 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
   const updatedAt: NotesSortOrder['targetField'] = 'updatedAt';
   const title: NotesSortOrder['targetField'] = 'title';
   const text: NotesSortOrder['targetField'] = 'text';
-  const authorName: NotesSortOrder['targetField'] = 'authorName';
-  const bookName: NotesSortOrder['targetField'] = 'bookName';
   const isTargetField = (str: string): str is NotesSortOrder['targetField'] => {
     return (
-      str === createdAt ||
-      str === updatedAt ||
-      str === title ||
-      str === text ||
-      str === authorName ||
-      str === bookName
+      str === createdAt || str === updatedAt || str === title || str === text
     );
   };
 
@@ -101,22 +94,6 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
           label="メモ本文"
           labelPlacement="end"
           data-testid="text"
-        />
-        <FormControlLabel
-          value={authorName}
-          checked={notesSortOrder.targetField === authorName}
-          control={<Radio color="secondary" />}
-          label="著者名"
-          labelPlacement="end"
-          data-testid="authorName"
-        />
-        <FormControlLabel
-          value={bookName}
-          checked={notesSortOrder.targetField === bookName}
-          control={<Radio color="secondary" />}
-          label="書籍名"
-          labelPlacement="end"
-          data-testid="bookName"
         />
       </RadioGroup>
       <Typography>並び替え順</Typography>

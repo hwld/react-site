@@ -26,8 +26,6 @@ const SearchHome: React.FC = () => {
     genreId: '',
     title: '',
     text: '',
-    authorName: '',
-    bookName: '',
   });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));

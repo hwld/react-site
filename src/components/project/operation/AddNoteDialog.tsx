@@ -17,11 +17,9 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   genreId,
   size,
 }) => {
-  const defaultNoteField = () => ({
+  const defaultNoteField = (): NoteField => ({
     title: '',
     text: '',
-    authorName: '',
-    bookName: '',
   });
   const [noteField, setNoteField] = useState<NoteField>(defaultNoteField());
 

@@ -1,8 +1,6 @@
 export type NoteField = {
   title: string;
   text: string;
-  authorName: string;
-  bookName: string;
 };
 
 export type NoteDate = {
@@ -21,8 +19,6 @@ export interface SearchNotesCriteria {
   genreId: string;
   title: string;
   text: string;
-  authorName: string;
-  bookName: string;
 }
 
 export type NoteStoreService = {
