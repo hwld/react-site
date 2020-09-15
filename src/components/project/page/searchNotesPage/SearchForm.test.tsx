@@ -1,11 +1,8 @@
 import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
 import { SearchForm } from './SearchForm';
-import { SearchNotesCriteria } from '../../../../services/useNoteStoreService';
-import {
-  genresContextDefaultValue,
-  GenresContextProvider,
-} from '../../../../context/GenresContext';
+import { GenresContextProvider } from '../../../../context/GenresContext';
+import { SearchNotesCriteria } from '../../../../types/note';
 
 describe('<SearchForm />', () => {
   test('検索処理が正しく呼び出される', () => {
@@ -13,7 +10,10 @@ describe('<SearchForm />', () => {
     const { getByLabelText, getByTestId } = render(
       <GenresContextProvider
         value={{
-          ...genresContextDefaultValue,
+          addGenre: () => {},
+          moveGenres: () => {},
+          removeGenres: () => {},
+          updateGenre: () => {},
           genres: [
             {
               genreName: 'testGenreName',
@@ -39,19 +39,11 @@ describe('<SearchForm />', () => {
     fireEvent.change(getByLabelText('メモ'), {
       target: { value: 'testText' },
     });
-    fireEvent.change(getByLabelText('著者名'), {
-      target: { value: 'testAuthorName' },
-    });
-    fireEvent.change(getByLabelText('書籍名'), {
-      target: { value: 'testBookName' },
-    });
     fireEvent.click(getByTestId('searchButton'));
 
     expect(search.mock.calls.length).toBe(1);
     expect(search.mock.calls[0][0].genreId).toBe('testGenreId');
     expect(search.mock.calls[0][0].title).toBe('testTitle');
     expect(search.mock.calls[0][0].text).toBe('testText');
-    expect(search.mock.calls[0][0].authorName).toBe('testAuthorName');
-    expect(search.mock.calls[0][0].bookName).toBe('testBookName');
   });
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '../../../test-util';
+import { Note } from '../../../types/note';
 import { NoteList } from './NoteList';
-import { Note } from '../../../services/useNoteStoreService';
 
 describe('<NoteList>', () => {
   const notes: Note[] = [
@@ -10,8 +10,6 @@ describe('<NoteList>', () => {
       genreId: 'dammy',
       title: 'test-title1',
       text: 'test-text1',
-      authorName: 'test-authorName1',
-      bookName: 'test-bookName1',
       createdAt: new Date(2000, 6, 1),
       updatedAt: new Date(2000, 7, 1),
     },
@@ -20,8 +18,6 @@ describe('<NoteList>', () => {
       genreId: 'dammy',
       title: 'test-title2',
       text: 'test-text2',
-      authorName: 'test-authorName2',
-      bookName: 'test-bookName2',
       createdAt: new Date(2000, 7, 1),
       updatedAt: new Date(2000, 6, 1),
     },
@@ -31,13 +27,9 @@ describe('<NoteList>', () => {
 
     expect(queryByText('test-title1')).toBeTruthy();
     expect(queryByText('test-text1')).toBeTruthy();
-    expect(queryByText(/test-authorName1/)).toBeTruthy();
-    expect(queryByText(/test-bookName1/)).toBeTruthy();
 
     expect(queryByText('test-title2')).toBeTruthy();
     expect(queryByText('test-text2')).toBeTruthy();
-    expect(queryByText(/test-authorName2/)).toBeTruthy();
-    expect(queryByText(/test-bookName2/)).toBeTruthy();
   });
 
   test('タイトルの昇降順で並び替えができる', () => {
@@ -81,56 +73,6 @@ describe('<NoteList>', () => {
 
     expect(getAllByTestId('text')[0].textContent).toBe('test-text2');
     expect(getAllByTestId('text')[1].textContent).toBe('test-text1');
-  });
-  test('著者名の昇降順で並び替えができる', () => {
-    const { getAllByTestId, rerender } = render(
-      <NoteList
-        notes={notes}
-        notesSortOrder={{ targetField: 'authorName', order: 'asc' }}
-      />,
-    );
-
-    expect(getAllByTestId('authorName')[0].textContent).toMatch(
-      /test-authorName1/,
-    );
-    expect(getAllByTestId('authorName')[1].textContent).toMatch(
-      /test-authorName2/,
-    );
-
-    rerender(
-      <NoteList
-        notes={notes}
-        notesSortOrder={{ targetField: 'authorName', order: 'desc' }}
-      />,
-    );
-
-    expect(getAllByTestId('authorName')[0].textContent).toMatch(
-      /test-authorName2/,
-    );
-    expect(getAllByTestId('authorName')[1].textContent).toMatch(
-      /test-authorName1/,
-    );
-  });
-  test('書籍名の昇降順で並び替えができる', () => {
-    const { getAllByTestId, rerender } = render(
-      <NoteList
-        notes={notes}
-        notesSortOrder={{ targetField: 'bookName', order: 'asc' }}
-      />,
-    );
-
-    expect(getAllByTestId('bookName')[0].textContent).toMatch(/test-bookName1/);
-    expect(getAllByTestId('bookName')[1].textContent).toMatch(/test-bookName2/);
-
-    rerender(
-      <NoteList
-        notes={notes}
-        notesSortOrder={{ targetField: 'bookName', order: 'desc' }}
-      />,
-    );
-
-    expect(getAllByTestId('bookName')[0].textContent).toMatch(/test-bookName2/);
-    expect(getAllByTestId('bookName')[1].textContent).toMatch(/test-bookName1/);
   });
   test('作成日の昇降順で並び替えができる', () => {
     const { getAllByTestId, rerender } = render(

@@ -6,13 +6,12 @@ describe('<NoteListItem>', () => {
   test('検索結果のハイライトが当てられている', () => {
     const { getAllByTestId } = render(
       <NoteListItem
+        itemId=""
         note={{
           id: '',
           genreId: '',
           title: 'title1',
           text: 'text1',
-          authorName: 'author1',
-          bookName: 'book1',
           createdAt: new Date(),
           updatedAt: new Date(),
         }}
@@ -20,8 +19,6 @@ describe('<NoteListItem>', () => {
           genreId: '',
           title: 'title1',
           text: 'text1',
-          authorName: 'author1',
-          bookName: 'book1',
         }}
       />,
     );
@@ -35,18 +32,6 @@ describe('<NoteListItem>', () => {
     expect(
       getAllByTestId('search-highlight').some(
         element => element.textContent === 'text1',
-      ),
-    ).toBeTruthy();
-
-    expect(
-      getAllByTestId('search-highlight').some(
-        element => element.textContent === 'author1',
-      ),
-    ).toBeTruthy();
-
-    expect(
-      getAllByTestId('search-highlight').some(
-        element => element.textContent === 'book1',
       ),
     ).toBeTruthy();
   });

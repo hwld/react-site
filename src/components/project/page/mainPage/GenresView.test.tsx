@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import { render, dragAndDrop } from '../../../../test-util';
 import { GenresView } from './GenresView';
-import { Genre } from '../../../../services/useGenreStoreService';
-import {
-  genresContextDefaultValue,
-  GenresContextProvider,
-} from '../../../../context/GenresContext';
+import { GenresContextProvider } from '../../../../context/GenresContext';
 
 describe('<GenresView>', () => {
   const GenreViewTest: React.FC<{
@@ -16,7 +12,9 @@ describe('<GenresView>', () => {
     return (
       <GenresContextProvider
         value={{
-          ...genresContextDefaultValue,
+          addGenre: () => {},
+          removeGenres: () => {},
+          updateGenre: () => {},
           genres: [
             {
               genreName: 'genre1',

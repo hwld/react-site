@@ -1,8 +1,9 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { render } from '../../../test-util';
-import { NoteField, NotesContextProvider } from '../../../context/NotesContext';
+import { NotesContextProvider } from '../../../context/NotesContext';
 import { UpdateNoteDialog } from './UpdateNoteDialog';
+import { NoteField } from '../../../types/note';
 
 describe('<UpdateNoteDialog>', () => {
   test('ノートの更新処理が適切に呼び出される', () => {
@@ -25,8 +26,6 @@ describe('<UpdateNoteDialog>', () => {
             genreId: 'genreId',
             title: 'title',
             text: 'text',
-            authorName: 'authorName',
-            bookName: 'bookName',
             createdAt: new Date(),
             updatedAt: new Date(),
           }}
@@ -42,12 +41,6 @@ describe('<UpdateNoteDialog>', () => {
     fireEvent.change(getByLabelText('メモ'), {
       target: { value: 'updatedText' },
     });
-    fireEvent.change(getByLabelText('著者名'), {
-      target: { value: 'updatedAuthorName' },
-    });
-    fireEvent.change(getByLabelText('書籍名'), {
-      target: { value: 'updatedBookName' },
-    });
 
     fireEvent.click(getByTestId('doneButton'));
 
@@ -55,7 +48,5 @@ describe('<UpdateNoteDialog>', () => {
     expect(updateNote.mock.calls[0][0].id).toBe('id');
     expect(updateNote.mock.calls[0][0].title).toBe('updatedTitle');
     expect(updateNote.mock.calls[0][0].text).toBe('updatedText');
-    expect(updateNote.mock.calls[0][0].authorName).toBe('updatedAuthorName');
-    expect(updateNote.mock.calls[0][0].bookName).toBe('updatedBookName');
   });
 });

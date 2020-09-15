@@ -318,19 +318,26 @@ const UnStyledTreeItem = React.forwardRef<
           ref={drop}
           isDropOver={isDropOverInner}
           canDrop={canDropInner}
+          data-testid={`dropLayer-${nodeId}`}
         >
-          <DragLayer ref={draggable ? drag : null} isDragging={isDragging}>
+          <DragLayer
+            ref={draggable ? drag : null}
+            isDragging={isDragging}
+            data-testid={`dragLayer-${nodeId}`}
+          >
             <div
               className={classes.content}
               onClick={handleContentClick}
               onMouseDown={handleMouseDown}
               ref={contentRef}
+              data-testid={`clickLayer-${nodeId}`}
             >
               <div
                 onClick={handleIconClick}
                 className={classes.iconContainer}
                 // click時にfocusが外側のdivにつかないようにする.
                 tabIndex={-1}
+                data-testid={`expandLayer-${nodeId}`}
               >
                 {icon()}
               </div>

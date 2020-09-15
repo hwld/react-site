@@ -1,23 +1,21 @@
 import React from 'react';
 import { render } from '../../../../test-util';
 import { NotesView } from './NotesView';
-import {
-  NotesContextValue,
-  notesContextDefaultValue,
-  NotesContextProvider,
-} from '../../../../context/NotesContext';
+import { NotesContextProvider } from '../../../../context/NotesContext';
+import { NoteStoreService } from '../../../../types/note';
 
 describe('<NotesView>', () => {
-  const notesContextValue: NotesContextValue = {
-    ...notesContextDefaultValue,
+  const notesContextValue: NoteStoreService = {
+    addNote: () => {},
+    moveNotes: () => {},
+    removeNotes: () => {},
+    updateNote: () => {},
     notes: [
       {
         id: 'note1',
         genreId: 'genre1',
         title: 'title1',
         text: 'text1',
-        authorName: 'authorName1',
-        bookName: 'bookName1',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -26,8 +24,6 @@ describe('<NotesView>', () => {
         genreId: 'genre2',
         title: 'title2',
         text: 'text2',
-        authorName: 'authorName2',
-        bookName: 'bookName2',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -42,13 +38,9 @@ describe('<NotesView>', () => {
     );
     expect(queryByText(/title1/)).toBeTruthy();
     expect(queryByText(/text1/)).toBeTruthy();
-    expect(queryByText(/authorName1/)).toBeTruthy();
-    expect(queryByText(/bookName1/)).toBeTruthy();
 
     expect(queryByText(/title2/)).toBeFalsy();
     expect(queryByText(/text2/)).toBeFalsy();
-    expect(queryByText(/authorName2/)).toBeFalsy();
-    expect(queryByText(/bookName2/)).toBeFalsy();
   });
   test('複数選択されているジャンルのメモが表示される', () => {
     const { queryByText } = render(
@@ -58,13 +50,9 @@ describe('<NotesView>', () => {
     );
     expect(queryByText(/title1/)).toBeTruthy();
     expect(queryByText(/text1/)).toBeTruthy();
-    expect(queryByText(/authorName1/)).toBeTruthy();
-    expect(queryByText(/bookName1/)).toBeTruthy();
 
     expect(queryByText(/title2/)).toBeTruthy();
     expect(queryByText(/text2/)).toBeTruthy();
-    expect(queryByText(/authorName2/)).toBeTruthy();
-    expect(queryByText(/bookName2/)).toBeTruthy();
   });
   test('ジャンルを選択していないときにはメモは表示されず、アラートが表示される', () => {
     const { queryByTestId, queryByText } = render(
@@ -73,12 +61,9 @@ describe('<NotesView>', () => {
 
     expect(queryByText(/title1/)).toBeFalsy();
     expect(queryByText(/text1/)).toBeFalsy();
-    expect(queryByText(/authorName1/)).toBeFalsy();
-    expect(queryByText(/bookName1/)).toBeFalsy();
+
     expect(queryByText(/title2/)).toBeFalsy();
     expect(queryByText(/text2/)).toBeFalsy();
-    expect(queryByText(/authorName2/)).toBeFalsy();
-    expect(queryByText(/bookName2/)).toBeFalsy();
 
     expect(queryByTestId('noselectedAlert')).toBeTruthy();
   });
