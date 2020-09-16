@@ -40,6 +40,12 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
+      
+      # cloud functions
+      - name: Install dependencies
+        run: |
+          cd functions
+          yarn --frozen-lockfile --ignore-optinal
         
       - name: Download Artifact
         uses: actions/download-artifact@master
