@@ -22,7 +22,6 @@
 devNote
 
 .firebaserc
-firebase.json
 .firebase
 
 npm-debug.log*
