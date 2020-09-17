@@ -1,6 +1,7 @@
 import React, { useMemo, useCallback, useRef, createRef } from 'react';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
+import { format } from 'date-fns';
 import { ListItem } from '../../ui/List/ListItem';
 import { RemoveNoteDialog } from '../operation/RemoveNoteDialog';
 import { UpdateNoteDialog } from '../operation/UpdateNoteDialog';
@@ -9,8 +10,8 @@ import { Note, SearchNotesCriteria } from '../../../types/note';
 const GridContainer = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: 80% 20%;
-  align-items: end;
+  grid-template-columns: 85% 15%;
+  align-items: flex-start;
 `;
 
 const NoteTextContainer = styled.div`
@@ -25,24 +26,24 @@ const TitleText = styled(Typography)`
 
 const NoteText = styled(Typography)`
   white-space: pre-line;
-  width: 100%;
   font-size: 1.2em;
   margin-top: 20px;
   margin-left: 20px;
   margin-bottom: 20px;
 `;
 
-// TODO: 更新日、作成日を表示するときに使うかも
-// const MetaData = styled.div`
-//   display: grid;
-//   grid-template-columns: 50% 50%;
-//   margin-top: 1em;
-// `;
+const MetaData = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+`;
 
-// const MetaText = styled(Typography)`
-//   font-size: 1em;
-//   color: #c0c0c0;
-// `;
+const MetaText = styled(Typography)`
+  font-size: 1em;
+  color: #c0c0c0;
+  margin-right: 10px;
+`;
 
 const HighlightSpan = styled.span`
   background-color: ${props => props.theme.palette.secondary.light};
@@ -138,6 +139,14 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
     return getHighlightedText(note.text, searchCriteria.text);
   }, [getHighlightedText, note.text, searchCriteria]);
 
+  const createdAt = useMemo(() => format(note.createdAt, 'yyyy/MM/dd'), [
+    note.createdAt,
+  ]);
+
+  const updatedAt = useMemo(() => format(note.updatedAt, 'yyyy/MM/dd'), [
+    note.updatedAt,
+  ]);
+
   return (
     <ListItem itemId={itemId} onKeyDown={handleKeyDown} ref={refs.current[0]}>
       <GridContainer>
@@ -146,6 +155,10 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
             <span data-testid="title">{title}</span>
           </TitleText>
           <NoteText data-testid="text">{text}</NoteText>
+          <MetaData>
+            <MetaText>{`作成日: ${createdAt}`}</MetaText>
+            <MetaText>{`更新日: ${updatedAt}`}</MetaText>
+          </MetaData>
         </NoteTextContainer>
         <MenuContainer>
           <RemoveNoteDialog
