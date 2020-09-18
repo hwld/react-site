@@ -8,6 +8,5 @@
   },
   "devDependencies": {
     "ts-node": "^9.0.0"
-  },
-  
+  }
 }
