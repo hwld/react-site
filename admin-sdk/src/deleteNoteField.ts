@@ -1,4 +1,6 @@
-import { db, admin } from './config';
+import { db, admin } from './firebaseConfig';
+
+
 
 async function getNotesSnapShot() {
   const ref = db.collectionGroup('notes');
