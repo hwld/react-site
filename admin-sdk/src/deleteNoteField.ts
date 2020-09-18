@@ -1,28 +1,28 @@
+import { firestore } from 'firebase-admin';
 import { db, admin } from './firebaseConfig';
+import { runBatch } from './runBatch';
 
+async function deleteNoteField(store: firestore.Firestore, limit: number) {
+  const notesQuery = store.collectionGroup('notes').orderBy('createdAt', 'asc');
 
-
-async function getNotesSnapShot() {
-  const ref = db.collectionGroup('notes');
-  const snapshot = await ref.get();
-
-  return snapshot;
-}
-
-async function deleteNoteField() {
-  try {
-    console.log('***** START MAIN *****');
-    const notes = await getNotesSnapShot();
-    notes.docs.forEach(n => {
-      n.ref.update({
-        authorName: admin.firestore.FieldValue.delete(),
-        bookName: admin.firestore.FieldValue.delete(),
-      });
+  const executeDeleteNoteField = (
+    batch: firestore.WriteBatch,
+    note: firestore.QueryDocumentSnapshot<firestore.DocumentData>,
+  ) => {
+    batch.update(note.ref, {
+      authorName: admin.firestore.FieldValue.delete(),
+      bookName: admin.firestore.FieldValue.delete(),
     });
-    console.log('***** END MAIN *****');
-  } catch (e) {
-    console.log(e);
-  }
+  };
+
+  runBatch(store, notesQuery, executeDeleteNoteField, limit);
 }
 
-deleteNoteField().then();
+async function main() {
+  console.log('***** START MAIN *****');
+  const limit = 25;
+  deleteNoteField(db, limit);
+  console.log('***** END MAIN *****');
+}
+
+main().then();
