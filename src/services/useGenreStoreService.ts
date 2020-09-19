@@ -1,7 +1,6 @@
-import firebase from 'firebase/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useCallback, useMemo } from 'react';
-import { db } from './firebaseConfig';
+import { db, firebase } from './firebaseConfig';
 import { useNoteStoreService } from './useNoteStoreService';
 import { GenreField, Genre, GenreStoreService } from '../types/genre';
 
@@ -27,6 +26,8 @@ export const useGenreStoreService = (uid: string): GenreStoreService => {
   }, [uid]);
 
   const [genresCollection] = useCollectionData<FirestoreGenre>(genresRef);
+
+  // firestore用のデータからapp用のデータに変換する
   const genres = useMemo(() => {
     if (!genresCollection) {
       return [];

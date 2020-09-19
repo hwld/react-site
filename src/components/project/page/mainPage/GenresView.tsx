@@ -1,9 +1,15 @@
-import React, { forwardRef, PropsWithChildren, useState } from 'react';
+import React, {
+  forwardRef,
+  PropsWithChildren,
+  useEffect,
+  useState,
+} from 'react';
 import { GenreTreeList } from '../../ui/GenreTreeList';
 import { ContentColumn } from '../../ui/ContentColumn';
 import { GenresViewMenu } from './GenresViewMenu';
 import { useGenresContext } from '../../../../context/GenresContext';
 import { useNotesContext } from '../../../../context/NotesContext';
+import { useAppStateContext } from '../../../../context/AppStateContext';
 
 type GenresViewProps = {
   onGenreSelect: (selectedId: string[]) => void;
@@ -21,11 +27,22 @@ export const GenresView = forwardRef<
 ) {
   const { genres, moveGenres } = useGenresContext();
   const { moveNotes } = useNotesContext();
-  const [expanded, setExpanded] = useState<string[]>([]);
 
-  const handleExpand = (expandedIds: string[]) => {
-    setExpanded(expandedIds);
+  const { appState, writeAppStateBuffer, storeAppState } = useAppStateContext();
+  const [expanded, setExpanded] = useState(appState.expandedIds);
+
+  const handleExpand = (ids: string[]) => {
+    setExpanded(ids);
+    writeAppStateBuffer({ expandedIds: ids });
   };
+
+  // コンポーネントが破棄されたときにストアにリクエストを飛ばす
+  // storeAppStateは再レンダリングで変更されない
+  useEffect(() => {
+    return () => {
+      storeAppState();
+    };
+  }, [storeAppState]);
 
   return (
     <ContentColumn
