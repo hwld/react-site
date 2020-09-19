@@ -12,7 +12,7 @@ const DropLayer = styled.div`
   height: 100%;
 `;
 
-export const styles = (theme: Theme) => ({
+export const styles = () => ({
   /* Styles applied to the root element. */
   root: {
     padding: 0,
@@ -38,6 +38,7 @@ type TreeViewProps = WithStyles<typeof styles> & {
   disableSelection?: boolean;
   multiSelect?: boolean;
   expanded?: string[];
+  onNodeExpand?: (id: string) => void;
   onNodeSelect?: (ids: string[]) => void;
   selected?: string[];
   draggable?: boolean;
@@ -64,7 +65,6 @@ const UnStyledTreeView = React.forwardRef<
     onDrop = () => {},
     onKeyDown = () => {},
   } = props;
-  const [tabbable, setTabbable] = React.useState<string | null>(null);
   const [focusedNodeId, setFocusedNodeId] = React.useState<string | null>(null);
 
   const nodeMap = React.useRef(
@@ -76,6 +76,8 @@ const UnStyledTreeView = React.forwardRef<
 
   const visibleNodes = React.useRef<string[]>([]);
 
+  // expandedPropがundefinedではない場合はsetExpandedStateで何も起こらない.
+  // 外側で開閉状態を制御する必要がある.
   const [expanded, setExpandedState] = useControlled({
     controlled: expandedProp,
     default: defaultExpanded,
@@ -165,7 +167,6 @@ const UnStyledTreeView = React.forwardRef<
     [getAllDescendants, selected],
   );
 
-  const isTabbable = (id: string) => tabbable === id;
   const isFocused = (id: string) => focusedNodeId === id;
 
   /*
@@ -174,7 +175,6 @@ const UnStyledTreeView = React.forwardRef<
 
   const focus = (id: string | null) => {
     if (id) {
-      setTabbable(id);
       setFocusedNodeId(id);
     }
   };
@@ -203,23 +203,9 @@ const UnStyledTreeView = React.forwardRef<
     value = focusedNodeId,
   ) => {
     if (value !== null) {
-      let newExpanded;
+      let newExpanded: string[];
       if (expanded.indexOf(value) !== -1) {
         newExpanded = expanded.filter(id => id !== value);
-        setTabbable(oldTabbable => {
-          let map;
-          if (oldTabbable) {
-            map = nodeMap.current.get(oldTabbable);
-          }
-          if (
-            oldTabbable &&
-            (map && map.parent ? map.parent : null) === value
-          ) {
-            return value;
-          }
-
-          return oldTabbable;
-        });
       } else {
         newExpanded = [value].concat(expanded);
       }
@@ -624,11 +610,6 @@ const UnStyledTreeView = React.forwardRef<
         expandable: false,
       });
 
-      childIds.forEach((id, index) => {
-        if (index === 0) {
-          setTabbable(id);
-        }
-      });
       const top = nodeMap.current.get('1');
       visibleNodes.current = top ? top.children : [];
       prevChildIds.current = childIds;
@@ -701,7 +682,6 @@ const UnStyledTreeView = React.forwardRef<
           : rangeSelectToFirst,
         rangeSelectToLast: disableSelection ? noopSelection : rangeSelectToLast,
         selectAllNodes: disableSelection ? noopSelection : selectAllNodes,
-        isTabbable,
         multiSelect,
         getParent,
         addNodeToNodeMap,

@@ -27,7 +27,6 @@ type TreeViewContextValue = {
   rangeSelectToFirst: (event: React.SyntheticEvent, id: string) => boolean;
   rangeSelectToLast: (event: React.SyntheticEvent, id: string) => boolean;
   selectAllNodes: (event: React.SyntheticEvent) => boolean;
-  isTabbable: (id: string) => boolean;
   multiSelect: boolean;
   getParent: (id: string) => string | null | undefined;
   addNodeToNodeMap: (
@@ -63,7 +62,6 @@ const TreeViewContext = React.createContext<TreeViewContextValue>({
   rangeSelectToFirst: () => false,
   rangeSelectToLast: () => false,
   selectAllNodes: () => false,
-  isTabbable: () => false,
   multiSelect: false,
   getParent: () => null,
   addNodeToNodeMap: () => {},
