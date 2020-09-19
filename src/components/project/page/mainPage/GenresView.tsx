@@ -1,4 +1,4 @@
-import React, { forwardRef, PropsWithChildren } from 'react';
+import React, { forwardRef, PropsWithChildren, useState } from 'react';
 import { GenreTreeList } from '../../ui/GenreTreeList';
 import { ContentColumn } from '../../ui/ContentColumn';
 import { GenresViewMenu } from './GenresViewMenu';
@@ -21,6 +21,11 @@ export const GenresView = forwardRef<
 ) {
   const { genres, moveGenres } = useGenresContext();
   const { moveNotes } = useNotesContext();
+  const [expanded, setExpanded] = useState<string[]>([]);
+
+  const handleExpand = (expandedIds: string[]) => {
+    setExpanded(expandedIds);
+  };
 
   return (
     <ContentColumn
@@ -32,6 +37,8 @@ export const GenresView = forwardRef<
         multiple
         genres={genres}
         selectedGenreIds={selectedGenreIds}
+        expanded={expanded}
+        onExpand={handleExpand}
         onGenreSelect={onGenreSelect}
         onGenreDrop={moveGenres}
         onNotesDrop={moveNotes}

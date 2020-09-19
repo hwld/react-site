@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withStyles, Theme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { useControlled } from '@material-ui/core/utils';
 import { WithStyles } from '@material-ui/styles';
 import clsx from 'clsx';
@@ -38,7 +38,7 @@ type TreeViewProps = WithStyles<typeof styles> & {
   disableSelection?: boolean;
   multiSelect?: boolean;
   expanded?: string[];
-  onNodeExpand?: (id: string) => void;
+  onExpand?: (expanded: string[]) => void;
   onNodeSelect?: (ids: string[]) => void;
   selected?: string[];
   draggable?: boolean;
@@ -59,6 +59,7 @@ const UnStyledTreeView = React.forwardRef<
     disableSelection = false,
     multiSelect = false,
     expanded: expandedProp,
+    onExpand,
     onNodeSelect,
     selected: selectedProp,
     draggable = false,
@@ -211,6 +212,9 @@ const UnStyledTreeView = React.forwardRef<
       }
 
       setExpandedState(newExpanded);
+      if (onExpand) {
+        onExpand(newExpanded);
+      }
     }
   };
 

@@ -18,6 +18,8 @@ type GenreTreeListProps = {
   className?: string;
   multiple?: boolean;
   selectedGenreIds?: string[];
+  expanded?: string[];
+  onExpand?: (expandedIds: string[]) => void;
   onGenreSelect?: (selectedId: string[]) => void;
   draggable?: boolean;
   onGenreDrop?: (sourceId: string[], targetId: string) => void;
@@ -33,6 +35,8 @@ export const GenreTreeList = forwardRef<
     multiple,
     genres,
     selectedGenreIds = [],
+    expanded,
+    onExpand = () => {},
     onGenreSelect = () => {},
     draggable = false,
     onGenreDrop,
@@ -115,6 +119,8 @@ export const GenreTreeList = forwardRef<
       multiSelect={multiple}
       className={className}
       selected={selectedGenreIds}
+      expanded={expanded}
+      onExpand={onExpand}
       onNodeSelect={onGenreSelect}
       draggable={draggable}
       onDrop={onGenreDrop}
