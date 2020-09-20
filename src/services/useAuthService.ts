@@ -22,6 +22,19 @@ export type AuthService = {
   deleteAccount: () => void;
 };
 
+// default value
+export const defaultAuthService = (): AuthService => {
+  return {
+    user: { userId: '', isAnonymous: false },
+    authState: { loading: false },
+    googleLogin: () => Promise.resolve(),
+    anonymousLogin: () => Promise.resolve(),
+    logout: () => Promise.resolve(),
+    linkWithGoogle: () => Promise.resolve(),
+    deleteAccount: () => {},
+  };
+};
+
 // hook
 export const useAuthService = () => {
   const [firebaseUser, loading] = useAuthState(auth);

@@ -47,6 +47,16 @@ type FirestoreNoteInfo = {
 
 type FirestoreNote = NoteField & FirestoreNoteDate & FirestoreNoteInfo;
 
+// default value
+export const defaultNoteStoreService = (): NoteStoreService => ({
+  notes: [],
+
+  addNote: () => {},
+  removeNotes: () => {},
+  updateNote: () => {},
+  moveNotes: () => {},
+});
+
 // hook
 export const useNoteStoreService = (uid: string): NoteStoreService => {
   const notesRef = useMemo(() => {

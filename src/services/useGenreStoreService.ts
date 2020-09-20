@@ -42,8 +42,17 @@ type FirestoreGenreInfo = {
 
 type FirestoreGenre = GenreField & FirestoreGenreDate & FirestoreGenreInfo;
 
-// hook
+// default value
+export const defaultGenreStoreService = (): GenreStoreService => ({
+  genres: [],
 
+  addGenre: () => {},
+  removeGenres: () => {},
+  updateGenre: () => {},
+  moveGenres: () => {},
+});
+
+// hook
 export const useGenreStoreService = (uid: string): GenreStoreService => {
   const genresRef = useMemo(() => {
     return db

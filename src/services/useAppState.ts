@@ -13,15 +13,14 @@ export type AppStateService = {
   storeAppState: () => void;
 };
 
+// default value
 export const defaultAppState = (): AppState => ({ expandedIds: [] });
 
-export const defaultAppStateService = (): AppStateService => {
-  return {
-    appState: { expandedIds: [] },
-    writeAppStateBuffer: () => {},
-    storeAppState: () => {},
-  };
-};
+export const defaultAppStateService = (): AppStateService => ({
+  appState: { expandedIds: [] },
+  writeAppStateBuffer: () => {},
+  storeAppState: () => {},
+});
 
 // hook
 export const useAppState = (uid: string): AppStateService => {

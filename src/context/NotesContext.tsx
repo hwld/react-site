@@ -1,15 +1,13 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { NoteStoreService } from '../services/useNoteStoreService';
+import {
+  defaultNoteStoreService,
+  NoteStoreService,
+} from '../services/useNoteStoreService';
 
-const NotesContext = React.createContext<NoteStoreService>({
-  notes: [],
-
-  addNote: () => {},
-  removeNotes: () => {},
-  updateNote: () => {},
-  moveNotes: () => {},
-});
+const NotesContext = React.createContext<NoteStoreService>(
+  defaultNoteStoreService(),
+);
 
 export const NotesContextProvider: React.FC<{ value: NoteStoreService }> = ({
   children,

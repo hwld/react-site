@@ -1,16 +1,8 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { AuthService } from '../services/useAuthService';
+import { AuthService, defaultAuthService } from '../services/useAuthService';
 
-const AuthContext = React.createContext<AuthService>({
-  user: { userId: '', isAnonymous: false },
-  authState: { loading: false },
-  googleLogin: () => Promise.resolve(),
-  anonymousLogin: () => Promise.resolve(),
-  logout: () => Promise.resolve(),
-  linkWithGoogle: () => Promise.resolve(),
-  deleteAccount: () => {},
-});
+const AuthContext = React.createContext<AuthService>(defaultAuthService());
 
 export const AuthContextProvider: React.FC<{
   value: AuthService;
