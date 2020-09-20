@@ -4,8 +4,8 @@ import { NoteList } from '../../ui/NoteList';
 import { NotesSortOrder } from '../../ui/NotesSortConditionFields';
 import { ContentColumn } from '../../ui/ContentColumn';
 import { NotesViewMenu } from './NotesViewMenu';
-import { useMobileContext } from '../../../../context/MobileContext';
 import { useNotesContext } from '../../../../context/NotesContext';
+import { useAppStateContext } from '../../../../context/AppStateContext';
 
 interface NotesViewProps {
   selectedGenreIds: string[];
@@ -17,7 +17,7 @@ export const NotesView = forwardRef<
   HTMLUListElement,
   PropsWithChildren<NotesViewProps>
 >(function NotesView({ selectedGenreIds, className, onKeyDown }, ref) {
-  const { isMobile } = useMobileContext();
+  const { isMobile } = useAppStateContext();
   const { notes } = useNotesContext();
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
   const [notesSortOrder, setNotesSortOrder] = useState<NotesSortOrder>({

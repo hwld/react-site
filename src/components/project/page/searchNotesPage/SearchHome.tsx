@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useTheme, useMediaQuery } from '@material-ui/core';
 import { SearchHeader } from './SearchHeader';
 import { SearchColumn } from './SearchColumn';
 import { ResultNotesColumn } from './ResultNotesColumn';
 import { Drawer } from '../../../ui/Drawer/Drawer';
-import { MobileContextProvider } from '../../../../context/MobileContext';
 import { SearchNotesCriteria } from '../../../../services/useNoteStoreService';
-
+import { useAppStateContext } from '../../../../context/AppStateContext';
 
 const Background = styled.div`
   display: flex;
@@ -28,8 +26,7 @@ const SearchHome: React.FC = () => {
     title: '',
     text: '',
   });
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const { isMobile } = useAppStateContext();
 
   const invertDrawer = () => {
     setIsOpen(state => !state);
@@ -44,21 +41,19 @@ const SearchHome: React.FC = () => {
   };
 
   return (
-    <MobileContextProvider value={{ isMobile }}>
-      <Background data-testid="searchNotestPage">
-        <SearchHeader onMenuClick={invertDrawer} />
-        <Drawer
-          width={isMobile ? '80' : '30'}
-          isPresistent={!isMobile}
-          open={isOpen}
-          onOpen={openDrawer}
-          onClose={closeDrawer}
-        >
-          <SearchColumn setCriteria={setSearchCriteria} />
-        </Drawer>
-        <ResultNotesColumn searchCriteria={searchCriteria} />
-      </Background>
-    </MobileContextProvider>
+    <Background data-testid="searchNotestPage">
+      <SearchHeader onMenuClick={invertDrawer} />
+      <Drawer
+        width={isMobile ? '80' : '30'}
+        isPresistent={!isMobile}
+        open={isOpen}
+        onOpen={openDrawer}
+        onClose={closeDrawer}
+      >
+        <SearchColumn setCriteria={setSearchCriteria} />
+      </Drawer>
+      <ResultNotesColumn searchCriteria={searchCriteria} />
+    </Background>
   );
 };
 

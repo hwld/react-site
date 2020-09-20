@@ -1,47 +1,49 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useMediaQuery, useTheme } from '@material-ui/core';
+import { useCallback, useMemo } from 'react';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { db } from './firebaseConfig';
 
 // types
-export type AppState = {
+export type FirestoreAppState = {
   expandedIds: string[];
 };
 
 export type AppStateService = {
-  appState: AppState;
-  writeAppStateBuffer: (appState: AppState) => void;
-  storeAppState: () => void;
+  isMobile: boolean;
+  expandedIds: string[];
+  storeExpandedIds: (ids: string[]) => void;
 };
 
 // default value
-export const defaultAppState = (): AppState => ({ expandedIds: [] });
+export const defaultAppState = (): FirestoreAppState => ({ expandedIds: [] });
 
 export const defaultAppStateService = (): AppStateService => ({
-  appState: { expandedIds: [] },
-  writeAppStateBuffer: () => {},
-  storeAppState: () => {},
+  isMobile: false,
+  expandedIds: [],
+  storeExpandedIds: () => {},
 });
 
 // hook
 export const useAppState = (uid: string): AppStateService => {
-  // 開閉ごとにリクエストを飛ばしたくないので、bufferにためてstoreAppState関数で実際にリクエストを飛ばす
-  const appStateBuffer = useRef<AppState>(defaultAppState());
   const appStateRef = useMemo(() => {
     return db.collection('users').doc(`${uid !== '' ? uid : 'tmp'}`);
   }, [uid]);
-  const [appState] = useDocumentData<AppState>(appStateRef);
+  const [appState] = useDocumentData<FirestoreAppState>(appStateRef);
+  const expandedIds = appState ? appState.expandedIds : [];
 
-  const writeAppStateBuffer = (newAppState: AppState) => {
-    appStateBuffer.current = newAppState;
-  };
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const storeAppState = useCallback(() => {
-    appStateRef.set(appStateBuffer.current);
-  }, [appStateRef]);
+  const storeExpandedIds = useCallback(
+    (ids: string[]) => {
+      appStateRef.set({ expandedIds: ids });
+    },
+    [appStateRef],
+  );
 
   return {
-    appState: appState || defaultAppState(),
-    writeAppStateBuffer,
-    storeAppState,
+    expandedIds,
+    isMobile,
+    storeExpandedIds,
   };
 };

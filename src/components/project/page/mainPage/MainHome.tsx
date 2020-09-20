@@ -1,12 +1,11 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import { useTheme, useMediaQuery } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { NotesView } from './NotesView';
 import { MainHeader } from './MainHeader';
 import { Drawer } from '../../../ui/Drawer/Drawer';
 import { GenresView } from './GenresView';
-import { MobileContextProvider } from '../../../../context/MobileContext';
+import { useAppStateContext } from '../../../../context/AppStateContext';
 
 const Background = styled.div`
   display: flex;
@@ -20,8 +19,7 @@ const MainHome: React.FC = () => {
   const genresViewRef = useRef<HTMLUListElement | null>(null);
   const notesViewRef = useRef<HTMLUListElement | null>(null);
   const history = useHistory();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const { isMobile } = useAppStateContext();
 
   const invertDrawer = () => {
     setIsOpen(state => !state);
@@ -70,30 +68,28 @@ const MainHome: React.FC = () => {
   };
 
   return (
-    <MobileContextProvider value={{ isMobile }}>
-      <Background data-testid="mainPage">
-        <MainHeader onMenuClick={invertDrawer} onGoSearchMode={goSearchMode} />
-        <Drawer
-          width={isMobile ? '80' : '40'}
-          isPresistent={!isMobile}
-          open={isOpen}
-          onOpen={openDrawer}
-          onClose={closeDrawer}
-        >
-          <GenresView
-            onGenreSelect={setSelectedGenreIds}
-            selectedGenreIds={selectedGenreIds}
-            onKeyDown={handleGenresViewKeyDown}
-            ref={genresViewRef}
-          />
-        </Drawer>
-        <NotesView
+    <Background data-testid="mainPage">
+      <MainHeader onMenuClick={invertDrawer} onGoSearchMode={goSearchMode} />
+      <Drawer
+        width={isMobile ? '80' : '40'}
+        isPresistent={!isMobile}
+        open={isOpen}
+        onOpen={openDrawer}
+        onClose={closeDrawer}
+      >
+        <GenresView
+          onGenreSelect={setSelectedGenreIds}
           selectedGenreIds={selectedGenreIds}
-          onKeyDown={handleNotesViewKeyDown}
-          ref={notesViewRef}
+          onKeyDown={handleGenresViewKeyDown}
+          ref={genresViewRef}
         />
-      </Background>
-    </MobileContextProvider>
+      </Drawer>
+      <NotesView
+        selectedGenreIds={selectedGenreIds}
+        onKeyDown={handleNotesViewKeyDown}
+        ref={notesViewRef}
+      />
+    </Background>
   );
 };
 

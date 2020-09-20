@@ -1,9 +1,4 @@
-import React, {
-  forwardRef,
-  PropsWithChildren,
-  useEffect,
-  useState,
-} from 'react';
+import React, { forwardRef, PropsWithChildren } from 'react';
 import { GenreTreeList } from '../../ui/GenreTreeList';
 import { ContentColumn } from '../../ui/ContentColumn';
 import { GenresViewMenu } from './GenresViewMenu';
@@ -28,21 +23,11 @@ export const GenresView = forwardRef<
   const { genres, moveGenres } = useGenresContext();
   const { moveNotes } = useNotesContext();
 
-  const { appState, writeAppStateBuffer, storeAppState } = useAppStateContext();
-  const [expanded, setExpanded] = useState(appState.expandedIds);
+  const { expandedIds, storeExpandedIds } = useAppStateContext();
 
   const handleExpand = (ids: string[]) => {
-    setExpanded(ids);
-    writeAppStateBuffer({ expandedIds: ids });
+    storeExpandedIds(ids);
   };
-
-  // コンポーネントが破棄されたときにストアにリクエストを飛ばす
-  // storeAppStateは再レンダリングで変更されない
-  useEffect(() => {
-    return () => {
-      storeAppState();
-    };
-  }, [storeAppState]);
 
   return (
     <ContentColumn
@@ -54,7 +39,7 @@ export const GenresView = forwardRef<
         multiple
         genres={genres}
         selectedGenreIds={selectedGenreIds}
-        expanded={expanded}
+        expanded={expandedIds}
         onExpand={handleExpand}
         onGenreSelect={onGenreSelect}
         onGenreDrop={moveGenres}
