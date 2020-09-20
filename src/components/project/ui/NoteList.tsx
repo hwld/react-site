@@ -3,7 +3,10 @@ import Alert from '@material-ui/lab/Alert';
 import { NoteListItem } from './NoteListItem';
 import { List } from '../../ui/List/List';
 import { NotesSortOrder } from './NotesSortConditionFields';
-import { SearchNotesCriteria, Note } from '../../../types/note';
+import {
+  Note,
+  SearchNotesCriteria,
+} from '../../../services/useNoteStoreService';
 
 type NoteListProps = {
   notes: Note[];

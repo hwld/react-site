@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
-import { GenreField } from '../../../types/genre';
+import { GenreField } from '../../../services/useGenreStoreService';
 
 const StyledTextField = styled(TextField)`
   & label.Mui-focused,

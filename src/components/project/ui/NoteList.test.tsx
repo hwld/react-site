@@ -1,6 +1,7 @@
 import React from 'react';
+import { Note } from '../../../services/useNoteStoreService';
 import { render } from '../../../test-util';
-import { Note } from '../../../types/note';
+
 import { NoteList } from './NoteList';
 
 describe('<NoteList>', () => {

@@ -3,7 +3,8 @@ import { ContentColumn } from '../../ui/ContentColumn';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { useMobileContext } from '../../../../context/MobileContext';
 import { NoteList } from '../../ui/NoteList';
-import { SearchNotesCriteria } from '../../../../types/note';
+import { SearchNotesCriteria } from '../../../../services/useNoteStoreService';
+
 
 type SearchNotesColumnProps = {
   searchCriteria: SearchNotesCriteria;

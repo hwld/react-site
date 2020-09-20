@@ -10,7 +10,8 @@ import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
 import { useGenresContext } from '../../../../context/GenresContext';
 import { SelectGenreDialog } from './SelectGenreDialog';
-import { SearchNotesCriteria } from '../../../../types/note';
+import { SearchNotesCriteria } from '../../../../services/useNoteStoreService';
+
 
 const Root = styled.div`
   padding: 16px 24px;

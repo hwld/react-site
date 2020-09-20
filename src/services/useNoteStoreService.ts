@@ -1,7 +1,39 @@
 import { useMemo, useCallback } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db, firebase } from './firebaseConfig';
-import { NoteField, Note, NoteStoreService } from '../types/note';
+
+// types
+export type NoteField = {
+  title: string;
+  text: string;
+};
+
+export type NoteDate = {
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type NoteInfo = {
+  id: string;
+  genreId: string;
+};
+
+export type Note = NoteField & NoteDate & NoteInfo;
+
+export interface SearchNotesCriteria {
+  genreId: string;
+  title: string;
+  text: string;
+}
+
+export type NoteStoreService = {
+  notes: Note[];
+
+  addNote: (genreId: string, noteField: NoteField) => void;
+  removeNotes: (ids: string[]) => void;
+  updateNote: (note: NoteField & { id: string }) => void;
+  moveNotes: (noteIds: string[], destGenreId: string) => void;
+};
 
 type FirestoreNoteDate = {
   createdAt: firebase.firestore.Timestamp;
@@ -15,6 +47,7 @@ type FirestoreNoteInfo = {
 
 type FirestoreNote = NoteField & FirestoreNoteDate & FirestoreNoteInfo;
 
+// hook
 export const useNoteStoreService = (uid: string): NoteStoreService => {
   const notesRef = useMemo(() => {
     return db

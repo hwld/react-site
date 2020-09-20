@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { NoteStoreService } from '../types/note';
+import { NoteStoreService } from '../services/useNoteStoreService';
 
 const NotesContext = React.createContext<NoteStoreService>({
   notes: [],

@@ -1,8 +1,28 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCallback, useMemo } from 'react';
 import { auth, firebase } from './firebaseConfig';
-import { AppUser, AuthState } from '../types/auth';
 
+// types
+export type AppUser = {
+  userId: string;
+  isAnonymous: boolean;
+};
+
+export type AuthState = {
+  loading: boolean;
+};
+
+export type AuthService = {
+  user: AppUser;
+  authState: AuthState;
+  googleLogin: () => Promise<void>;
+  anonymousLogin: () => Promise<void>;
+  logout: () => Promise<void>;
+  linkWithGoogle: () => Promise<void>;
+  deleteAccount: () => void;
+};
+
+// hook
 export const useAuthService = () => {
   const [firebaseUser, loading] = useAuthState(auth);
   const user: AppUser = useMemo(

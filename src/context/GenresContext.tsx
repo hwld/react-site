@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { GenreStoreService } from '../types/genre';
+import { GenreStoreService } from '../services/useGenreStoreService';
 
 const GenresContext = React.createContext<GenreStoreService>({
   genres: [],

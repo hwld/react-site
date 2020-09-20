@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Alert from '@material-ui/lab/Alert';
 import { TreeView } from '../../ui/TreeView/TreeView';
 import { GenreTreeItem } from './GenreTreeItem';
-import { Genre } from '../../../types/genre';
+import { Genre } from '../../../services/useGenreStoreService';
 
 export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
 

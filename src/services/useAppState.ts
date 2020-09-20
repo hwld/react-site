@@ -2,6 +2,7 @@ import { useCallback, useMemo, useRef } from 'react';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { db } from './firebaseConfig';
 
+// types
 export type AppState = {
   expandedIds: string[];
 };
@@ -22,6 +23,7 @@ export const defaultAppStateService = (): AppStateService => {
   };
 };
 
+// hook
 export const useAppState = (uid: string): AppStateService => {
   // 開閉ごとにリクエストを飛ばしたくないので、bufferにためてstoreAppState関数で実際にリクエストを飛ばす
   const appStateBuffer = useRef<AppState>(defaultAppState());
