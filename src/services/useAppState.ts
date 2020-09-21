@@ -10,7 +10,9 @@ export type FirestoreAppState = {
 export type AppStateService = {
   isMobile: boolean;
   expandedIds: string[];
+  selectedGenreIds: string[];
   setExpandedIds: (ids: string[]) => void;
+  setSelectedGenreIds: (ids: string[]) => void;
 };
 
 // default value
@@ -19,7 +21,9 @@ export const defaultAppState = (): FirestoreAppState => ({ expandedIds: [] });
 export const defaultAppStateService = (): AppStateService => ({
   isMobile: false,
   expandedIds: [],
+  selectedGenreIds: [],
   setExpandedIds: () => {},
+  setSelectedGenreIds: () => {},
 });
 
 // hook
@@ -33,14 +37,30 @@ export const useAppState = (): AppStateService => {
     initExpandedIds,
   );
 
+  // selected genre
+  const initSelectedGenreIds = useMemo(
+    () => getLocalStorage('selectedGenre'),
+    [],
+  );
+  const [selectedGenreIds, setInternalSelectedIds] = useState<string[]>(
+    initSelectedGenreIds,
+  );
+
   const setExpandedIds = useCallback((ids: string[]) => {
     localStorage.setItem('expanded', JSON.stringify(ids));
     setInternalExpandedIds(ids);
   }, []);
 
+  const setSelectedGenreIds = useCallback((ids: string[]) => {
+    localStorage.setItem('selectedGenre', JSON.stringify(ids));
+    setInternalSelectedIds(ids);
+  }, []);
+
   return {
     isMobile,
     expandedIds,
+    selectedGenreIds,
     setExpandedIds,
+    setSelectedGenreIds,
   };
 };
