@@ -1,7 +1,6 @@
 import { useMediaQuery, useTheme } from '@material-ui/core';
-import { useCallback, useMemo } from 'react';
-import { useDocumentData } from 'react-firebase-hooks/firestore';
-import { db } from './firebaseConfig';
+import { useCallback, useMemo, useState } from 'react';
+import { getLocalStorage } from '../util/getLocalStorage';
 
 // types
 export type FirestoreAppState = {
@@ -11,7 +10,7 @@ export type FirestoreAppState = {
 export type AppStateService = {
   isMobile: boolean;
   expandedIds: string[];
-  storeExpandedIds: (ids: string[]) => void;
+  setExpandedIds: (ids: string[]) => void;
 };
 
 // default value
@@ -20,30 +19,28 @@ export const defaultAppState = (): FirestoreAppState => ({ expandedIds: [] });
 export const defaultAppStateService = (): AppStateService => ({
   isMobile: false,
   expandedIds: [],
-  storeExpandedIds: () => {},
+  setExpandedIds: () => {},
 });
 
 // hook
-export const useAppState = (uid: string): AppStateService => {
-  const appStateRef = useMemo(() => {
-    return db.collection('users').doc(`${uid !== '' ? uid : 'tmp'}`);
-  }, [uid]);
-  const [appState] = useDocumentData<FirestoreAppState>(appStateRef);
-  const expandedIds = appState ? appState.expandedIds : [];
-
+export const useAppState = (): AppStateService => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const storeExpandedIds = useCallback(
-    (ids: string[]) => {
-      appStateRef.set({ expandedIds: ids });
-    },
-    [appStateRef],
+  // expanded
+  const initExpandedIds = useMemo(() => getLocalStorage('expanded'), []);
+  const [expandedIds, setInternalExpandedIds] = useState<string[]>(
+    initExpandedIds,
   );
 
+  const setExpandedIds = useCallback((ids: string[]) => {
+    localStorage.setItem('expanded', JSON.stringify(ids));
+    setInternalExpandedIds(ids);
+  }, []);
+
   return {
-    expandedIds,
     isMobile,
-    storeExpandedIds,
+    expandedIds,
+    setExpandedIds,
   };
 };

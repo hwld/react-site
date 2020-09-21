@@ -23,10 +23,10 @@ export const GenresView = forwardRef<
   const { genres, moveGenres } = useGenresContext();
   const { moveNotes } = useNotesContext();
 
-  const { expandedIds, storeExpandedIds } = useAppStateContext();
+  const { expandedIds, setExpandedIds } = useAppStateContext();
 
   const handleExpand = (ids: string[]) => {
-    storeExpandedIds(ids);
+    setExpandedIds(ids);
   };
 
   return (

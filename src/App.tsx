@@ -13,7 +13,7 @@ import { AppStateProvider } from './context/AppStateContext';
 
 const App: React.FC = () => {
   const authService = useAuthService();
-  const appStateService = useAppState(authService.user.userId);
+  const appStateService = useAppState();
   const genreService = useGenreStoreService(authService.user.userId);
   const noteService = useNoteStoreService(authService.user.userId);
 
