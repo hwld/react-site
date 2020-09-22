@@ -15,14 +15,13 @@ const Background = styled.div`
 
 const MainHome: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
-  // const [selectedGenreIds, setSelectedGenreIds] = useState<string[]>([]);
   const genresViewRef = useRef<HTMLUListElement | null>(null);
   const notesViewRef = useRef<HTMLUListElement | null>(null);
   const history = useHistory();
   const {
+    isMobile,
     selectedGenreIds,
     setSelectedGenreIds,
-    isMobile,
   } = useAppStateContext();
 
   const invertDrawer = () => {

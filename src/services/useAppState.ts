@@ -28,6 +28,7 @@ export const defaultAppStateService = (): AppStateService => ({
 
 // hook
 export const useAppState = (): AppStateService => {
+  // isMobile
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
@@ -46,11 +47,13 @@ export const useAppState = (): AppStateService => {
     initSelectedGenreIds,
   );
 
+  // set expanded
   const setExpandedIds = useCallback((ids: string[]) => {
     localStorage.setItem('expanded', JSON.stringify(ids));
     setInternalExpandedIds(ids);
   }, []);
 
+  // set selected genre
   const setSelectedGenreIds = useCallback((ids: string[]) => {
     localStorage.setItem('selectedGenre', JSON.stringify(ids));
     setInternalSelectedIds(ids);
