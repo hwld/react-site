@@ -2,9 +2,9 @@ import React, { useCallback, useMemo, forwardRef } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import { NoteListItem } from './NoteListItem';
 import { List } from '../../ui/List/List';
-import { NotesSortOrder } from './NotesSortConditionFields';
 import {
   Note,
+  NotesSortOrder,
   SearchNotesCriteria,
 } from '../../../services/useNoteStoreService';
 

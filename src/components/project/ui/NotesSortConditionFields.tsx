@@ -5,12 +5,7 @@ import {
   FormControlLabel,
   Typography,
 } from '@material-ui/core';
-import { NoteDate, NoteField } from '../../../services/useNoteStoreService';
-
-export interface NotesSortOrder {
-  targetField: keyof NoteDate | keyof NoteField;
-  order: 'asc' | 'desc';
-}
+import { NotesSortOrder } from '../../../services/useNoteStoreService';
 
 type NotesSortConditionFieldProps = {
   notesSortOrder: NotesSortOrder;

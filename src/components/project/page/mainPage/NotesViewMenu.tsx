@@ -1,10 +1,10 @@
 import React from 'react';
-import { NotesSortOrder } from '../../ui/NotesSortConditionFields';
 import { AddNoteDialog } from '../../operation/AddNoteDialog';
 import { RemoveNoteDialog } from '../../operation/RemoveNoteDialog';
 import { MoveNotesDialog } from '../../operation/MoveNotesDialog';
 import { SortNotesDialog } from '../../operation/SortNotesDialog';
 import { UpdateNoteDialog } from '../../operation/UpdateNoteDialog';
+import { NotesSortOrder } from '../../../../services/useNoteStoreService';
 
 interface NotesViewMenuProps {
   sortNotes: (order: NotesSortOrder) => void;

@@ -26,6 +26,11 @@ export interface SearchNotesCriteria {
   text: string;
 }
 
+export interface NotesSortOrder {
+  targetField: keyof NoteDate | keyof NoteField;
+  order: 'asc' | 'desc';
+}
+
 export type NoteStoreService = {
   notes: Note[];
 

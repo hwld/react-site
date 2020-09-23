@@ -1,11 +1,11 @@
 import React, { useState, forwardRef, PropsWithChildren } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import { NoteList } from '../../ui/NoteList';
-import { NotesSortOrder } from '../../ui/NotesSortConditionFields';
 import { ContentColumn } from '../../ui/ContentColumn';
 import { NotesViewMenu } from './NotesViewMenu';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { useAppStateContext } from '../../../../context/AppStateContext';
+import { NotesSortOrder } from '../../../../services/useNoteStoreService';
 
 interface NotesViewProps {
   selectedGenreIds: string[];
