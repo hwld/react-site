@@ -170,7 +170,7 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
             ref={refs.current[1]}
           />
           <UpdateNoteDialog
-            defaultNote={note}
+            defaultNoteId={note.id}
             tabIndex={-1}
             ref={refs.current[2]}
           />

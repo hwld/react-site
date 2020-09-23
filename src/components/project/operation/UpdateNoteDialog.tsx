@@ -3,11 +3,16 @@ import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { OperationDialog } from './OperationDialog';
 import { EditNoteField } from '../ui/EditNoteFields';
-import { Note, NoteField } from '../../../services/useNoteStoreService';
+import {
+  getDefaultNote,
+  Note,
+  NoteField,
+} from '../../../services/useNoteStoreService';
 import { useNotesContext } from '../../../context/NotesContext';
 
 type UpdateNoteDialogProps = {
-  defaultNote: Note;
+  disabled?: boolean;
+  defaultNoteId: string;
   size?: SvgIconProps['fontSize'];
   tabIndex?: number;
 };
@@ -15,29 +20,34 @@ type UpdateNoteDialogProps = {
 export const UpdateNoteDialog = forwardRef<
   HTMLButtonElement,
   PropsWithChildren<UpdateNoteDialogProps>
->(function UpdateNoteDialog({ defaultNote, size, tabIndex }, ref) {
-  const [note, setNote] = useState(defaultNote);
-  const { updateNote } = useNotesContext();
+>(function UpdateNoteDialog({ disabled, defaultNoteId, size, tabIndex }, ref) {
+  const [newNote, setNewNote] = useState<Note>(getDefaultNote());
+  const { notes, updateNote } = useNotesContext();
 
   const update = () => {
-    updateNote(note);
+    updateNote(newNote);
   };
 
   const setDefaultNote = () => {
-    setNote(defaultNote);
+    const defaultNote = notes.find(note => note.id === defaultNoteId);
+    if (!defaultNote) {
+      throw Error('存在しないノート');
+    }
+    setNewNote(defaultNote);
   };
 
   const changeNoteField = (fieldName: keyof NoteField, value: string) => {
-    setNote(state => ({ ...state, [fieldName]: value }));
+    setNewNote(state => ({ ...state, [fieldName]: value }));
   };
 
   return (
     <OperationDialog
       tooltipText="メモを編集"
       activatorIcon={<EditIcon fontSize={size} />}
+      activatorDisabled={disabled}
       doneText="変更"
       onDone={update}
-      doneDisabled={note.text.length === 0}
+      doneDisabled={newNote.text.length === 0}
       onOpen={setDefaultNote}
       data-testid="updateNoteDialog"
       tabIndex={tabIndex}
@@ -45,7 +55,7 @@ export const UpdateNoteDialog = forwardRef<
     >
       <DialogTitle>メモの編集</DialogTitle>
       <DialogContent>
-        <EditNoteField defaultNote={note} onChange={changeNoteField} />
+        <EditNoteField defaultNote={newNote} onChange={changeNoteField} />
       </DialogContent>
     </OperationDialog>
   );

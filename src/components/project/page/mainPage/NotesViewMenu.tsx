@@ -4,6 +4,7 @@ import { AddNoteDialog } from '../../operation/AddNoteDialog';
 import { RemoveNoteDialog } from '../../operation/RemoveNoteDialog';
 import { MoveNotesDialog } from '../../operation/MoveNotesDialog';
 import { SortNotesDialog } from '../../operation/SortNotesDialog';
+import { UpdateNoteDialog } from '../../operation/UpdateNoteDialog';
 
 interface NotesViewMenuProps {
   sortNotes: (order: NotesSortOrder) => void;
@@ -27,6 +28,10 @@ const NotesViewMenu: React.FC<NotesViewMenuProps> = ({
       <RemoveNoteDialog
         disabled={selectedNoteIds.length === 0}
         targetNoteIds={selectedNoteIds}
+      />
+      <UpdateNoteDialog
+        disabled={selectedNoteIds.length !== 1}
+        defaultNoteId={selectedNoteIds[0] || ''}
       />
       <MoveNotesDialog
         disabled={selectedGenreIds.length === 0}
