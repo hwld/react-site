@@ -48,6 +48,15 @@ type FirestoreNoteInfo = {
 type FirestoreNote = NoteField & FirestoreNoteDate & FirestoreNoteInfo;
 
 // default value
+export const getDefaultNote = (): Note => ({
+  id: '',
+  genreId: '',
+  title: '',
+  text: '',
+  createdAt: new Date(),
+  updatedAt: new Date(),
+});
+
 export const defaultNoteStoreService = (): NoteStoreService => ({
   notes: [],
 

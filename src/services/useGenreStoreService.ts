@@ -43,6 +43,14 @@ type FirestoreGenreInfo = {
 type FirestoreGenre = GenreField & FirestoreGenreDate & FirestoreGenreInfo;
 
 // default value
+export const getDefaultGenre = (): Genre => ({
+  id: '',
+  genreName: '',
+  parentGenreId: '',
+  childrenGenreIds: [],
+  createdAt: new Date(),
+});
+
 export const defaultGenreStoreService = (): GenreStoreService => ({
   genres: [],
 

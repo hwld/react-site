@@ -4,8 +4,10 @@ import AddGenreIcon from '@material-ui/icons/CreateNewFolder';
 import { OperationDialog } from './OperationDialog';
 import { EditGenreField } from '../ui/EditGenreFields';
 import { useGenresContext } from '../../../context/GenresContext';
-import { GenreField } from '../../../services/useGenreStoreService';
-
+import {
+  GenreField,
+  getDefaultGenre,
+} from '../../../services/useGenreStoreService';
 
 type AddGenreDialogProps = {
   disabled?: boolean;
@@ -19,7 +21,7 @@ const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
   size,
 }) => {
   const { addGenre } = useGenresContext();
-  const [genreField, setGenreField] = useState<GenreField>({ genreName: '' });
+  const [genreField, setGenreField] = useState<GenreField>(getDefaultGenre());
 
   const add = () => {
     addGenre(parentGenreId, genreField);
