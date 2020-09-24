@@ -1,10 +1,8 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
 import { RemoveGenreDialog } from './RemoveGenreDIalog';
-import {
-  genresContextDefaultValue,
-  GenresContextProvider,
-} from '../../../context/GenresContext';
+import { GenresContextProvider } from '../../../context/GenresContext';
+import { getDefaultGenreStoreService } from '../../../services/useGenreStoreService';
 
 describe('<RemoveGenreDialog>', () => {
   test('ジャンルの削除処理が正しく呼ばれる', () => {
@@ -12,7 +10,7 @@ describe('<RemoveGenreDialog>', () => {
     const { getByTestId } = render(
       <GenresContextProvider
         value={{
-          ...genresContextDefaultValue,
+          ...getDefaultGenreStoreService(),
           removeGenres,
         }}
       >

@@ -1,14 +1,10 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
 import { MoveNotesDialog } from './MoveNotesDialog';
-import {
-  genresContextDefaultValue,
-  GenresContextProvider,
-} from '../../../context/GenresContext';
-import {
-  notesContextDefaultValue,
-  NotesContextProvider,
-} from '../../../context/NotesContext';
+import { GenresContextProvider } from '../../../context/GenresContext';
+import { NotesContextProvider } from '../../../context/NotesContext';
+import { getDefaultGenreStoreService } from '../../../services/useGenreStoreService';
+import { getDefaultNoteStoreService } from '../../../services/useNoteStoreService';
 
 describe('<MoveNotesDialog>', () => {
   test('メモの移動処理が正しく呼び出される', () => {
@@ -16,7 +12,7 @@ describe('<MoveNotesDialog>', () => {
     const { getByTestId } = render(
       <GenresContextProvider
         value={{
-          ...genresContextDefaultValue,
+          ...getDefaultGenreStoreService(),
           genres: [
             {
               genreName: 'testGenreName',
@@ -30,7 +26,7 @@ describe('<MoveNotesDialog>', () => {
       >
         <NotesContextProvider
           value={{
-            ...notesContextDefaultValue,
+            ...getDefaultNoteStoreService(),
             moveNotes,
           }}
         >

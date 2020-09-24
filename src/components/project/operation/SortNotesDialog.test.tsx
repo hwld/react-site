@@ -1,7 +1,7 @@
 import React from 'react';
+import { NotesSortOrder } from '../../../services/useNoteStoreService';
 import { render, fireEvent } from '../../../test-util';
 import { SortNotesDialog } from './SortNotesDialog';
-import { NotesSortOrder } from '../ui/NotesSortConditionFields';
 
 describe('<SortNotesDialog>', () => {
   test('タイトルの昇降順を設定できる', () => {

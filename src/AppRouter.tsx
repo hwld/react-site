@@ -6,7 +6,6 @@ import { MainHome } from './components/project/page/mainPage/MainHome';
 import { SearchHome } from './components/project/page/searchNotesPage/SearchHome';
 import { AppUser, AuthState } from './services/useAuthService';
 
-
 type AppRouterProps = {
   user: AppUser;
   authState: AuthState;

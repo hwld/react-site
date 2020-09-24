@@ -51,7 +51,7 @@ export const getDefaultGenre = (): Genre => ({
   createdAt: new Date(),
 });
 
-export const defaultGenreStoreService = (): GenreStoreService => ({
+export const getDefaultGenreStoreService = (): GenreStoreService => ({
   genres: [],
 
   addGenre: () => {},

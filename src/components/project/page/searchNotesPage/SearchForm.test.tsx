@@ -4,7 +4,6 @@ import { SearchForm } from './SearchForm';
 import { GenresContextProvider } from '../../../../context/GenresContext';
 import { SearchNotesCriteria } from '../../../../services/useNoteStoreService';
 
-
 describe('<SearchForm />', () => {
   test('検索処理が正しく呼び出される', () => {
     const search = jest.fn((criteria: SearchNotesCriteria) => criteria);

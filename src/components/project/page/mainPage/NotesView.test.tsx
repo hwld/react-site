@@ -4,7 +4,6 @@ import { NotesView } from './NotesView';
 import { NotesContextProvider } from '../../../../context/NotesContext';
 import { NoteStoreService } from '../../../../services/useNoteStoreService';
 
-
 describe('<NotesView>', () => {
   const notesContextValue: NoteStoreService = {
     addNote: () => {},

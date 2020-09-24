@@ -62,7 +62,7 @@ export const getDefaultNote = (): Note => ({
   updatedAt: new Date(),
 });
 
-export const defaultNoteStoreService = (): NoteStoreService => ({
+export const getDefaultNoteStoreService = (): NoteStoreService => ({
   notes: [],
 
   addNote: () => {},

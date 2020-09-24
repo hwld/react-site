@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
 import { AddGenreDialog } from './AddGenreDialog';
+import { GenresContextProvider } from '../../../context/GenresContext';
 import {
-  genresContextDefaultValue,
-  GenresContextProvider,
   GenreField,
-} from '../../../context/GenresContext';
+  getDefaultGenreStoreService,
+} from '../../../services/useGenreStoreService';
 
 describe('<AddGenreDialog>', () => {
   test('ジャンル追加処理が適切に呼び出される', () => {
@@ -16,7 +16,7 @@ describe('<AddGenreDialog>', () => {
     const { getByTestId, getByLabelText } = render(
       <GenresContextProvider
         value={{
-          ...genresContextDefaultValue,
+          ...getDefaultGenreStoreService(),
           addGenre,
         }}
       >

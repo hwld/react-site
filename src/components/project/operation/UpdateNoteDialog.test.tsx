@@ -13,23 +13,23 @@ describe('<UpdateNoteDialog>', () => {
     const { getByTestId, getByLabelText } = render(
       <NotesContextProvider
         value={{
-          notes: [],
+          notes: [
+            {
+              id: 'id',
+              genreId: 'genreId',
+              title: 'title',
+              text: 'text',
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+          ],
           addNote: () => {},
           removeNotes: () => {},
           updateNote,
           moveNotes: () => {},
         }}
       >
-        <UpdateNoteDialog
-          defaultNote={{
-            id: 'id',
-            genreId: 'genreId',
-            title: 'title',
-            text: 'text',
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          }}
-        />
+        <UpdateNoteDialog defaultNoteId="id" />
       </NotesContextProvider>,
     );
 

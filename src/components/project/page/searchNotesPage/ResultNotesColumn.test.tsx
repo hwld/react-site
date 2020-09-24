@@ -1,24 +1,22 @@
 import React from 'react';
-import {
-  NotesContextValue,
-  notesContextDefaultValue,
-  NotesContextProvider,
-} from '../../../../context/NotesContext';
+import { NotesContextProvider } from '../../../../context/NotesContext';
 import { render } from '../../../../test-util';
 import { ResultNotesColumn } from './ResultNotesColumn';
-import { SearchNotesCriteria } from '../../../../services/useNoteStoreService';
+import {
+  getDefaultNoteStoreService,
+  NoteStoreService,
+  SearchNotesCriteria,
+} from '../../../../services/useNoteStoreService';
 
 describe('<ResultNotesColumn>', () => {
-  const notesContextValue: NotesContextValue = {
-    ...notesContextDefaultValue,
+  const notesContextValue: NoteStoreService = {
+    ...getDefaultNoteStoreService(),
     notes: [
       {
         id: 'note1',
         genreId: 'genre1',
         title: 'title1',
         text: 'text1',
-        authorName: 'authorName1',
-        bookName: 'bookName1',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -27,8 +25,6 @@ describe('<ResultNotesColumn>', () => {
         genreId: 'genre1',
         title: 'title1',
         text: 'text1',
-        authorName: 'authorName1',
-        bookName: 'bookName1',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -39,8 +35,6 @@ describe('<ResultNotesColumn>', () => {
     genreId: '',
     title: '',
     text: '',
-    authorName: '',
-    bookName: '',
   };
 
   test('ジャンルIDで検索可能', () => {
@@ -91,7 +85,6 @@ describe('<ResultNotesColumn>', () => {
         <ResultNotesColumn
           searchCriteria={{
             ...defaultCriteria,
-            authorName: 'authorName1',
           }}
         />
       </NotesContextProvider>,
@@ -105,7 +98,6 @@ describe('<ResultNotesColumn>', () => {
         <ResultNotesColumn
           searchCriteria={{
             ...defaultCriteria,
-            bookName: 'bookName1',
           }}
         />
       </NotesContextProvider>,

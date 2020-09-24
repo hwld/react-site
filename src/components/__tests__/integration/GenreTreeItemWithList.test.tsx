@@ -3,10 +3,8 @@ import { render, dragAndDrop } from '../../../test-util';
 import { List } from '../../ui/List/List';
 import { GenreTreeItem } from '../../project/ui/GenreTreeItem';
 import { ListItem } from '../../ui/List/ListItem';
-import {
-  notesContextDefaultValue,
-  NotesContextProvider,
-} from '../../../context/NotesContext';
+import { NotesContextProvider } from '../../../context/NotesContext';
+import { getDefaultNoteStoreService } from '../../../services/useNoteStoreService';
 
 describe('<GenreTreeItem> with <List>', () => {
   const DnDTestList: React.FC<{ onDrop: () => {} }> = ({ onDrop }) => {
@@ -15,7 +13,7 @@ describe('<GenreTreeItem> with <List>', () => {
     return (
       <NotesContextProvider
         value={{
-          ...notesContextDefaultValue,
+          ...getDefaultNoteStoreService(),
         }}
       >
         <List
