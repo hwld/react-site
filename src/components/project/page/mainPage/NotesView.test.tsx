@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '../../../../test-util';
 import { NotesView } from './NotesView';
 import { NotesContextProvider } from '../../../../context/NotesContext';
-import { NoteStoreService } from '../../../../services/useNoteStoreService';
+import { NoteStoreService } from '../../../../services/noteStoreService';
 
 describe('<NotesView>', () => {
   const notesContextValue: NoteStoreService = {

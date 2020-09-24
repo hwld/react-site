@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
 import { SearchForm } from './SearchForm';
 import { GenresContextProvider } from '../../../../context/GenresContext';
-import { SearchNotesCriteria } from '../../../../services/useNoteStoreService';
+import { SearchNotesCriteria } from '../../../../services/noteStoreService';
 
 describe('<SearchForm />', () => {
   test('検索処理が正しく呼び出される', () => {

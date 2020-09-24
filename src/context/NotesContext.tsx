@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import {
   getDefaultNoteStoreService,
   NoteStoreService,
-} from '../services/useNoteStoreService';
+} from '../services/noteStoreService';
 
 const NotesContext = React.createContext<NoteStoreService>(
   getDefaultNoteStoreService(),

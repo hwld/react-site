@@ -7,7 +7,7 @@ import { useGenresContext } from '../../../context/GenresContext';
 import {
   GenreField,
   getDefaultGenre,
-} from '../../../services/useGenreStoreService';
+} from '../../../services/genreStoreService';
 
 type AddGenreDialogProps = {
   disabled?: boolean;

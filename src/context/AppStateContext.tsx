@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import {
-  AppStateService,
-  defaultAppStateService,
-} from '../services/useAppState';
+import { AppStateService, defaultAppStateService } from '../services/appState';
 
 const AppStateContext = React.createContext<AppStateService>(
   defaultAppStateService(),

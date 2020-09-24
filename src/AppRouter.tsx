@@ -4,7 +4,7 @@ import { Loading } from './components/project/page/loadingPage/Loading';
 import { Login } from './components/project/page/loginPage/LoginHome';
 import { MainHome } from './components/project/page/mainPage/MainHome';
 import { SearchHome } from './components/project/page/searchNotesPage/SearchHome';
-import { AppUser, AuthState } from './services/useAuthService';
+import { AppUser, AuthState } from './services/authService';
 
 type AppRouterProps = {
   user: AppUser;

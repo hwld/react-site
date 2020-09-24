@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchNotesCriteria } from '../../../../services/useNoteStoreService';
+import { SearchNotesCriteria } from '../../../../services/noteStoreService';
 import { ContentColumn } from '../../ui/ContentColumn';
 import { SearchForm } from './SearchForm';
 

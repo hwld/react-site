@@ -7,7 +7,7 @@ import { EditNoteField } from '../ui/EditNoteFields';
 import {
   getDefaultNote,
   NoteField,
-} from '../../../services/useNoteStoreService';
+} from '../../../services/noteStoreService';
 
 type AddNoteDialogProps = {
   disabled?: boolean;

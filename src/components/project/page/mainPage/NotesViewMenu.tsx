@@ -4,7 +4,7 @@ import { RemoveNoteDialog } from '../../operation/RemoveNoteDialog';
 import { MoveNotesDialog } from '../../operation/MoveNotesDialog';
 import { SortNotesDialog } from '../../operation/SortNotesDialog';
 import { UpdateNoteDialog } from '../../operation/UpdateNoteDialog';
-import { NotesSortOrder } from '../../../../services/useNoteStoreService';
+import { NotesSortOrder } from '../../../../services/noteStoreService';
 
 interface NotesViewMenuProps {
   sortNotes: (order: NotesSortOrder) => void;

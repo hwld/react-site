@@ -6,7 +6,7 @@ import {
   getDefaultNoteStoreService,
   NoteStoreService,
   SearchNotesCriteria,
-} from '../../../../services/useNoteStoreService';
+} from '../../../../services/noteStoreService';
 
 describe('<ResultNotesColumn>', () => {
   const notesContextValue: NoteStoreService = {

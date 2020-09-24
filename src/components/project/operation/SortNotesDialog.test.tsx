@@ -1,5 +1,5 @@
 import React from 'react';
-import { NotesSortOrder } from '../../../services/useNoteStoreService';
+import { NotesSortOrder } from '../../../services/noteStoreService';
 import { render, fireEvent } from '../../../test-util';
 import { SortNotesDialog } from './SortNotesDialog';
 

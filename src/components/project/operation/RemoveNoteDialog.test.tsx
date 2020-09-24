@@ -2,7 +2,7 @@ import React from 'react';
 import { RemoveNoteDialog } from './RemoveNoteDialog';
 import { render, fireEvent } from '../../../test-util';
 import { NotesContextProvider } from '../../../context/NotesContext';
-import { getDefaultNoteStoreService } from '../../../services/useNoteStoreService';
+import { getDefaultNoteStoreService } from '../../../services/noteStoreService';
 
 describe('<RemoveNoteDialog>', () => {
   test('メモの削除処理が正しく呼び出される', () => {

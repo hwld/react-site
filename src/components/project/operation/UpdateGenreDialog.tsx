@@ -4,7 +4,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { OperationDialog } from './OperationDialog';
 import { EditGenreField } from '../ui/EditGenreFields';
 import { useGenresContext } from '../../../context/GenresContext';
-import { Genre, getDefaultGenre } from '../../../services/useGenreStoreService';
+import { Genre, getDefaultGenre } from '../../../services/genreStoreService';
 
 type UpdateGenreDialogProps = {
   disabled?: boolean;

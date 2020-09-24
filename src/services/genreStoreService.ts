@@ -1,7 +1,7 @@
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useCallback, useMemo } from 'react';
 import { db, firebase } from './firebaseConfig';
-import { useNoteStoreService } from './useNoteStoreService';
+import { useNoteStoreService } from './noteStoreService';
 
 // types
 export type GenreField = {

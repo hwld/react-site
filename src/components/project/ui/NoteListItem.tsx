@@ -5,10 +5,7 @@ import { format } from 'date-fns';
 import { ListItem } from '../../ui/List/ListItem';
 import { RemoveNoteDialog } from '../operation/RemoveNoteDialog';
 import { UpdateNoteDialog } from '../operation/UpdateNoteDialog';
-import {
-  Note,
-  SearchNotesCriteria,
-} from '../../../services/useNoteStoreService';
+import { Note, SearchNotesCriteria } from '../../../services/noteStoreService';
 
 const GridContainer = styled.div`
   width: 100%;

@@ -5,7 +5,7 @@ import { GenresContextProvider } from '../../../context/GenresContext';
 import {
   GenreField,
   getDefaultGenreStoreService,
-} from '../../../services/useGenreStoreService';
+} from '../../../services/genreStoreService';
 
 describe('<AddGenreDialog>', () => {
   test('ジャンル追加処理が適切に呼び出される', () => {

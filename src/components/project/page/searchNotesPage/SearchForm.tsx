@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
 import { useGenresContext } from '../../../../context/GenresContext';
 import { SelectGenreDialog } from './SelectGenreDialog';
-import { SearchNotesCriteria } from '../../../../services/useNoteStoreService';
+import { SearchNotesCriteria } from '../../../../services/noteStoreService';
 
 
 const Root = styled.div`

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { AuthService, defaultAuthService } from '../services/useAuthService';
+import { AuthService, defaultAuthService } from '../services/authService';
 
 const AuthContext = React.createContext<AuthService>(defaultAuthService());
 

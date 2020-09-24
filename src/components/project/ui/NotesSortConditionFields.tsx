@@ -5,7 +5,7 @@ import {
   FormControlLabel,
   Typography,
 } from '@material-ui/core';
-import { NotesSortOrder } from '../../../services/useNoteStoreService';
+import { NotesSortOrder } from '../../../services/noteStoreService';
 
 type NotesSortConditionFieldProps = {
   notesSortOrder: NotesSortOrder;

@@ -3,12 +3,12 @@ import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import { NotesContextProvider } from './context/NotesContext';
 import { GenresContextProvider } from './context/GenresContext';
-import { useNoteStoreService } from './services/useNoteStoreService';
-import { useGenreStoreService } from './services/useGenreStoreService';
-import { useAuthService } from './services/useAuthService';
+import { useNoteStoreService } from './services/noteStoreService';
+import { useGenreStoreService } from './services/genreStoreService';
+import { useAuthService } from './services/authService';
 import { AppRouter } from './AppRouter';
 import { AuthContextProvider } from './context/AuthContext';
-import { useAppState } from './services/useAppState';
+import { useAppState } from './services/appState';
 import { AppStateProvider } from './context/AppStateContext';
 
 const App: React.FC = () => {

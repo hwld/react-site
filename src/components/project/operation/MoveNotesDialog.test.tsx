@@ -3,8 +3,8 @@ import { render, fireEvent } from '../../../test-util';
 import { MoveNotesDialog } from './MoveNotesDialog';
 import { GenresContextProvider } from '../../../context/GenresContext';
 import { NotesContextProvider } from '../../../context/NotesContext';
-import { getDefaultGenreStoreService } from '../../../services/useGenreStoreService';
-import { getDefaultNoteStoreService } from '../../../services/useNoteStoreService';
+import { getDefaultGenreStoreService } from '../../../services/genreStoreService';
+import { getDefaultNoteStoreService } from '../../../services/noteStoreService';
 
 describe('<MoveNotesDialog>', () => {
   test('メモの移動処理が正しく呼び出される', () => {

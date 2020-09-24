@@ -7,7 +7,7 @@ import {
   getDefaultNote,
   Note,
   NoteField,
-} from '../../../services/useNoteStoreService';
+} from '../../../services/noteStoreService';
 import { useNotesContext } from '../../../context/NotesContext';
 
 type UpdateNoteDialogProps = {

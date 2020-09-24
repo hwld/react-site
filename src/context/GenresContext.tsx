@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import {
   getDefaultGenreStoreService,
   GenreStoreService,
-} from '../services/useGenreStoreService';
+} from '../services/genreStoreService';
 
 const GenresContext = React.createContext<GenreStoreService>(
   getDefaultGenreStoreService(),

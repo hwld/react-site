@@ -4,7 +4,7 @@ import { SearchHeader } from './SearchHeader';
 import { SearchColumn } from './SearchColumn';
 import { ResultNotesColumn } from './ResultNotesColumn';
 import { Drawer } from '../../../ui/Drawer/Drawer';
-import { SearchNotesCriteria } from '../../../../services/useNoteStoreService';
+import { SearchNotesCriteria } from '../../../../services/noteStoreService';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 
 const Background = styled.div`
