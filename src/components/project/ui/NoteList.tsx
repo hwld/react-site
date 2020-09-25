@@ -6,7 +6,7 @@ import {
   Note,
   NotesSortOrder,
   SearchNotesCriteria,
-} from '../../../services/noteStoreService';
+} from '../../../services/notes';
 
 type NoteListProps = {
   notes: Note[];

@@ -1,7 +1,7 @@
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useCallback, useMemo } from 'react';
 import { db, firebase } from './firebaseConfig';
-import { useNoteStoreService } from './noteStoreService';
+import { useNotes } from './notes';
 
 // types
 export type GenreField = {
@@ -21,7 +21,7 @@ export type GenreInfo = {
 
 export type Genre = GenreField & GenreDate & GenreInfo;
 
-export type GenreStoreService = {
+export type GenreService = {
   genres: Genre[];
   addGenre: (parentGenreId: string, genreField: GenreField) => void;
   removeGenres: (id: string[]) => void;
@@ -51,7 +51,7 @@ export const getDefaultGenre = (): Genre => ({
   createdAt: new Date(),
 });
 
-export const getDefaultGenreStoreService = (): GenreStoreService => ({
+export const getDefaultGenreService = (): GenreService => ({
   genres: [],
 
   addGenre: () => {},
@@ -61,7 +61,7 @@ export const getDefaultGenreStoreService = (): GenreStoreService => ({
 });
 
 // hook
-export const useGenreStoreService = (uid: string): GenreStoreService => {
+export const useGenres = (uid: string): GenreService => {
   const genresRef = useMemo(() => {
     return db
       .collection('users')
@@ -89,7 +89,7 @@ export const useGenreStoreService = (uid: string): GenreStoreService => {
     });
   }, [genresCollection]);
 
-  const { notes, removeNotes } = useNoteStoreService(uid);
+  const { notes, removeNotes } = useNotes(uid);
 
   // 指定されたIdのジャンルの子孫ノードのidを再帰的に取得する.
   const fetchDescendantsGenreIds = useCallback(

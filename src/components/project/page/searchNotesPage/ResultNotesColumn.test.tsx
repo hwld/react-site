@@ -3,14 +3,14 @@ import { NotesContextProvider } from '../../../../context/NotesContext';
 import { render } from '../../../../test-util';
 import { ResultNotesColumn } from './ResultNotesColumn';
 import {
-  getDefaultNoteStoreService,
-  NoteStoreService,
+  getDefaultNoteService,
+  NoteService,
   SearchNotesCriteria,
-} from '../../../../services/noteStoreService';
+} from '../../../../services/notes';
 
 describe('<ResultNotesColumn>', () => {
-  const notesContextValue: NoteStoreService = {
-    ...getDefaultNoteStoreService(),
+  const notesContextValue: NoteService = {
+    ...getDefaultNoteService(),
     notes: [
       {
         id: 'note1',

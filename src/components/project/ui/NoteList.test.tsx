@@ -1,5 +1,5 @@
 import React from 'react';
-import { Note } from '../../../services/useNoteStoreService';
+import { Note } from '../../../services/notes';
 import { render } from '../../../test-util';
 
 import { NoteList } from './NoteList';

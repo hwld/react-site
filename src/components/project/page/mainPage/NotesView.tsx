@@ -5,7 +5,7 @@ import { ContentColumn } from '../../ui/ContentColumn';
 import { NotesViewMenu } from './NotesViewMenu';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { useAppStateContext } from '../../../../context/AppStateContext';
-import { NotesSortOrder } from '../../../../services/noteStoreService';
+import { NotesSortOrder } from '../../../../services/notes';
 
 interface NotesViewProps {
   selectedGenreIds: string[];

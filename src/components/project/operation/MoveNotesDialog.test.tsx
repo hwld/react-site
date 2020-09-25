@@ -3,8 +3,8 @@ import { render, fireEvent } from '../../../test-util';
 import { MoveNotesDialog } from './MoveNotesDialog';
 import { GenresContextProvider } from '../../../context/GenresContext';
 import { NotesContextProvider } from '../../../context/NotesContext';
-import { getDefaultGenreStoreService } from '../../../services/genreStoreService';
-import { getDefaultNoteStoreService } from '../../../services/noteStoreService';
+import { getDefaultGenreService } from '../../../services/genres';
+import { getDefaultNoteService } from '../../../services/notes';
 
 describe('<MoveNotesDialog>', () => {
   test('メモの移動処理が正しく呼び出される', () => {
@@ -12,7 +12,7 @@ describe('<MoveNotesDialog>', () => {
     const { getByTestId } = render(
       <GenresContextProvider
         value={{
-          ...getDefaultGenreStoreService(),
+          ...getDefaultGenreService(),
           genres: [
             {
               genreName: 'testGenreName',
@@ -26,7 +26,7 @@ describe('<MoveNotesDialog>', () => {
       >
         <NotesContextProvider
           value={{
-            ...getDefaultNoteStoreService(),
+            ...getDefaultNoteService(),
             moveNotes,
           }}
         >

@@ -3,19 +3,19 @@ import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import { NotesContextProvider } from './context/NotesContext';
 import { GenresContextProvider } from './context/GenresContext';
-import { useNoteStoreService } from './services/noteStoreService';
-import { useGenreStoreService } from './services/genreStoreService';
-import { useAuthService } from './services/authService';
+import { useNotes } from './services/notes';
+import { useGenres } from './services/genres';
+import { useAuth } from './services/auth';
 import { AppRouter } from './AppRouter';
 import { AuthContextProvider } from './context/AuthContext';
 import { useAppState } from './services/appState';
 import { AppStateProvider } from './context/AppStateContext';
 
 const App: React.FC = () => {
-  const authService = useAuthService();
+  const authService = useAuth();
   const appStateService = useAppState();
-  const genreService = useGenreStoreService(authService.user.userId);
-  const noteService = useNoteStoreService(authService.user.userId);
+  const genreService = useGenres(authService.user.userId);
+  const noteService = useNotes(authService.user.userId);
 
   return (
     <AuthContextProvider value={authService}>

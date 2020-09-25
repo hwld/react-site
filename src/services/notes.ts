@@ -31,7 +31,7 @@ export interface NotesSortOrder {
   order: 'asc' | 'desc';
 }
 
-export type NoteStoreService = {
+export type NoteService = {
   notes: Note[];
 
   addNote: (genreId: string, noteField: NoteField) => void;
@@ -62,7 +62,7 @@ export const getDefaultNote = (): Note => ({
   updatedAt: new Date(),
 });
 
-export const getDefaultNoteStoreService = (): NoteStoreService => ({
+export const getDefaultNoteService = (): NoteService => ({
   notes: [],
 
   addNote: () => {},
@@ -72,7 +72,7 @@ export const getDefaultNoteStoreService = (): NoteStoreService => ({
 });
 
 // hook
-export const useNoteStoreService = (uid: string): NoteStoreService => {
+export const useNotes = (uid: string): NoteService => {
   const notesRef = useMemo(() => {
     return db
       .collection('users')

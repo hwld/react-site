@@ -36,7 +36,7 @@ export const defaultAuthService = (): AuthService => {
 };
 
 // hook
-export const useAuthService = () => {
+export const useAuth = (): AuthService => {
   const [firebaseUser, loading] = useAuthState(auth);
   const user: AppUser = useMemo(
     () => ({

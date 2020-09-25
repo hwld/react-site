@@ -4,8 +4,8 @@ import { UpdateGenreDialog } from './UpdateGenreDialog';
 import { GenresContextProvider } from '../../../context/GenresContext';
 import {
   GenreField,
-  getDefaultGenreStoreService,
-} from '../../../services/genreStoreService';
+  getDefaultGenreService,
+} from '../../../services/genres';
 
 describe('<UpdateGenreDialog>', () => {
   test('ジャンル更新処理が適切に呼び出される', () => {
@@ -13,7 +13,7 @@ describe('<UpdateGenreDialog>', () => {
     const { getByTestId, getByLabelText } = render(
       <GenresContextProvider
         value={{
-          ...getDefaultGenreStoreService(),
+          ...getDefaultGenreService(),
           genres: [
             {
               genreName: 'testGenre',

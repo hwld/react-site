@@ -3,11 +3,7 @@ import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { OperationDialog } from './OperationDialog';
 import { EditNoteField } from '../ui/EditNoteFields';
-import {
-  getDefaultNote,
-  Note,
-  NoteField,
-} from '../../../services/noteStoreService';
+import { getDefaultNote, Note, NoteField } from '../../../services/notes';
 import { useNotesContext } from '../../../context/NotesContext';
 
 type UpdateNoteDialogProps = {

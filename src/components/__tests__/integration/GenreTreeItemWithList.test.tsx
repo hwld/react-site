@@ -4,7 +4,7 @@ import { List } from '../../ui/List/List';
 import { GenreTreeItem } from '../../project/ui/GenreTreeItem';
 import { ListItem } from '../../ui/List/ListItem';
 import { NotesContextProvider } from '../../../context/NotesContext';
-import { getDefaultNoteStoreService } from '../../../services/noteStoreService';
+import { getDefaultNoteService } from '../../../services/notes';
 
 describe('<GenreTreeItem> with <List>', () => {
   const DnDTestList: React.FC<{ onDrop: () => {} }> = ({ onDrop }) => {
@@ -13,7 +13,7 @@ describe('<GenreTreeItem> with <List>', () => {
     return (
       <NotesContextProvider
         value={{
-          ...getDefaultNoteStoreService(),
+          ...getDefaultNoteService(),
         }}
       >
         <List

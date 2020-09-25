@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import {
-  getDefaultGenreStoreService,
-  GenreStoreService,
-} from '../services/genreStoreService';
+import { getDefaultGenreService, GenreService } from '../services/genres';
 
-const GenresContext = React.createContext<GenreStoreService>(
-  getDefaultGenreStoreService(),
+const GenresContext = React.createContext<GenreService>(
+  getDefaultGenreService(),
 );
 
-export const GenresContextProvider: React.FC<{ value: GenreStoreService }> = ({
+export const GenresContextProvider: React.FC<{ value: GenreService }> = ({
   children,
   value,
 }) => {
