@@ -14,8 +14,8 @@ import { AppStateProvider } from './context/AppStateContext';
 const App: React.FC = () => {
   const authService = useAuth();
   const appStateService = useAppState();
-  const genreService = useGenres(authService.user.userId);
   const noteService = useNotes(authService.user.userId);
+  const genreService = useGenres(authService.user.userId, noteService);
 
   return (
     <AuthContextProvider value={authService}>
