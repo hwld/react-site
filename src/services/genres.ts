@@ -12,25 +12,15 @@ export type GenreDate = {
   createdAt: Date;
 };
 
+type FirestoreGenreDate = {
+  createdAt: firebase.firestore.Timestamp;
+};
+
 export type GenreInfo = {
   id: string;
   parentGenreId: string;
   // 直接の子ジャンルのみをもたせる
   childrenGenreIds: string[];
-};
-
-export type Genre = GenreField & GenreDate & GenreInfo;
-
-export type GenreService = {
-  genres: Genre[];
-  addGenre: (parentGenreId: string, genreField: GenreField) => void;
-  removeGenres: (id: string[]) => void;
-  updateGenre: (genre: GenreField & { id: string }) => void;
-  moveGenres: (genreId: string[], destGenreId: string) => void;
-};
-
-type FirestoreGenreDate = {
-  createdAt: firebase.firestore.Timestamp;
 };
 
 type FirestoreGenreInfo = {
@@ -40,7 +30,17 @@ type FirestoreGenreInfo = {
   childrenGenreRefs: firebase.firestore.DocumentReference[];
 };
 
+export type Genre = GenreField & GenreDate & GenreInfo;
+
 type FirestoreGenre = GenreField & FirestoreGenreDate & FirestoreGenreInfo;
+
+export type GenreService = {
+  genres: Genre[];
+  addGenre: (parentGenreId: string, genreField: GenreField) => void;
+  removeGenres: (id: string[]) => void;
+  updateGenre: (genre: GenreField & { id: string }) => void;
+  moveGenres: (genreId: string[], destGenreId: string) => void;
+};
 
 // default value
 export const getDefaultGenre = (): Genre => ({
@@ -95,7 +95,7 @@ export const useGenres = (
   const { notes, removeNotes } = noteService;
 
   // 指定されたIdのジャンルの子孫ノードのidを再帰的に取得する.
-  const fetchDescendantsGenreIds = useCallback(
+  const getDescendantsGenreIds = useCallback(
     (parentId: string) => {
       const parentGenre = genres.find(genre => genre.id === parentId);
       if (!parentGenre) return [];
@@ -104,7 +104,7 @@ export const useGenres = (
 
       const grandChildrenIds: string[] = childrenIds.flatMap(id => {
         if (id !== '') {
-          return fetchDescendantsGenreIds(id);
+          return getDescendantsGenreIds(id);
         }
 
         return [];
@@ -116,7 +116,7 @@ export const useGenres = (
   );
 
   // 指定されたジャンルIdのメモidを配列にして全て返す
-  const fetchAllNotesInGenreIds = useCallback(
+  const getNotesByGenreIds = useCallback(
     (genreIds: string[]) => {
       return genreIds.flatMap(genreId => {
         return notes
@@ -159,7 +159,7 @@ export const useGenres = (
   const removeGenres = useCallback(
     (ids: string[]) => {
       const batch = db.batch();
-      const childrenIds = ids.flatMap(id => fetchDescendantsGenreIds(id));
+      const childrenIds = ids.flatMap(id => getDescendantsGenreIds(id));
       // 親子関係にあるジャンルを削除しようとした場合に重複するので排除する
       const deletedGenreIds = Array.from(new Set([...ids, ...childrenIds]));
 
@@ -183,13 +183,13 @@ export const useGenres = (
       });
 
       // noteを削除する
-      removeNotes(fetchAllNotesInGenreIds(deletedGenreIds));
+      removeNotes(getNotesByGenreIds(deletedGenreIds));
 
       batch.commit();
     },
     [
-      fetchAllNotesInGenreIds,
-      fetchDescendantsGenreIds,
+      getNotesByGenreIds,
+      getDescendantsGenreIds,
       genres,
       genresRef,
       removeNotes,
