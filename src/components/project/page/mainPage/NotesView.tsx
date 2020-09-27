@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, PropsWithChildren } from 'react';
+import React, { useState, forwardRef, PropsWithChildren, useMemo } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import { NoteList } from '../../ui/NoteList';
 import { ContentColumn } from '../../ui/ContentColumn';
@@ -25,11 +25,11 @@ export const NotesView = forwardRef<
     order: 'asc',
   });
 
-  const viewNotes = notes.filter(note =>
-    selectedGenreIds.includes(note.genreId),
-  );
+  const viewNotes = useMemo(() => {
+    return notes.filter(note => selectedGenreIds.includes(note.genreId));
+  }, [notes, selectedGenreIds]);
 
-  const notesContent = () => {
+  const notesContent = useMemo(() => {
     return selectedGenreIds.length !== 0 ? (
       <>
         <NoteList
@@ -47,7 +47,14 @@ export const NotesView = forwardRef<
         ジャンルを選択してください
       </Alert>
     );
-  };
+  }, [
+    notesSortOrder,
+    onKeyDown,
+    ref,
+    selectedGenreIds.length,
+    selectedNoteIds,
+    viewNotes,
+  ]);
 
   return (
     <ContentColumn
@@ -62,7 +69,7 @@ export const NotesView = forwardRef<
         />
       }
     >
-      {notesContent()}
+      {notesContent}
     </ContentColumn>
   );
 });

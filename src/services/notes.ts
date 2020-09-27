@@ -13,12 +13,24 @@ export type NoteDate = {
   updatedAt: Date;
 };
 
+type FirestoreNoteDate = {
+  createdAt: firebase.firestore.Timestamp;
+  updatedAt: firebase.firestore.Timestamp;
+};
+
 export type NoteInfo = {
   id: string;
   genreId: string;
 };
 
+type FirestoreNoteInfo = {
+  id: string;
+  genreRef: firebase.firestore.DocumentReference;
+};
+
 export type Note = NoteField & NoteDate & NoteInfo;
+
+type FirestoreNote = NoteField & FirestoreNoteDate & FirestoreNoteInfo;
 
 export interface SearchNotesCriteria {
   genreId: string;
@@ -39,18 +51,6 @@ export type NoteService = {
   updateNote: (note: NoteField & { id: string }) => void;
   moveNotes: (noteIds: string[], destGenreId: string) => void;
 };
-
-type FirestoreNoteDate = {
-  createdAt: firebase.firestore.Timestamp;
-  updatedAt: firebase.firestore.Timestamp;
-};
-
-type FirestoreNoteInfo = {
-  id: string;
-  genreRef: firebase.firestore.DocumentReference;
-};
-
-type FirestoreNote = NoteField & FirestoreNoteDate & FirestoreNoteInfo;
 
 // default value
 export const getDefaultNote = (): Note => ({
@@ -109,13 +109,15 @@ export const useNotes = (uid: string): NoteService => {
     (genreId: string, noteField: NoteField) => {
       const newNoteRef = notesRef.doc();
 
+      const now = new Date();
+
       const newNote: FirestoreNote = {
         id: newNoteRef.id,
         genreRef: genresRef.doc(genreId),
         title: noteField.title,
         text: noteField.text,
-        createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
-        updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
+        createdAt: firebase.firestore.Timestamp.fromDate(now),
+        updatedAt: firebase.firestore.Timestamp.fromDate(now),
       };
       newNoteRef.set(newNote);
     },

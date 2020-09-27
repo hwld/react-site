@@ -2,10 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '../../../test-util';
 import { AddGenreDialog } from './AddGenreDialog';
 import { GenresContextProvider } from '../../../context/GenresContext';
-import {
-  GenreField,
-  getDefaultGenreService,
-} from '../../../services/genres';
+import { GenreField, getDefaultGenreService } from '../../../services/genres';
 
 describe('<AddGenreDialog>', () => {
   test('ジャンル追加処理が適切に呼び出される', () => {

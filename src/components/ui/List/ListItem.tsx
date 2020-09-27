@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import {
   ListItem as MuiListItem,
   Divider,
@@ -81,7 +81,7 @@ export const ListItem = React.forwardRef<
     },
   });
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     if (!isFocused(itemId)) {
       focus(itemId);
     }
@@ -91,7 +91,7 @@ export const ListItem = React.forwardRef<
     } else {
       selectItem(selectedIds.filter(id => id !== itemId));
     }
-  };
+  }, [focus, isFocused, itemId, selectItem, selectedIds]);
 
   useEffect(() => {
     return () => {

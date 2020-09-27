@@ -139,13 +139,13 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
     return getHighlightedText(note.text, searchCriteria.text);
   }, [getHighlightedText, note.text, searchCriteria]);
 
-  const createdAt = useMemo(() => format(note.createdAt, 'yyyy/MM/dd'), [
-    note.createdAt,
-  ]);
+  const createdAt = useMemo(() => {
+    return format(note.createdAt, 'yyyy/MM/dd');
+  }, [note.createdAt]);
 
-  const updatedAt = useMemo(() => format(note.updatedAt, 'yyyy/MM/dd'), [
-    note.updatedAt,
-  ]);
+  const updatedAt = useMemo(() => {
+    return format(note.updatedAt, 'yyyy/MM/dd');
+  }, [note.updatedAt]);
 
   return (
     <ListItem itemId={itemId} onKeyDown={handleKeyDown} ref={refs.current[0]}>
