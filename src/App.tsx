@@ -12,14 +12,14 @@ import { useAppState } from './services/appState';
 import { AppStateProvider } from './context/AppStateContext';
 
 const App: React.FC = () => {
-  const authService = useAuth();
   const appStateService = useAppState();
+  const authService = useAuth();
   const noteService = useNotes(authService.user.userId);
   const genreService = useGenres(authService.user.userId, noteService);
 
   return (
-    <AuthContextProvider value={authService}>
-      <AppStateProvider value={appStateService}>
+    <AppStateProvider value={appStateService}>
+      <AuthContextProvider value={authService}>
         <GenresContextProvider value={genreService}>
           <NotesContextProvider value={noteService}>
             <BrowserRouter>
@@ -30,8 +30,8 @@ const App: React.FC = () => {
             </BrowserRouter>
           </NotesContextProvider>
         </GenresContextProvider>
-      </AppStateProvider>
-    </AuthContextProvider>
+      </AuthContextProvider>
+    </AppStateProvider>
   );
 };
 
