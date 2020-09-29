@@ -71,6 +71,11 @@ export const getDefaultNoteService = (): NoteService => ({
   moveNotes: () => {},
 });
 
+export const getDefaultNotesSortOrder = (): NotesSortOrder => ({
+  targetField: 'text',
+  order: 'asc',
+});
+
 // hook
 export const useNotes = (uid: string): NoteService => {
   const notesRef = useMemo(() => {

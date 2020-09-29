@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { render, dragAndDrop } from '../../../../test-util';
 import { GenresView } from './GenresView';
 import { GenresContextProvider } from '../../../../context/GenresContext';
+import { getDefaultNotesSortOrder } from '../../../../services/notes';
 
 describe('<GenresView>', () => {
   const GenreViewTest: React.FC<{
@@ -15,6 +16,7 @@ describe('<GenresView>', () => {
           addGenre: () => {},
           removeGenres: () => {},
           updateGenre: () => {},
+          updateNotesSortOrderInGenre: () => {},
           genres: [
             {
               genreName: 'genre1',
@@ -22,6 +24,7 @@ describe('<GenresView>', () => {
               childrenGenreIds: [],
               parentGenreId: '',
               createdAt: new Date(),
+              notesSortOrder: getDefaultNotesSortOrder(),
             },
             {
               genreName: 'genre2',
@@ -29,6 +32,7 @@ describe('<GenresView>', () => {
               childrenGenreIds: [],
               parentGenreId: '',
               createdAt: new Date(),
+              notesSortOrder: getDefaultNotesSortOrder(),
             },
           ],
           moveGenres,

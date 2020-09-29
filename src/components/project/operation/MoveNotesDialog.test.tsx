@@ -4,7 +4,10 @@ import { MoveNotesDialog } from './MoveNotesDialog';
 import { GenresContextProvider } from '../../../context/GenresContext';
 import { NotesContextProvider } from '../../../context/NotesContext';
 import { getDefaultGenreService } from '../../../services/genres';
-import { getDefaultNoteService } from '../../../services/notes';
+import {
+  getDefaultNoteService,
+  getDefaultNotesSortOrder,
+} from '../../../services/notes';
 
 describe('<MoveNotesDialog>', () => {
   test('メモの移動処理が正しく呼び出される', () => {
@@ -20,6 +23,7 @@ describe('<MoveNotesDialog>', () => {
               id: 'testGenre',
               parentGenreId: '',
               childrenGenreIds: [],
+              notesSortOrder: getDefaultNotesSortOrder(),
             },
           ],
         }}

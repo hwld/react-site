@@ -1,7 +1,7 @@
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useCallback, useMemo } from 'react';
 import { db, firebase } from './firebaseConfig';
-import { NoteService } from './notes';
+import { getDefaultNotesSortOrder, NoteService, NotesSortOrder } from './notes';
 
 // types
 export type GenreField = {
@@ -21,6 +21,7 @@ export type GenreInfo = {
   parentGenreId: string;
   // 直接の子ジャンルのみをもたせる
   childrenGenreIds: string[];
+  notesSortOrder: NotesSortOrder;
 };
 
 type FirestoreGenreInfo = {
@@ -28,6 +29,7 @@ type FirestoreGenreInfo = {
   // 親が存在しない場合は自分自身への参照にする
   parentGenreRef: firebase.firestore.DocumentReference;
   childrenGenreRefs: firebase.firestore.DocumentReference[];
+  notesSortOrder: NotesSortOrder;
 };
 
 export type Genre = GenreField & GenreDate & GenreInfo;
@@ -39,6 +41,7 @@ export type GenreService = {
   addGenre: (parentGenreId: string, genreField: GenreField) => void;
   removeGenres: (id: string[]) => void;
   updateGenre: (genre: GenreField & { id: string }) => void;
+  updateNotesSortOrderInGenre: (order: NotesSortOrder & { id: string }) => void;
   moveGenres: (genreId: string[], destGenreId: string) => void;
 };
 
@@ -49,6 +52,7 @@ export const getDefaultGenre = (): Genre => ({
   parentGenreId: '',
   childrenGenreIds: [],
   createdAt: new Date(),
+  notesSortOrder: getDefaultNotesSortOrder(),
 });
 
 export const getDefaultGenreService = (): GenreService => ({
@@ -57,6 +61,7 @@ export const getDefaultGenreService = (): GenreService => ({
   addGenre: () => {},
   removeGenres: () => {},
   updateGenre: () => {},
+  updateNotesSortOrderInGenre: () => {},
   moveGenres: () => {},
 });
 
@@ -88,6 +93,7 @@ export const useGenres = (
           genre.parentGenreRef.id !== genre.id ? genre.parentGenreRef.id : '',
         childrenGenreIds: genre.childrenGenreRefs.map(ref => ref.id),
         createdAt: genre.createdAt.toDate(),
+        notesSortOrder: genre.notesSortOrder,
       };
     });
   }, [genresCollection]);
@@ -150,6 +156,7 @@ export const useGenres = (
             : genresRef.doc(newGenreRef.id),
         childrenGenreRefs: [],
         createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+        notesSortOrder: getDefaultNotesSortOrder(),
       };
       newGenreRef.set(newGenre);
     },
@@ -208,6 +215,18 @@ export const useGenres = (
     [genresRef],
   );
 
+  const updateNotesSortOrderInGenre = useCallback(
+    (order: NotesSortOrder & { id: string }) => {
+      const newOrder: NotesSortOrder = {
+        order: order.order,
+        targetField: order.targetField,
+      };
+
+      genresRef.doc(order.id).update({ notesSortOrder: newOrder });
+    },
+    [genresRef],
+  );
+
   const moveGenres = useCallback(
     (ids: string[], destGenreId: string | '') => {
       const batch = db.batch();
@@ -246,5 +265,12 @@ export const useGenres = (
     [genres, genresRef],
   );
 
-  return { genres, addGenre, removeGenres, updateGenre, moveGenres };
+  return {
+    genres,
+    addGenre,
+    removeGenres,
+    updateGenre,
+    updateNotesSortOrderInGenre,
+    moveGenres,
+  };
 };

@@ -2,7 +2,10 @@ import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
 import { SearchForm } from './SearchForm';
 import { GenresContextProvider } from '../../../../context/GenresContext';
-import { SearchNotesCriteria } from '../../../../services/notes';
+import {
+  getDefaultNotesSortOrder,
+  SearchNotesCriteria,
+} from '../../../../services/notes';
 
 describe('<SearchForm />', () => {
   test('検索処理が正しく呼び出される', () => {
@@ -14,6 +17,7 @@ describe('<SearchForm />', () => {
           moveGenres: () => {},
           removeGenres: () => {},
           updateGenre: () => {},
+          updateNotesSortOrderInGenre: () => {},
           genres: [
             {
               genreName: 'testGenreName',
@@ -21,6 +25,7 @@ describe('<SearchForm />', () => {
               childrenGenreIds: [],
               parentGenreId: '',
               createdAt: new Date(),
+              notesSortOrder: getDefaultNotesSortOrder(),
             },
           ],
         }}

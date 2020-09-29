@@ -2,10 +2,8 @@ import React from 'react';
 import { render, fireEvent } from '../../../test-util';
 import { UpdateGenreDialog } from './UpdateGenreDialog';
 import { GenresContextProvider } from '../../../context/GenresContext';
-import {
-  GenreField,
-  getDefaultGenreService,
-} from '../../../services/genres';
+import { GenreField, getDefaultGenreService } from '../../../services/genres';
+import { getDefaultNotesSortOrder } from '../../../services/notes';
 
 describe('<UpdateGenreDialog>', () => {
   test('ジャンル更新処理が適切に呼び出される', () => {
@@ -21,6 +19,7 @@ describe('<UpdateGenreDialog>', () => {
               createdAt: new Date(),
               parentGenreId: '',
               childrenGenreIds: [],
+              notesSortOrder: getDefaultNotesSortOrder(),
             },
           ],
           updateGenre,
