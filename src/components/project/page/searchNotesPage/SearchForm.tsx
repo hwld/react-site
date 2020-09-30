@@ -12,7 +12,6 @@ import { useGenresContext } from '../../../../context/GenresContext';
 import { SelectGenreDialog } from './SelectGenreDialog';
 import { SearchNotesCriteria } from '../../../../services/notes';
 
-
 const Root = styled.div`
   padding: 16px 24px;
 `;

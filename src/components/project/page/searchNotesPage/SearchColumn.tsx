@@ -3,7 +3,6 @@ import { SearchNotesCriteria } from '../../../../services/notes';
 import { ContentColumn } from '../../ui/ContentColumn';
 import { SearchForm } from './SearchForm';
 
-
 type SearchColumnProps = {
   setCriteria: (criteria: SearchNotesCriteria) => void;
   className?: string;

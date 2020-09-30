@@ -4,10 +4,7 @@ import { DialogContent, DialogTitle, SvgIconProps } from '@material-ui/core';
 import { useNotesContext } from '../../../context/NotesContext';
 import { OperationDialog } from './OperationDialog';
 import { EditNoteField } from '../ui/EditNoteFields';
-import {
-  getDefaultNote,
-  NoteField,
-} from '../../../services/notes';
+import { getDefaultNote, NoteField } from '../../../services/notes';
 
 type AddNoteDialogProps = {
   disabled?: boolean;

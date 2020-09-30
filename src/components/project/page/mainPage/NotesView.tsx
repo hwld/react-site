@@ -37,7 +37,6 @@ export const NotesView = forwardRef<
   });
 
   const notesSortOrder: NotesSortOrder = useMemo(() => {
-    // ジャンルが一つだけ選択されていて、ジャンルが存在する場合
     // ジャンルの選択状態を外部に保存しているのでジャンルが読み込まれる前にlengthが1になる可能性があり、例外を出してしまう.
     if (selectedGenreIds.length === 1 && genres.length !== 0) {
       const selectedGenre = genres.find(g => g.id === selectedGenreIds[0]);
@@ -48,7 +47,6 @@ export const NotesView = forwardRef<
       return selectedGenre.notesSortOrder;
     }
 
-    // ジャンルが複数選択されている場合
     return internalNotesSortOrder;
   }, [genres, internalNotesSortOrder, selectedGenreIds]);
 
