@@ -2,7 +2,10 @@ import { firestore } from 'firebase-admin';
 import { db, admin } from './firebaseConfig';
 import { runBatch } from './runBatch';
 
-async function deleteNoteField(store: firestore.Firestore, limit: number) {
+async function deleteAuthorAndBookName(
+  store: firestore.Firestore,
+  limit: number,
+) {
   const notesQuery = store.collectionGroup('notes').orderBy('createdAt', 'asc');
 
   const executeDeleteNoteField = (
@@ -19,10 +22,11 @@ async function deleteNoteField(store: firestore.Firestore, limit: number) {
 }
 
 async function main() {
-  console.log('***** START MAIN *****');
-  const limit = 25;
-  deleteNoteField(db, limit);
-  console.log('***** END MAIN *****');
+  console.log('start deleteNoteField');
+  const limit = 100;
+  await deleteAuthorAndBookName(db, limit);
 }
 
-main().then();
+main().then(() => {
+  console.log('end deleteNoteField');
+});
