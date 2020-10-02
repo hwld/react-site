@@ -2,6 +2,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useCallback, useMemo } from 'react';
 import { db, firebase } from './firebaseConfig';
 import { getDefaultNotesSortOrder, NoteService, NotesSortOrder } from './notes';
+import { AppStateService } from './appState';
 
 // types
 export type GenreField = {
@@ -69,6 +70,7 @@ export const getDefaultGenreService = (): GenreService => ({
 export const useGenres = (
   uid: string,
   noteService: NoteService,
+  appState: AppStateService,
 ): GenreService => {
   const genresRef = useMemo(() => {
     return db
@@ -193,13 +195,25 @@ export const useGenres = (
       removeNotes(getNotesByGenreIds(deletedGenreIds));
 
       batch.commit();
+
+      // appStateのgenre関連を設定する
+      const newSelected = appState.selectedGenreIds.filter(id => {
+        return !deletedGenreIds.includes(id);
+      });
+      appState.setSelectedGenreIds(newSelected);
+
+      const newExpanded = appState.expandedIds.filter(id => {
+        return !deletedGenreIds.includes(id);
+      });
+      appState.setExpandedIds(newExpanded);
     },
     [
-      getNotesByGenreIds,
-      getDescendantsGenreIds,
       genres,
-      genresRef,
       removeNotes,
+      getNotesByGenreIds,
+      appState,
+      getDescendantsGenreIds,
+      genresRef,
     ],
   );
 

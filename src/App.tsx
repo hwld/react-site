@@ -15,7 +15,11 @@ const App: React.FC = () => {
   const appStateService = useAppState();
   const authService = useAuth();
   const noteService = useNotes(authService.user.userId);
-  const genreService = useGenres(authService.user.userId, noteService);
+  const genreService = useGenres(
+    authService.user.userId,
+    noteService,
+    appStateService,
+  );
 
   return (
     <AppStateProvider value={appStateService}>
