@@ -7,6 +7,7 @@ import { TooltipIconButton } from '../../ui/TooltipIconButton';
 import { AccountLinkMenu } from './AccountLinkMenu';
 import { AccountSettingMenu } from './AccountSettingMenu';
 import { useAuthContext } from '../../../context/AuthContext';
+import { useAppStateContext } from '../../../context/AppStateContext';
 
 const AppTitle = styled(Typography)`
   font-weight: bold;
@@ -25,11 +26,13 @@ const AppHeader: React.FC<AppHeaderProps> = ({
   menuItems,
 }) => {
   const { user, logout, deleteAccount } = useAuthContext();
+  const { clearAppState } = useAppStateContext();
 
   const logoutAndDelete = () => {
     if (user.isAnonymous) {
       deleteAccount();
     }
+    clearAppState();
     logout();
   };
 

@@ -13,6 +13,7 @@ export type AppStateService = {
   selectedGenreIds: string[];
   setExpandedIds: (ids: string[]) => void;
   setSelectedGenreIds: (ids: string[]) => void;
+  clearAppState: () => void;
 };
 
 // default value
@@ -24,6 +25,7 @@ export const defaultAppStateService = (): AppStateService => ({
   selectedGenreIds: [],
   setExpandedIds: () => {},
   setSelectedGenreIds: () => {},
+  clearAppState: () => {},
 });
 
 // hook
@@ -59,11 +61,19 @@ export const useAppState = (): AppStateService => {
     setInternalSelectedIds(ids);
   }, []);
 
+  const clearAppState = useCallback(() => {
+    localStorage.removeItem('expanded');
+    localStorage.removeItem('selectedGenre');
+    setInternalExpandedIds([]);
+    setInternalSelectedIds([]);
+  }, []);
+
   return {
     isMobile,
     expandedIds,
     selectedGenreIds,
     setExpandedIds,
     setSelectedGenreIds,
+    clearAppState,
   };
 };
