@@ -34,7 +34,7 @@ const NotesViewMenu: React.FC<NotesViewMenuProps> = ({
         defaultNoteId={selectedNoteIds[0] || ''}
       />
       <MoveNotesDialog
-        disabled={selectedGenreIds.length === 0}
+        disabled={selectedNoteIds.length === 0}
         sourceNoteIds={selectedNoteIds}
       />
       <SortNotesDialog
