@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AppBar, Typography, Toolbar, IconButton } from '@material-ui/core';
+import { AppBar, Typography, Toolbar } from '@material-ui/core';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
-import { TooltipIconButton } from '../../ui/TooltipIconButton';
+import { IconButton } from '../../ui/IconButton';
 import { AccountLinkMenu } from './AccountLinkMenu';
 import { AccountSettingMenu } from './AccountSettingMenu';
 import { useAuthContext } from '../../../context/AuthContext';
@@ -39,14 +39,18 @@ const AppHeader: React.FC<AppHeaderProps> = ({
   return (
     <AppBar position="absolute">
       <Toolbar>
-        <IconButton edge="start" data-testid="menuButton" onClick={onMenuClick}>
-          <MenuIcon />
-        </IconButton>
+        <IconButton
+          tooltipText="ジャンルビューを開く"
+          edge="start"
+          data-testid="menuButton"
+          onClick={onMenuClick}
+          icon={<MenuIcon />}
+        />
         <AppTitle variant="h5">{title}</AppTitle>
         {menuItems}
         {user.isAnonymous && <AccountLinkMenu />}
         {!user.isAnonymous && <AccountSettingMenu />}
-        <TooltipIconButton
+        <IconButton
           tooltipText="ログアウト"
           icon={<ExitToApp />}
           onClick={logoutAndDelete}

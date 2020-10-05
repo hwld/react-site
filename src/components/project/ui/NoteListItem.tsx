@@ -54,6 +54,10 @@ const MenuContainer = styled.div`
   line-height: 60px;
 `;
 
+const MenuItem = styled.span`
+  margin-left: 10px;
+`;
+
 type NoteListItemProps = {
   note: Note;
   itemId: string;
@@ -161,16 +165,20 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
           </MetaData>
         </NoteTextContainer>
         <MenuContainer>
-          <RemoveNoteDialog
-            targetNoteIds={[itemId]}
-            tabIndex={-1}
-            ref={refs.current[1]}
-          />
-          <UpdateNoteDialog
-            defaultNoteId={note.id}
-            tabIndex={-1}
-            ref={refs.current[2]}
-          />
+          <MenuItem>
+            <RemoveNoteDialog
+              targetNoteIds={[itemId]}
+              tabIndex={-1}
+              ref={refs.current[1]}
+            />
+          </MenuItem>
+          <MenuItem>
+            <UpdateNoteDialog
+              defaultNoteId={note.id}
+              tabIndex={-1}
+              ref={refs.current[2]}
+            />
+          </MenuItem>
         </MenuContainer>
       </GridContainer>
     </ListItem>

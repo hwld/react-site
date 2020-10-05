@@ -11,7 +11,7 @@ import {
   DialogContentText,
   Typography,
 } from '@material-ui/core';
-import { TooltipIconButton } from '../../ui/TooltipIconButton';
+import { IconButton } from '../../ui/IconButton';
 import { useAuthContext } from '../../../context/AuthContext';
 
 type AccountSettingMenuProps = {};
@@ -54,7 +54,7 @@ const AccountSettingMenu: React.FC<AccountSettingMenuProps> = () => {
 
   return (
     <>
-      <TooltipIconButton
+      <IconButton
         icon={<AccountCircleIcon />}
         tooltipText="アカウント設定"
         onClick={openMenu}

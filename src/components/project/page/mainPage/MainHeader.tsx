@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchNoteIcon from '@material-ui/icons/Search';
 import { AppHeader } from '../../ui/AppHeader';
-import { TooltipIconButton } from '../../../ui/TooltipIconButton';
+import { IconButton } from '../../../ui/IconButton';
 
 type MainHeaderProps = {
   onMenuClick: () => void;
@@ -17,7 +17,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
       title="Notes"
       onMenuClick={onMenuClick}
       menuItems={
-        <TooltipIconButton
+        <IconButton
           tooltipText="検索モードに移動"
           icon={<SearchNoteIcon />}
           onClick={onGoSearchMode}

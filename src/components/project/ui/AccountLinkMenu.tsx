@@ -11,7 +11,7 @@ import {
   DialogContentText,
   Typography,
 } from '@material-ui/core';
-import { TooltipIconButton } from '../../ui/TooltipIconButton';
+import { IconButton } from '../../ui/IconButton';
 import { GoogleLoginButton } from '../page/loginPage/GoogleLoginButton';
 import { useAuthContext } from '../../../context/AuthContext';
 
@@ -62,7 +62,7 @@ const AccountLinkMenu: React.FC<AccountLinkMenuProps> = () => {
 
   return (
     <>
-      <TooltipIconButton
+      <IconButton
         icon={<PersonAddIcon />}
         tooltipText="アカウントを紐付ける"
         onClick={openMenu}

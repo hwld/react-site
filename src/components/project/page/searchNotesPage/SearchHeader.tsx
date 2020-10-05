@@ -2,7 +2,7 @@ import React from 'react';
 import HomeIcon from '@material-ui/icons/Home';
 import { useHistory } from 'react-router-dom';
 import { AppHeader } from '../../ui/AppHeader';
-import { TooltipIconButton } from '../../../ui/TooltipIconButton';
+import { IconButton } from '../../../ui/IconButton';
 
 type HeaderProps = {
   onMenuClick: () => void;
@@ -20,7 +20,7 @@ const SearchHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
       title="検索"
       onMenuClick={onMenuClick}
       menuItems={
-        <TooltipIconButton
+        <IconButton
           tooltipText="ホームに戻る"
           icon={<HomeIcon />}
           onClick={backHome}

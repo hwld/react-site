@@ -5,27 +5,12 @@ import React, {
   BaseSyntheticEvent,
 } from 'react';
 import styled from 'styled-components';
-import {
-  Dialog,
-  IconButton,
-  DialogActions,
-  Button,
-  Tooltip,
-  Typography,
-} from '@material-ui/core';
+import { Dialog, DialogActions, Button, Typography } from '@material-ui/core';
+import { IconButton } from '../../ui/IconButton';
 
 const StyledDialog = styled(Dialog)`
   & .MuiDialog-paper {
     background: ${props => props.theme.palette.primary.main};
-  }
-`;
-
-const StyledIconButton = styled(IconButton)`
-  margin-left: 10px;
-  background-color: ${props => props.theme.palette.secondary.main};
-
-  &:hover {
-    background-color: ${props => props.theme.palette.secondary.dark};
   }
 `;
 
@@ -67,14 +52,14 @@ export const OperationDialog = forwardRef<
     event.stopPropagation();
   };
 
-  const openDialog = () => {
-    setIsOpen(true);
-    if (onOpen) onOpen();
-  };
-
   const closeDialog = () => {
     setIsOpen(false);
     if (onClose) onClose();
+  };
+
+  const openDialog = () => {
+    setIsOpen(true);
+    if (onOpen) onOpen();
   };
 
   const handleClickActivator = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -93,39 +78,17 @@ export const OperationDialog = forwardRef<
     closeDialog();
   };
 
-  // ToolTipの子コンポーネントにdisable属性をつけるとエラーが出るのでifで分岐させる
-  const activator = () => {
-    if (activatorDisabled)
-      return (
-        <StyledIconButton
-          disabled
-          data-testid="activatorButton"
-          tabIndex={tabIndex}
-          ref={ref}
-        >
-          {activatorIcon}
-        </StyledIconButton>
-      );
-
-    return (
-      <Tooltip
-        title={<Typography>{tooltipText}</Typography>}
-        tabIndex={tabIndex}
-      >
-        <StyledIconButton
-          onClick={handleClickActivator}
-          data-testid="activatorButton"
-          ref={ref}
-        >
-          {activatorIcon}
-        </StyledIconButton>
-      </Tooltip>
-    );
-  };
-
   return (
     <span data-testid={dataTestId}>
-      {activator()}
+      <IconButton
+        ref={ref}
+        disabled={activatorDisabled}
+        tooltipText={tooltipText}
+        onClick={handleClickActivator}
+        tabIndex={tabIndex}
+        data-testid="activatorButton"
+        icon={activatorIcon}
+      />
       <StyledDialog
         fullWidth
         open={isOpen}
