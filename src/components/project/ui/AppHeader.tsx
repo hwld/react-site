@@ -44,17 +44,16 @@ const AppHeader: React.FC<AppHeaderProps> = ({
           edge="start"
           data-testid="menuButton"
           onClick={onMenuClick}
-          icon={<MenuIcon />}
-        />
+        >
+          <MenuIcon />
+        </IconButton>
         <AppTitle variant="h5">{title}</AppTitle>
         {menuItems}
         {user.isAnonymous && <AccountLinkMenu />}
         {!user.isAnonymous && <AccountSettingMenu />}
-        <IconButton
-          tooltipText="ログアウト"
-          icon={<ExitToApp />}
-          onClick={logoutAndDelete}
-        />
+        <IconButton tooltipText="ログアウト" onClick={logoutAndDelete}>
+          <ExitToApp />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

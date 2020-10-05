@@ -54,11 +54,9 @@ const AccountSettingMenu: React.FC<AccountSettingMenuProps> = () => {
 
   return (
     <>
-      <IconButton
-        icon={<AccountCircleIcon />}
-        tooltipText="アカウント設定"
-        onClick={openMenu}
-      />
+      <IconButton tooltipText="アカウント設定" onClick={openMenu}>
+        <AccountCircleIcon />
+      </IconButton>
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

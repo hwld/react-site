@@ -20,11 +20,9 @@ const SearchHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
       title="検索"
       onMenuClick={onMenuClick}
       menuItems={
-        <IconButton
-          tooltipText="ホームに戻る"
-          icon={<HomeIcon />}
-          onClick={backHome}
-        />
+        <IconButton tooltipText="ホームに戻る" onClick={backHome}>
+          <HomeIcon />
+        </IconButton>
       }
     />
   );

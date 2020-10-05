@@ -18,7 +18,6 @@ const StyledMuiIconButton = styled(MuiIconButton)`
 type IconButtonProps = {
   tooltipText?: string;
   disabled?: boolean;
-  icon: React.ReactNode;
   'data-testid'?: string;
   tabIndex?: number;
 } & MuiIconButtonProps;
@@ -26,46 +25,20 @@ type IconButtonProps = {
 const IconButton = forwardRef<
   HTMLButtonElement,
   PropsWithChildren<IconButtonProps>
->(function IconButton(
-  {
-    className,
-    tooltipText,
-    disabled,
-    onClick,
-    icon,
-    'data-testid': dataTestId,
-    tabIndex,
-    ...props
-  },
-  ref,
-) {
+>(function IconButton({ tooltipText, disabled, children, ...props }, ref) {
   if (tooltipText && !disabled) {
     return (
       <Tooltip title={<Typography>{tooltipText}</Typography>}>
-        <StyledMuiIconButton
-          className={className}
-          ref={ref}
-          onClick={onClick}
-          tabIndex={tabIndex}
-          data-testid={dataTestId}
-          {...props}
-        >
-          {icon}
+        <StyledMuiIconButton ref={ref} {...props}>
+          {children}
         </StyledMuiIconButton>
       </Tooltip>
     );
   }
 
   return (
-    <StyledMuiIconButton
-      ref={ref}
-      disabled={disabled}
-      onClick={onClick}
-      tabIndex={tabIndex}
-      data-testid={dataTestId}
-      {...props}
-    >
-      {icon}
+    <StyledMuiIconButton ref={ref} disabled={disabled} {...props}>
+      {children}
     </StyledMuiIconButton>
   );
 });

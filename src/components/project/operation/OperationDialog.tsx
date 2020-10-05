@@ -87,8 +87,9 @@ export const OperationDialog = forwardRef<
         onClick={handleClickActivator}
         tabIndex={tabIndex}
         data-testid="activatorButton"
-        icon={activatorIcon}
-      />
+      >
+        {activatorIcon}
+      </IconButton>
       <StyledDialog
         fullWidth
         open={isOpen}

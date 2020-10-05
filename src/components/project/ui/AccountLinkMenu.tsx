@@ -62,11 +62,9 @@ const AccountLinkMenu: React.FC<AccountLinkMenuProps> = () => {
 
   return (
     <>
-      <IconButton
-        icon={<PersonAddIcon />}
-        tooltipText="アカウントを紐付ける"
-        onClick={openMenu}
-      />
+      <IconButton tooltipText="アカウントを紐付ける" onClick={openMenu}>
+        <PersonAddIcon />
+      </IconButton>
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

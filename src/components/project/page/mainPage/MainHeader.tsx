@@ -17,11 +17,9 @@ const MainHeader: React.FC<MainHeaderProps> = ({
       title="Notes"
       onMenuClick={onMenuClick}
       menuItems={
-        <IconButton
-          tooltipText="検索モードに移動"
-          icon={<SearchNoteIcon />}
-          onClick={onGoSearchMode}
-        />
+        <IconButton tooltipText="検索モードに移動" onClick={onGoSearchMode}>
+          <SearchNoteIcon />
+        </IconButton>
       }
     />
   );
