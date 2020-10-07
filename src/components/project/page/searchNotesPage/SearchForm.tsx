@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
-import { useGenresContext } from '../../../../context/GenresContext';
+import { useGenresContext } from '../../../../context/CategoriesContext';
 import { SelectGenreDialog } from './SelectGenreDialog';
 import { SearchNotesCriteria } from '../../../../services/notes';
 
@@ -81,7 +81,7 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
     setTargetText('');
   };
 
-  // ジャンル
+  // カテゴリー
   const selectGenreId = (id: string) => {
     setTargetGenreId(id);
     let genreName = genres.find(genre => genre.id === id)?.genreName;
@@ -108,7 +108,7 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
               </InputAdornment>
             ),
           }}
-          label="ジャンル名"
+          label="カテゴリー名"
           value={targetGenreName}
           color="secondary"
           variant="outlined"

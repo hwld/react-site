@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { render, dragAndDrop } from '../../../../test-util';
-import { GenresView } from './GenresView';
-import { GenresContextProvider } from '../../../../context/GenresContext';
+import { GenresView } from './CategoriesView';
+import { GenresContextProvider } from '../../../../context/CategoriesContext';
 import { getDefaultNotesSortOrder } from '../../../../services/notes';
 
 describe('<GenresView>', () => {

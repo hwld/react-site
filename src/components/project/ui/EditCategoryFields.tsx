@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
-import { GenreField } from '../../../services/genres';
+import { GenreField } from '../../../services/categories';
 
 const StyledTextField = styled(TextField)`
   & label.Mui-focused,
@@ -35,9 +35,9 @@ const EditGenreField: React.FC<EditGenreFieldProps> = ({ genre, onChange }) => {
       inputProps={{ maxLength: 100, autoComplete: 'off' }}
       placeholder="(100文字以内で入力してください)"
       id="EditGenreFieldsGenreName"
-      label="ジャンル名"
+      label="カテゴリー名"
       error={genreName.length === 0}
-      helperText="※ジャンル名は必須項目です"
+      helperText="※カテゴリー名は必須項目です"
       value={genreName}
       onChange={changeGenreName}
       color="secondary"

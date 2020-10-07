@@ -8,8 +8,8 @@ import {
 import MoveNoteIcon from '@material-ui/icons/Forward';
 import styled from 'styled-components';
 import { OperationDialog } from './OperationDialog';
-import { useGenresContext } from '../../../context/GenresContext';
-import { GenreTreeList } from '../ui/GenreTreeList';
+import { useGenresContext } from '../../../context/CategoriesContext';
+import { GenreTreeList } from '../ui/CategoryTreeList';
 import { useNotesContext } from '../../../context/NotesContext';
 
 const StyledGenreTreeList = styled(GenreTreeList)`
@@ -58,7 +58,7 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
       <DialogTitle>メモの移動</DialogTitle>
       <DialogContent>
         <DialogContentText color="textPrimary">
-          移動先ジャンル
+          移動先カテゴリー
         </DialogContentText>
         <StyledGenreTreeList
           genres={genres}

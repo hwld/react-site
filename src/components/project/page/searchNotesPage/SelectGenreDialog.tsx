@@ -8,8 +8,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import styled from 'styled-components';
-import { GenreTreeList } from '../../ui/GenreTreeList';
-import { useGenresContext } from '../../../../context/GenresContext';
+import { GenreTreeList } from '../../ui/CategoryTreeList';
+import { useGenresContext } from '../../../../context/CategoriesContext';
 
 const StyledGenreTreeList = styled(GenreTreeList)`
   height: 50vh;
@@ -58,7 +58,7 @@ const SelectGenreDialog: React.FC<SelectGenreDialogProps> = ({
         選択
       </Button>
       <Dialog open={isOpen} onClose={closeDialog} fullWidth maxWidth="sm">
-        <DialogTitle>検索するジャンルの選択</DialogTitle>
+        <DialogTitle>検索するカテゴリーの選択</DialogTitle>
         <DialogContent>
           <StyledGenreTreeList
             genres={genres}

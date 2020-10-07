@@ -30,7 +30,7 @@ describe('<NotesView>', () => {
     ],
   };
 
-  test('単一選択されているジャンルのメモが表示される', () => {
+  test('単一選択されているカテゴリーのメモが表示される', () => {
     const { queryByText } = render(
       <NotesContextProvider value={notesContextValue}>
         <NotesView selectedGenreIds={['genre1']} />
@@ -42,7 +42,7 @@ describe('<NotesView>', () => {
     expect(queryByText(/title2/)).toBeFalsy();
     expect(queryByText(/text2/)).toBeFalsy();
   });
-  test('複数選択されているジャンルのメモが表示される', () => {
+  test('複数選択されているカテゴリーのメモが表示される', () => {
     const { queryByText } = render(
       <NotesContextProvider value={notesContextValue}>
         <NotesView selectedGenreIds={['genre1', 'genre2']} />
@@ -54,7 +54,7 @@ describe('<NotesView>', () => {
     expect(queryByText(/title2/)).toBeTruthy();
     expect(queryByText(/text2/)).toBeTruthy();
   });
-  test('ジャンルを選択していないときにはメモは表示されず、アラートが表示される', () => {
+  test('カテゴリーを選択していないときにはメモは表示されず、アラートが表示される', () => {
     const { queryByTestId, queryByText } = render(
       <NotesView selectedGenreIds={[]} />,
     );

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { NotesView } from './NotesView';
 import { MainHeader } from './MainHeader';
 import { Drawer } from '../../../ui/Drawer/Drawer';
-import { GenresView } from './GenresView';
+import { GenresView } from './CategoriesView';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 
 const Background = styled.div`

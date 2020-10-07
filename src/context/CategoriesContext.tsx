@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { getDefaultGenreService, GenreService } from '../services/genres';
+import { getDefaultGenreService, GenreService } from '../services/categories';
 
 const GenresContext = React.createContext<GenreService>(
   getDefaultGenreService(),

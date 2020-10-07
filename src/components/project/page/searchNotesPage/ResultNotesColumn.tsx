@@ -22,7 +22,7 @@ const ResultNotesColumn: React.FC<SearchNotesColumnProps> = ({
     (criteria: SearchNotesCriteria) => {
       return (
         notes
-          // ジャンルIDでの検索
+          // カテゴリーIDでの検索
           .filter(note => {
             if (criteria.genreId === '') {
               return true;

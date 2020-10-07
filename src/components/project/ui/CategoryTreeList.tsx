@@ -2,8 +2,8 @@ import React, { useCallback, useMemo, forwardRef } from 'react';
 import styled from 'styled-components';
 import Alert from '@material-ui/lab/Alert';
 import { TreeView } from '../../ui/TreeView/TreeView';
-import { GenreTreeItem } from './GenreTreeItem';
-import { Genre } from '../../../services/genres';
+import { GenreTreeItem } from './CategoryTreeItem';
+import { Genre } from '../../../services/categories';
 
 export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
 
@@ -68,7 +68,7 @@ export const GenreTreeList = forwardRef<
 
   const buildGenreTreeNode = useCallback(
     (rawGenre: Genre): GenreTreeNode => {
-      // rawGenreの子ジャンルを抽出
+      // rawGenreの子カテゴリーを抽出
       const childrenGenres = genres.filter(
         genre => genre.parentGenreId === rawGenre.id,
       );
@@ -107,10 +107,10 @@ export const GenreTreeList = forwardRef<
   );
 
   const genreTreeItems = useMemo(() => {
-    // ルートジャンルを取得する
+    // ルートカテゴリーを取得する
     const rootGenres = genres.filter(genre => genre.parentGenreId === '');
 
-    // ルートジャンルそれぞれのGenreTreeNodeを作成する
+    // ルートカテゴリーそれぞれのGenreTreeNodeを作成する
     const treeObject = rootGenres
       .sort(genresCompareFunction())
       .map(genre => buildGenreTreeNode(genre));
@@ -135,7 +135,7 @@ export const GenreTreeList = forwardRef<
       {genres.length !== 0 ? (
         genreTreeItems
       ) : (
-        <StyledAlert severity="warning">ジャンルが存在しません</StyledAlert>
+        <StyledAlert severity="warning">カテゴリーが存在しません</StyledAlert>
       )}
     </StyledTreeView>
   );

@@ -13,7 +13,7 @@ import { NotesViewMenu } from './NotesViewMenu';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 import { NotesSortOrder } from '../../../../services/notes';
-import { useGenresContext } from '../../../../context/GenresContext';
+import { useGenresContext } from '../../../../context/CategoriesContext';
 
 const StyledAlert = styled(Alert)`
   margin: 20px auto;
@@ -34,7 +34,7 @@ export const NotesView = forwardRef<
   const { notes } = useNotesContext();
   const { genres, updateNotesSortOrderInGenre } = useGenresContext();
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
-  // ジャンルが複数選択されている場合にはこっちのソート順を使用する
+  // カテゴリーが複数選択されている場合にはこっちのソート順を使用する
   const [internalNotesSortOrder, setInternalNotesSortOrder] = useState<
     NotesSortOrder
   >({
@@ -43,11 +43,11 @@ export const NotesView = forwardRef<
   });
 
   const notesSortOrder: NotesSortOrder = useMemo(() => {
-    // ジャンルの選択状態を外部に保存しているのでジャンルが読み込まれる前にlengthが1になる可能性があり、例外を出してしまう.
+    // カテゴリーの選択状態を外部に保存しているのでカテゴリーが読み込まれる前にlengthが1になる可能性があり、例外を出してしまう.
     if (selectedGenreIds.length === 1 && genres.length !== 0) {
       const selectedGenre = genres.find(g => g.id === selectedGenreIds[0]);
       if (!selectedGenre) {
-        throw new Error('存在しないジャンルが選択されています');
+        throw new Error('存在しないカテゴリーが選択されています');
       }
 
       return selectedGenre.notesSortOrder;
@@ -102,7 +102,7 @@ export const NotesView = forwardRef<
         </>
       ) : (
         <StyledAlert severity="warning" data-testid="noselectedAlert">
-          ジャンルを選択してください
+          カテゴリーを選択してください
         </StyledAlert>
       )}
     </ContentColumn>

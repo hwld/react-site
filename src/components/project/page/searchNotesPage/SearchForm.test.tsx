@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
 import { SearchForm } from './SearchForm';
-import { GenresContextProvider } from '../../../../context/GenresContext';
+import { GenresContextProvider } from '../../../../context/CategoriesContext';
 import {
   getDefaultNotesSortOrder,
   SearchNotesCriteria,

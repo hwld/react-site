@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { OperationDialog } from './OperationDialog';
-import { EditGenreField } from '../ui/EditGenreFields';
-import { useGenresContext } from '../../../context/GenresContext';
-import { Genre, getDefaultGenre } from '../../../services/genres';
+import { EditGenreField } from '../ui/EditCategoryFields';
+import { useGenresContext } from '../../../context/CategoriesContext';
+import { Genre, getDefaultGenre } from '../../../services/categories';
 
 type UpdateGenreDialogProps = {
   disabled?: boolean;
@@ -27,7 +27,7 @@ const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
   const setDefaultGenreName = () => {
     const defaultGenre = genres.find(genre => genre.id === defaultGenreId);
     if (!defaultGenre) {
-      throw Error('存在しないジャンル');
+      throw Error('存在しないカテゴリー');
     }
     setNewGenre(defaultGenre);
   };
@@ -38,7 +38,7 @@ const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
 
   return (
     <OperationDialog
-      tooltipText="ジャンルを編集"
+      tooltipText="カテゴリーを編集"
       activatorIcon={<EditIcon fontSize={size} />}
       activatorDisabled={disabled}
       doneText="変更"
@@ -47,7 +47,7 @@ const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
       onOpen={setDefaultGenreName}
       data-testid="updateGenreDialog"
     >
-      <DialogTitle>ジャンルの編集</DialogTitle>
+      <DialogTitle>カテゴリーの編集</DialogTitle>
       <DialogContent>
         <EditGenreField genre={newGenre} onChange={changeGenreName} />
       </DialogContent>

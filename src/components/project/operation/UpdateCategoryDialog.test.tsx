@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
-import { UpdateGenreDialog } from './UpdateGenreDialog';
-import { GenresContextProvider } from '../../../context/GenresContext';
-import { GenreField, getDefaultGenreService } from '../../../services/genres';
+import { UpdateGenreDialog } from './UpdateCategoryDialog';
+import { GenresContextProvider } from '../../../context/CategoriesContext';
+import { GenreField, getDefaultGenreService } from '../../../services/categories';
 import { getDefaultNotesSortOrder } from '../../../services/notes';
 
 describe('<UpdateGenreDialog>', () => {
-  test('ジャンル更新処理が適切に呼び出される', () => {
+  test('カテゴリー更新処理が適切に呼び出される', () => {
     const updateGenre = jest.fn((genre: GenreField & { id: string }) => genre);
     const { getByTestId, getByLabelText } = render(
       <GenresContextProvider
@@ -29,7 +29,7 @@ describe('<UpdateGenreDialog>', () => {
       </GenresContextProvider>,
     );
     fireEvent.click(getByTestId('activatorButton'));
-    fireEvent.change(getByLabelText('ジャンル名'), {
+    fireEvent.change(getByLabelText('カテゴリー名'), {
       target: { value: 'updatedGenreName' },
     });
     fireEvent.click(getByTestId('doneButton'));

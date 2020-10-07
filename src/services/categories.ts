@@ -20,7 +20,7 @@ type FirestoreGenreDate = {
 export type GenreInfo = {
   id: string;
   parentGenreId: string;
-  // 直接の子ジャンルのみをもたせる
+  // 直接の子カテゴリーのみをもたせる
   childrenGenreIds: string[];
   notesSortOrder: NotesSortOrder;
 };
@@ -102,7 +102,7 @@ export const useGenres = (
 
   const { notes, removeNotes } = noteService;
 
-  // 指定されたIdのジャンルの子孫ノードのidを再帰的に取得する.
+  // 指定されたIdのカテゴリーの子孫ノードのidを再帰的に取得する.
   const getDescendantsGenreIds = useCallback(
     (parentId: string) => {
       const parentGenre = genres.find(genre => genre.id === parentId);
@@ -123,7 +123,7 @@ export const useGenres = (
     [genres],
   );
 
-  // 指定されたジャンルIdのメモidを配列にして全て返す
+  // 指定されたカテゴリーIdのメモidを配列にして全て返す
   const getNotesByGenreIds = useCallback(
     (genreIds: string[]) => {
       return genreIds.flatMap(genreId => {
@@ -140,7 +140,7 @@ export const useGenres = (
       const newGenreRef = genresRef.doc();
 
       if (parentGenreId !== '') {
-        // 親ジャンルの子ジャンルidのリストを更新する
+        // 親カテゴリーの子カテゴリーidのリストを更新する
         const parentGenreRef = genresRef.doc(parentGenreId);
         parentGenreRef.update({
           childrenGenreRefs: firebase.firestore.FieldValue.arrayUnion(
@@ -169,10 +169,10 @@ export const useGenres = (
     (ids: string[]) => {
       const batch = db.batch();
       const childrenIds = ids.flatMap(id => getDescendantsGenreIds(id));
-      // 親子関係にあるジャンルを削除しようとした場合に重複するので排除する
+      // 親子関係にあるカテゴリーを削除しようとした場合に重複するので排除する
       const deletedGenreIds = Array.from(new Set([...ids, ...childrenIds]));
 
-      // 指定されたジャンルの親がrootじゃない場合,親のchildrenからジャンルを削除する
+      // 指定されたカテゴリーの親がrootじゃない場合,親のchildrenからカテゴリーを削除する
       const genreIds = deletedGenreIds.filter(id => !childrenIds.includes(id));
       genres
         .filter(genre => genreIds.includes(genre.id))
@@ -247,7 +247,7 @@ export const useGenres = (
       const sourceGenres = genres.filter(genre => ids.includes(genre.id));
 
       sourceGenres.forEach(genre => {
-        // 移動元のジャンルの親がrootじゃない場合、childrenから移動元のジャンルを削除する
+        // 移動元のカテゴリーの親がrootじゃない場合、childrenから移動元のカテゴリーを削除する
         if (genre.parentGenreId !== '') {
           batch.update(genresRef.doc(genre.parentGenreId), {
             childrenGenreRefs: firebase.firestore.FieldValue.arrayRemove(
@@ -256,7 +256,7 @@ export const useGenres = (
           });
         }
 
-        // 移動先ジャンルがrootでなければchildrenを設定して、移動先ジャンルのrefをparentGenreRefに設定
+        // 移動先カテゴリーがrootでなければchildrenを設定して、移動先カテゴリーのrefをparentGenreRefに設定
         if (destGenreId !== '') {
           batch.update(genresRef.doc(destGenreId), {
             childrenGenreRefs: firebase.firestore.FieldValue.arrayUnion(
@@ -267,7 +267,7 @@ export const useGenres = (
             parentGenreRef: genresRef.doc(destGenreId),
           });
         } else {
-          // 移動先ジャンルがrootの場合は自分自身をparentGenreRefに設定
+          // 移動先カテゴリーがrootの場合は自分自身をparentGenreRefに設定
           batch.update(genresRef.doc(genre.id), {
             parentGenreRef: genresRef.doc(genre.id),
           });

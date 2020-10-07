@@ -1,7 +1,7 @@
 import React from 'react';
-import { AddGenreDialog } from '../../operation/AddGenreDialog';
-import { RemoveGenreDialog } from '../../operation/RemoveGenreDIalog';
-import { UpdateGenreDialog } from '../../operation/UpdateGenreDialog';
+import { AddGenreDialog } from '../../operation/AddCategoryDialog';
+import { RemoveGenreDialog } from '../../operation/RemoveCategoryDIalog';
+import { UpdateGenreDialog } from '../../operation/UpdateCategoryDialog';
 
 interface GenresViewMenuProps {
   selectedGenreIds: string[];

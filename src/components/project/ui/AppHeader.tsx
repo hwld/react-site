@@ -40,7 +40,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     <AppBar position="absolute">
       <Toolbar>
         <IconButton
-          tooltipText="ジャンルビューを開く"
+          tooltipText="カテゴリービューを開く"
           edge="start"
           data-testid="menuButton"
           onClick={onMenuClick}

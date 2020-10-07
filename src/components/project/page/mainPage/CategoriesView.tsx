@@ -1,8 +1,8 @@
 import React, { forwardRef, PropsWithChildren } from 'react';
-import { GenreTreeList } from '../../ui/GenreTreeList';
+import { GenreTreeList } from '../../ui/CategoryTreeList';
 import { ContentColumn } from '../../ui/ContentColumn';
-import { GenresViewMenu } from './GenresViewMenu';
-import { useGenresContext } from '../../../../context/GenresContext';
+import { GenresViewMenu } from './CategoriesViewMenu';
+import { useGenresContext } from '../../../../context/CategoriesContext';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 

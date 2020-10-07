@@ -37,7 +37,7 @@ describe('<ResultNotesColumn>', () => {
     text: '',
   };
 
-  test('ジャンルIDで検索可能', () => {
+  test('カテゴリーIDで検索可能', () => {
     const { queryAllByText } = render(
       <NotesContextProvider value={notesContextValue}>
         <ResultNotesColumn

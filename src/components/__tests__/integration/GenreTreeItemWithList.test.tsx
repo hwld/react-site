@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { render, dragAndDrop } from '../../../test-util';
 import { List } from '../../ui/List/List';
-import { GenreTreeItem } from '../../project/ui/GenreTreeItem';
+import { GenreTreeItem } from '../../project/ui/CategoryTreeItem';
 import { ListItem } from '../../ui/List/ListItem';
 import { NotesContextProvider } from '../../../context/NotesContext';
 import { getDefaultNoteService } from '../../../services/notes';

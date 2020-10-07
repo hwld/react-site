@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
-import { RemoveGenreDialog } from './RemoveGenreDIalog';
-import { GenresContextProvider } from '../../../context/GenresContext';
-import { getDefaultGenreService } from '../../../services/genres';
+import { RemoveGenreDialog } from './RemoveCategoryDIalog';
+import { GenresContextProvider } from '../../../context/CategoriesContext';
+import { getDefaultGenreService } from '../../../services/categories';
 
 describe('<RemoveGenreDialog>', () => {
-  test('ジャンルの削除処理が正しく呼ばれる', () => {
+  test('カテゴリーの削除処理が正しく呼ばれる', () => {
     const removeGenres = jest.fn();
     const { getByTestId } = render(
       <GenresContextProvider
