@@ -13,6 +13,11 @@ const StyledTreeView = styled(TreeView)`
   word-break: keep-all;
 `;
 
+const StyledAlert = styled(Alert)`
+  margin: 20px auto;
+  width: 80%;
+`;
+
 type GenreTreeListProps = {
   genres: Genre[];
   className?: string;
@@ -130,7 +135,7 @@ export const GenreTreeList = forwardRef<
       {genres.length !== 0 ? (
         genreTreeItems
       ) : (
-        <Alert severity="warning">ジャンルが存在しません</Alert>
+        <StyledAlert severity="warning">ジャンルが存在しません</StyledAlert>
       )}
     </StyledTreeView>
   );

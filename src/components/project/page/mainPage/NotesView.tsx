@@ -6,6 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 import Alert from '@material-ui/lab/Alert';
+import styled from 'styled-components';
 import { NoteList } from '../../ui/NoteList';
 import { ContentColumn } from '../../ui/ContentColumn';
 import { NotesViewMenu } from './NotesViewMenu';
@@ -13,6 +14,11 @@ import { useNotesContext } from '../../../../context/NotesContext';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 import { NotesSortOrder } from '../../../../services/notes';
 import { useGenresContext } from '../../../../context/GenresContext';
+
+const StyledAlert = styled(Alert)`
+  margin: 20px auto;
+  width: 80%;
+`;
 
 interface NotesViewProps {
   selectedGenreIds: string[];
@@ -95,9 +101,9 @@ export const NotesView = forwardRef<
           />
         </>
       ) : (
-        <Alert severity="warning" data-testid="noselectedAlert">
+        <StyledAlert severity="warning" data-testid="noselectedAlert">
           ジャンルを選択してください
-        </Alert>
+        </StyledAlert>
       )}
     </ContentColumn>
   );

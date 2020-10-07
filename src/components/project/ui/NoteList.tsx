@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, forwardRef } from 'react';
 import Alert from '@material-ui/lab/Alert';
+import styled from 'styled-components';
 import { NoteListItem } from './NoteListItem';
 import { List } from '../../ui/List/List';
 import {
@@ -7,6 +8,11 @@ import {
   NotesSortOrder,
   SearchNotesCriteria,
 } from '../../../services/notes';
+
+const StyledAlert = styled(Alert)`
+  margin: 20px auto;
+  width: 80%;
+`;
 
 type NoteListProps = {
   notes: Note[];
@@ -104,9 +110,9 @@ export const NoteList = forwardRef<
       {notes.length !== 0 ? (
         listItems
       ) : (
-        <Alert className={className} severity="warning">
+        <StyledAlert className={className} severity="warning">
           メモが存在しません
-        </Alert>
+        </StyledAlert>
       )}
     </List>
   );

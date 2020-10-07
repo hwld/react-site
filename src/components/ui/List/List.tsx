@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { ListContextProvider } from './ListContext';
 
 const StyledMuiList = styled(MuiList)`
+  overflow: auto;
   height: 100%;
   padding-top: 0;
   padding-bottom: 0;
