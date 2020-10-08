@@ -6,7 +6,7 @@ export async function runBatch(
   execute: (
     batch: firestore.WriteBatch,
     doc: firestore.QueryDocumentSnapshot<firestore.DocumentData>,
-  ) => void,
+  ) => Promise<void>,
   limit: number,
   last?: firestore.DocumentSnapshot,
 ) {
@@ -22,7 +22,11 @@ export async function runBatch(
   }
 
   const batch = store.batch();
-  querySnapshot.forEach(doc => execute(batch, doc));
+
+  const promises: Promise<void>[] = [];
+  querySnapshot.forEach(doc => promises.push(execute(batch, doc)));
+  await Promise.all(promises);
+
   batch.commit();
 
   runBatch(

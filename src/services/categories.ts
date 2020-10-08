@@ -35,7 +35,9 @@ type FirestoreGenreInfo = {
 
 export type Genre = GenreField & GenreDate & GenreInfo;
 
-type FirestoreGenre = GenreField & FirestoreGenreDate & FirestoreGenreInfo;
+export type FirestoreGenre = GenreField &
+  FirestoreGenreDate &
+  FirestoreGenreInfo;
 
 export type GenreService = {
   genres: Genre[];

@@ -8,7 +8,7 @@ async function deleteAuthorAndBookName(
 ) {
   const notesQuery = store.collectionGroup('notes').orderBy('createdAt', 'asc');
 
-  const executeDeleteNoteField = (
+  const executeDeleteNoteField = async (
     batch: firestore.WriteBatch,
     note: firestore.QueryDocumentSnapshot<firestore.DocumentData>,
   ) => {

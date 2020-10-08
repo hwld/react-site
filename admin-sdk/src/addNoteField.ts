@@ -1,14 +1,14 @@
 import { firestore } from 'firebase-admin';
 import { db } from './firebaseConfig';
 import { runBatch } from './runBatch';
-import { Genre } from '../../src/services/genres';
+import { Genre } from '../../src/services/categories';
 
 async function addNotseSortOrder(store: firestore.Firestore, limit: number) {
   const genresQuery = store
     .collectionGroup('genres')
     .orderBy('createdAt', 'asc');
 
-  const executeAddNotesSortOrder = (
+  const executeAddNotesSortOrder = async (
     batch: firestore.WriteBatch,
     genre: firestore.QueryDocumentSnapshot<firestore.DocumentData>,
   ) => {
