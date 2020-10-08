@@ -14,7 +14,7 @@ describe('<ResultNotesColumn>', () => {
     notes: [
       {
         id: 'note1',
-        genreId: 'genre1',
+        categoryId: 'category1',
         title: 'title1',
         text: 'text1',
         createdAt: new Date(),
@@ -22,7 +22,7 @@ describe('<ResultNotesColumn>', () => {
       },
       {
         id: 'note2',
-        genreId: 'genre1',
+        categoryId: 'category1',
         title: 'title1',
         text: 'text1',
         createdAt: new Date(),
@@ -32,7 +32,7 @@ describe('<ResultNotesColumn>', () => {
   };
 
   const defaultCriteria: SearchNotesCriteria = {
-    genreId: '',
+    categoryId: '',
     title: '',
     text: '',
   };
@@ -43,7 +43,7 @@ describe('<ResultNotesColumn>', () => {
         <ResultNotesColumn
           searchCriteria={{
             ...defaultCriteria,
-            genreId: 'genre1',
+            categoryId: 'category1',
           }}
         />
       </NotesContextProvider>,

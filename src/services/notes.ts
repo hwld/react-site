@@ -20,12 +20,12 @@ type FirestoreNoteDate = {
 
 export type NoteInfo = {
   id: string;
-  genreId: string;
+  categoryId: string;
 };
 
 type FirestoreNoteInfo = {
   id: string;
-  genreRef: firebase.firestore.DocumentReference;
+  categoryRef: firebase.firestore.DocumentReference;
 };
 
 export type Note = NoteField & NoteDate & NoteInfo;
@@ -33,7 +33,7 @@ export type Note = NoteField & NoteDate & NoteInfo;
 type FirestoreNote = NoteField & FirestoreNoteDate & FirestoreNoteInfo;
 
 export interface SearchNotesCriteria {
-  genreId: string;
+  categoryId: string;
   title: string;
   text: string;
 }
@@ -46,16 +46,16 @@ export interface NotesSortOrder {
 export type NoteService = {
   notes: Note[];
 
-  addNote: (genreId: string, noteField: NoteField) => void;
+  addNote: (categoryId: string, noteField: NoteField) => void;
   removeNotes: (ids: string[]) => void;
   updateNote: (note: NoteField & { id: string }) => void;
-  moveNotes: (noteIds: string[], destGenreId: string) => void;
+  moveNotes: (noteIds: string[], destCategoryId: string) => void;
 };
 
 // default value
 export const getDefaultNote = (): Note => ({
   id: '',
-  genreId: '',
+  categoryId: '',
   title: '',
   text: '',
   createdAt: new Date(),
@@ -85,11 +85,11 @@ export const useNotes = (uid: string): NoteService => {
       .collection('notes');
   }, [uid]);
 
-  const genresRef = useMemo(() => {
+  const categoriesRef = useMemo(() => {
     return db
       .collection('users')
       .doc(`${uid !== '' ? uid : 'tmp'}`)
-      .collection('genres');
+      .collection('categories');
   }, [uid]);
 
   const [notesCollection] = useCollectionData<FirestoreNote>(notesRef);
@@ -101,7 +101,7 @@ export const useNotes = (uid: string): NoteService => {
     return notesCollection.map<Note>(note => {
       return {
         id: note.id,
-        genreId: note.genreRef.id,
+        categoryId: note.categoryRef.id,
         title: note.title,
         text: note.text,
         createdAt: note.createdAt.toDate(),
@@ -111,14 +111,14 @@ export const useNotes = (uid: string): NoteService => {
   }, [notesCollection]);
 
   const addNote = useCallback(
-    (genreId: string, noteField: NoteField) => {
+    (categoryId: string, noteField: NoteField) => {
       const newNoteRef = notesRef.doc();
 
       const now = new Date();
 
       const newNote: FirestoreNote = {
         id: newNoteRef.id,
-        genreRef: genresRef.doc(genreId),
+        categoryRef: categoriesRef.doc(categoryId),
         title: noteField.title,
         text: noteField.text,
         createdAt: firebase.firestore.Timestamp.fromDate(now),
@@ -126,7 +126,7 @@ export const useNotes = (uid: string): NoteService => {
       };
       newNoteRef.set(newNote);
     },
-    [genresRef, notesRef],
+    [categoriesRef, notesRef],
   );
 
   const removeNotes = useCallback(
@@ -156,17 +156,17 @@ export const useNotes = (uid: string): NoteService => {
   );
 
   const moveNotes = useCallback(
-    (noteIds: string[], destGenreId: string) => {
+    (noteIds: string[], destCategoryId: string) => {
       const batch = db.batch();
       noteIds.forEach(id =>
         batch.update(notesRef.doc(id), {
-          genreRef: genresRef.doc(destGenreId),
+          categoryRef: categoriesRef.doc(destCategoryId),
           updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
         }),
       );
       batch.commit();
     },
-    [genresRef, notesRef],
+    [categoriesRef, notesRef],
   );
 
   return { notes, addNote, removeNotes, updateNote, moveNotes };

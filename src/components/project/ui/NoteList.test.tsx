@@ -8,7 +8,7 @@ describe('<NoteList>', () => {
   const notes: Note[] = [
     {
       id: 'note1',
-      genreId: 'dammy',
+      categoryId: 'dammy',
       title: 'test-title1',
       text: 'test-text1',
       createdAt: new Date(2000, 6, 1),
@@ -16,7 +16,7 @@ describe('<NoteList>', () => {
     },
     {
       id: 'note2',
-      genreId: 'dammy',
+      categoryId: 'dammy',
       title: 'test-title2',
       text: 'test-text2',
       createdAt: new Date(2000, 7, 1),

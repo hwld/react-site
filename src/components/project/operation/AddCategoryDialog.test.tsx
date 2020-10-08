@@ -1,24 +1,29 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
-import { AddGenreDialog } from './AddCategoryDialog';
-import { GenresContextProvider } from '../../../context/CategoriesContext';
-import { GenreField, getDefaultGenreService } from '../../../services/categories';
+import { AddCategoryDialog } from './AddCategoryDialog';
+import { CategoriesContextProvider } from '../../../context/CategoriesContext';
+import {
+  CategoryField,
+  getDefaultCategoryService,
+} from '../../../services/categories';
 
-describe('<AddGenreDialog>', () => {
+describe('<AddCategoryDialog>', () => {
   test('カテゴリー追加処理が適切に呼び出される', () => {
-    const addGenre = jest.fn((parentId: string, genreField: GenreField) => ({
-      parentId,
-      genreField,
-    }));
+    const addCategory = jest.fn(
+      (parentId: string, categoryField: CategoryField) => ({
+        parentId,
+        categoryField,
+      }),
+    );
     const { getByTestId, getByLabelText } = render(
-      <GenresContextProvider
+      <CategoriesContextProvider
         value={{
-          ...getDefaultGenreService(),
-          addGenre,
+          ...getDefaultCategoryService(),
+          addCategory,
         }}
       >
-        <AddGenreDialog parentGenreId="genre1" />
-      </GenresContextProvider>,
+        <AddCategoryDialog parentCategoryId="category1" />
+      </CategoriesContextProvider>,
     );
 
     // ダイアログ表示
@@ -26,14 +31,14 @@ describe('<AddGenreDialog>', () => {
 
     // カテゴリーの情報を設定
     fireEvent.change(getByLabelText('カテゴリー名'), {
-      target: { value: 'TestGenreName' },
+      target: { value: 'TestCategoryName' },
     });
 
     // 追加ボタンを押す
     fireEvent.click(getByTestId('doneButton'));
 
     // カテゴリーの追加が呼び出されているか
-    expect(addGenre.mock.calls.length).toBe(1);
-    expect(addGenre.mock.calls[0][1].genreName).toBe('TestGenreName');
+    expect(addCategory.mock.calls.length).toBe(1);
+    expect(addCategory.mock.calls[0][1].categoryName).toBe('TestCategoryName');
   });
 });

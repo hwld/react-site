@@ -8,7 +8,7 @@ describe('NotesViewMenu', () => {
       <NotesViewMenu
         sortNotes={() => {}}
         defaultNotesSortOrder={{ targetField: 'title', order: 'asc' }}
-        selectedGenreIds={[]}
+        selectedCategoryIds={[]}
         selectedNoteIds={[]}
       />,
     );

@@ -8,8 +8,8 @@ import {
 } from '@material-ui/core';
 import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
-import { useGenresContext } from '../../../../context/CategoriesContext';
-import { SelectGenreDialog } from './SelectGenreDialog';
+import { useCategoriesContext } from '../../../../context/CategoriesContext';
+import { SelectCategoryDialog } from './SelectCategoryDialog';
 import { SearchNotesCriteria } from '../../../../services/notes';
 
 const Root = styled.div`
@@ -49,17 +49,17 @@ type SearchFormprops = {
 };
 
 const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
-  const { genres } = useGenresContext();
+  const { categories } = useCategoriesContext();
 
-  const [targetGenreId, setTargetGenreId] = useState('');
-  const [targetGenreName, setTargetGenreName] = useState('');
+  const [targetCategoryId, setTargetCategoryId] = useState('');
+  const [targetCategoryName, setTargetCategoryName] = useState('');
 
   const [targetTitle, setTargetTitle] = useState('');
   const [targetText, setTargetText] = useState('');
 
   const onSearch = () => {
     search({
-      genreId: targetGenreId,
+      categoryId: targetCategoryId,
       title: targetTitle,
       text: targetText,
     });
@@ -82,14 +82,15 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
   };
 
   // カテゴリー
-  const selectGenreId = (id: string) => {
-    setTargetGenreId(id);
-    let genreName = genres.find(genre => genre.id === id)?.genreName;
-    if (!genreName) genreName = '';
-    setTargetGenreName(genreName);
+  const selectCategoryId = (id: string) => {
+    setTargetCategoryId(id);
+    let categoryName = categories.find(category => category.id === id)
+      ?.categoryName;
+    if (!categoryName) categoryName = '';
+    setTargetCategoryName(categoryName);
   };
-  const clearSelectGenreId = () => {
-    selectGenreId('');
+  const clearSelectCategoryId = () => {
+    selectCategoryId('');
   };
 
   return (
@@ -97,25 +98,25 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
       <CriteriaTitle>検索条件</CriteriaTitle>
       <CriteriaContent>
         <CriteriaTextField
-          id="searchFormGenreName"
+          id="searchFormCategoryName"
           InputProps={{
             readOnly: true,
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={clearSelectGenreId}>
+                <IconButton onClick={clearSelectCategoryId}>
                   <ClearIcon color="secondary" />
                 </IconButton>
               </InputAdornment>
             ),
           }}
           label="カテゴリー名"
-          value={targetGenreName}
+          value={targetCategoryName}
           color="secondary"
           variant="outlined"
         />
-        <SelectGenreDialog
-          defaultSelectedGenreId={targetGenreId}
-          selectGenreId={selectGenreId}
+        <SelectCategoryDialog
+          defaultSelectedCategoryId={targetCategoryId}
+          selectCategoryId={selectCategoryId}
         />
       </CriteriaContent>
       <CriteriaContent>

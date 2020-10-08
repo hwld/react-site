@@ -1,26 +1,26 @@
 import { firestore } from 'firebase-admin';
 import { db } from './firebaseConfig';
 import { runBatch } from './runBatch';
-import { Genre } from '../../src/services/categories';
+import { Category } from '../../src/services/categories';
 
 async function addNotseSortOrder(store: firestore.Firestore, limit: number) {
-  const genresQuery = store
-    .collectionGroup('genres')
+  const categoriesQuery = store
+    .collectionGroup('categories')
     .orderBy('createdAt', 'asc');
 
   const executeAddNotesSortOrder = async (
     batch: firestore.WriteBatch,
-    genre: firestore.QueryDocumentSnapshot<firestore.DocumentData>,
+    category: firestore.QueryDocumentSnapshot<firestore.DocumentData>,
   ) => {
-    const genreData = genre.data() as Genre;
-    if (genreData.notesSortOrder === undefined) {
-      batch.update(genre.ref, {
+    const categoryData = category.data() as Category;
+    if (categoryData.notesSortOrder === undefined) {
+      batch.update(category.ref, {
         notesSortOrder: { order: 'asc', targetField: 'text' },
       });
     }
   };
 
-  runBatch(store, genresQuery, executeAddNotesSortOrder, limit);
+  runBatch(store, categoriesQuery, executeAddNotesSortOrder, limit);
 }
 
 async function main() {

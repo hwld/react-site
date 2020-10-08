@@ -4,16 +4,16 @@ import { TreeItem } from '../../ui/TreeView/TreeItem';
 import { ListItemDropType } from '../../ui/List/ListItem';
 import { ItemTypes } from '../../ui/ItemTypes';
 
-type GenreTreeItemProps = {
+type CategoryTreeItemProps = {
   nodeId: string;
-  genreName: string;
-  onNotesDrop?: (noteIds: string[], destGenreId: string) => void;
+  categoryName: string;
+  onNotesDrop?: (noteIds: string[], destCategoryId: string) => void;
 };
 
-const GenreTreeItem: React.FC<GenreTreeItemProps> = ({
+const CategoryTreeItem: React.FC<CategoryTreeItemProps> = ({
   children,
   nodeId,
-  genreName,
+  categoryName,
   onNotesDrop = () => {},
 }) => {
   const [{ isDropOver, canDrop }, drop] = useDrop({
@@ -36,7 +36,7 @@ const GenreTreeItem: React.FC<GenreTreeItemProps> = ({
     <div ref={drop} data-testid={`gti-dropLayer-${nodeId}`}>
       <TreeItem
         nodeId={nodeId}
-        label={genreName}
+        label={categoryName}
         isDropOver={isDropOver}
         canDrop={canDrop}
       >
@@ -46,4 +46,4 @@ const GenreTreeItem: React.FC<GenreTreeItemProps> = ({
   );
 };
 
-export { GenreTreeItem };
+export { CategoryTreeItem };

@@ -1,18 +1,22 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { getDefaultGenreService, GenreService } from '../services/categories';
+import {
+  getDefaultCategoryService,
+  CategoryService,
+} from '../services/categories';
 
-const GenresContext = React.createContext<GenreService>(
-  getDefaultGenreService(),
+const CategoriesContext = React.createContext<CategoryService>(
+  getDefaultCategoryService(),
 );
 
-export const GenresContextProvider: React.FC<{ value: GenreService }> = ({
-  children,
-  value,
-}) => {
+export const CategoriesContextProvider: React.FC<{
+  value: CategoryService;
+}> = ({ children, value }) => {
   return (
-    <GenresContext.Provider value={value}>{children}</GenresContext.Provider>
+    <CategoriesContext.Provider value={value}>
+      {children}
+    </CategoriesContext.Provider>
   );
 };
 
-export const useGenresContext = () => useContext(GenresContext);
+export const useCategoriesContext = () => useContext(CategoriesContext);

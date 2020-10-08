@@ -2,38 +2,42 @@ import React, { useState } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { OperationDialog } from './OperationDialog';
-import { EditGenreField } from '../ui/EditCategoryFields';
-import { useGenresContext } from '../../../context/CategoriesContext';
-import { Genre, getDefaultGenre } from '../../../services/categories';
+import { EditCategoryField } from '../ui/EditCategoryFields';
+import { useCategoriesContext } from '../../../context/CategoriesContext';
+import { Category, getDefaultCategory } from '../../../services/categories';
 
-type UpdateGenreDialogProps = {
+type UpdateCategoryDialogProps = {
   disabled?: boolean;
-  defaultGenreId: string;
+  defaultCategoryId: string;
   size?: SvgIconProps['fontSize'];
 };
 
-const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
+const UpdateCategoryDialog: React.FC<UpdateCategoryDialogProps> = ({
   disabled,
-  defaultGenreId,
+  defaultCategoryId,
   size,
 }) => {
-  const [newGenre, setNewGenre] = useState<Genre>(getDefaultGenre());
-  const { genres, updateGenre } = useGenresContext();
+  const [newCategory, setNewCategory] = useState<Category>(
+    getDefaultCategory(),
+  );
+  const { categories, updateCategory } = useCategoriesContext();
 
   const update = () => {
-    updateGenre(newGenre);
+    updateCategory(newCategory);
   };
 
-  const setDefaultGenreName = () => {
-    const defaultGenre = genres.find(genre => genre.id === defaultGenreId);
-    if (!defaultGenre) {
+  const setDefaultCategoryName = () => {
+    const defaultCategory = categories.find(
+      category => category.id === defaultCategoryId,
+    );
+    if (!defaultCategory) {
       throw Error('存在しないカテゴリー');
     }
-    setNewGenre(defaultGenre);
+    setNewCategory(defaultCategory);
   };
 
-  const changeGenreName = (genreName: string) => {
-    setNewGenre(state => ({ ...state, genreName }));
+  const changeCategoryName = (categoryName: string) => {
+    setNewCategory(state => ({ ...state, categoryName }));
   };
 
   return (
@@ -43,16 +47,19 @@ const UpdateGenreDialog: React.FC<UpdateGenreDialogProps> = ({
       activatorDisabled={disabled}
       doneText="変更"
       onDone={update}
-      doneDisabled={newGenre.genreName === ''}
-      onOpen={setDefaultGenreName}
-      data-testid="updateGenreDialog"
+      doneDisabled={newCategory.categoryName === ''}
+      onOpen={setDefaultCategoryName}
+      data-testid="updateCategoryDialog"
     >
       <DialogTitle>カテゴリーの編集</DialogTitle>
       <DialogContent>
-        <EditGenreField genre={newGenre} onChange={changeGenreName} />
+        <EditCategoryField
+          category={newCategory}
+          onChange={changeCategoryName}
+        />
       </DialogContent>
     </OperationDialog>
   );
 };
 
-export { UpdateGenreDialog };
+export { UpdateCategoryDialog };

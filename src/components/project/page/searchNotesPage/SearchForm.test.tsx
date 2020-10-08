@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
 import { SearchForm } from './SearchForm';
-import { GenresContextProvider } from '../../../../context/CategoriesContext';
+import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
 import {
   getDefaultNotesSortOrder,
   SearchNotesCriteria,
@@ -11,19 +11,19 @@ describe('<SearchForm />', () => {
   test('検索処理が正しく呼び出される', () => {
     const search = jest.fn((criteria: SearchNotesCriteria) => criteria);
     const { getByLabelText, getByTestId } = render(
-      <GenresContextProvider
+      <CategoriesContextProvider
         value={{
-          addGenre: () => {},
-          moveGenres: () => {},
-          removeGenres: () => {},
-          updateGenre: () => {},
-          updateNotesSortOrderInGenre: () => {},
-          genres: [
+          addCategory: () => {},
+          moveCategories: () => {},
+          removeCategories: () => {},
+          updateCategory: () => {},
+          updateNotesSortOrderInCategory: () => {},
+          categories: [
             {
-              genreName: 'testGenreName',
-              id: 'testGenreId',
-              childrenGenreIds: [],
-              parentGenreId: '',
+              categoryName: 'testCategoryName',
+              id: 'testCategoryId',
+              childrenCategoryIds: [],
+              parentCategoryId: '',
               createdAt: new Date(),
               notesSortOrder: getDefaultNotesSortOrder(),
             },
@@ -31,11 +31,11 @@ describe('<SearchForm />', () => {
         }}
       >
         <SearchForm search={search} />
-      </GenresContextProvider>,
+      </CategoriesContextProvider>,
     );
 
     fireEvent.click(getByTestId('activator'));
-    fireEvent.click(getByTestId('clickLayer-testGenreId'));
+    fireEvent.click(getByTestId('clickLayer-testCategoryId'));
     fireEvent.click(getByTestId('selectButton'));
 
     fireEvent.change(getByLabelText('タイトル'), {
@@ -47,7 +47,7 @@ describe('<SearchForm />', () => {
     fireEvent.click(getByTestId('searchButton'));
 
     expect(search.mock.calls.length).toBe(1);
-    expect(search.mock.calls[0][0].genreId).toBe('testGenreId');
+    expect(search.mock.calls[0][0].categoryId).toBe('testCategoryId');
     expect(search.mock.calls[0][0].title).toBe('testTitle');
     expect(search.mock.calls[0][0].text).toBe('testText');
   });

@@ -5,35 +5,35 @@ import {
   DialogContentText,
   DialogContent,
 } from '@material-ui/core';
-import DeleteGenreIcon from '@material-ui/icons/Delete';
-import { useGenresContext } from '../../../context/CategoriesContext';
+import DeleteCategoryIcon from '@material-ui/icons/Delete';
+import { useCategoriesContext } from '../../../context/CategoriesContext';
 import { OperationDialog } from './OperationDialog';
 
-type RemoveGenreDialogProps = {
+type RemoveCategoryDialogProps = {
   disabled?: boolean;
-  targetGenreIds: string[];
+  targetCategoryIds: string[];
   size?: SvgIconProps['fontSize'];
 };
 
-const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
+const RemoveCategoryDialog: React.FC<RemoveCategoryDialogProps> = ({
   disabled,
-  targetGenreIds,
+  targetCategoryIds,
   size,
 }) => {
-  const { removeGenres } = useGenresContext();
+  const { removeCategories } = useCategoriesContext();
 
   const remove = () => {
-    removeGenres(targetGenreIds);
+    removeCategories(targetCategoryIds);
   };
 
   return (
     <OperationDialog
       tooltipText="カテゴリーを削除"
-      activatorIcon={<DeleteGenreIcon fontSize={size} />}
+      activatorIcon={<DeleteCategoryIcon fontSize={size} />}
       activatorDisabled={disabled}
       doneText="削除"
       onDone={remove}
-      data-testid="removeGenreDialog"
+      data-testid="removeCategoryDialog"
     >
       <DialogTitle>カテゴリーの削除</DialogTitle>
       <DialogContent>
@@ -45,4 +45,4 @@ const RemoveGenreDialog: React.FC<RemoveGenreDialogProps> = ({
   );
 };
 
-export { RemoveGenreDialog };
+export { RemoveCategoryDialog };

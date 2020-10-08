@@ -1,54 +1,59 @@
 import React, { useState } from 'react';
 import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
-import AddGenreIcon from '@material-ui/icons/CreateNewFolder';
+import AddCategoryIcon from '@material-ui/icons/CreateNewFolder';
 import { OperationDialog } from './OperationDialog';
-import { EditGenreField } from '../ui/EditCategoryFields';
-import { useGenresContext } from '../../../context/CategoriesContext';
-import { GenreField, getDefaultGenre } from '../../../services/categories';
+import { EditCategoryField } from '../ui/EditCategoryFields';
+import { useCategoriesContext } from '../../../context/CategoriesContext';
+import {
+  CategoryField,
+  getDefaultCategory,
+} from '../../../services/categories';
 
-type AddGenreDialogProps = {
+type AddCategoryDialogProps = {
   disabled?: boolean;
-  parentGenreId: string;
+  parentCategoryId: string;
   size?: SvgIconProps['fontSize'];
 };
 
-const AddGenreDialog: React.FC<AddGenreDialogProps> = ({
+const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
   disabled,
-  parentGenreId,
+  parentCategoryId,
   size,
 }) => {
-  const { addGenre } = useGenresContext();
-  const [genreField, setGenreField] = useState<GenreField>(getDefaultGenre());
+  const { addCategory } = useCategoriesContext();
+  const [categoryField, setCategoryField] = useState<CategoryField>(
+    getDefaultCategory(),
+  );
 
   const add = () => {
-    addGenre(parentGenreId, genreField);
+    addCategory(parentCategoryId, categoryField);
   };
 
   const clearField = () => {
-    setGenreField({ genreName: '' });
+    setCategoryField({ categoryName: '' });
   };
 
-  const changeGenreName = (text: string) => {
-    setGenreField({ genreName: text });
+  const changeCategoryName = (text: string) => {
+    setCategoryField({ categoryName: text });
   };
 
   return (
     <OperationDialog
       tooltipText="カテゴリーを追加"
-      activatorIcon={<AddGenreIcon fontSize={size} />}
+      activatorIcon={<AddCategoryIcon fontSize={size} />}
       activatorDisabled={disabled}
       doneText="追加"
       onDone={add}
-      doneDisabled={genreField.genreName.length === 0}
+      doneDisabled={categoryField.categoryName.length === 0}
       onOpen={clearField}
-      data-testid="addGenreDialog"
+      data-testid="addCategoryDialog"
     >
       <DialogTitle>カテゴリーの追加</DialogTitle>
       <DialogContent>
-        <EditGenreField genre={genreField} onChange={changeGenreName} />
+        <EditCategoryField category={categoryField} onChange={changeCategoryName} />
       </DialogContent>
     </OperationDialog>
   );
 };
 
-export { AddGenreDialog };
+export { AddCategoryDialog };

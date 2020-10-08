@@ -1,26 +1,26 @@
 import React, { forwardRef, PropsWithChildren } from 'react';
-import { GenreTreeList } from '../../ui/CategoryTreeList';
+import { CategoryTreeList } from '../../ui/CategoryTreeList';
 import { ContentColumn } from '../../ui/ContentColumn';
-import { GenresViewMenu } from './CategoriesViewMenu';
-import { useGenresContext } from '../../../../context/CategoriesContext';
+import { CategoriesViewMenu } from './CategoriesViewMenu';
+import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 
-type GenresViewProps = {
-  onGenreSelect: (selectedId: string[]) => void;
+type CategoriesViewProps = {
+  onCategorySelect: (selectedId: string[]) => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
-  selectedGenreIds: string[];
+  selectedCategoryIds: string[];
   className?: string;
 };
 
-export const GenresView = forwardRef<
+export const CategoriesView = forwardRef<
   HTMLUListElement,
-  PropsWithChildren<GenresViewProps>
->(function GenresView(
-  { onGenreSelect, selectedGenreIds, className, onKeyDown },
+  PropsWithChildren<CategoriesViewProps>
+>(function CategoriesView(
+  { onCategorySelect, selectedCategoryIds, className, onKeyDown },
   ref,
 ) {
-  const { genres, moveGenres } = useGenresContext();
+  const { categories, moveCategories } = useCategoriesContext();
   const { moveNotes } = useNotesContext();
 
   const { expandedIds, setExpandedIds } = useAppStateContext();
@@ -32,17 +32,19 @@ export const GenresView = forwardRef<
   return (
     <ContentColumn
       className={className}
-      footerMenu={<GenresViewMenu selectedGenreIds={selectedGenreIds} />}
+      footerMenu={
+        <CategoriesViewMenu selectedCategoryIds={selectedCategoryIds} />
+      }
     >
-      <GenreTreeList
+      <CategoryTreeList
         draggable
         multiple
-        genres={genres}
-        selectedGenreIds={selectedGenreIds}
+        categories={categories}
+        selectedCategoryIds={selectedCategoryIds}
         expanded={expandedIds}
         onExpand={handleExpand}
-        onGenreSelect={onGenreSelect}
-        onGenreDrop={moveGenres}
+        onCategorySelect={onCategorySelect}
+        onCategoryDrop={moveCategories}
         onNotesDrop={moveNotes}
         onKeyDown={onKeyDown}
         ref={ref}

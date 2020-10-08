@@ -9,21 +9,21 @@ import { NotesSortOrder } from '../../../../services/notes';
 interface NotesViewMenuProps {
   sortNotes: (order: NotesSortOrder) => void;
   defaultNotesSortOrder: NotesSortOrder;
-  selectedGenreIds: string[];
+  selectedCategoryIds: string[];
   selectedNoteIds: string[];
 }
 
 const NotesViewMenu: React.FC<NotesViewMenuProps> = ({
   sortNotes,
   defaultNotesSortOrder,
-  selectedGenreIds,
+  selectedCategoryIds,
   selectedNoteIds,
 }) => {
   return (
     <>
       <AddNoteDialog
-        disabled={selectedGenreIds.length !== 1}
-        genreId={selectedGenreIds[0] || ''}
+        disabled={selectedCategoryIds.length !== 1}
+        categoryId={selectedCategoryIds[0] || ''}
       />
       <RemoveNoteDialog
         disabled={selectedNoteIds.length === 0}
@@ -38,7 +38,7 @@ const NotesViewMenu: React.FC<NotesViewMenuProps> = ({
         sourceNoteIds={selectedNoteIds}
       />
       <SortNotesDialog
-        disabled={selectedGenreIds.length === 0}
+        disabled={selectedCategoryIds.length === 0}
         defaultSortOrder={defaultNotesSortOrder}
         sort={sortNotes}
       />

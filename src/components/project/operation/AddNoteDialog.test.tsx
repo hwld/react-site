@@ -6,8 +6,8 @@ import { NoteField } from '../../../services/notes';
 
 describe('<AddNoteDialog>', () => {
   test('ノート追加処理が適切に呼び出される', () => {
-    const addNote = jest.fn((genreId: string, noteField: NoteField) => ({
-      genreId,
+    const addNote = jest.fn((categoryId: string, noteField: NoteField) => ({
+      categoryId,
       noteField,
     }));
     const { getByLabelText, getByTestId } = render(
@@ -23,13 +23,13 @@ describe('<AddNoteDialog>', () => {
               createdAt: new Date(),
               updatedAt: new Date(),
               id: 'dammy',
-              genreId: 'dammy',
+              categoryId: 'dammy',
             },
           ],
           addNote,
         }}
       >
-        <AddNoteDialog genreId="genre1" />
+        <AddNoteDialog categoryId="category1" />
       </NotesContextProvider>,
     );
 

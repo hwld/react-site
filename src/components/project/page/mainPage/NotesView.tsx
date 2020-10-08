@@ -13,7 +13,7 @@ import { NotesViewMenu } from './NotesViewMenu';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 import { NotesSortOrder } from '../../../../services/notes';
-import { useGenresContext } from '../../../../context/CategoriesContext';
+import { useCategoriesContext } from '../../../../context/CategoriesContext';
 
 const StyledAlert = styled(Alert)`
   margin: 20px auto;
@@ -21,7 +21,7 @@ const StyledAlert = styled(Alert)`
 `;
 
 interface NotesViewProps {
-  selectedGenreIds: string[];
+  selectedCategoryIds: string[];
   className?: string;
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
 }
@@ -29,10 +29,10 @@ interface NotesViewProps {
 export const NotesView = forwardRef<
   HTMLUListElement,
   PropsWithChildren<NotesViewProps>
->(function NotesView({ selectedGenreIds, className, onKeyDown }, ref) {
+>(function NotesView({ selectedCategoryIds, className, onKeyDown }, ref) {
   const { isMobile } = useAppStateContext();
   const { notes } = useNotesContext();
-  const { genres, updateNotesSortOrderInGenre } = useGenresContext();
+  const { categories, updateNotesSortOrderInCategory } = useCategoriesContext();
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
   // カテゴリーが複数選択されている場合にはこっちのソート順を使用する
   const [internalNotesSortOrder, setInternalNotesSortOrder] = useState<
@@ -44,36 +44,38 @@ export const NotesView = forwardRef<
 
   const notesSortOrder: NotesSortOrder = useMemo(() => {
     // カテゴリーの選択状態を外部に保存しているのでカテゴリーが読み込まれる前にlengthが1になる可能性があり、例外を出してしまう.
-    if (selectedGenreIds.length === 1 && genres.length !== 0) {
-      const selectedGenre = genres.find(g => g.id === selectedGenreIds[0]);
-      if (!selectedGenre) {
+    if (selectedCategoryIds.length === 1 && categories.length !== 0) {
+      const selectedCategory = categories.find(
+        g => g.id === selectedCategoryIds[0],
+      );
+      if (!selectedCategory) {
         throw new Error('存在しないカテゴリーが選択されています');
       }
 
-      return selectedGenre.notesSortOrder;
+      return selectedCategory.notesSortOrder;
     }
 
     return internalNotesSortOrder;
-  }, [genres, internalNotesSortOrder, selectedGenreIds]);
+  }, [categories, internalNotesSortOrder, selectedCategoryIds]);
 
   const setNotesSortOrder = useCallback(
     (order: NotesSortOrder) => {
-      if (selectedGenreIds.length === 1) {
-        updateNotesSortOrderInGenre({
+      if (selectedCategoryIds.length === 1) {
+        updateNotesSortOrderInCategory({
           order: order.order,
           targetField: order.targetField,
-          id: selectedGenreIds[0],
+          id: selectedCategoryIds[0],
         });
       } else {
         setInternalNotesSortOrder(order);
       }
     },
-    [selectedGenreIds, updateNotesSortOrderInGenre],
+    [selectedCategoryIds, updateNotesSortOrderInCategory],
   );
 
   const viewNotes = useMemo(() => {
-    return notes.filter(note => selectedGenreIds.includes(note.genreId));
-  }, [notes, selectedGenreIds]);
+    return notes.filter(note => selectedCategoryIds.includes(note.categoryId));
+  }, [notes, selectedCategoryIds]);
 
   return (
     <ContentColumn
@@ -81,14 +83,14 @@ export const NotesView = forwardRef<
       isMobile={isMobile}
       footerMenu={
         <NotesViewMenu
-          selectedGenreIds={selectedGenreIds}
+          selectedCategoryIds={selectedCategoryIds}
           selectedNoteIds={selectedNoteIds}
           defaultNotesSortOrder={notesSortOrder}
           sortNotes={setNotesSortOrder}
         />
       }
     >
-      {selectedGenreIds.length !== 0 ? (
+      {selectedCategoryIds.length !== 0 ? (
         <>
           <NoteList
             draggable

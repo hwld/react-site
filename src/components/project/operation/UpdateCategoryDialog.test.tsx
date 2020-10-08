@@ -1,40 +1,47 @@
 import React from 'react';
 import { render, fireEvent } from '../../../test-util';
-import { UpdateGenreDialog } from './UpdateCategoryDialog';
-import { GenresContextProvider } from '../../../context/CategoriesContext';
-import { GenreField, getDefaultGenreService } from '../../../services/categories';
+import { UpdateCategoryDialog } from './UpdateCategoryDialog';
+import { CategoriesContextProvider } from '../../../context/CategoriesContext';
+import {
+  CategoryField,
+  getDefaultCategoryService,
+} from '../../../services/categories';
 import { getDefaultNotesSortOrder } from '../../../services/notes';
 
-describe('<UpdateGenreDialog>', () => {
+describe('<UpdateCategoryDialog>', () => {
   test('カテゴリー更新処理が適切に呼び出される', () => {
-    const updateGenre = jest.fn((genre: GenreField & { id: string }) => genre);
+    const updateCategory = jest.fn(
+      (category: CategoryField & { id: string }) => category,
+    );
     const { getByTestId, getByLabelText } = render(
-      <GenresContextProvider
+      <CategoriesContextProvider
         value={{
-          ...getDefaultGenreService(),
-          genres: [
+          ...getDefaultCategoryService(),
+          categories: [
             {
-              genreName: 'testGenre',
-              id: 'testGenre',
+              categoryName: 'testCategory',
+              id: 'testCategory',
               createdAt: new Date(),
-              parentGenreId: '',
-              childrenGenreIds: [],
+              parentCategoryId: '',
+              childrenCategoryIds: [],
               notesSortOrder: getDefaultNotesSortOrder(),
             },
           ],
-          updateGenre,
+          updateCategory,
         }}
       >
-        <UpdateGenreDialog defaultGenreId="testGenre" />
-      </GenresContextProvider>,
+        <UpdateCategoryDialog defaultCategoryId="testCategory" />
+      </CategoriesContextProvider>,
     );
     fireEvent.click(getByTestId('activatorButton'));
     fireEvent.change(getByLabelText('カテゴリー名'), {
-      target: { value: 'updatedGenreName' },
+      target: { value: 'updatedCategoryName' },
     });
     fireEvent.click(getByTestId('doneButton'));
 
-    expect(updateGenre.mock.calls.length).toBe(1);
-    expect(updateGenre.mock.calls[0][0].genreName).toBe('updatedGenreName');
+    expect(updateCategory.mock.calls.length).toBe(1);
+    expect(updateCategory.mock.calls[0][0].categoryName).toBe(
+      'updatedCategoryName',
+    );
   });
 });

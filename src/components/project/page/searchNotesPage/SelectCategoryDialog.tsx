@@ -8,29 +8,29 @@ import {
   Typography,
 } from '@material-ui/core';
 import styled from 'styled-components';
-import { GenreTreeList } from '../../ui/CategoryTreeList';
-import { useGenresContext } from '../../../../context/CategoriesContext';
+import { CategoryTreeList } from '../../ui/CategoryTreeList';
+import { useCategoriesContext } from '../../../../context/CategoriesContext';
 
-const StyledGenreTreeList = styled(GenreTreeList)`
+const StyledCategoryTreeList = styled(CategoryTreeList)`
   height: 50vh;
 `;
 
-type SelectGenreDialogProps = {
-  selectGenreId: (id: string) => void;
-  defaultSelectedGenreId: string;
+type SelectCategoryDialogProps = {
+  selectCategoryId: (id: string) => void;
+  defaultSelectedCategoryId: string;
 };
 
-const SelectGenreDialog: React.FC<SelectGenreDialogProps> = ({
-  selectGenreId,
-  defaultSelectedGenreId,
+const SelectCategoryDialog: React.FC<SelectCategoryDialogProps> = ({
+  selectCategoryId,
+  defaultSelectedCategoryId,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { genres } = useGenresContext();
-  const [selectedGenreId, setSelectedGenreId] = useState('');
+  const { categories } = useCategoriesContext();
+  const [selectedCategoryId, setSelectedCategoryId] = useState('');
 
   const openDialog = () => {
-    setSelectedGenreId(defaultSelectedGenreId);
+    setSelectedCategoryId(defaultSelectedCategoryId);
     setIsOpen(true);
   };
 
@@ -39,11 +39,11 @@ const SelectGenreDialog: React.FC<SelectGenreDialogProps> = ({
   };
 
   const selectListItem = (ids: string[]) => {
-    setSelectedGenreId(ids[0] || '');
+    setSelectedCategoryId(ids[0] || '');
   };
 
   const select = () => {
-    selectGenreId(selectedGenreId);
+    selectCategoryId(selectedCategoryId);
     setIsOpen(false);
   };
 
@@ -60,10 +60,10 @@ const SelectGenreDialog: React.FC<SelectGenreDialogProps> = ({
       <Dialog open={isOpen} onClose={closeDialog} fullWidth maxWidth="sm">
         <DialogTitle>検索するカテゴリーの選択</DialogTitle>
         <DialogContent>
-          <StyledGenreTreeList
-            genres={genres}
-            selectedGenreIds={[selectedGenreId]}
-            onGenreSelect={selectListItem}
+          <StyledCategoryTreeList
+            categories={categories}
+            selectedCategoryIds={[selectedCategoryId]}
+            onCategorySelect={selectListItem}
           />
         </DialogContent>
         <DialogActions>
@@ -84,4 +84,4 @@ const SelectGenreDialog: React.FC<SelectGenreDialogProps> = ({
   );
 };
 
-export { SelectGenreDialog };
+export { SelectCategoryDialog };

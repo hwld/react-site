@@ -1,31 +1,31 @@
 import React from 'react';
-import { AddGenreDialog } from '../../operation/AddCategoryDialog';
-import { RemoveGenreDialog } from '../../operation/RemoveCategoryDIalog';
-import { UpdateGenreDialog } from '../../operation/UpdateCategoryDialog';
+import { AddCategoryDialog } from '../../operation/AddCategoryDialog';
+import { RemoveCategoryDialog } from '../../operation/RemoveCategoryDIalog';
+import { UpdateCategoryDialog } from '../../operation/UpdateCategoryDialog';
 
-interface GenresViewMenuProps {
-  selectedGenreIds: string[];
+interface CategoriesViewMenuProps {
+  selectedCategoryIds: string[];
 }
 
-const GenresViewMenu: React.FC<GenresViewMenuProps> = ({
-  selectedGenreIds,
+const CategoriesViewMenu: React.FC<CategoriesViewMenuProps> = ({
+  selectedCategoryIds,
 }) => {
   return (
     <>
-      <AddGenreDialog
-        disabled={selectedGenreIds.length > 1}
-        parentGenreId={selectedGenreIds[0] || ''}
+      <AddCategoryDialog
+        disabled={selectedCategoryIds.length > 1}
+        parentCategoryId={selectedCategoryIds[0] || ''}
       />
-      <RemoveGenreDialog
-        disabled={selectedGenreIds.length === 0}
-        targetGenreIds={selectedGenreIds}
+      <RemoveCategoryDialog
+        disabled={selectedCategoryIds.length === 0}
+        targetCategoryIds={selectedCategoryIds}
       />
-      <UpdateGenreDialog
-        disabled={selectedGenreIds.length !== 1}
-        defaultGenreId={selectedGenreIds[0] || ''}
+      <UpdateCategoryDialog
+        disabled={selectedCategoryIds.length !== 1}
+        defaultCategoryId={selectedCategoryIds[0] || ''}
       />
     </>
   );
 };
 
-export { GenresViewMenu };
+export { CategoriesViewMenu };

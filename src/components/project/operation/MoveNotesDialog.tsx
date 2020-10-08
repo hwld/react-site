@@ -8,11 +8,11 @@ import {
 import MoveNoteIcon from '@material-ui/icons/Forward';
 import styled from 'styled-components';
 import { OperationDialog } from './OperationDialog';
-import { useGenresContext } from '../../../context/CategoriesContext';
-import { GenreTreeList } from '../ui/CategoryTreeList';
+import { useCategoriesContext } from '../../../context/CategoriesContext';
+import { CategoryTreeList } from '../ui/CategoryTreeList';
 import { useNotesContext } from '../../../context/NotesContext';
 
-const StyledGenreTreeList = styled(GenreTreeList)`
+const StyledCategoryTreeList = styled(CategoryTreeList)`
   height: 50vh;
   background-color: ${props => props.theme.palette.primary.dark};
 `;
@@ -28,21 +28,21 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
   sourceNoteIds,
   size,
 }) => {
-  const { genres } = useGenresContext();
-  const [destGenreId, setDestGenreId] = useState('');
+  const { categories } = useCategoriesContext();
+  const [destCategoryId, setDestCategoryId] = useState('');
 
   const { moveNotes } = useNotesContext();
 
   const move = () => {
-    moveNotes(sourceNoteIds, destGenreId);
+    moveNotes(sourceNoteIds, destCategoryId);
   };
 
-  const selectGenre = (ids: string[]) => {
-    setDestGenreId(ids[0] || '');
+  const selectCategory = (ids: string[]) => {
+    setDestCategoryId(ids[0] || '');
   };
 
-  const clearDestGenre = () => {
-    setDestGenreId('');
+  const clearDestCategory = () => {
+    setDestCategoryId('');
   };
 
   return (
@@ -52,7 +52,7 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
       activatorDisabled={disabled}
       doneText="移動"
       onDone={move}
-      onOpen={clearDestGenre}
+      onOpen={clearDestCategory}
       data-testid="moveNotesDialog"
     >
       <DialogTitle>メモの移動</DialogTitle>
@@ -60,10 +60,10 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
         <DialogContentText color="textPrimary">
           移動先カテゴリー
         </DialogContentText>
-        <StyledGenreTreeList
-          genres={genres}
-          selectedGenreIds={[destGenreId]}
-          onGenreSelect={selectGenre}
+        <StyledCategoryTreeList
+          categories={categories}
+          selectedCategoryIds={[destCategoryId]}
+          onCategorySelect={selectCategory}
         />
       </DialogContent>
     </OperationDialog>

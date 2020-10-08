@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { render, dragAndDrop } from '../../../test-util';
 import { List } from '../../ui/List/List';
-import { GenreTreeItem } from '../../project/ui/CategoryTreeItem';
+import { CategoryTreeItem } from '../../project/ui/CategoryTreeItem';
 import { ListItem } from '../../ui/List/ListItem';
 import { NotesContextProvider } from '../../../context/NotesContext';
 import { getDefaultNoteService } from '../../../services/notes';
 
-describe('<GenreTreeItem> with <List>', () => {
+describe('<CategoryTreeItem> with <List>', () => {
   const DnDTestList: React.FC<{ onDrop: () => {} }> = ({ onDrop }) => {
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
@@ -23,15 +23,15 @@ describe('<GenreTreeItem> with <List>', () => {
         >
           <ListItem itemId="listItem" />
         </List>
-        <GenreTreeItem
+        <CategoryTreeItem
           nodeId="treeItem"
-          genreName="treeItem"
+          categoryName="treeItem"
           onNotesDrop={onDrop}
         />
       </NotesContextProvider>
     );
   };
-  test('ListItemがGenreTreeItemにドロップ可能', () => {
+  test('ListItemがCategoryTreeItemにドロップ可能', () => {
     const onDrop = jest.fn();
     const { getByTestId } = render(<DnDTestList onDrop={onDrop} />);
 

@@ -2,10 +2,12 @@ import React, { useCallback, useMemo, forwardRef } from 'react';
 import styled from 'styled-components';
 import Alert from '@material-ui/lab/Alert';
 import { TreeView } from '../../ui/TreeView/TreeView';
-import { GenreTreeItem } from './CategoryTreeItem';
-import { Genre } from '../../../services/categories';
+import { CategoryTreeItem } from './CategoryTreeItem';
+import { Category } from '../../../services/categories';
 
-export type GenreTreeNode = Genre & { childrenGenres: GenreTreeNode[] };
+export type CategoryTreeNode = Category & {
+  childrenCategories: CategoryTreeNode[];
+};
 
 const StyledTreeView = styled(TreeView)`
   height: 100%;
@@ -18,47 +20,47 @@ const StyledAlert = styled(Alert)`
   width: 80%;
 `;
 
-type GenreTreeListProps = {
-  genres: Genre[];
+type CategoryTreeListProps = {
+  categories: Category[];
   className?: string;
   multiple?: boolean;
-  selectedGenreIds?: string[];
+  selectedCategoryIds?: string[];
   expanded?: string[];
   onExpand?: (expandedIds: string[]) => void;
-  onGenreSelect?: (selectedId: string[]) => void;
+  onCategorySelect?: (selectedId: string[]) => void;
   draggable?: boolean;
-  onGenreDrop?: (sourceId: string[], targetId: string) => void;
-  onNotesDrop?: (noteIds: string[], destGenreId: string) => void;
+  onCategoryDrop?: (sourceId: string[], targetId: string) => void;
+  onNotesDrop?: (noteIds: string[], destCategoryId: string) => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
 };
 
-export const GenreTreeList = forwardRef<
+export const CategoryTreeList = forwardRef<
   HTMLUListElement,
-  React.PropsWithChildren<GenreTreeListProps>
->(function GenreTreeList(
+  React.PropsWithChildren<CategoryTreeListProps>
+>(function CategoryTreeList(
   {
     multiple,
-    genres,
-    selectedGenreIds = [],
+    categories,
+    selectedCategoryIds = [],
     expanded,
     onExpand = () => {},
-    onGenreSelect = () => {},
+    onCategorySelect = () => {},
     draggable = false,
-    onGenreDrop,
+    onCategoryDrop,
     onNotesDrop,
     onKeyDown,
     className,
   },
   ref,
 ) {
-  // 同じ親を持つgenreを作成順に並び替える.
+  // 同じ親を持つcategoryを作成順に並び替える.
   // そのうち並び順を指定できるようにするかも.
-  const genresCompareFunction = useCallback(() => {
-    return (genreA: Genre, genreB: Genre) => {
-      if (genreA.createdAt.getTime() > genreB.createdAt.getTime()) {
+  const categoriesCompareFunction = useCallback(() => {
+    return (categoryA: Category, categoryB: Category) => {
+      if (categoryA.createdAt.getTime() > categoryB.createdAt.getTime()) {
         return 1;
       }
-      if (genreA.createdAt.getTime() < genreB.createdAt.getTime()) {
+      if (categoryA.createdAt.getTime() < categoryB.createdAt.getTime()) {
         return -1;
       }
 
@@ -66,74 +68,81 @@ export const GenreTreeList = forwardRef<
     };
   }, []);
 
-  const buildGenreTreeNode = useCallback(
-    (rawGenre: Genre): GenreTreeNode => {
-      // rawGenreの子カテゴリーを抽出
-      const childrenGenres = genres.filter(
-        genre => genre.parentGenreId === rawGenre.id,
+  const buildCategoryTreeNode = useCallback(
+    (rawCategory: Category): CategoryTreeNode => {
+      // rawCategoryの子カテゴリーを抽出
+      const childrenCategories = categories.filter(
+        category => category.parentCategoryId === rawCategory.id,
       );
 
-      // childrenGenresそれぞれのGenreTreeNodeを作成
-      const childrenGenreTreeNodes = childrenGenres
-        .sort(genresCompareFunction())
-        .map(genre => buildGenreTreeNode(genre));
+      // childrenCategoriesそれぞれのCategoryTreeNodeを作成
+      const childrenCategoryTreeNodes = childrenCategories
+        .sort(categoriesCompareFunction())
+        .map(category => buildCategoryTreeNode(category));
 
       return {
-        ...rawGenre,
-        childrenGenres: [...childrenGenreTreeNodes],
+        ...rawCategory,
+        childrenCategories: [...childrenCategoryTreeNodes],
       };
     },
-    [genres, genresCompareFunction],
+    [categories, categoriesCompareFunction],
   );
 
-  const buildGenreTreeItems = useCallback(
-    (genreTreeNode: GenreTreeNode): React.ReactNode => {
+  const buildCategoryTreeItems = useCallback(
+    (categoryTreeNode: CategoryTreeNode): React.ReactNode => {
       return (
-        <GenreTreeItem
-          nodeId={genreTreeNode.id}
-          genreName={genreTreeNode.genreName}
-          key={genreTreeNode.id}
+        <CategoryTreeItem
+          nodeId={categoryTreeNode.id}
+          categoryName={categoryTreeNode.categoryName}
+          key={categoryTreeNode.id}
           onNotesDrop={onNotesDrop}
         >
-          {genreTreeNode.childrenGenres.length === 0
+          {categoryTreeNode.childrenCategories.length === 0
             ? null
-            : genreTreeNode.childrenGenres.map(node =>
-                buildGenreTreeItems(node),
+            : categoryTreeNode.childrenCategories.map(node =>
+                buildCategoryTreeItems(node),
               )}
-        </GenreTreeItem>
+        </CategoryTreeItem>
       );
     },
     [onNotesDrop],
   );
 
-  const genreTreeItems = useMemo(() => {
+  const categoryTreeItems = useMemo(() => {
     // ルートカテゴリーを取得する
-    const rootGenres = genres.filter(genre => genre.parentGenreId === '');
+    const rootCategories = categories.filter(
+      category => category.parentCategoryId === '',
+    );
 
-    // ルートカテゴリーそれぞれのGenreTreeNodeを作成する
-    const treeObject = rootGenres
-      .sort(genresCompareFunction())
-      .map(genre => buildGenreTreeNode(genre));
+    // ルートカテゴリーそれぞれのCategoryTreeNodeを作成する
+    const treeObject = rootCategories
+      .sort(categoriesCompareFunction())
+      .map(category => buildCategoryTreeNode(category));
 
-    // GenreTreeNodeをReactNodeに変換する
-    return treeObject.map(obj => buildGenreTreeItems(obj));
-  }, [buildGenreTreeItems, buildGenreTreeNode, genres, genresCompareFunction]);
+    // CategoryTreeNodeをReactNodeに変換する
+    return treeObject.map(obj => buildCategoryTreeItems(obj));
+  }, [
+    buildCategoryTreeItems,
+    buildCategoryTreeNode,
+    categories,
+    categoriesCompareFunction,
+  ]);
 
   return (
     <StyledTreeView
       multiSelect={multiple}
       className={className}
-      selected={selectedGenreIds}
+      selected={selectedCategoryIds}
       expanded={expanded}
       onExpand={onExpand}
-      onNodeSelect={onGenreSelect}
+      onNodeSelect={onCategorySelect}
       draggable={draggable}
-      onDrop={onGenreDrop}
+      onDrop={onCategoryDrop}
       onKeyDown={onKeyDown}
       ref={ref}
     >
-      {genres.length !== 0 ? (
-        genreTreeItems
+      {categories.length !== 0 ? (
+        categoryTreeItems
       ) : (
         <StyledAlert severity="warning">カテゴリーが存在しません</StyledAlert>
       )}

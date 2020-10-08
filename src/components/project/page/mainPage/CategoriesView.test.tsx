@@ -1,62 +1,64 @@
 import React, { useState } from 'react';
 import { render, dragAndDrop } from '../../../../test-util';
-import { GenresView } from './CategoriesView';
-import { GenresContextProvider } from '../../../../context/CategoriesContext';
+import { CategoriesView } from './CategoriesView';
+import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
 import { getDefaultNotesSortOrder } from '../../../../services/notes';
 
-describe('<GenresView>', () => {
-  const GenreViewTest: React.FC<{
-    moveGenres: (sourceGenreId: string[], destGenreId: string) => {};
-  }> = ({ moveGenres }) => {
+describe('<CategoriesView>', () => {
+  const CategoryViewTest: React.FC<{
+    moveCategories: (sourceCategoryId: string[], destCategoryId: string) => {};
+  }> = ({ moveCategories }) => {
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
     return (
-      <GenresContextProvider
+      <CategoriesContextProvider
         value={{
-          addGenre: () => {},
-          removeGenres: () => {},
-          updateGenre: () => {},
-          updateNotesSortOrderInGenre: () => {},
-          genres: [
+          addCategory: () => {},
+          removeCategories: () => {},
+          updateCategory: () => {},
+          updateNotesSortOrderInCategory: () => {},
+          categories: [
             {
-              genreName: 'genre1',
-              id: 'genre1',
-              childrenGenreIds: [],
-              parentGenreId: '',
+              categoryName: 'category1',
+              id: 'category1',
+              childrenCategoryIds: [],
+              parentCategoryId: '',
               createdAt: new Date(),
               notesSortOrder: getDefaultNotesSortOrder(),
             },
             {
-              genreName: 'genre2',
-              id: 'genre2',
-              childrenGenreIds: [],
-              parentGenreId: '',
+              categoryName: 'category2',
+              id: 'category2',
+              childrenCategoryIds: [],
+              parentCategoryId: '',
               createdAt: new Date(),
               notesSortOrder: getDefaultNotesSortOrder(),
             },
           ],
-          moveGenres,
+          moveCategories,
         }}
       >
-        <GenresView
-          selectedGenreIds={selectedIds}
-          onGenreSelect={setSelectedIds}
+        <CategoriesView
+          selectedCategoryIds={selectedIds}
+          onCategorySelect={setSelectedIds}
         />
-      </GenresContextProvider>
+      </CategoriesContextProvider>
     );
   };
-  test('コンテキストに含まれるmoveGenreが正しく呼び出されている', () => {
-    const moveGenres = jest.fn(
-      (sourceGenreIds: string[], destGenreId: string) => ({
-        sourceGenreIds,
-        destGenreId,
+  test('コンテキストに含まれるmoveCategoryが正しく呼び出されている', () => {
+    const moveCategories = jest.fn(
+      (sourceCategoryIds: string[], destCategoryId: string) => ({
+        sourceCategoryIds,
+        destCategoryId,
       }),
     );
-    const { getByTestId } = render(<GenreViewTest moveGenres={moveGenres} />);
-    dragAndDrop(
-      getByTestId('dragLayer-genre2'),
-      getByTestId('dropLayer-genre1'),
+    const { getByTestId } = render(
+      <CategoryViewTest moveCategories={moveCategories} />,
     );
-    expect(moveGenres.mock.calls.length).toBe(1);
+    dragAndDrop(
+      getByTestId('dragLayer-category2'),
+      getByTestId('dropLayer-category1'),
+    );
+    expect(moveCategories.mock.calls.length).toBe(1);
   });
 });

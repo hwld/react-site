@@ -10,9 +10,9 @@ export type FirestoreAppState = {
 export type AppStateService = {
   isMobile: boolean;
   expandedIds: string[];
-  selectedGenreIds: string[];
+  selectedCategoryIds: string[];
   setExpandedIds: (ids: string[]) => void;
-  setSelectedGenreIds: (ids: string[]) => void;
+  setSelectedCategoryIds: (ids: string[]) => void;
   clearAppState: () => void;
 };
 
@@ -22,9 +22,9 @@ export const defaultAppState = (): FirestoreAppState => ({ expandedIds: [] });
 export const defaultAppStateService = (): AppStateService => ({
   isMobile: false,
   expandedIds: [],
-  selectedGenreIds: [],
+  selectedCategoryIds: [],
   setExpandedIds: () => {},
-  setSelectedGenreIds: () => {},
+  setSelectedCategoryIds: () => {},
   clearAppState: () => {},
 });
 
@@ -40,13 +40,13 @@ export const useAppState = (): AppStateService => {
     initExpandedIds,
   );
 
-  // selected genre
-  const initSelectedGenreIds = useMemo(
-    () => getLocalStorage('selectedGenre'),
+  // selected category
+  const initSelectedCategoryIds = useMemo(
+    () => getLocalStorage('selectedCategory'),
     [],
   );
-  const [selectedGenreIds, setInternalSelectedIds] = useState<string[]>(
-    initSelectedGenreIds,
+  const [selectedCategoryIds, setInternalSelectedIds] = useState<string[]>(
+    initSelectedCategoryIds,
   );
 
   // set expanded
@@ -55,15 +55,15 @@ export const useAppState = (): AppStateService => {
     setInternalExpandedIds(ids);
   }, []);
 
-  // set selected genre
-  const setSelectedGenreIds = useCallback((ids: string[]) => {
-    localStorage.setItem('selectedGenre', JSON.stringify(ids));
+  // set selected category
+  const setSelectedCategoryIds = useCallback((ids: string[]) => {
+    localStorage.setItem('selectedCategory', JSON.stringify(ids));
     setInternalSelectedIds(ids);
   }, []);
 
   const clearAppState = useCallback(() => {
     localStorage.removeItem('expanded');
-    localStorage.removeItem('selectedGenre');
+    localStorage.removeItem('selectedCategory');
     setInternalExpandedIds([]);
     setInternalSelectedIds([]);
   }, []);
@@ -71,9 +71,9 @@ export const useAppState = (): AppStateService => {
   return {
     isMobile,
     expandedIds,
-    selectedGenreIds,
+    selectedCategoryIds,
     setExpandedIds,
-    setSelectedGenreIds,
+    setSelectedCategoryIds,
     clearAppState,
   };
 };

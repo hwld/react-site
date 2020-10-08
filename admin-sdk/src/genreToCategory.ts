@@ -1,5 +1,4 @@
 import { firestore } from 'firebase-admin';
-import { FirestoreGenre } from '../../src/services/categories';
 import { db } from './firebaseConfig';
 import { runBatch } from './runBatch';
 
@@ -25,19 +24,14 @@ async function genreToCategory(store: firestore.Firestore, limit: number) {
     batch: firestore.WriteBatch,
     genreDoc: firestore.QueryDocumentSnapshot<firestore.DocumentData>,
   ) => {
-    const genreData = genreDoc.data() as FirestoreGenre;
+    const genreData = genreDoc.data();
     const genreRef = genreDoc.ref;
     const categoryRef = categoriesCollectionRef.doc(genreDoc.id);
 
-    // categoryがすでに存在する場合はスキップ
-    if ((await categoryRef.get()).data()) {
-      return;
-    }
-
-    const categoryData: FirestoreGenre = {
+    const categoryData = {
       childrenGenreRefs: genreData.childrenGenreRefs,
       createdAt: genreData.createdAt,
-      genreName: genreData.genreName,
+      categoryName: genreData.genreName,
       id: genreData.id,
       notesSortOrder: genreData.notesSortOrder,
       parentGenreRef: genreData.parentGenreRef,
@@ -59,11 +53,6 @@ async function genreToCategory(store: firestore.Firestore, limit: number) {
   ) => {
     const categoryData = categoryDoc.data();
     const categoryRef = categoryDoc.ref;
-
-    // 既に存在する場合はスキップ
-    if (categoryData.parentCategoryRef && categoryData.childrenCategoryRefs) {
-      return;
-    }
 
     const parentCategoryRef = (
       await (categoryData.parentGenreRef as firestore.DocumentReference).get()
@@ -98,6 +87,10 @@ async function genreToCategory(store: firestore.Firestore, limit: number) {
   ) => {
     const noteRef = noteDoc.ref;
     const noteData = noteDoc.data();
+
+    if (noteData.categoryRef) {
+      return;
+    }
 
     const categoryRef = (
       await (noteData.genreRef as firestore.DocumentReference).get()

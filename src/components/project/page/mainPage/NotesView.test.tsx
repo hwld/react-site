@@ -13,7 +13,7 @@ describe('<NotesView>', () => {
     notes: [
       {
         id: 'note1',
-        genreId: 'genre1',
+        categoryId: 'category1',
         title: 'title1',
         text: 'text1',
         createdAt: new Date(),
@@ -21,7 +21,7 @@ describe('<NotesView>', () => {
       },
       {
         id: 'note2',
-        genreId: 'genre2',
+        categoryId: 'category2',
         title: 'title2',
         text: 'text2',
         createdAt: new Date(),
@@ -33,7 +33,7 @@ describe('<NotesView>', () => {
   test('単一選択されているカテゴリーのメモが表示される', () => {
     const { queryByText } = render(
       <NotesContextProvider value={notesContextValue}>
-        <NotesView selectedGenreIds={['genre1']} />
+        <NotesView selectedCategoryIds={['category1']} />
       </NotesContextProvider>,
     );
     expect(queryByText(/title1/)).toBeTruthy();
@@ -45,7 +45,7 @@ describe('<NotesView>', () => {
   test('複数選択されているカテゴリーのメモが表示される', () => {
     const { queryByText } = render(
       <NotesContextProvider value={notesContextValue}>
-        <NotesView selectedGenreIds={['genre1', 'genre2']} />
+        <NotesView selectedCategoryIds={['category1', 'category2']} />
       </NotesContextProvider>,
     );
     expect(queryByText(/title1/)).toBeTruthy();
@@ -56,7 +56,7 @@ describe('<NotesView>', () => {
   });
   test('カテゴリーを選択していないときにはメモは表示されず、アラートが表示される', () => {
     const { queryByTestId, queryByText } = render(
-      <NotesView selectedGenreIds={[]} />,
+      <NotesView selectedCategoryIds={[]} />,
     );
 
     expect(queryByText(/title1/)).toBeFalsy();

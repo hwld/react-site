@@ -8,13 +8,13 @@ import { getDefaultNote, NoteField } from '../../../services/notes';
 
 type AddNoteDialogProps = {
   disabled?: boolean;
-  genreId: string;
+  categoryId: string;
   size?: SvgIconProps['fontSize'];
 };
 
 const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   disabled,
-  genreId,
+  categoryId,
   size,
 }) => {
   const [noteField, setNoteField] = useState<NoteField>(getDefaultNote());
@@ -22,7 +22,7 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   const { addNote } = useNotesContext();
 
   const add = () => {
-    addNote(genreId, noteField);
+    addNote(categoryId, noteField);
   };
 
   const clearField = () => {

@@ -16,7 +16,7 @@ describe('<UpdateNoteDialog>', () => {
           notes: [
             {
               id: 'id',
-              genreId: 'genreId',
+              categoryId: 'categoryId',
               title: 'title',
               text: 'text',
               createdAt: new Date(),

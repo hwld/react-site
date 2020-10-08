@@ -5,116 +5,124 @@ import { getDefaultNotesSortOrder, NoteService, NotesSortOrder } from './notes';
 import { AppStateService } from './appState';
 
 // types
-export type GenreField = {
-  genreName: string;
+export type CategoryField = {
+  categoryName: string;
 };
 
-export type GenreDate = {
+export type CategoryDate = {
   createdAt: Date;
 };
 
-type FirestoreGenreDate = {
+type FirestoreCategoryDate = {
   createdAt: firebase.firestore.Timestamp;
 };
 
-export type GenreInfo = {
+export type CategoryInfo = {
   id: string;
-  parentGenreId: string;
+  parentCategoryId: string;
   // 直接の子カテゴリーのみをもたせる
-  childrenGenreIds: string[];
+  childrenCategoryIds: string[];
   notesSortOrder: NotesSortOrder;
 };
 
-type FirestoreGenreInfo = {
+type FirestoreCategoryInfo = {
   id: string;
   // 親が存在しない場合は自分自身への参照にする
-  parentGenreRef: firebase.firestore.DocumentReference;
-  childrenGenreRefs: firebase.firestore.DocumentReference[];
+  parentCategoryRef: firebase.firestore.DocumentReference;
+  childrenCategoryRefs: firebase.firestore.DocumentReference[];
   notesSortOrder: NotesSortOrder;
 };
 
-export type Genre = GenreField & GenreDate & GenreInfo;
+export type Category = CategoryField & CategoryDate & CategoryInfo;
 
-export type FirestoreGenre = GenreField &
-  FirestoreGenreDate &
-  FirestoreGenreInfo;
+export type FirestoreCategory = CategoryField &
+  FirestoreCategoryDate &
+  FirestoreCategoryInfo;
 
-export type GenreService = {
-  genres: Genre[];
-  addGenre: (parentGenreId: string, genreField: GenreField) => void;
-  removeGenres: (id: string[]) => void;
-  updateGenre: (genre: GenreField & { id: string }) => void;
-  updateNotesSortOrderInGenre: (order: NotesSortOrder & { id: string }) => void;
-  moveGenres: (genreId: string[], destGenreId: string) => void;
+export type CategoryService = {
+  categories: Category[];
+  addCategory: (parentCategoryId: string, categoryField: CategoryField) => void;
+  removeCategories: (id: string[]) => void;
+  updateCategory: (category: CategoryField & { id: string }) => void;
+  updateNotesSortOrderInCategory: (
+    order: NotesSortOrder & { id: string },
+  ) => void;
+  moveCategories: (categoryId: string[], destCategoryId: string) => void;
 };
 
 // default value
-export const getDefaultGenre = (): Genre => ({
+export const getDefaultCategory = (): Category => ({
   id: '',
-  genreName: '',
-  parentGenreId: '',
-  childrenGenreIds: [],
+  categoryName: '',
+  parentCategoryId: '',
+  childrenCategoryIds: [],
   createdAt: new Date(),
   notesSortOrder: getDefaultNotesSortOrder(),
 });
 
-export const getDefaultGenreService = (): GenreService => ({
-  genres: [],
+export const getDefaultCategoryService = (): CategoryService => ({
+  categories: [],
 
-  addGenre: () => {},
-  removeGenres: () => {},
-  updateGenre: () => {},
-  updateNotesSortOrderInGenre: () => {},
-  moveGenres: () => {},
+  addCategory: () => {},
+  removeCategories: () => {},
+  updateCategory: () => {},
+  updateNotesSortOrderInCategory: () => {},
+  moveCategories: () => {},
 });
 
 // hook
-export const useGenres = (
+export const useCategories = (
   uid: string,
   noteService: NoteService,
   appState: AppStateService,
-): GenreService => {
-  const genresRef = useMemo(() => {
+): CategoryService => {
+  const categoriesRef = useMemo(() => {
     return db
       .collection('users')
       .doc(`${uid !== '' ? uid : 'tmp'}`)
-      .collection('genres');
+      .collection('categories');
   }, [uid]);
 
-  const [genresCollection] = useCollectionData<FirestoreGenre>(genresRef);
+  const [categoriesCollection] = useCollectionData<FirestoreCategory>(
+    categoriesRef,
+  );
 
   // firestore用のデータからapp用のデータに変換する
-  const genres = useMemo(() => {
-    if (!genresCollection) {
+  const categories = useMemo(() => {
+    if (!categoriesCollection) {
       return [];
     }
 
-    return genresCollection.map<Genre>(genre => {
+    return categoriesCollection.map<Category>(category => {
       return {
-        id: genre.id,
-        genreName: genre.genreName,
-        parentGenreId:
-          genre.parentGenreRef.id !== genre.id ? genre.parentGenreRef.id : '',
-        childrenGenreIds: genre.childrenGenreRefs.map(ref => ref.id),
-        createdAt: genre.createdAt.toDate(),
-        notesSortOrder: genre.notesSortOrder,
+        id: category.id,
+        categoryName: category.categoryName,
+        parentCategoryId:
+          category.parentCategoryRef.id !== category.id
+            ? category.parentCategoryRef.id
+            : '',
+        childrenCategoryIds: category.childrenCategoryRefs.map(ref => ref.id),
+        createdAt: category.createdAt.toDate(),
+        notesSortOrder: category.notesSortOrder,
       };
     });
-  }, [genresCollection]);
+  }, [categoriesCollection]);
 
   const { notes, removeNotes } = noteService;
 
   // 指定されたIdのカテゴリーの子孫ノードのidを再帰的に取得する.
-  const getDescendantsGenreIds = useCallback(
+  const getDescendantsCategoryIds = useCallback(
     (parentId: string) => {
-      const parentGenre = genres.find(genre => genre.id === parentId);
-      if (!parentGenre) return [];
+      const parentCategory = categories.find(
+        category => category.id === parentId,
+      );
+      if (!parentCategory) return [];
 
-      const childrenIds = parentGenre.childrenGenreIds;
+      const childrenIds = parentCategory.childrenCategoryIds;
 
       const grandChildrenIds: string[] = childrenIds.flatMap(id => {
         if (id !== '') {
-          return getDescendantsGenreIds(id);
+          return getDescendantsCategoryIds(id);
         }
 
         return [];
@@ -122,171 +130,175 @@ export const useGenres = (
 
       return [...childrenIds, ...grandChildrenIds];
     },
-    [genres],
+    [categories],
   );
 
   // 指定されたカテゴリーIdのメモidを配列にして全て返す
-  const getNotesByGenreIds = useCallback(
-    (genreIds: string[]) => {
-      return genreIds.flatMap(genreId => {
+  const getNotesByCategoryIds = useCallback(
+    (categoryIds: string[]) => {
+      return categoryIds.flatMap(categoryId => {
         return notes
-          .filter(note => note.genreId === genreId)
+          .filter(note => note.categoryId === categoryId)
           .map(note => note.id);
       });
     },
     [notes],
   );
 
-  const addGenre = useCallback(
-    (parentGenreId: string, genreField: GenreField) => {
-      const newGenreRef = genresRef.doc();
+  const addCategory = useCallback(
+    (parentCategoryId: string, categoryField: CategoryField) => {
+      const newCategoryRef = categoriesRef.doc();
 
-      if (parentGenreId !== '') {
+      if (parentCategoryId !== '') {
         // 親カテゴリーの子カテゴリーidのリストを更新する
-        const parentGenreRef = genresRef.doc(parentGenreId);
-        parentGenreRef.update({
-          childrenGenreRefs: firebase.firestore.FieldValue.arrayUnion(
-            newGenreRef,
+        const parentCategoryRef = categoriesRef.doc(parentCategoryId);
+        parentCategoryRef.update({
+          childrenCategoryRefs: firebase.firestore.FieldValue.arrayUnion(
+            newCategoryRef,
           ),
         });
       }
 
-      const newGenre: FirestoreGenre = {
-        id: newGenreRef.id,
-        genreName: genreField.genreName,
-        parentGenreRef:
-          parentGenreId !== ''
-            ? genresRef.doc(parentGenreId)
-            : genresRef.doc(newGenreRef.id),
-        childrenGenreRefs: [],
+      const newCategory: FirestoreCategory = {
+        id: newCategoryRef.id,
+        categoryName: categoryField.categoryName,
+        parentCategoryRef:
+          parentCategoryId !== ''
+            ? categoriesRef.doc(parentCategoryId)
+            : categoriesRef.doc(newCategoryRef.id),
+        childrenCategoryRefs: [],
         createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
         notesSortOrder: getDefaultNotesSortOrder(),
       };
-      newGenreRef.set(newGenre);
+      newCategoryRef.set(newCategory);
     },
-    [genresRef],
+    [categoriesRef],
   );
 
-  const removeGenres = useCallback(
+  const removeCategories = useCallback(
     (ids: string[]) => {
       const batch = db.batch();
-      const childrenIds = ids.flatMap(id => getDescendantsGenreIds(id));
+      const childrenIds = ids.flatMap(id => getDescendantsCategoryIds(id));
       // 親子関係にあるカテゴリーを削除しようとした場合に重複するので排除する
-      const deletedGenreIds = Array.from(new Set([...ids, ...childrenIds]));
+      const deletedCategoryIds = Array.from(new Set([...ids, ...childrenIds]));
 
       // 指定されたカテゴリーの親がrootじゃない場合,親のchildrenからカテゴリーを削除する
-      const genreIds = deletedGenreIds.filter(id => !childrenIds.includes(id));
-      genres
-        .filter(genre => genreIds.includes(genre.id))
-        .forEach(genre => {
-          if (genre.parentGenreId !== '') {
-            batch.update(genresRef.doc(genre.parentGenreId), {
-              childrenGenreRefs: firebase.firestore.FieldValue.arrayRemove(
-                genresRef.doc(genre.id),
+      const categoryIds = deletedCategoryIds.filter(
+        id => !childrenIds.includes(id),
+      );
+      categories
+        .filter(category => categoryIds.includes(category.id))
+        .forEach(category => {
+          if (category.parentCategoryId !== '') {
+            batch.update(categoriesRef.doc(category.parentCategoryId), {
+              childrenCategoryRefs: firebase.firestore.FieldValue.arrayRemove(
+                categoriesRef.doc(category.id),
               ),
             });
           }
         });
 
-      // genreを削除する
-      deletedGenreIds.forEach(id => {
-        batch.delete(genresRef.doc(id));
+      // categoryを削除する
+      deletedCategoryIds.forEach(id => {
+        batch.delete(categoriesRef.doc(id));
       });
 
       // noteを削除する
-      removeNotes(getNotesByGenreIds(deletedGenreIds));
+      removeNotes(getNotesByCategoryIds(deletedCategoryIds));
 
       batch.commit();
 
-      // appStateのgenre関連を設定する
-      const newSelected = appState.selectedGenreIds.filter(id => {
-        return !deletedGenreIds.includes(id);
+      // appStateのcategory関連を設定する
+      const newSelected = appState.selectedCategoryIds.filter(id => {
+        return !deletedCategoryIds.includes(id);
       });
-      appState.setSelectedGenreIds(newSelected);
+      appState.setSelectedCategoryIds(newSelected);
 
       const newExpanded = appState.expandedIds.filter(id => {
-        return !deletedGenreIds.includes(id);
+        return !deletedCategoryIds.includes(id);
       });
       appState.setExpandedIds(newExpanded);
     },
     [
-      genres,
+      categories,
       removeNotes,
-      getNotesByGenreIds,
+      getNotesByCategoryIds,
       appState,
-      getDescendantsGenreIds,
-      genresRef,
+      getDescendantsCategoryIds,
+      categoriesRef,
     ],
   );
 
-  const updateGenre = useCallback(
-    (genre: GenreField & { id: string }) => {
-      // スプレッド演算子使うと genreにGenre型のサブタイプが渡されたときに更新したくないプロパティまで更新される
-      const newGenre: GenreField = {
-        genreName: genre.genreName,
+  const updateCategory = useCallback(
+    (category: CategoryField & { id: string }) => {
+      // スプレッド演算子使うと categoryにCategory型のサブタイプが渡されたときに更新したくないプロパティまで更新される
+      const newCategory: CategoryField = {
+        categoryName: category.categoryName,
       };
 
-      genresRef.doc(genre.id).update(newGenre);
+      categoriesRef.doc(category.id).update(newCategory);
     },
-    [genresRef],
+    [categoriesRef],
   );
 
-  const updateNotesSortOrderInGenre = useCallback(
+  const updateNotesSortOrderInCategory = useCallback(
     (order: NotesSortOrder & { id: string }) => {
       const newOrder: NotesSortOrder = {
         order: order.order,
         targetField: order.targetField,
       };
 
-      genresRef.doc(order.id).update({ notesSortOrder: newOrder });
+      categoriesRef.doc(order.id).update({ notesSortOrder: newOrder });
     },
-    [genresRef],
+    [categoriesRef],
   );
 
-  const moveGenres = useCallback(
-    (ids: string[], destGenreId: string | '') => {
+  const moveCategories = useCallback(
+    (ids: string[], destCategoryId: string | '') => {
       const batch = db.batch();
-      const sourceGenres = genres.filter(genre => ids.includes(genre.id));
+      const sourceCategories = categories.filter(category =>
+        ids.includes(category.id),
+      );
 
-      sourceGenres.forEach(genre => {
+      sourceCategories.forEach(category => {
         // 移動元のカテゴリーの親がrootじゃない場合、childrenから移動元のカテゴリーを削除する
-        if (genre.parentGenreId !== '') {
-          batch.update(genresRef.doc(genre.parentGenreId), {
-            childrenGenreRefs: firebase.firestore.FieldValue.arrayRemove(
-              genresRef.doc(genre.id),
+        if (category.parentCategoryId !== '') {
+          batch.update(categoriesRef.doc(category.parentCategoryId), {
+            childrenCategoryRefs: firebase.firestore.FieldValue.arrayRemove(
+              categoriesRef.doc(category.id),
             ),
           });
         }
 
-        // 移動先カテゴリーがrootでなければchildrenを設定して、移動先カテゴリーのrefをparentGenreRefに設定
-        if (destGenreId !== '') {
-          batch.update(genresRef.doc(destGenreId), {
-            childrenGenreRefs: firebase.firestore.FieldValue.arrayUnion(
-              genresRef.doc(genre.id),
+        // 移動先カテゴリーがrootでなければchildrenを設定して、移動先カテゴリーのrefをparentCategoryRefに設定
+        if (destCategoryId !== '') {
+          batch.update(categoriesRef.doc(destCategoryId), {
+            childrenCategoryRefs: firebase.firestore.FieldValue.arrayUnion(
+              categoriesRef.doc(category.id),
             ),
           });
-          batch.update(genresRef.doc(genre.id), {
-            parentGenreRef: genresRef.doc(destGenreId),
+          batch.update(categoriesRef.doc(category.id), {
+            parentCategoryRef: categoriesRef.doc(destCategoryId),
           });
         } else {
-          // 移動先カテゴリーがrootの場合は自分自身をparentGenreRefに設定
-          batch.update(genresRef.doc(genre.id), {
-            parentGenreRef: genresRef.doc(genre.id),
+          // 移動先カテゴリーがrootの場合は自分自身をparentCategoryRefに設定
+          batch.update(categoriesRef.doc(category.id), {
+            parentCategoryRef: categoriesRef.doc(category.id),
           });
         }
       });
 
       batch.commit();
     },
-    [genres, genresRef],
+    [categories, categoriesRef],
   );
 
   return {
-    genres,
-    addGenre,
-    removeGenres,
-    updateGenre,
-    updateNotesSortOrderInGenre,
-    moveGenres,
+    categories,
+    addCategory,
+    removeCategories,
+    updateCategory,
+    updateNotesSortOrderInCategory,
+    moveCategories,
   };
 };

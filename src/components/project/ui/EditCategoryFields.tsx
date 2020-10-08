@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
-import { GenreField } from '../../../services/categories';
+import { CategoryField } from '../../../services/categories';
 
 const StyledTextField = styled(TextField)`
   & label.Mui-focused,
@@ -18,15 +18,18 @@ const StyledTextField = styled(TextField)`
   }
 `;
 
-type EditGenreFieldProps = {
-  genre: GenreField;
-  onChange: (genreName: string) => void;
+type EditCategoryFieldProps = {
+  category: CategoryField;
+  onChange: (categoryName: string) => void;
 };
 
-const EditGenreField: React.FC<EditGenreFieldProps> = ({ genre, onChange }) => {
-  const { genreName } = genre;
+const EditCategoryField: React.FC<EditCategoryFieldProps> = ({
+  category,
+  onChange,
+}) => {
+  const { categoryName } = category;
 
-  const changeGenreName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const changeCategoryName = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
   };
 
@@ -34,12 +37,12 @@ const EditGenreField: React.FC<EditGenreFieldProps> = ({ genre, onChange }) => {
     <StyledTextField
       inputProps={{ maxLength: 100, autoComplete: 'off' }}
       placeholder="(100文字以内で入力してください)"
-      id="EditGenreFieldsGenreName"
+      id="EditCategoryFieldsCategoryName"
       label="カテゴリー名"
-      error={genreName.length === 0}
+      error={categoryName.length === 0}
       helperText="※カテゴリー名は必須項目です"
-      value={genreName}
-      onChange={changeGenreName}
+      value={categoryName}
+      onChange={changeCategoryName}
       color="secondary"
       variant="filled"
       fullWidth
@@ -47,4 +50,4 @@ const EditGenreField: React.FC<EditGenreFieldProps> = ({ genre, onChange }) => {
   );
 };
 
-export { EditGenreField };
+export { EditCategoryField };

@@ -2,9 +2,9 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import { NotesContextProvider } from './context/NotesContext';
-import { GenresContextProvider } from './context/CategoriesContext';
+import { CategoriesContextProvider } from './context/CategoriesContext';
 import { useNotes } from './services/notes';
-import { useGenres } from './services/categories';
+import { useCategories } from './services/categories';
 import { useAuth } from './services/auth';
 import { AppRouter } from './AppRouter';
 import { AuthContextProvider } from './context/AuthContext';
@@ -15,7 +15,7 @@ const App: React.FC = () => {
   const appStateService = useAppState();
   const authService = useAuth();
   const noteService = useNotes(authService.user.userId);
-  const genreService = useGenres(
+  const categoryService = useCategories(
     authService.user.userId,
     noteService,
     appStateService,
@@ -24,7 +24,7 @@ const App: React.FC = () => {
   return (
     <AppStateProvider value={appStateService}>
       <AuthContextProvider value={authService}>
-        <GenresContextProvider value={genreService}>
+        <CategoriesContextProvider value={categoryService}>
           <NotesContextProvider value={noteService}>
             <BrowserRouter>
               <AppRouter
@@ -33,7 +33,7 @@ const App: React.FC = () => {
               />
             </BrowserRouter>
           </NotesContextProvider>
-        </GenresContextProvider>
+        </CategoriesContextProvider>
       </AuthContextProvider>
     </AppStateProvider>
   );

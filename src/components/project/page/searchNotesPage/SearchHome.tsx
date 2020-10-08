@@ -22,7 +22,7 @@ const Background = styled.div`
 const SearchHome: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [searchCriteria, setSearchCriteria] = useState<SearchNotesCriteria>({
-    genreId: '',
+    categoryId: '',
     title: '',
     text: '',
   });

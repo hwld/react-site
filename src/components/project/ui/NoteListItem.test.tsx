@@ -9,14 +9,14 @@ describe('<NoteListItem>', () => {
         itemId=""
         note={{
           id: '',
-          genreId: '',
+          categoryId: '',
           title: 'title1',
           text: 'text1',
           createdAt: new Date(),
           updatedAt: new Date(),
         }}
         searchCriteria={{
-          genreId: '',
+          categoryId: '',
           title: 'title1',
           text: 'text1',
         }}

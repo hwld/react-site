@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { NotesView } from './NotesView';
 import { MainHeader } from './MainHeader';
 import { Drawer } from '../../../ui/Drawer/Drawer';
-import { GenresView } from './CategoriesView';
+import { CategoriesView } from './CategoriesView';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 
 const Background = styled.div`
@@ -21,13 +21,13 @@ const StyledDrawer = styled(Drawer)`
 
 const MainHome: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const genresViewRef = useRef<HTMLUListElement | null>(null);
+  const categoriesViewRef = useRef<HTMLUListElement | null>(null);
   const notesViewRef = useRef<HTMLUListElement | null>(null);
   const history = useHistory();
   const {
     isMobile,
-    selectedGenreIds,
-    setSelectedGenreIds,
+    selectedCategoryIds,
+    setSelectedCategoryIds,
   } = useAppStateContext();
 
   const invertDrawer = () => {
@@ -46,7 +46,7 @@ const MainHome: React.FC = () => {
     history.replace('/search');
   };
 
-  const handleGenresViewKeyDown = (
+  const handleCategoriesViewKeyDown = (
     event: React.KeyboardEvent<HTMLUListElement>,
   ) => {
     switch (event.key) {
@@ -66,8 +66,8 @@ const MainHome: React.FC = () => {
   ) => {
     switch (event.key) {
       case 'ArrowLeft': {
-        if (genresViewRef.current) {
-          genresViewRef.current.focus();
+        if (categoriesViewRef.current) {
+          categoriesViewRef.current.focus();
         }
         break;
       }
@@ -86,15 +86,15 @@ const MainHome: React.FC = () => {
         onOpen={openDrawer}
         onClose={closeDrawer}
       >
-        <GenresView
-          onGenreSelect={setSelectedGenreIds}
-          selectedGenreIds={selectedGenreIds}
-          onKeyDown={handleGenresViewKeyDown}
-          ref={genresViewRef}
+        <CategoriesView
+          onCategorySelect={setSelectedCategoryIds}
+          selectedCategoryIds={selectedCategoryIds}
+          onKeyDown={handleCategoriesViewKeyDown}
+          ref={categoriesViewRef}
         />
       </StyledDrawer>
       <NotesView
-        selectedGenreIds={selectedGenreIds}
+        selectedCategoryIds={selectedCategoryIds}
         onKeyDown={handleNotesViewKeyDown}
         ref={notesViewRef}
       />
