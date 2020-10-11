@@ -23,6 +23,7 @@ type NoteListProps = {
   searchCriteria?: SearchNotesCriteria;
   className?: string;
   draggable?: boolean;
+  isMobile?: boolean;
 };
 
 export const NoteList = forwardRef<
@@ -38,6 +39,7 @@ export const NoteList = forwardRef<
     searchCriteria,
     className,
     draggable = false,
+    isMobile,
   },
   ref,
 ) {
@@ -90,13 +92,14 @@ export const NoteList = forwardRef<
       .sort(notesCompareFunction(notesSortOrder))
       .map(note => (
         <NoteListItem
+          key={note.id}
           note={note}
           itemId={note.id}
-          key={note.id}
           searchCriteria={searchCriteria}
+          isMobile={isMobile}
         />
       ));
-  }, [notes, notesCompareFunction, notesSortOrder, searchCriteria]);
+  }, [isMobile, notes, notesCompareFunction, notesSortOrder, searchCriteria]);
 
   return (
     <List

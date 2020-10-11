@@ -91,17 +91,16 @@ export const NotesView = forwardRef<
       }
     >
       {selectedCategoryIds.length !== 0 ? (
-        <>
-          <NoteList
-            draggable
-            notes={viewNotes}
-            selectedNoteIds={selectedNoteIds}
-            onNotesSelect={setSelectedNoteIds}
-            onKeyDown={onKeyDown}
-            notesSortOrder={notesSortOrder}
-            ref={ref}
-          />
-        </>
+        <NoteList
+          draggable
+          notes={viewNotes}
+          selectedNoteIds={selectedNoteIds}
+          onNotesSelect={setSelectedNoteIds}
+          onKeyDown={onKeyDown}
+          notesSortOrder={notesSortOrder}
+          ref={ref}
+          isMobile={isMobile}
+        />
       ) : (
         <StyledAlert severity="warning" data-testid="noselectedAlert">
           カテゴリーを選択してください

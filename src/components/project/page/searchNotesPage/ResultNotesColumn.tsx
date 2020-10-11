@@ -58,7 +58,11 @@ const ResultNotesColumn: React.FC<SearchNotesColumnProps> = ({
 
   return (
     <ContentColumn className={className} isMobile={isMobile}>
-      <NoteList notes={searchNotes} searchCriteria={searchCriteria} />
+      <NoteList
+        notes={searchNotes}
+        searchCriteria={searchCriteria}
+        isMobile={isMobile}
+      />
     </ContentColumn>
   );
 };

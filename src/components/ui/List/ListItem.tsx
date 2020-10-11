@@ -1,9 +1,5 @@
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
-import {
-  ListItem as MuiListItem,
-  Divider,
-  useForkRef,
-} from '@material-ui/core';
+import { ListItem as MuiListItem, useForkRef } from '@material-ui/core';
 import { useDrag, DragPreviewImage } from 'react-dnd';
 import styled from 'styled-components';
 import { fade } from '@material-ui/core/styles';
@@ -11,9 +7,13 @@ import { ListContext } from './ListContext';
 import { ItemTypes } from '../ItemTypes';
 
 const StyledMuiListItem = styled(MuiListItem)`
+  border: 1px solid ${props => props.theme.palette.primary.light};
+  border-radius: 10px;
+
   &.Mui-focusVisible,
   &:focus {
     background-color: ${props => props.theme.palette.action.hover};
+    border: 1px solid ${props => props.theme.palette.secondary.light};
   }
 
   &.Mui-selected {
@@ -42,6 +42,7 @@ export type ListItemDropType = {
 };
 
 type ListItemProps = {
+  className?: string;
   itemId: string;
   onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 };
@@ -49,7 +50,7 @@ type ListItemProps = {
 export const ListItem = React.forwardRef<
   HTMLDivElement,
   React.PropsWithChildren<ListItemProps>
->(function ListItem({ children, itemId, onKeyDown }, ref) {
+>(function ListItem({ children, className, itemId, onKeyDown }, ref) {
   const {
     selectedIds,
     draggable,
@@ -106,7 +107,11 @@ export const ListItem = React.forwardRef<
   }, [isFocused, itemId]);
 
   return (
-    <div ref={draggable ? drag : null} data-testid={`dragLayer-${itemId}`}>
+    <div
+      className={className}
+      ref={draggable ? drag : null}
+      data-testid={`dragLayer-${itemId}`}
+    >
       <StyledMuiListItem
         ref={handleRef}
         button
@@ -125,7 +130,6 @@ export const ListItem = React.forwardRef<
       >
         {children}
       </StyledMuiListItem>
-      <Divider />
       <DragPreviewImage
         connect={preview}
         src={`${process.env.PUBLIC_URL}/note.svg`}

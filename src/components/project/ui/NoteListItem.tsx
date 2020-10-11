@@ -7,6 +7,10 @@ import { RemoveNoteDialog } from '../operation/RemoveNoteDialog';
 import { UpdateNoteDialog } from '../operation/UpdateNoteDialog';
 import { Note, SearchNotesCriteria } from '../../../services/notes';
 
+const StyledListItem = styled(ListItem)<{ isMobile?: boolean }>`
+  margin: ${props => (props.isMobile ? '10px' : '30px')};
+`;
+
 const GridContainer = styled.div`
   width: 100%;
   display: grid;
@@ -35,7 +39,7 @@ const NoteText = styled(Typography)`
 const MetaData = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   width: 100%;
 `;
 
@@ -51,6 +55,7 @@ const HighlightSpan = styled.span`
 `;
 
 const MenuContainer = styled.div`
+  height: 100%;
   line-height: 60px;
 `;
 
@@ -59,11 +64,13 @@ const MenuItem = styled.span`
 `;
 
 type NoteListItemProps = {
+  isMobile?: boolean;
   note: Note;
   itemId: string;
   searchCriteria?: SearchNotesCriteria;
 };
 const NoteListItem: React.FC<NoteListItemProps> = ({
+  isMobile,
   note,
   itemId,
   searchCriteria,
@@ -152,7 +159,12 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
   }, [note.updatedAt]);
 
   return (
-    <ListItem itemId={itemId} onKeyDown={handleKeyDown} ref={refs.current[0]}>
+    <StyledListItem
+      itemId={itemId}
+      onKeyDown={handleKeyDown}
+      ref={refs.current[0]}
+      isMobile={isMobile}
+    >
       <GridContainer>
         <NoteTextContainer>
           <TitleText variant="h4">
@@ -181,7 +193,7 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
           </MenuItem>
         </MenuContainer>
       </GridContainer>
-    </ListItem>
+    </StyledListItem>
   );
 };
 
