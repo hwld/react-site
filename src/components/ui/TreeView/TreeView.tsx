@@ -168,7 +168,18 @@ const UnStyledTreeView = React.forwardRef<
     [getAllDescendants, selected],
   );
 
-  const isFocused = (id: string) => focusedNodeId === id;
+  // TreeViewにfocusが当たったか
+  const [isTreeViewFocused, setIsTreeViewFocused] = React.useState(false);
+
+  // TreeItemにfocusが当たっているか
+  const isFocused = (id: string) => {
+    if (isTreeViewFocused) {
+      return focusedNodeId === id;
+    }
+
+    // TreeViewからfocuseが外れていたら常にfalseを返す
+    return false;
+  };
 
   /*
    * Focus Helpers
@@ -186,6 +197,7 @@ const UnStyledTreeView = React.forwardRef<
   const focusLastNode = () => focus(getLastNode());
 
   const handleFocus = () => {
+    setIsTreeViewFocused(true);
     if (!focusedNodeId) {
       if (selected.length !== 0) {
         focus(selected[0]);
@@ -193,6 +205,10 @@ const UnStyledTreeView = React.forwardRef<
         focusFirstNode();
       }
     }
+  };
+
+  const handleBlur = () => {
+    setIsTreeViewFocused(false);
   };
 
   /*
@@ -704,6 +720,7 @@ const UnStyledTreeView = React.forwardRef<
           onClick={() => !disableSelection && selectNode(null)}
           onKeyDown={handleKeyDown}
           onFocus={handleFocus}
+          onBlur={handleBlur}
           ref={ref}
         >
           {children}

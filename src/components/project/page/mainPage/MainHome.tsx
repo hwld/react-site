@@ -13,12 +13,6 @@ const Background = styled.div`
   background-color: ${props => props.theme.palette.primary.dark};
 `;
 
-const StyledDrawer = styled(Drawer)`
-  &:focus-within {
-    outline: ${props => props.theme.palette.secondary.main} solid 1px;
-  }
-`;
-
 const MainHome: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const categoriesViewRef = useRef<HTMLUListElement | null>(null);
@@ -79,7 +73,7 @@ const MainHome: React.FC = () => {
   return (
     <Background data-testid="mainPage">
       <MainHeader onMenuClick={invertDrawer} onGoSearchMode={goSearchMode} />
-      <StyledDrawer
+      <Drawer
         width={isMobile ? '80' : '40'}
         isPresistent={!isMobile}
         open={isOpen}
@@ -92,7 +86,7 @@ const MainHome: React.FC = () => {
           onKeyDown={handleCategoriesViewKeyDown}
           ref={categoriesViewRef}
         />
-      </StyledDrawer>
+      </Drawer>
       <NotesView
         selectedCategoryIds={selectedCategoryIds}
         onKeyDown={handleNotesViewKeyDown}

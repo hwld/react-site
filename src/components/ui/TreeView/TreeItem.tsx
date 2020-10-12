@@ -30,12 +30,15 @@ export const styles = (theme: Theme) => ({
   /* Styles applied to the root element. */
   root: {
     listStyle: 'none',
-    margin: 0,
+    margin: 1,
     padding: 0,
     outline: 0,
     WebkitTapHighlightColor: 'transparent',
-    '&:focus > div > div > div > $content $label, &$focused > div > div > div > $content $label': {
+
+    // , &$focused > div > div > div > $content $label
+    '&:focus > div > div > div > $content $label': {
       backgroundColor: theme.palette.action.hover,
+      outline: `1px solid ${theme.palette.secondary.main}`,
     },
 
     '&$selected > div > div > div > $content $label': {
