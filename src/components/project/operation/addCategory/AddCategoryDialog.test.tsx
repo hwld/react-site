@@ -1,11 +1,11 @@
 import React from 'react';
-import { render, fireEvent } from '../../../test-util';
+import { render, fireEvent } from '../../../../test-util';
 import { AddCategoryDialog } from './AddCategoryDialog';
-import { CategoriesContextProvider } from '../../../context/CategoriesContext';
+import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
 import {
   CategoryField,
   getDefaultCategoryService,
-} from '../../../services/categories';
+} from '../../../../services/categories';
 
 describe('<AddCategoryDialog>', () => {
   test('カテゴリー追加処理が適切に呼び出される', () => {

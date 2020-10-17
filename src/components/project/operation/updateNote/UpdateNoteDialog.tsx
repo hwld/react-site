@@ -1,10 +1,10 @@
 import React, { useState, forwardRef, PropsWithChildren } from 'react';
-import { SvgIconProps, DialogContent } from '@material-ui/core';
+import { SvgIconProps } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import { OperationDialog } from './OperationDialog';
-import { EditNoteField } from '../ui/EditNoteFields';
-import { getDefaultNote, Note, NoteField } from '../../../services/notes';
-import { useNotesContext } from '../../../context/NotesContext';
+import { OperationDialog } from '../OperationDialog';
+import { getDefaultNote, Note, NoteField } from '../../../../services/notes';
+import { useNotesContext } from '../../../../context/NotesContext';
+import { UpdateNoteDialogContent } from './UpdateNoteDialogContent';
 
 type UpdateNoteDialogProps = {
   disabled?: boolean;
@@ -49,9 +49,10 @@ export const UpdateNoteDialog = forwardRef<
       tabIndex={tabIndex}
       ref={ref}
     >
-      <DialogContent>
-        <EditNoteField defaultNote={newNote} onChange={changeNoteField} />
-      </DialogContent>
+      <UpdateNoteDialogContent
+        newNoteField={newNote}
+        onChangeNoteField={changeNoteField}
+      />
     </OperationDialog>
   );
 });

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { SvgIconProps, DialogContent } from '@material-ui/core';
+import { SvgIconProps } from '@material-ui/core';
 import AddCategoryIcon from '@material-ui/icons/CreateNewFolder';
-import { OperationDialog } from './OperationDialog';
-import { EditCategoryField } from '../ui/EditCategoryFields';
-import { useCategoriesContext } from '../../../context/CategoriesContext';
+import { OperationDialog } from '../OperationDialog';
+import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import {
   CategoryField,
   getDefaultCategory,
-} from '../../../services/categories';
+} from '../../../../services/categories';
+import { AddCategoryDialogContent } from './AddCategoryDialogContent';
 
 type AddCategoryDialogProps = {
   disabled?: boolean;
@@ -33,8 +33,11 @@ const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
     setCategoryField({ categoryName: '' });
   };
 
-  const changeCategoryName = (text: string) => {
-    setCategoryField({ categoryName: text });
+  const changeCategoryField = (
+    fieldName: keyof CategoryField,
+    value: string,
+  ) => {
+    setCategoryField(state => ({ ...state, [fieldName]: value }));
   };
 
   return (
@@ -48,12 +51,10 @@ const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
       onOpen={clearField}
       data-testid="addCategoryDialog"
     >
-      <DialogContent>
-        <EditCategoryField
-          category={categoryField}
-          onChange={changeCategoryName}
-        />
-      </DialogContent>
+      <AddCategoryDialogContent
+        categoryField={categoryField}
+        onChange={changeCategoryField}
+      />
     </OperationDialog>
   );
 };

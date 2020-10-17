@@ -23,15 +23,15 @@ const FormTextField = styled(TextField)`
 `;
 
 type EditNoteFieldProps = {
-  defaultNote: NoteField;
+  noteField: NoteField;
   onChange: (fieldName: keyof NoteField, value: string) => void;
 };
 
 const EditNoteField: React.FC<EditNoteFieldProps> = ({
-  defaultNote,
+  noteField,
   onChange,
 }) => {
-  const { title, text } = defaultNote;
+  const { title, text } = noteField;
 
   const changeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange('title', event.target.value);

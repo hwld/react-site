@@ -1,6 +1,6 @@
 import React from 'react';
-import { NotesSortOrder } from '../../../services/notes';
-import { render, fireEvent } from '../../../test-util';
+import { NotesSortOrder } from '../../../../services/notes';
+import { render, fireEvent } from '../../../../test-util';
 import { SortNotesDialog } from './SortNotesDialog';
 
 describe('<SortNotesDialog>', () => {

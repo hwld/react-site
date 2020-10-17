@@ -1,20 +1,17 @@
 import React from 'react';
-import {
-  SvgIconProps,
-  DialogContentText,
-  DialogContent,
-} from '@material-ui/core';
+import { SvgIconProps } from '@material-ui/core';
 import DeleteCategoryIcon from '@material-ui/icons/Delete';
-import { useCategoriesContext } from '../../../context/CategoriesContext';
-import { OperationDialog } from './OperationDialog';
+import { useCategoriesContext } from '../../../../context/CategoriesContext';
+import { OperationDialog } from '../OperationDialog';
+import { RemoveCategoriesDialogContent } from './RemoveCategoriesDialogContent';
 
-type RemoveCategoryDialogProps = {
+type RemoveCategoriesDialogProps = {
   disabled?: boolean;
   targetCategoryIds: string[];
   size?: SvgIconProps['fontSize'];
 };
 
-const RemoveCategoryDialog: React.FC<RemoveCategoryDialogProps> = ({
+const RemoveCategoriesDialog: React.FC<RemoveCategoriesDialogProps> = ({
   disabled,
   targetCategoryIds,
   size,
@@ -34,13 +31,9 @@ const RemoveCategoryDialog: React.FC<RemoveCategoryDialogProps> = ({
       onDone={remove}
       data-testid="removeCategoryDialog"
     >
-      <DialogContent>
-        <DialogContentText color="textPrimary">
-          削除してよろしいですか？
-        </DialogContentText>
-      </DialogContent>
+      <RemoveCategoriesDialogContent />
     </OperationDialog>
   );
 };
 
-export { RemoveCategoryDialog };
+export { RemoveCategoriesDialog };

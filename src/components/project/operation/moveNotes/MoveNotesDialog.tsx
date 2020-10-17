@@ -1,20 +1,10 @@
 import React, { useState } from 'react';
-import {
-  DialogContent,
-  SvgIconProps,
-  DialogContentText,
-} from '@material-ui/core';
+import { SvgIconProps } from '@material-ui/core';
 import MoveNoteIcon from '@material-ui/icons/Forward';
-import styled from 'styled-components';
-import { OperationDialog } from './OperationDialog';
-import { useCategoriesContext } from '../../../context/CategoriesContext';
-import { CategoryTreeList } from '../ui/CategoryTreeList';
-import { useNotesContext } from '../../../context/NotesContext';
-
-const StyledCategoryTreeList = styled(CategoryTreeList)`
-  height: 50vh;
-  background-color: ${props => props.theme.palette.primary.dark};
-`;
+import { OperationDialog } from '../OperationDialog';
+import { useCategoriesContext } from '../../../../context/CategoriesContext';
+import { useNotesContext } from '../../../../context/NotesContext';
+import { MoveNotesDialogContent } from './MoveNotesDialogContent';
 
 type MoveNotesDialogProps = {
   disabled?: boolean;
@@ -54,16 +44,11 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
       onOpen={clearDestCategory}
       data-testid="moveNotesDialog"
     >
-      <DialogContent>
-        <DialogContentText color="textPrimary">
-          移動先カテゴリー
-        </DialogContentText>
-        <StyledCategoryTreeList
-          categories={categories}
-          selectedCategoryIds={[destCategoryId]}
-          onCategorySelect={selectCategory}
-        />
-      </DialogContent>
+      <MoveNotesDialogContent
+        categories={categories}
+        destCategoryId={destCategoryId}
+        onCategorySelect={selectCategory}
+      />
     </OperationDialog>
   );
 };

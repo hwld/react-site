@@ -1,12 +1,12 @@
 import React from 'react';
-import { render, fireEvent } from '../../../test-util';
+import { render, fireEvent } from '../../../../test-util';
 import { UpdateCategoryDialog } from './UpdateCategoryDialog';
-import { CategoriesContextProvider } from '../../../context/CategoriesContext';
+import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
 import {
   CategoryField,
   getDefaultCategoryService,
-} from '../../../services/categories';
-import { getDefaultNotesSortOrder } from '../../../services/notes';
+} from '../../../../services/categories';
+import { getDefaultNotesSortOrder } from '../../../../services/notes';
 
 describe('<UpdateCategoryDialog>', () => {
   test('カテゴリー更新処理が適切に呼び出される', () => {

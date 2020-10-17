@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, fireEvent } from '../../../test-util';
-import { NotesContextProvider } from '../../../context/NotesContext';
+import { render, fireEvent } from '../../../../test-util';
+import { NotesContextProvider } from '../../../../context/NotesContext';
 import { AddNoteDialog } from './AddNoteDialog';
-import { NoteField } from '../../../services/notes';
+import { NoteField } from '../../../../services/notes';
 
 describe('<AddNoteDialog>', () => {
   test('ノート追加処理が適切に呼び出される', () => {

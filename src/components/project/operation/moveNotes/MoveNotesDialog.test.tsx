@@ -1,13 +1,13 @@
 import React from 'react';
-import { render, fireEvent } from '../../../test-util';
+import { render, fireEvent } from '../../../../test-util';
 import { MoveNotesDialog } from './MoveNotesDialog';
-import { CategoriesContextProvider } from '../../../context/CategoriesContext';
-import { NotesContextProvider } from '../../../context/NotesContext';
-import { getDefaultCategoryService } from '../../../services/categories';
+import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
+import { NotesContextProvider } from '../../../../context/NotesContext';
+import { getDefaultCategoryService } from '../../../../services/categories';
 import {
   getDefaultNoteService,
   getDefaultNotesSortOrder,
-} from '../../../services/notes';
+} from '../../../../services/notes';
 
 describe('<MoveNotesDialog>', () => {
   test('メモの移動処理が正しく呼び出される', () => {

@@ -4,7 +4,6 @@ import React, {
   forwardRef,
   BaseSyntheticEvent,
 } from 'react';
-import styled from 'styled-components';
 import {
   Dialog,
   DialogActions,
@@ -13,12 +12,6 @@ import {
   DialogTitle,
 } from '@material-ui/core';
 import { IconButton } from '../../ui/IconButton';
-
-const StyledDialog = styled(Dialog)`
-  & .MuiDialog-paper {
-    background: ${props => props.theme.palette.primary.main};
-  }
-`;
 
 type OperationDialogProps = {
   title: string;
@@ -96,7 +89,7 @@ export const OperationDialog = forwardRef<
       >
         {activatorIcon}
       </IconButton>
-      <StyledDialog
+      <Dialog
         fullWidth
         open={isOpen}
         onClose={closeDialog}
@@ -130,7 +123,7 @@ export const OperationDialog = forwardRef<
             <Typography color="textSecondary">中止</Typography>
           </Button>
         </DialogActions>
-      </StyledDialog>
+      </Dialog>
     </span>
   );
 });

@@ -1,7 +1,7 @@
 import React from 'react';
-import { AddCategoryDialog } from '../../operation/AddCategoryDialog';
-import { RemoveCategoryDialog } from '../../operation/RemoveCategoryDIalog';
-import { UpdateCategoryDialog } from '../../operation/UpdateCategoryDialog';
+import { AddCategoryDialog } from '../../operation/addCategory/AddCategoryDialog';
+import { RemoveCategoriesDialog } from '../../operation/removeCategories/RemoveCategoriesDIalog';
+import { UpdateCategoryDialog } from '../../operation/updateCategory/UpdateCategoryDialog';
 
 interface CategoriesViewMenuProps {
   selectedCategoryIds: string[];
@@ -16,7 +16,7 @@ const CategoriesViewMenu: React.FC<CategoriesViewMenuProps> = ({
         disabled={selectedCategoryIds.length > 1}
         parentCategoryId={selectedCategoryIds[0] || ''}
       />
-      <RemoveCategoryDialog
+      <RemoveCategoriesDialog
         disabled={selectedCategoryIds.length === 0}
         targetCategoryIds={selectedCategoryIds}
       />

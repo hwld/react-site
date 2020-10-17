@@ -1,8 +1,8 @@
 import React from 'react';
-import { RemoveNoteDialog } from './RemoveNoteDialog';
-import { render, fireEvent } from '../../../test-util';
-import { NotesContextProvider } from '../../../context/NotesContext';
-import { getDefaultNoteService } from '../../../services/notes';
+import { RemoveNotesDialog } from './RemoveNotesDialog';
+import { render, fireEvent } from '../../../../test-util';
+import { NotesContextProvider } from '../../../../context/NotesContext';
+import { getDefaultNoteService } from '../../../../services/notes';
 
 describe('<RemoveNoteDialog>', () => {
   test('メモの削除処理が正しく呼び出される', () => {
@@ -14,7 +14,7 @@ describe('<RemoveNoteDialog>', () => {
           removeNotes,
         }}
       >
-        <RemoveNoteDialog targetNoteIds={['note1']} />
+        <RemoveNotesDialog targetNoteIds={['note1']} />
       </NotesContextProvider>,
     );
 

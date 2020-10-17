@@ -1,23 +1,20 @@
 import React, { forwardRef, PropsWithChildren } from 'react';
-import {
-  DialogContent,
-  SvgIconProps,
-  DialogContentText,
-} from '@material-ui/core';
+import { SvgIconProps } from '@material-ui/core';
 import DeleteNoteIcon from '@material-ui/icons/Delete';
-import { useNotesContext } from '../../../context/NotesContext';
-import { OperationDialog } from './OperationDialog';
+import { useNotesContext } from '../../../../context/NotesContext';
+import { OperationDialog } from '../OperationDialog';
+import { RemoveNotesDialogContent } from './RemoveNotesDialogContent';
 
-type RemoveNoteDialogProps = {
+type RemoveNotesDialogProps = {
   disabled?: boolean;
   targetNoteIds: string[];
   size?: SvgIconProps['fontSize'];
   tabIndex?: number;
 };
 
-export const RemoveNoteDialog = forwardRef<
+export const RemoveNotesDialog = forwardRef<
   HTMLButtonElement,
-  PropsWithChildren<RemoveNoteDialogProps>
+  PropsWithChildren<RemoveNotesDialogProps>
 >(function RemoveNoteDialog({ disabled, targetNoteIds, size, tabIndex }, ref) {
   const { removeNotes } = useNotesContext();
 
@@ -36,11 +33,7 @@ export const RemoveNoteDialog = forwardRef<
       tabIndex={tabIndex}
       ref={ref}
     >
-      <DialogContent>
-        <DialogContentText color="textPrimary">
-          削除してよろしいですか?
-        </DialogContentText>
-      </DialogContent>
+      <RemoveNotesDialogContent />
     </OperationDialog>
   );
 });

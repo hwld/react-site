@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { DialogTitle, DialogContent, SvgIconProps } from '@material-ui/core';
+import { SvgIconProps } from '@material-ui/core';
 import SortNoteIcon from '@material-ui/icons/Sort';
-import { NotesSortConditionField } from '../ui/NotesSortConditionFields';
-import { OperationDialog } from './OperationDialog';
-import { NotesSortOrder } from '../../../services/notes';
+import { OperationDialog } from '../OperationDialog';
+import { NotesSortOrder } from '../../../../services/notes';
+import { SortNotesDialogContent } from './SortNotesDialogContent';
 
 type SortNotesDialogProps = {
   sort: (order: NotesSortOrder) => void;
@@ -48,14 +48,11 @@ const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
       onOpen={setDefaultSortOrder}
       data-testid="sortNotesDialog"
     >
-      <DialogTitle>ノートの並び替え</DialogTitle>
-      <DialogContent>
-        <NotesSortConditionField
-          notesSortOrder={sortOrder}
-          onChangeTargetField={changeSortTargetField}
-          onChangeOrder={changeSortOrder}
-        />
-      </DialogContent>
+      <SortNotesDialogContent
+        sortOrder={sortOrder}
+        onChangeSortTargetField={changeSortTargetField}
+        onChangeSortOrder={changeSortOrder}
+      />
     </OperationDialog>
   );
 };

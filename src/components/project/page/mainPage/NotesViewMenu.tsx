@@ -1,10 +1,10 @@
 import React from 'react';
-import { AddNoteDialog } from '../../operation/AddNoteDialog';
-import { RemoveNoteDialog } from '../../operation/RemoveNoteDialog';
-import { MoveNotesDialog } from '../../operation/MoveNotesDialog';
-import { SortNotesDialog } from '../../operation/SortNotesDialog';
-import { UpdateNoteDialog } from '../../operation/UpdateNoteDialog';
+import { AddNoteDialog } from '../../operation/addNote/AddNoteDialog';
+import { RemoveNotesDialog } from '../../operation/removeNotes/RemoveNotesDialog';
+import { MoveNotesDialog } from '../../operation/moveNotes/MoveNotesDialog';
 import { NotesSortOrder } from '../../../../services/notes';
+import { UpdateNoteDialog } from '../../operation/updateNote/UpdateNoteDialog';
+import { SortNotesDialog } from '../../operation/sortNotes/SortNotesDialog';
 
 interface NotesViewMenuProps {
   sortNotes: (order: NotesSortOrder) => void;
@@ -25,7 +25,7 @@ const NotesViewMenu: React.FC<NotesViewMenuProps> = ({
         disabled={selectedCategoryIds.length !== 1}
         categoryId={selectedCategoryIds[0] || ''}
       />
-      <RemoveNoteDialog
+      <RemoveNotesDialog
         disabled={selectedNoteIds.length === 0}
         targetNoteIds={selectedNoteIds}
       />

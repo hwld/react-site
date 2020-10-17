@@ -1,9 +1,9 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { render } from '../../../test-util';
-import { NotesContextProvider } from '../../../context/NotesContext';
+import { render } from '../../../../test-util';
+import { NotesContextProvider } from '../../../../context/NotesContext';
 import { UpdateNoteDialog } from './UpdateNoteDialog';
-import { NoteField } from '../../../services/notes';
+import { NoteField } from '../../../../services/notes';
 
 describe('<UpdateNoteDialog>', () => {
   test('ノートの更新処理が適切に呼び出される', () => {

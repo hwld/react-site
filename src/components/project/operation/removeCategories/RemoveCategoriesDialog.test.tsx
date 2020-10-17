@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, fireEvent } from '../../../test-util';
-import { RemoveCategoryDialog } from './RemoveCategoryDIalog';
-import { CategoriesContextProvider } from '../../../context/CategoriesContext';
-import { getDefaultCategoryService } from '../../../services/categories';
+import { render, fireEvent } from '../../../../test-util';
+import { RemoveCategoriesDialog } from './RemoveCategoriesDIalog';
+import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
+import { getDefaultCategoryService } from '../../../../services/categories';
 
 describe('<RemoveCategoryDialog>', () => {
   test('カテゴリーの削除処理が正しく呼ばれる', () => {
@@ -14,7 +14,7 @@ describe('<RemoveCategoryDialog>', () => {
           removeCategories,
         }}
       >
-        <RemoveCategoryDialog targetCategoryIds={['category1']} />
+        <RemoveCategoriesDialog targetCategoryIds={['category1']} />
       </CategoriesContextProvider>,
     );
 

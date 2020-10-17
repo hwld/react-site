@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import AddNoteIcon from '@material-ui/icons/NoteAdd';
-import { DialogContent, SvgIconProps } from '@material-ui/core';
-import { useNotesContext } from '../../../context/NotesContext';
-import { OperationDialog } from './OperationDialog';
-import { EditNoteField } from '../ui/EditNoteFields';
-import { getDefaultNote, NoteField } from '../../../services/notes';
+import { SvgIconProps } from '@material-ui/core';
+import { useNotesContext } from '../../../../context/NotesContext';
+import { OperationDialog } from '../OperationDialog';
+import { getDefaultNote, NoteField } from '../../../../services/notes';
+import { AddNoteDialogContent } from './AddNoteDialogContent';
 
 type AddNoteDialogProps = {
   disabled?: boolean;
@@ -44,9 +44,7 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
       onOpen={clearField}
       data-testid="addNoteDialog"
     >
-      <DialogContent>
-        <EditNoteField defaultNote={noteField} onChange={changeNoteField} />
-      </DialogContent>
+      <AddNoteDialogContent noteField={noteField} onChange={changeNoteField} />
     </OperationDialog>
   );
 };
