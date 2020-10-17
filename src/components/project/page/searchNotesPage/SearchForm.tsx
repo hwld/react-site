@@ -12,43 +12,12 @@ import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { SelectCategoryDialog } from './SelectCategoryDialog';
 import { SearchNotesCriteria } from '../../../../services/notes';
 
-const Root = styled.div`
-  padding: 16px 24px;
-`;
-
-const CriteriaTitle = styled(Typography)`
-  font-size: 1.5rem;
-`;
-
-const CriteriaContent = styled.div`
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-`;
-
-const CriteriaTextField = styled(TextField)`
-  & label.Mui-focused,
-  .MuiFormLabel-root {
-    color: ${props => props.theme.palette.secondary.main};
-  }
-
-  & .MuiFilledInput-input:-webkit-autofill {
-    box-shadow: 0 0 0 100px ${props => props.theme.palette.primary.main}e5 inset;
-  }
-`;
-
-const CriteriaAction = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-`;
-
-type SearchFormprops = {
+type Props = {
+  className?: string;
   search: (criteria: SearchNotesCriteria) => void;
 };
 
-const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
+const Component: React.FC<Props> = ({ className, search }) => {
   const { categories } = useCategoriesContext();
 
   const [targetCategoryId, setTargetCategoryId] = useState('');
@@ -94,10 +63,11 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
   };
 
   return (
-    <Root>
-      <CriteriaTitle>検索条件</CriteriaTitle>
-      <CriteriaContent>
-        <CriteriaTextField
+    <div className={className}>
+      <Typography className="criteriaTitle">検索条件</Typography>
+      <div className="criteriaContent">
+        <TextField
+          className="criteriaTextField"
           id="searchFormCategoryName"
           InputProps={{
             readOnly: true,
@@ -118,9 +88,10 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
           defaultSelectedCategoryId={targetCategoryId}
           selectCategoryId={selectCategoryId}
         />
-      </CriteriaContent>
-      <CriteriaContent>
-        <CriteriaTextField
+      </div>
+      <div className="criteriaContent">
+        <TextField
+          className="criteriaTextField"
           id="searchFormTitle"
           InputProps={{
             endAdornment: (
@@ -138,9 +109,10 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
           variant="filled"
           fullWidth
         />
-      </CriteriaContent>
-      <CriteriaContent>
-        <CriteriaTextField
+      </div>
+      <div className="criteriaContent">
+        <TextField
+          className="criteriaTextField"
           id="searchFormText"
           InputProps={{
             endAdornment: (
@@ -158,8 +130,8 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
           variant="filled"
           fullWidth
         />
-      </CriteriaContent>
-      <CriteriaAction>
+      </div>
+      <div className="criteriaAction">
         <Button
           variant="contained"
           color="secondary"
@@ -168,9 +140,42 @@ const SearchForm: React.FC<SearchFormprops> = ({ search }) => {
         >
           検索
         </Button>
-      </CriteriaAction>
-    </Root>
+      </div>
+    </div>
   );
 };
 
-export { SearchForm };
+const StyledComponent = styled(Component)`
+  padding: 16px 24px;
+
+  & > .criteriaTitle {
+    font-size: 1.5rem;
+  }
+
+  & > .criteriaContent {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+
+    & > .criteriaTextField {
+      & label.Mui-focused,
+      & .MuiFormLabel-root {
+        color: ${props => props.theme.palette.secondary.main};
+      }
+
+      & .MuiFilledInput-input:-webkit-autofill {
+        box-shadow: 0 0 0 100px ${props => props.theme.palette.primary.main}e5
+          inset;
+      }
+    }
+  }
+
+  & > .criteriaAction {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+`;
+
+export const SearchForm = StyledComponent;

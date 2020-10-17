@@ -50,7 +50,10 @@ const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
     >
       <DialogTitle>カテゴリーの追加</DialogTitle>
       <DialogContent>
-        <EditCategoryField category={categoryField} onChange={changeCategoryName} />
+        <EditCategoryField
+          category={categoryField}
+          onChange={changeCategoryName}
+        />
       </DialogContent>
     </OperationDialog>
   );

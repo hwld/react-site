@@ -2,57 +2,14 @@ import React, { useCallback, useState } from 'react';
 import LockIcon from '@material-ui/icons/Lock';
 import styled from 'styled-components';
 import { CircularProgress } from '@material-ui/core';
-import { GoogleLoginButton } from './GoogleLoginButton';
-import { GuestLoginButton } from './GuestLoginButton';
 import { useAuthContext } from '../../../../context/AuthContext';
+import { LoginButton } from '../../ui/LoginButton';
 
-const Background = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${props => props.theme.palette.primary.dark};
-  height: 100vh;
-`;
+type Props = {
+  className?: string;
+};
 
-const LoginForm = styled.div`
-  border-radius: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: ${props => props.theme.palette.primary.main};
-  height: 80%;
-  width: 30%;
-
-  /* props => props... の ">" がstylelintに引っかかる */
-  /* stylelint-disable-next-line selector-combinator-space-before */
-  ${props => props.theme.breakpoints.down('sm')} {
-    width: 80%;
-  }
-`;
-
-const IconField = styled.div`
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  height: 50%;
-`;
-
-const LoginIcon = styled(LockIcon)`
-  width: 100%;
-  height: 100%;
-`;
-
-const LoginButtonList = styled.ul`
-  list-style: none;
-  padding: 0;
-`;
-
-const ListItem = styled.li`
-  margin-top: 30px;
-`;
-
-const Login: React.FC = () => {
+const Component: React.FC<Props> = ({ className }) => {
   const { googleLogin, anonymousLogin } = useAuthContext();
   const [loading, setLoading] = useState(false);
 
@@ -71,26 +28,84 @@ const Login: React.FC = () => {
   }, [anonymousLogin]);
 
   return (
-    <Background data-testid="loginPage">
-      <LoginForm>
-        <IconField>
+    <div className={className} data-testid="loginPage">
+      <div className="loginForm">
+        <div className="iconField">
           {loading ? (
             <CircularProgress color="secondary" size="10rem" />
           ) : (
-            <LoginIcon />
+            <LockIcon className="loginIcon" />
           )}
-        </IconField>
-        <LoginButtonList>
-          <ListItem>
-            <GoogleLoginButton onLogin={onGoogleLogin} />
-          </ListItem>
-          <ListItem>
-            <GuestLoginButton onLogin={onAnonymousLogin} />
-          </ListItem>
-        </LoginButtonList>
-      </LoginForm>
-    </Background>
+        </div>
+        <ul className="loginButtonList">
+          <li className="listItem">
+            <LoginButton
+              imgSrc="./google.svg"
+              imgAlt="google"
+              onClick={onGoogleLogin}
+              message="Googleでログイン"
+              data-testid="googleLoginButton"
+            />
+          </li>
+          <li className="listItem">
+            <LoginButton
+              imgSrc="./anonymous.svg"
+              imgAlt="anonymous"
+              onClick={onAnonymousLogin}
+              message="ゲストとしてログイン"
+              data-testid="guestLoginButton"
+            />
+          </li>
+        </ul>
+      </div>
+    </div>
   );
 };
 
-export { Login };
+const StyledComponent = styled(Component)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${props => props.theme.palette.primary.dark};
+  height: 100vh;
+
+  & > .loginForm {
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: ${props => props.theme.palette.primary.main};
+    height: 80%;
+    width: 30%;
+
+    /* props => props... の ">" がstylelintに引っかかる */
+    /* stylelint-disable-next-line selector-combinator-space-before */
+    ${props => props.theme.breakpoints.down('sm')} {
+      width: 80%;
+    }
+
+    & > .iconField {
+      display: flex;
+      align-items: center;
+      justify-items: center;
+      height: 50%;
+
+      & > .loginIcon {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    & > .loginButtonList {
+      list-style: none;
+      padding: 0;
+
+      & > .listItem {
+        margin-top: 30px;
+      }
+    }
+  }
+`;
+
+export const LoginHome = StyledComponent;

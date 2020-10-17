@@ -7,13 +7,11 @@ import { Drawer } from '../../../ui/Drawer/Drawer';
 import { CategoriesView } from './CategoriesView';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 
-const Background = styled.div`
-  display: flex;
-  height: 100vh;
-  background-color: ${props => props.theme.palette.primary.dark};
-`;
+type Props = {
+  className?: string;
+};
 
-const MainHome: React.FC = () => {
+const Component: React.FC<Props> = ({ className }) => {
   const [isOpen, setIsOpen] = useState(true);
   const categoriesViewRef = useRef<HTMLUListElement | null>(null);
   const notesViewRef = useRef<HTMLUListElement | null>(null);
@@ -71,7 +69,7 @@ const MainHome: React.FC = () => {
   };
 
   return (
-    <Background data-testid="mainPage">
+    <div className={className} data-testid="mainPage">
       <MainHeader onMenuClick={invertDrawer} onGoSearchMode={goSearchMode} />
       <Drawer
         width={isMobile ? '80' : '40'}
@@ -92,8 +90,14 @@ const MainHome: React.FC = () => {
         onKeyDown={handleNotesViewKeyDown}
         ref={notesViewRef}
       />
-    </Background>
+    </div>
   );
 };
 
-export { MainHome };
+const StyledComponent = styled(Component)`
+  display: flex;
+  height: 100vh;
+  background-color: ${props => props.theme.palette.primary.dark};
+`;
+
+export const MainHome = StyledComponent;

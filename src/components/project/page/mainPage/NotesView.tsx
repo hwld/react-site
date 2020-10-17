@@ -15,97 +15,109 @@ import { useAppStateContext } from '../../../../context/AppStateContext';
 import { NotesSortOrder } from '../../../../services/notes';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 
-const StyledAlert = styled(Alert)`
-  margin: 20px auto;
-  width: 80%;
-`;
-
-interface NotesViewProps {
+interface Props {
   selectedCategoryIds: string[];
   className?: string;
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
 }
 
-export const NotesView = forwardRef<
-  HTMLUListElement,
-  PropsWithChildren<NotesViewProps>
->(function NotesView({ selectedCategoryIds, className, onKeyDown }, ref) {
-  const { isMobile } = useAppStateContext();
-  const { notes } = useNotesContext();
-  const { categories, updateNotesSortOrderInCategory } = useCategoriesContext();
-  const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
-  // カテゴリーが複数選択されている場合にはこっちのソート順を使用する
-  const [internalNotesSortOrder, setInternalNotesSortOrder] = useState<
-    NotesSortOrder
-  >({
-    targetField: 'createdAt',
-    order: 'asc',
-  });
+const Component = forwardRef<HTMLUListElement, PropsWithChildren<Props>>(
+  function NotesView({ selectedCategoryIds, className, onKeyDown }, ref) {
+    const { isMobile } = useAppStateContext();
+    const { notes } = useNotesContext();
+    const {
+      categories,
+      updateNotesSortOrderInCategory,
+    } = useCategoriesContext();
+    const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([]);
+    // カテゴリーが複数選択されている場合にはこっちのソート順を使用する
+    const [internalNotesSortOrder, setInternalNotesSortOrder] = useState<
+      NotesSortOrder
+    >({
+      targetField: 'createdAt',
+      order: 'asc',
+    });
 
-  const notesSortOrder: NotesSortOrder = useMemo(() => {
-    // カテゴリーの選択状態を外部に保存しているのでカテゴリーが読み込まれる前にlengthが1になる可能性があり、例外を出してしまう.
-    if (selectedCategoryIds.length === 1 && categories.length !== 0) {
-      const selectedCategory = categories.find(
-        g => g.id === selectedCategoryIds[0],
+    const notesSortOrder: NotesSortOrder = useMemo(() => {
+      // カテゴリーの選択状態を外部に保存しているのでカテゴリーが読み込まれる前にlengthが1になる可能性があり、例外を出してしまう.
+      if (selectedCategoryIds.length === 1 && categories.length !== 0) {
+        const selectedCategory = categories.find(
+          g => g.id === selectedCategoryIds[0],
+        );
+        if (!selectedCategory) {
+          throw new Error('存在しないカテゴリーが選択されています');
+        }
+
+        return selectedCategory.notesSortOrder;
+      }
+
+      return internalNotesSortOrder;
+    }, [categories, internalNotesSortOrder, selectedCategoryIds]);
+
+    const setNotesSortOrder = useCallback(
+      (order: NotesSortOrder) => {
+        if (selectedCategoryIds.length === 1) {
+          updateNotesSortOrderInCategory({
+            order: order.order,
+            targetField: order.targetField,
+            id: selectedCategoryIds[0],
+          });
+        } else {
+          setInternalNotesSortOrder(order);
+        }
+      },
+      [selectedCategoryIds, updateNotesSortOrderInCategory],
+    );
+
+    const viewNotes = useMemo(() => {
+      return notes.filter(note =>
+        selectedCategoryIds.includes(note.categoryId),
       );
-      if (!selectedCategory) {
-        throw new Error('存在しないカテゴリーが選択されています');
-      }
+    }, [notes, selectedCategoryIds]);
 
-      return selectedCategory.notesSortOrder;
-    }
+    return (
+      <ContentColumn
+        className={className}
+        isMobile={isMobile}
+        footerMenu={
+          <NotesViewMenu
+            selectedCategoryIds={selectedCategoryIds}
+            selectedNoteIds={selectedNoteIds}
+            defaultNotesSortOrder={notesSortOrder}
+            sortNotes={setNotesSortOrder}
+          />
+        }
+      >
+        {selectedCategoryIds.length !== 0 ? (
+          <NoteList
+            draggable
+            notes={viewNotes}
+            selectedNoteIds={selectedNoteIds}
+            onNotesSelect={setSelectedNoteIds}
+            onKeyDown={onKeyDown}
+            notesSortOrder={notesSortOrder}
+            ref={ref}
+            isMobile={isMobile}
+          />
+        ) : (
+          <Alert
+            className={`${className}_alert`}
+            severity="warning"
+            data-testid="noselectedAlert"
+          >
+            カテゴリーを選択してください
+          </Alert>
+        )}
+      </ContentColumn>
+    );
+  },
+);
 
-    return internalNotesSortOrder;
-  }, [categories, internalNotesSortOrder, selectedCategoryIds]);
+const StyledComponent = styled(Component)`
+  & &_alert {
+    margin: 20px auto;
+    width: 80%;
+  }
+`;
 
-  const setNotesSortOrder = useCallback(
-    (order: NotesSortOrder) => {
-      if (selectedCategoryIds.length === 1) {
-        updateNotesSortOrderInCategory({
-          order: order.order,
-          targetField: order.targetField,
-          id: selectedCategoryIds[0],
-        });
-      } else {
-        setInternalNotesSortOrder(order);
-      }
-    },
-    [selectedCategoryIds, updateNotesSortOrderInCategory],
-  );
-
-  const viewNotes = useMemo(() => {
-    return notes.filter(note => selectedCategoryIds.includes(note.categoryId));
-  }, [notes, selectedCategoryIds]);
-
-  return (
-    <ContentColumn
-      className={className}
-      isMobile={isMobile}
-      footerMenu={
-        <NotesViewMenu
-          selectedCategoryIds={selectedCategoryIds}
-          selectedNoteIds={selectedNoteIds}
-          defaultNotesSortOrder={notesSortOrder}
-          sortNotes={setNotesSortOrder}
-        />
-      }
-    >
-      {selectedCategoryIds.length !== 0 ? (
-        <NoteList
-          draggable
-          notes={viewNotes}
-          selectedNoteIds={selectedNoteIds}
-          onNotesSelect={setSelectedNoteIds}
-          onKeyDown={onKeyDown}
-          notesSortOrder={notesSortOrder}
-          ref={ref}
-          isMobile={isMobile}
-        />
-      ) : (
-        <StyledAlert severity="warning" data-testid="noselectedAlert">
-          カテゴリーを選択してください
-        </StyledAlert>
-      )}
-    </ContentColumn>
-  );
-});
+export const NotesView = StyledComponent;

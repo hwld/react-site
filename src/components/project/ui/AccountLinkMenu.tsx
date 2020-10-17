@@ -12,8 +12,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import { IconButton } from '../../ui/IconButton';
-import { GoogleLoginButton } from '../page/loginPage/GoogleLoginButton';
 import { useAuthContext } from '../../../context/AuthContext';
+import { LoginButton } from './LoginButton';
 
 type AccountLinkMenuProps = {};
 
@@ -73,7 +73,13 @@ const AccountLinkMenu: React.FC<AccountLinkMenuProps> = () => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
         <MenuItem>
-          <GoogleLoginButton onLogin={link} />
+          <LoginButton
+            imgSrc="./google.svg"
+            imgAlt="google"
+            onClick={link}
+            message="Googleでログイン"
+            data-testid="googleLoginButton"
+          />
         </MenuItem>
       </Menu>
       <Dialog open={open} onClose={closeDialog}>

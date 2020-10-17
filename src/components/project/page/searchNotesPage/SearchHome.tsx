@@ -7,19 +7,11 @@ import { Drawer } from '../../../ui/Drawer/Drawer';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 
-const Background = styled.div`
-  display: flex;
+type Props = {
+  className?: string;
+};
 
-  /* props => props... の ">" がstylelintに引っかかる */
-  /* stylelint-disable-next-line selector-combinator-space-before */
-  ${props => props.theme.breakpoints.down('xs')} {
-    display: block;
-  }
-  height: 100vh;
-  background-color: ${props => props.theme.palette.primary.dark};
-`;
-
-const SearchHome: React.FC = () => {
+const Component: React.FC<Props> = ({ className }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [searchCriteria, setSearchCriteria] = useState<SearchNotesCriteria>({
     categoryId: '',
@@ -41,7 +33,7 @@ const SearchHome: React.FC = () => {
   };
 
   return (
-    <Background data-testid="searchNotestPage">
+    <div className={className} data-testid="searchNotestPage">
       <SearchHeader onMenuClick={invertDrawer} />
       <Drawer
         width={isMobile ? '80' : '30'}
@@ -53,8 +45,20 @@ const SearchHome: React.FC = () => {
         <SearchColumn setCriteria={setSearchCriteria} />
       </Drawer>
       <ResultNotesColumn searchCriteria={searchCriteria} />
-    </Background>
+    </div>
   );
 };
 
-export { SearchHome };
+const StyledComponent = styled(Component)`
+  display: flex;
+  height: 100vh;
+  background-color: ${props => props.theme.palette.primary.dark};
+
+  /* props => props... の ">" がstylelintに引っかかる */
+  /* stylelint-disable-next-line selector-combinator-space-before */
+  ${props => props.theme.breakpoints.down('xs')} {
+    display: block;
+  }
+`;
+
+export const SearchHome = StyledComponent;
