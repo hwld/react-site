@@ -8,6 +8,7 @@ import {
   getDefaultCategory,
 } from '../../../../services/categories';
 import { AddCategoryDialogContent } from './AddCategoryDialogContent';
+import { IconButton } from '../../../ui/IconButton';
 
 type AddCategoryDialogProps = {
   disabled?: boolean;
@@ -20,17 +21,20 @@ const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
   parentCategoryId,
   size,
 }) => {
-  const { addCategory } = useCategoriesContext();
+  const [isOpen, setIsOpen] = useState(false);
   const [categoryField, setCategoryField] = useState<CategoryField>(
     getDefaultCategory(),
   );
+  const { addCategory } = useCategoriesContext();
 
   const add = () => {
     addCategory(parentCategoryId, categoryField);
   };
 
-  const clearField = () => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     setCategoryField({ categoryName: '' });
+    setIsOpen(true);
   };
 
   const changeCategoryField = (
@@ -42,13 +46,22 @@ const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
 
   return (
     <OperationDialog
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
       title="カテゴリーの追加"
-      activatorIcon={<AddCategoryIcon fontSize={size} />}
-      activatorDisabled={disabled}
+      activator={
+        <IconButton
+          disabled={disabled}
+          tooltipText="カテゴリーの追加"
+          onClick={handleClick}
+          data-testid="activatorButton"
+        >
+          <AddCategoryIcon fontSize={size} />
+        </IconButton>
+      }
       doneText="追加"
       onDone={add}
       doneDisabled={categoryField.categoryName.length === 0}
-      onOpen={clearField}
       data-testid="addCategoryDialog"
     >
       <AddCategoryDialogContent

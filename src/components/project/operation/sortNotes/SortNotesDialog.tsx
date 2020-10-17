@@ -4,6 +4,7 @@ import SortNoteIcon from '@material-ui/icons/Sort';
 import { OperationDialog } from '../OperationDialog';
 import { NotesSortOrder } from '../../../../services/notes';
 import { SortNotesDialogContent } from './SortNotesDialogContent';
+import { IconButton } from '../../../ui/IconButton';
 
 type SortNotesDialogProps = {
   sort: (order: NotesSortOrder) => void;
@@ -18,14 +19,17 @@ const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
   disabled,
   size,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState(defaultSortOrder);
 
   const sortNotes = () => {
     sort(sortOrder);
   };
 
-  const setDefaultSortOrder = () => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     setSortOrder(defaultSortOrder);
+    setIsOpen(true);
   };
 
   const changeSortTargetField = (
@@ -40,12 +44,21 @@ const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
 
   return (
     <OperationDialog
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
       title="ノートの並び替え"
-      activatorIcon={<SortNoteIcon fontSize={size} />}
-      activatorDisabled={disabled}
+      activator={
+        <IconButton
+          disabled={disabled}
+          tooltipText="ノートの並び替え"
+          onClick={handleClick}
+          data-testid="activatorButton"
+        >
+          <SortNoteIcon fontSize={size} />
+        </IconButton>
+      }
       doneText="並び替え"
       onDone={sortNotes}
-      onOpen={setDefaultSortOrder}
       data-testid="sortNotesDialog"
     >
       <SortNotesDialogContent

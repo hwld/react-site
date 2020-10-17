@@ -9,6 +9,7 @@ import {
   getDefaultCategory,
 } from '../../../../services/categories';
 import { UpdateCategoryDialogContent } from './UpdateCategoryDialogContent';
+import { IconButton } from '../../../ui/IconButton';
 
 type UpdateCategoryDialogProps = {
   disabled?: boolean;
@@ -21,6 +22,7 @@ const UpdateCategoryDialog: React.FC<UpdateCategoryDialogProps> = ({
   defaultCategoryId,
   size,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [newCategory, setNewCategory] = useState<Category>(
     getDefaultCategory(),
   );
@@ -30,7 +32,7 @@ const UpdateCategoryDialog: React.FC<UpdateCategoryDialogProps> = ({
     updateCategory(newCategory);
   };
 
-  const setDefaultCategoryName = () => {
+  const setDefaultCategory = () => {
     const defaultCategory = categories.find(
       category => category.id === defaultCategoryId,
     );
@@ -38,6 +40,12 @@ const UpdateCategoryDialog: React.FC<UpdateCategoryDialogProps> = ({
       throw Error('存在しないカテゴリー');
     }
     setNewCategory(defaultCategory);
+  };
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    setDefaultCategory();
+    setIsOpen(true);
   };
 
   const changeCategoryField = (
@@ -49,13 +57,22 @@ const UpdateCategoryDialog: React.FC<UpdateCategoryDialogProps> = ({
 
   return (
     <OperationDialog
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
       title="カテゴリーの編集"
-      activatorIcon={<EditIcon fontSize={size} />}
-      activatorDisabled={disabled}
+      activator={
+        <IconButton
+          disabled={disabled}
+          tooltipText="カテゴリーの編集"
+          onClick={handleClick}
+          data-testid="activatorButton"
+        >
+          <EditIcon fontSize={size} />
+        </IconButton>
+      }
       doneText="変更"
       onDone={update}
       doneDisabled={newCategory.categoryName === ''}
-      onOpen={setDefaultCategoryName}
       data-testid="updateCategoryDialog"
     >
       <UpdateCategoryDialogContent

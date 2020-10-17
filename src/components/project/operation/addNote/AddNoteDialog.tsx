@@ -5,6 +5,7 @@ import { useNotesContext } from '../../../../context/NotesContext';
 import { OperationDialog } from '../OperationDialog';
 import { getDefaultNote, NoteField } from '../../../../services/notes';
 import { AddNoteDialogContent } from './AddNoteDialogContent';
+import { IconButton } from '../../../ui/IconButton';
 
 type AddNoteDialogProps = {
   disabled?: boolean;
@@ -17,15 +18,17 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   categoryId,
   size,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [noteField, setNoteField] = useState<NoteField>(getDefaultNote());
-
   const { addNote } = useNotesContext();
 
   const add = () => {
     addNote(categoryId, noteField);
   };
 
-  const clearField = () => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    setIsOpen(true);
     setNoteField(getDefaultNote());
   };
 
@@ -35,13 +38,22 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
 
   return (
     <OperationDialog
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
       title="メモの追加"
-      activatorIcon={<AddNoteIcon fontSize={size} />}
-      activatorDisabled={disabled}
+      activator={
+        <IconButton
+          disabled={disabled}
+          tooltipText="メモの追加"
+          onClick={handleClick}
+          data-testid="activatorButton"
+        >
+          <AddNoteIcon fontSize={size} />
+        </IconButton>
+      }
       doneText="追加"
       onDone={add}
       doneDisabled={noteField.text.length === 0}
-      onOpen={clearField}
       data-testid="addNoteDialog"
     >
       <AddNoteDialogContent noteField={noteField} onChange={changeNoteField} />

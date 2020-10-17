@@ -5,6 +5,7 @@ import { OperationDialog } from '../OperationDialog';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { MoveNotesDialogContent } from './MoveNotesDialogContent';
+import { IconButton } from '../../../ui/IconButton';
 
 type MoveNotesDialogProps = {
   disabled?: boolean;
@@ -17,31 +18,42 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
   sourceNoteIds,
   size,
 }) => {
-  const { categories } = useCategoriesContext();
+  const [isOpen, setIsOpen] = useState(false);
   const [destCategoryId, setDestCategoryId] = useState('');
-
+  const { categories } = useCategoriesContext();
   const { moveNotes } = useNotesContext();
 
   const move = () => {
     moveNotes(sourceNoteIds, destCategoryId);
   };
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    setIsOpen(true);
+    setDestCategoryId('');
+  };
+
   const selectCategory = (ids: string[]) => {
     setDestCategoryId(ids[0] || '');
   };
 
-  const clearDestCategory = () => {
-    setDestCategoryId('');
-  };
-
   return (
     <OperationDialog
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
       title="メモの移動"
-      activatorIcon={<MoveNoteIcon fontSize={size} />}
-      activatorDisabled={disabled}
+      activator={
+        <IconButton
+          disabled={disabled}
+          tooltipText="メモの移動"
+          onClick={handleClick}
+          data-testid="activatorButton"
+        >
+          <MoveNoteIcon fontSize={size} />
+        </IconButton>
+      }
       doneText="移動"
       onDone={move}
-      onOpen={clearDestCategory}
       data-testid="moveNotesDialog"
     >
       <MoveNotesDialogContent

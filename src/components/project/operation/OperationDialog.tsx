@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  PropsWithChildren,
-  forwardRef,
-  BaseSyntheticEvent,
-} from 'react';
+import React, { BaseSyntheticEvent } from 'react';
 import {
   Dialog,
   DialogActions,
@@ -11,42 +6,31 @@ import {
   Typography,
   DialogTitle,
 } from '@material-ui/core';
-import { IconButton } from '../../ui/IconButton';
 
 type OperationDialogProps = {
   title: string;
-  activatorDisabled?: boolean;
-  activatorIcon: JSX.Element;
+  activator: JSX.Element;
   doneText?: string;
   onDone?: () => void;
   doneDisabled?: boolean;
-  onOpen?: () => void;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   onClose?: () => void;
   'data-testid'?: string;
-  tabIndex?: number;
 };
 
-export const OperationDialog = forwardRef<
-  HTMLButtonElement,
-  PropsWithChildren<OperationDialogProps>
->(function OperationDialog(
-  {
-    children,
-    title,
-    activatorIcon,
-    activatorDisabled,
-    doneText,
-    onDone,
-    doneDisabled,
-    onOpen,
-    onClose,
-    'data-testid': dataTestId,
-    tabIndex,
-  },
-  ref,
-) {
-  const [isOpen, setIsOpen] = useState(false);
-
+export const OperationDialog: React.FC<OperationDialogProps> = ({
+  children,
+  title,
+  activator,
+  doneText,
+  onDone,
+  doneDisabled,
+  isOpen,
+  setIsOpen,
+  onClose,
+  'data-testid': dataTestId,
+}) => {
   const stopPropagation = (event: BaseSyntheticEvent<{}>) => {
     event.stopPropagation();
   };
@@ -54,16 +38,6 @@ export const OperationDialog = forwardRef<
   const closeDialog = () => {
     setIsOpen(false);
     if (onClose) onClose();
-  };
-
-  const openDialog = () => {
-    setIsOpen(true);
-    if (onOpen) onOpen();
-  };
-
-  const handleClickActivator = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    openDialog();
   };
 
   const handleDone = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -79,16 +53,7 @@ export const OperationDialog = forwardRef<
 
   return (
     <span data-testid={dataTestId}>
-      <IconButton
-        ref={ref}
-        disabled={activatorDisabled}
-        tooltipText={title}
-        onClick={handleClickActivator}
-        tabIndex={tabIndex}
-        data-testid="activatorButton"
-      >
-        {activatorIcon}
-      </IconButton>
+      {activator}
       <Dialog
         fullWidth
         open={isOpen}
@@ -126,4 +91,4 @@ export const OperationDialog = forwardRef<
       </Dialog>
     </span>
   );
-});
+};
