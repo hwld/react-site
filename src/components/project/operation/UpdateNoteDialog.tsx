@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, PropsWithChildren } from 'react';
-import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
+import { SvgIconProps, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { OperationDialog } from './OperationDialog';
 import { EditNoteField } from '../ui/EditNoteFields';
@@ -38,7 +38,7 @@ export const UpdateNoteDialog = forwardRef<
 
   return (
     <OperationDialog
-      tooltipText="メモを編集"
+      title="メモの編集"
       activatorIcon={<EditIcon fontSize={size} />}
       activatorDisabled={disabled}
       doneText="変更"
@@ -49,7 +49,6 @@ export const UpdateNoteDialog = forwardRef<
       tabIndex={tabIndex}
       ref={ref}
     >
-      <DialogTitle>メモの編集</DialogTitle>
       <DialogContent>
         <EditNoteField defaultNote={newNote} onChange={changeNoteField} />
       </DialogContent>

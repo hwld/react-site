@@ -5,7 +5,13 @@ import React, {
   BaseSyntheticEvent,
 } from 'react';
 import styled from 'styled-components';
-import { Dialog, DialogActions, Button, Typography } from '@material-ui/core';
+import {
+  Dialog,
+  DialogActions,
+  Button,
+  Typography,
+  DialogTitle,
+} from '@material-ui/core';
 import { IconButton } from '../../ui/IconButton';
 
 const StyledDialog = styled(Dialog)`
@@ -15,6 +21,7 @@ const StyledDialog = styled(Dialog)`
 `;
 
 type OperationDialogProps = {
+  title: string;
   activatorDisabled?: boolean;
   activatorIcon: JSX.Element;
   doneText?: string;
@@ -22,7 +29,6 @@ type OperationDialogProps = {
   doneDisabled?: boolean;
   onOpen?: () => void;
   onClose?: () => void;
-  tooltipText: string;
   'data-testid'?: string;
   tabIndex?: number;
 };
@@ -33,6 +39,7 @@ export const OperationDialog = forwardRef<
 >(function OperationDialog(
   {
     children,
+    title,
     activatorIcon,
     activatorDisabled,
     doneText,
@@ -40,7 +47,6 @@ export const OperationDialog = forwardRef<
     doneDisabled,
     onOpen,
     onClose,
-    tooltipText,
     'data-testid': dataTestId,
     tabIndex,
   },
@@ -83,7 +89,7 @@ export const OperationDialog = forwardRef<
       <IconButton
         ref={ref}
         disabled={activatorDisabled}
-        tooltipText={tooltipText}
+        tooltipText={title}
         onClick={handleClickActivator}
         tabIndex={tabIndex}
         data-testid="activatorButton"
@@ -103,6 +109,7 @@ export const OperationDialog = forwardRef<
         onKeyDown={stopPropagation}
         data-testid="dialog"
       >
+        <DialogTitle>{title}</DialogTitle>
         {children}
         <DialogActions>
           <Button

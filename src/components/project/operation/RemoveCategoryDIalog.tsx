@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   SvgIconProps,
-  DialogTitle,
   DialogContentText,
   DialogContent,
 } from '@material-ui/core';
@@ -28,14 +27,13 @@ const RemoveCategoryDialog: React.FC<RemoveCategoryDialogProps> = ({
 
   return (
     <OperationDialog
-      tooltipText="カテゴリーを削除"
+      title="カテゴリーの削除"
       activatorIcon={<DeleteCategoryIcon fontSize={size} />}
       activatorDisabled={disabled}
       doneText="削除"
       onDone={remove}
       data-testid="removeCategoryDialog"
     >
-      <DialogTitle>カテゴリーの削除</DialogTitle>
       <DialogContent>
         <DialogContentText color="textPrimary">
           削除してよろしいですか？

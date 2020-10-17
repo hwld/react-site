@@ -1,6 +1,5 @@
 import React, { forwardRef, PropsWithChildren } from 'react';
 import {
-  DialogTitle,
   DialogContent,
   SvgIconProps,
   DialogContentText,
@@ -28,7 +27,7 @@ export const RemoveNoteDialog = forwardRef<
 
   return (
     <OperationDialog
-      tooltipText="メモを削除"
+      title="メモの削除"
       activatorIcon={<DeleteNoteIcon fontSize={size} />}
       activatorDisabled={disabled}
       doneText="削除"
@@ -37,7 +36,6 @@ export const RemoveNoteDialog = forwardRef<
       tabIndex={tabIndex}
       ref={ref}
     >
-      <DialogTitle>メモの削除</DialogTitle>
       <DialogContent>
         <DialogContentText color="textPrimary">
           削除してよろしいですか?

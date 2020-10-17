@@ -40,7 +40,7 @@ const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
 
   return (
     <OperationDialog
-      tooltipText="ノートを並び替える"
+      title="ノートの並び替え"
       activatorIcon={<SortNoteIcon fontSize={size} />}
       activatorDisabled={disabled}
       doneText="並び替え"

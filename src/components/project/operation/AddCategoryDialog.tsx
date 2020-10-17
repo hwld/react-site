@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
+import { SvgIconProps, DialogContent } from '@material-ui/core';
 import AddCategoryIcon from '@material-ui/icons/CreateNewFolder';
 import { OperationDialog } from './OperationDialog';
 import { EditCategoryField } from '../ui/EditCategoryFields';
@@ -39,7 +39,7 @@ const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
 
   return (
     <OperationDialog
-      tooltipText="カテゴリーを追加"
+      title="カテゴリーの追加"
       activatorIcon={<AddCategoryIcon fontSize={size} />}
       activatorDisabled={disabled}
       doneText="追加"
@@ -48,7 +48,6 @@ const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
       onOpen={clearField}
       data-testid="addCategoryDialog"
     >
-      <DialogTitle>カテゴリーの追加</DialogTitle>
       <DialogContent>
         <EditCategoryField
           category={categoryField}

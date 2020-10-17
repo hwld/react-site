@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  DialogTitle,
   DialogContent,
   SvgIconProps,
   DialogContentText,
@@ -47,7 +46,7 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
 
   return (
     <OperationDialog
-      tooltipText="メモを移動"
+      title="メモの移動"
       activatorIcon={<MoveNoteIcon fontSize={size} />}
       activatorDisabled={disabled}
       doneText="移動"
@@ -55,7 +54,6 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
       onOpen={clearDestCategory}
       data-testid="moveNotesDialog"
     >
-      <DialogTitle>メモの移動</DialogTitle>
       <DialogContent>
         <DialogContentText color="textPrimary">
           移動先カテゴリー

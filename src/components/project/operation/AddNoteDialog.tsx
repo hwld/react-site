@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AddNoteIcon from '@material-ui/icons/NoteAdd';
-import { DialogContent, DialogTitle, SvgIconProps } from '@material-ui/core';
+import { DialogContent, SvgIconProps } from '@material-ui/core';
 import { useNotesContext } from '../../../context/NotesContext';
 import { OperationDialog } from './OperationDialog';
 import { EditNoteField } from '../ui/EditNoteFields';
@@ -35,7 +35,7 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
 
   return (
     <OperationDialog
-      tooltipText="メモを追加"
+      title="メモの追加"
       activatorIcon={<AddNoteIcon fontSize={size} />}
       activatorDisabled={disabled}
       doneText="追加"
@@ -44,7 +44,6 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
       onOpen={clearField}
       data-testid="addNoteDialog"
     >
-      <DialogTitle>メモの追加</DialogTitle>
       <DialogContent>
         <EditNoteField defaultNote={noteField} onChange={changeNoteField} />
       </DialogContent>

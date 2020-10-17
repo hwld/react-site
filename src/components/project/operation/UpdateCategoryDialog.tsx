@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SvgIconProps, DialogTitle, DialogContent } from '@material-ui/core';
+import { SvgIconProps, DialogContent } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { OperationDialog } from './OperationDialog';
 import { EditCategoryField } from '../ui/EditCategoryFields';
@@ -42,7 +42,7 @@ const UpdateCategoryDialog: React.FC<UpdateCategoryDialogProps> = ({
 
   return (
     <OperationDialog
-      tooltipText="カテゴリーを編集"
+      title="カテゴリーの編集"
       activatorIcon={<EditIcon fontSize={size} />}
       activatorDisabled={disabled}
       doneText="変更"
@@ -51,7 +51,6 @@ const UpdateCategoryDialog: React.FC<UpdateCategoryDialogProps> = ({
       onOpen={setDefaultCategoryName}
       data-testid="updateCategoryDialog"
     >
-      <DialogTitle>カテゴリーの編集</DialogTitle>
       <DialogContent>
         <EditCategoryField
           category={newCategory}
