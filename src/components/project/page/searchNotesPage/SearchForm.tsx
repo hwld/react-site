@@ -9,8 +9,8 @@ import {
 import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
-import { SelectCategoryDialog } from './SelectCategoryDialog';
 import { SearchNotesCriteria } from '../../../../services/notes';
+import { SelectCategoryField } from '../../operation/selectCategory/SelectCategoryField';
 
 type Props = {
   className?: string;
@@ -51,42 +51,28 @@ const Component: React.FC<Props> = ({ className, search }) => {
   };
 
   // カテゴリー
-  const selectCategoryId = (id: string) => {
+  const selectTargetCategory = (id: string) => {
     setTargetCategoryId(id);
     let categoryName = categories.find(category => category.id === id)
       ?.categoryName;
     if (!categoryName) categoryName = '';
     setTargetCategoryName(categoryName);
   };
-  const clearSelectCategoryId = () => {
-    selectCategoryId('');
+
+  const clearSelectedCategoryId = () => {
+    selectTargetCategory('');
   };
 
   return (
     <div className={className}>
       <Typography className="criteriaTitle">検索条件</Typography>
       <div className="criteriaContent">
-        <TextField
+        <SelectCategoryField
+          selectedCategoryName={targetCategoryName}
+          selectedCategoryId={targetCategoryId}
+          selectCategoryId={selectTargetCategory}
+          clearSelectedCategoryId={clearSelectedCategoryId}
           className="criteriaTextField"
-          id="searchFormCategoryName"
-          InputProps={{
-            readOnly: true,
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={clearSelectCategoryId}>
-                  <ClearIcon color="secondary" />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          label="カテゴリー名"
-          value={targetCategoryName}
-          color="secondary"
-          variant="outlined"
-        />
-        <SelectCategoryDialog
-          defaultSelectedCategoryId={targetCategoryId}
-          selectCategoryId={selectCategoryId}
         />
       </div>
       <div className="criteriaContent">
@@ -157,7 +143,7 @@ const StyledComponent = styled(Component)`
     display: flex;
     justify-content: center;
 
-    & > .criteriaTextField {
+    & .criteriaTextField {
       & label.Mui-focused,
       & .MuiFormLabel-root {
         color: ${props => props.theme.palette.secondary.main};
