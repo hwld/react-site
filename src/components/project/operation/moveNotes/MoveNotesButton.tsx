@@ -7,17 +7,13 @@ import { useNotesContext } from '../../../../context/NotesContext';
 import { MoveNotesDialogContent } from './MoveNotesDialogContent';
 import { IconButton } from '../../../ui/IconButton';
 
-type MoveNotesDialogProps = {
+type Props = {
   disabled?: boolean;
   sourceNoteIds: string[];
   size?: SvgIconProps['fontSize'];
 };
 
-const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
-  disabled,
-  sourceNoteIds,
-  size,
-}) => {
+const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [destCategoryId, setDestCategoryId] = useState('');
   const { categories } = useCategoriesContext();
@@ -65,4 +61,4 @@ const MoveNotesDialog: React.FC<MoveNotesDialogProps> = ({
   );
 };
 
-export { MoveNotesDialog };
+export const MoveNotesButton = Component;

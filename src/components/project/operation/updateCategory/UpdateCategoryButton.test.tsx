@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
-import { UpdateCategoryDialog } from './UpdateCategoryDialog';
+import { UpdateCategoryButton } from './UpdateCategoryButton';
 import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
 import {
   CategoryField,
@@ -30,7 +30,7 @@ describe('<UpdateCategoryDialog>', () => {
           updateCategory,
         }}
       >
-        <UpdateCategoryDialog defaultCategoryId="testCategory" />
+        <UpdateCategoryButton defaultCategoryId="testCategory" />
       </CategoriesContextProvider>,
     );
     fireEvent.click(getByTestId('activatorButton'));

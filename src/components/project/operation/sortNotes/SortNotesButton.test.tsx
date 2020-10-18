@@ -1,12 +1,12 @@
 import React from 'react';
 import { NotesSortOrder } from '../../../../services/notes';
 import { render, fireEvent } from '../../../../test-util';
-import { SortNotesDialog } from './SortNotesDialog';
+import { SortNotesButton } from './SortNotesButton';
 
-describe('<SortNotesDialog>', () => {
+describe('<SortNotesButton>', () => {
   test('タイトルの昇降順を設定できる', () => {
     const sort = jest.fn((order: NotesSortOrder) => order);
-    const { getByTestId } = render(<SortNotesDialog sort={sort} />);
+    const { getByTestId } = render(<SortNotesButton sort={sort} />);
 
     // 昇順
     fireEvent.click(getByTestId('activatorButton'));
@@ -29,7 +29,7 @@ describe('<SortNotesDialog>', () => {
   });
   test('本文の昇降順を設定できる', () => {
     const sort = jest.fn((order: NotesSortOrder) => order);
-    const { getByTestId } = render(<SortNotesDialog sort={sort} />);
+    const { getByTestId } = render(<SortNotesButton sort={sort} />);
 
     // 昇順
     fireEvent.click(getByTestId('activatorButton'));
@@ -52,7 +52,7 @@ describe('<SortNotesDialog>', () => {
   });
   test('作成日の昇降順を設定できる', () => {
     const sort = jest.fn((order: NotesSortOrder) => order);
-    const { getByTestId } = render(<SortNotesDialog sort={sort} />);
+    const { getByTestId } = render(<SortNotesButton sort={sort} />);
 
     // 昇順
     fireEvent.click(getByTestId('activatorButton'));
@@ -75,7 +75,7 @@ describe('<SortNotesDialog>', () => {
   });
   test('更新日の昇降順を設定できる', () => {
     const sort = jest.fn((order: NotesSortOrder) => order);
-    const { getByTestId } = render(<SortNotesDialog sort={sort} />);
+    const { getByTestId } = render(<SortNotesButton sort={sort} />);
 
     // 昇順
     fireEvent.click(getByTestId('activatorButton'));

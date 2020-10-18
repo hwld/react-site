@@ -3,9 +3,9 @@ import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { format } from 'date-fns';
 import { ListItem } from '../../ui/List/ListItem';
-import { RemoveNotesDialog } from '../operation/removeNotes/RemoveNotesDialog';
+import { RemoveNotesButton } from '../operation/removeNotes/RemoveNotesButton';
 import { Note, SearchNotesCriteria } from '../../../services/notes';
-import { UpdateNoteDialog } from '../operation/updateNote/UpdateNoteDialog';
+import { UpdateNoteButton } from '../operation/updateNote/UpdateNoteButton';
 
 const StyledListItem = styled(ListItem)<{ isMobile?: boolean }>`
   margin: ${props => (props.isMobile ? '10px' : '30px')};
@@ -178,14 +178,14 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
         </NoteTextContainer>
         <MenuContainer>
           <MenuItem>
-            <RemoveNotesDialog
+            <RemoveNotesButton
               targetNoteIds={[itemId]}
               tabIndex={-1}
               ref={refs.current[1]}
             />
           </MenuItem>
           <MenuItem>
-            <UpdateNoteDialog
+            <UpdateNoteButton
               defaultNoteId={note.id}
               tabIndex={-1}
               ref={refs.current[2]}

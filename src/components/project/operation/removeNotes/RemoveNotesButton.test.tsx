@@ -1,5 +1,5 @@
 import React from 'react';
-import { RemoveNotesDialog } from './RemoveNotesDialog';
+import { RemoveNotesButton } from './RemoveNotesButton';
 import { render, fireEvent } from '../../../../test-util';
 import { NotesContextProvider } from '../../../../context/NotesContext';
 import { getDefaultNoteService } from '../../../../services/notes';
@@ -14,7 +14,7 @@ describe('<RemoveNoteDialog>', () => {
           removeNotes,
         }}
       >
-        <RemoveNotesDialog targetNoteIds={['note1']} />
+        <RemoveNotesButton targetNoteIds={['note1']} />
       </NotesContextProvider>,
     );
 

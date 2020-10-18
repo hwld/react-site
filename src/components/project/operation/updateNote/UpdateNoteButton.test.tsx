@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { render } from '../../../../test-util';
 import { NotesContextProvider } from '../../../../context/NotesContext';
-import { UpdateNoteDialog } from './UpdateNoteDialog';
+import { UpdateNoteButton } from './UpdateNoteButton';
 import { NoteField } from '../../../../services/notes';
 
 describe('<UpdateNoteDialog>', () => {
@@ -29,7 +29,7 @@ describe('<UpdateNoteDialog>', () => {
           moveNotes: () => {},
         }}
       >
-        <UpdateNoteDialog defaultNoteId="id" />
+        <UpdateNoteButton defaultNoteId="id" />
       </NotesContextProvider>,
     );
 

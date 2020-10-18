@@ -6,17 +6,13 @@ import { OperationDialog } from '../OperationDialog';
 import { RemoveCategoriesDialogContent } from './RemoveCategoriesDialogContent';
 import { IconButton } from '../../../ui/IconButton';
 
-type RemoveCategoriesDialogProps = {
+type Props = {
   disabled?: boolean;
   targetCategoryIds: string[];
   size?: SvgIconProps['fontSize'];
 };
 
-const RemoveCategoriesDialog: React.FC<RemoveCategoriesDialogProps> = ({
-  disabled,
-  targetCategoryIds,
-  size,
-}) => {
+const Component: React.FC<Props> = ({ disabled, targetCategoryIds, size }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { removeCategories } = useCategoriesContext();
 
@@ -53,4 +49,4 @@ const RemoveCategoriesDialog: React.FC<RemoveCategoriesDialogProps> = ({
   );
 };
 
-export { RemoveCategoriesDialog };
+export const RemoveCategoriesButton = Component;

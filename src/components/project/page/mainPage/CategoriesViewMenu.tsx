@@ -1,7 +1,7 @@
 import React from 'react';
-import { AddCategoryDialog } from '../../operation/addCategory/AddCategoryDialog';
-import { RemoveCategoriesDialog } from '../../operation/removeCategories/RemoveCategoriesDIalog';
-import { UpdateCategoryDialog } from '../../operation/updateCategory/UpdateCategoryDialog';
+import { AddCategoryButton } from '../../operation/addCategory/AddCategoryButton';
+import { RemoveCategoriesButton } from '../../operation/removeCategories/RemoveCategoriesButton';
+import { UpdateCategoryButton } from '../../operation/updateCategory/UpdateCategoryButton';
 
 interface CategoriesViewMenuProps {
   selectedCategoryIds: string[];
@@ -12,15 +12,15 @@ const CategoriesViewMenu: React.FC<CategoriesViewMenuProps> = ({
 }) => {
   return (
     <>
-      <AddCategoryDialog
+      <AddCategoryButton
         disabled={selectedCategoryIds.length > 1}
         parentCategoryId={selectedCategoryIds[0] || ''}
       />
-      <RemoveCategoriesDialog
+      <RemoveCategoriesButton
         disabled={selectedCategoryIds.length === 0}
         targetCategoryIds={selectedCategoryIds}
       />
-      <UpdateCategoryDialog
+      <UpdateCategoryButton
         disabled={selectedCategoryIds.length !== 1}
         defaultCategoryId={selectedCategoryIds[0] || ''}
       />

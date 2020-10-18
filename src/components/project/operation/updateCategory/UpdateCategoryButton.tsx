@@ -11,17 +11,13 @@ import {
 import { UpdateCategoryDialogContent } from './UpdateCategoryDialogContent';
 import { IconButton } from '../../../ui/IconButton';
 
-type UpdateCategoryDialogProps = {
+type Props = {
   disabled?: boolean;
   defaultCategoryId: string;
   size?: SvgIconProps['fontSize'];
 };
 
-const UpdateCategoryDialog: React.FC<UpdateCategoryDialogProps> = ({
-  disabled,
-  defaultCategoryId,
-  size,
-}) => {
+const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [newCategory, setNewCategory] = useState<Category>(
     getDefaultCategory(),
@@ -83,4 +79,4 @@ const UpdateCategoryDialog: React.FC<UpdateCategoryDialogProps> = ({
   );
 };
 
-export { UpdateCategoryDialog };
+export const UpdateCategoryButton = Component;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
-import { RemoveCategoriesDialog } from './RemoveCategoriesDIalog';
+import { RemoveCategoriesButton } from './RemoveCategoriesButton';
 import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
 import { getDefaultCategoryService } from '../../../../services/categories';
 
@@ -14,7 +14,7 @@ describe('<RemoveCategoryDialog>', () => {
           removeCategories,
         }}
       >
-        <RemoveCategoriesDialog targetCategoryIds={['category1']} />
+        <RemoveCategoriesButton targetCategoryIds={['category1']} />
       </CategoriesContextProvider>,
     );
 

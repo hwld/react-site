@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
-import { AddCategoryDialog } from './AddCategoryDialog';
+import { AddCategoryButton } from './AddCategoryButton';
 import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
 import {
   CategoryField,
@@ -22,7 +22,7 @@ describe('<AddCategoryDialog>', () => {
           addCategory,
         }}
       >
-        <AddCategoryDialog parentCategoryId="category1" />
+        <AddCategoryButton parentCategoryId="category1" />
       </CategoriesContextProvider>,
     );
 

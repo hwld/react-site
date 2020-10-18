@@ -1,10 +1,10 @@
 import React from 'react';
-import { AddNoteDialog } from '../../operation/addNote/AddNoteDialog';
-import { RemoveNotesDialog } from '../../operation/removeNotes/RemoveNotesDialog';
-import { MoveNotesDialog } from '../../operation/moveNotes/MoveNotesDialog';
+import { AddNoteButton } from '../../operation/addNote/AddNoteButton';
+import { RemoveNotesButton } from '../../operation/removeNotes/RemoveNotesButton';
+import { MoveNotesButton } from '../../operation/moveNotes/MoveNotesButton';
 import { NotesSortOrder } from '../../../../services/notes';
-import { UpdateNoteDialog } from '../../operation/updateNote/UpdateNoteDialog';
-import { SortNotesDialog } from '../../operation/sortNotes/SortNotesDialog';
+import { UpdateNoteButton } from '../../operation/updateNote/UpdateNoteButton';
+import { SortNotesButton } from '../../operation/sortNotes/SortNotesButton';
 
 interface NotesViewMenuProps {
   sortNotes: (order: NotesSortOrder) => void;
@@ -21,23 +21,23 @@ const NotesViewMenu: React.FC<NotesViewMenuProps> = ({
 }) => {
   return (
     <>
-      <AddNoteDialog
+      <AddNoteButton
         disabled={selectedCategoryIds.length !== 1}
         categoryId={selectedCategoryIds[0] || ''}
       />
-      <RemoveNotesDialog
+      <RemoveNotesButton
         disabled={selectedNoteIds.length === 0}
         targetNoteIds={selectedNoteIds}
       />
-      <UpdateNoteDialog
+      <UpdateNoteButton
         disabled={selectedNoteIds.length !== 1}
         defaultNoteId={selectedNoteIds[0] || ''}
       />
-      <MoveNotesDialog
+      <MoveNotesButton
         disabled={selectedNoteIds.length === 0}
         sourceNoteIds={selectedNoteIds}
       />
-      <SortNotesDialog
+      <SortNotesButton
         disabled={selectedCategoryIds.length === 0}
         defaultSortOrder={defaultNotesSortOrder}
         sort={sortNotes}

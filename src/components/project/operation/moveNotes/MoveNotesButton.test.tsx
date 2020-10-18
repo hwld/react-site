@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
-import { MoveNotesDialog } from './MoveNotesDialog';
+import { MoveNotesButton } from './MoveNotesButton';
 import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
 import { NotesContextProvider } from '../../../../context/NotesContext';
 import { getDefaultCategoryService } from '../../../../services/categories';
@@ -34,7 +34,7 @@ describe('<MoveNotesDialog>', () => {
             moveNotes,
           }}
         >
-          <MoveNotesDialog sourceNoteIds={['noteId']} />
+          <MoveNotesButton sourceNoteIds={['noteId']} />
         </NotesContextProvider>
       </CategoriesContextProvider>,
     );

@@ -10,17 +10,13 @@ import {
 import { AddCategoryDialogContent } from './AddCategoryDialogContent';
 import { IconButton } from '../../../ui/IconButton';
 
-type AddCategoryDialogProps = {
+type Props = {
   disabled?: boolean;
   parentCategoryId: string;
   size?: SvgIconProps['fontSize'];
 };
 
-const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
-  disabled,
-  parentCategoryId,
-  size,
-}) => {
+const Component: React.FC<Props> = ({ disabled, parentCategoryId, size }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [categoryField, setCategoryField] = useState<CategoryField>(
     getDefaultCategory(),
@@ -72,4 +68,4 @@ const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
   );
 };
 
-export { AddCategoryDialog };
+export const AddCategoryButton = Component;

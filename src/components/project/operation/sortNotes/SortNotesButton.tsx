@@ -6,14 +6,14 @@ import { NotesSortOrder } from '../../../../services/notes';
 import { SortNotesDialogContent } from './SortNotesDialogContent';
 import { IconButton } from '../../../ui/IconButton';
 
-type SortNotesDialogProps = {
+type Props = {
   sort: (order: NotesSortOrder) => void;
   defaultSortOrder?: NotesSortOrder;
   disabled?: boolean;
   size?: SvgIconProps['fontSize'];
 };
 
-const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
+const Component: React.FC<Props> = ({
   sort,
   defaultSortOrder = { targetField: 'createdAt', order: 'asc' },
   disabled,
@@ -70,4 +70,4 @@ const SortNotesDialog: React.FC<SortNotesDialogProps> = ({
   );
 };
 
-export { SortNotesDialog };
+export const SortNotesButton = Component;

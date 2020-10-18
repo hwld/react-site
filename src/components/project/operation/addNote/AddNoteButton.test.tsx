@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '../../../../test-util';
 import { NotesContextProvider } from '../../../../context/NotesContext';
-import { AddNoteDialog } from './AddNoteDialog';
+import { AddNoteButton } from './AddNoteButton';
 import { NoteField } from '../../../../services/notes';
 
 describe('<AddNoteDialog>', () => {
@@ -29,7 +29,7 @@ describe('<AddNoteDialog>', () => {
           addNote,
         }}
       >
-        <AddNoteDialog categoryId="category1" />
+        <AddNoteButton categoryId="category1" />
       </NotesContextProvider>,
     );
 

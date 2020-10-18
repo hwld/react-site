@@ -7,17 +7,13 @@ import { getDefaultNote, NoteField } from '../../../../services/notes';
 import { AddNoteDialogContent } from './AddNoteDialogContent';
 import { IconButton } from '../../../ui/IconButton';
 
-type AddNoteDialogProps = {
+type Props = {
   disabled?: boolean;
   categoryId: string;
   size?: SvgIconProps['fontSize'];
 };
 
-const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
-  disabled,
-  categoryId,
-  size,
-}) => {
+const Component: React.FC<Props> = ({ disabled, categoryId, size }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [noteField, setNoteField] = useState<NoteField>(getDefaultNote());
   const { addNote } = useNotesContext();
@@ -61,4 +57,4 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   );
 };
 
-export { AddNoteDialog };
+export const AddNoteButton = Component;
