@@ -36,6 +36,7 @@ const Component: React.FC<Props> = ({
 const StyledComponent = styled(Component)`
   &_categoryTreeList {
     height: 50vh;
+    background-color: ${props => props.theme.palette.primary.dark};
   }
 `;
 
