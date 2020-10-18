@@ -4,7 +4,7 @@ import DeleteCategoryIcon from '@material-ui/icons/Delete';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { OperationDialog } from '../OperationDialog';
 import { RemoveCategoriesDialogContent } from './RemoveCategoriesDialogContent';
-import { IconButton } from '../../../ui/IconButton';
+import { OperationIconButton } from '../OperationIconButton';
 
 type Props = {
   disabled?: boolean;
@@ -31,14 +31,14 @@ const Component: React.FC<Props> = ({ disabled, targetCategoryIds, size }) => {
       setIsOpen={setIsOpen}
       title="カテゴリーの削除"
       activator={
-        <IconButton
+        <OperationIconButton
           disabled={disabled}
           tooltipText="カテゴリーの削除"
           onClick={handleClick}
           data-testid="activatorButton"
         >
           <DeleteCategoryIcon fontSize={size} />
-        </IconButton>
+        </OperationIconButton>
       }
       doneText="削除"
       onDone={remove}

@@ -9,7 +9,7 @@ import {
   getDefaultCategory,
 } from '../../../../services/categories';
 import { UpdateCategoryDialogContent } from './UpdateCategoryDialogContent';
-import { IconButton } from '../../../ui/IconButton';
+import { OperationIconButton } from '../OperationIconButton';
 
 type Props = {
   disabled?: boolean;
@@ -57,14 +57,14 @@ const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
       setIsOpen={setIsOpen}
       title="カテゴリーの編集"
       activator={
-        <IconButton
+        <OperationIconButton
           disabled={disabled}
           tooltipText="カテゴリーの編集"
           onClick={handleClick}
           data-testid="activatorButton"
         >
           <EditIcon fontSize={size} />
-        </IconButton>
+        </OperationIconButton>
       }
       doneText="変更"
       onDone={update}

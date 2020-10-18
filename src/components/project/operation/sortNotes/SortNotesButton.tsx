@@ -4,7 +4,7 @@ import SortNoteIcon from '@material-ui/icons/Sort';
 import { OperationDialog } from '../OperationDialog';
 import { NotesSortOrder } from '../../../../services/notes';
 import { SortNotesDialogContent } from './SortNotesDialogContent';
-import { IconButton } from '../../../ui/IconButton';
+import { OperationIconButton } from '../OperationIconButton';
 
 type Props = {
   sort: (order: NotesSortOrder) => void;
@@ -48,14 +48,14 @@ const Component: React.FC<Props> = ({
       setIsOpen={setIsOpen}
       title="ノートの並び替え"
       activator={
-        <IconButton
+        <OperationIconButton
           disabled={disabled}
           tooltipText="ノートの並び替え"
           onClick={handleClick}
           data-testid="activatorButton"
         >
           <SortNoteIcon fontSize={size} />
-        </IconButton>
+        </OperationIconButton>
       }
       doneText="並び替え"
       onDone={sortNotes}

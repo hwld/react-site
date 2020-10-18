@@ -5,7 +5,7 @@ import { OperationDialog } from '../OperationDialog';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { MoveNotesDialogContent } from './MoveNotesDialogContent';
-import { IconButton } from '../../../ui/IconButton';
+import { OperationIconButton } from '../OperationIconButton';
 
 type Props = {
   disabled?: boolean;
@@ -39,14 +39,14 @@ const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
       setIsOpen={setIsOpen}
       title="メモの移動"
       activator={
-        <IconButton
+        <OperationIconButton
           disabled={disabled}
           tooltipText="メモの移動"
           onClick={handleClick}
           data-testid="activatorButton"
         >
           <MoveNoteIcon fontSize={size} />
-        </IconButton>
+        </OperationIconButton>
       }
       doneText="移動"
       onDone={move}

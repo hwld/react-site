@@ -6,7 +6,7 @@ import {
   IconButtonProps as MuiIconButtonProps,
 } from '@material-ui/core';
 
-type IconButtonProps = {
+export type IconButtonProps = {
   tooltipText?: string;
   disabled?: boolean;
   'data-testid'?: string;

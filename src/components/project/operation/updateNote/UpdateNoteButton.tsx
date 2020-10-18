@@ -5,7 +5,7 @@ import { OperationDialog } from '../OperationDialog';
 import { getDefaultNote, Note, NoteField } from '../../../../services/notes';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { UpdateNoteDialogContent } from './UpdateNoteDialogContent';
-import { IconButton } from '../../../ui/IconButton';
+import { OperationIconButton } from '../OperationIconButton';
 
 type Props = {
   disabled?: boolean;
@@ -48,7 +48,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
         setIsOpen={setIsOpen}
         title="メモの編集"
         activator={
-          <IconButton
+          <OperationIconButton
             ref={ref}
             disabled={disabled}
             tooltipText="メモの編集"
@@ -57,7 +57,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
             data-testid="activatorButton"
           >
             <EditIcon fontSize={size} />
-          </IconButton>
+          </OperationIconButton>
         }
         doneText="変更"
         onDone={update}

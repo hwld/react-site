@@ -5,7 +5,7 @@ import { useNotesContext } from '../../../../context/NotesContext';
 import { OperationDialog } from '../OperationDialog';
 import { getDefaultNote, NoteField } from '../../../../services/notes';
 import { AddNoteDialogContent } from './AddNoteDialogContent';
-import { IconButton } from '../../../ui/IconButton';
+import { OperationIconButton } from '../OperationIconButton';
 
 type Props = {
   disabled?: boolean;
@@ -38,14 +38,14 @@ const Component: React.FC<Props> = ({ disabled, categoryId, size }) => {
       setIsOpen={setIsOpen}
       title="メモの追加"
       activator={
-        <IconButton
+        <OperationIconButton
           disabled={disabled}
           tooltipText="メモの追加"
           onClick={handleClick}
           data-testid="activatorButton"
         >
           <AddNoteIcon fontSize={size} />
-        </IconButton>
+        </OperationIconButton>
       }
       doneText="追加"
       onDone={add}

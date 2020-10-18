@@ -4,7 +4,7 @@ import DeleteNoteIcon from '@material-ui/icons/Delete';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { OperationDialog } from '../OperationDialog';
 import { RemoveNotesDialogContent } from './RemoveNotesDialogContent';
-import { IconButton } from '../../../ui/IconButton';
+import { OperationIconButton } from '../OperationIconButton';
 
 type Props = {
   disabled?: boolean;
@@ -33,7 +33,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
         setIsOpen={setIsOpen}
         title="メモの削除"
         activator={
-          <IconButton
+          <OperationIconButton
             ref={ref}
             disabled={disabled}
             tooltipText="メモの削除"
@@ -42,7 +42,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
             data-testid="activatorButton"
           >
             <DeleteNoteIcon fontSize={size} />
-          </IconButton>
+          </OperationIconButton>
         }
         doneText="削除"
         onDone={remove}
