@@ -5,15 +5,6 @@ import {
   IconButton as MuiIconButton,
   IconButtonProps as MuiIconButtonProps,
 } from '@material-ui/core';
-import styled from 'styled-components';
-
-const StyledMuiIconButton = styled(MuiIconButton)`
-  background-color: ${props => props.theme.palette.secondary.main};
-
-  &:hover {
-    background-color: ${props => props.theme.palette.secondary.dark};
-  }
-`;
 
 type IconButtonProps = {
   tooltipText?: string;
@@ -29,17 +20,17 @@ const IconButton = forwardRef<
   if (tooltipText && !disabled) {
     return (
       <Tooltip title={<Typography>{tooltipText}</Typography>}>
-        <StyledMuiIconButton ref={ref} {...props}>
+        <MuiIconButton ref={ref} {...props}>
           {children}
-        </StyledMuiIconButton>
+        </MuiIconButton>
       </Tooltip>
     );
   }
 
   return (
-    <StyledMuiIconButton ref={ref} disabled={disabled} {...props}>
+    <MuiIconButton ref={ref} disabled={disabled} {...props}>
       {children}
-    </StyledMuiIconButton>
+    </MuiIconButton>
   );
 });
 

@@ -1,10 +1,11 @@
-import { TextField, InputAdornment, IconButton } from '@material-ui/core';
+import { TextField, InputAdornment } from '@material-ui/core';
 import React, { useState } from 'react';
 import ClearIcon from '@material-ui/icons/Clear';
 import styled from 'styled-components';
 import { OperationDialog } from '../OperationDialog';
 import { SelectCategoryDialogContent } from './SelectCategoryDialogContent';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
+import { IconButton } from '../../../ui/IconButton';
 
 type Props = {
   selectedCategoryName: string;

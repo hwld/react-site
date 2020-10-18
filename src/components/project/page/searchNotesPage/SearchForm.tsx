@@ -4,13 +4,13 @@ import {
   TextField,
   Button,
   InputAdornment,
-  IconButton,
 } from '@material-ui/core';
 import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import { SelectCategoryField } from '../../operation/selectCategory/SelectCategoryField';
+import { IconButton } from '../../../ui/IconButton';
 
 type Props = {
   className?: string;
