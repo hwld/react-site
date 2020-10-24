@@ -7,13 +7,13 @@ import {
 } from '@material-ui/core';
 import { NotesSortOrder } from '../../../services/notes';
 
-type NotesSortConditionFieldProps = {
+type Props = {
   notesSortOrder: NotesSortOrder;
   onChangeTargetField: (targetField: NotesSortOrder['targetField']) => void;
   onChangeOrder: (order: NotesSortOrder['order']) => void;
 };
 
-const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
+const Component: React.FC<Props> = ({
   notesSortOrder,
   onChangeTargetField,
   onChangeOrder,
@@ -114,4 +114,4 @@ const NotesSortConditionField: React.FC<NotesSortConditionFieldProps> = ({
   );
 };
 
-export { NotesSortConditionField };
+export const NotesSortConditionField = Component;

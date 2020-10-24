@@ -14,8 +14,7 @@ import {
 import { IconButton } from '../../ui/IconButton';
 import { useAuthContext } from '../../../context/AuthContext';
 
-type AccountSettingMenuProps = {};
-const AccountSettingMenu: React.FC<AccountSettingMenuProps> = () => {
+const Component: React.FC<{}> = () => {
   const { googleLogin, deleteAccount } = useAuthContext();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState(false);
@@ -93,4 +92,4 @@ const AccountSettingMenu: React.FC<AccountSettingMenuProps> = () => {
   );
 };
 
-export { AccountSettingMenu };
+export const AccountSettingMenu = Component;

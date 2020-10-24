@@ -63,13 +63,13 @@ const MenuItem = styled.span`
   margin-left: 10px;
 `;
 
-type NoteListItemProps = {
+type Props = {
   isMobile?: boolean;
   note: Note;
   itemId: string;
   searchCriteria?: SearchNotesCriteria;
 };
-const NoteListItem: React.FC<NoteListItemProps> = ({
+const Component: React.FC<Props> = ({
   isMobile,
   note,
   itemId,
@@ -197,4 +197,4 @@ const NoteListItem: React.FC<NoteListItemProps> = ({
   );
 };
 
-export { NoteListItem };
+export const NoteListItem = Component;

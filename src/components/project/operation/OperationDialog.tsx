@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from '@material-ui/core';
 
-type OperationDialogProps = {
+type Props = {
   title: string;
   activator: JSX.Element;
   doneText?: string;
@@ -19,7 +19,7 @@ type OperationDialogProps = {
   'data-testid'?: string;
 };
 
-export const OperationDialog: React.FC<OperationDialogProps> = ({
+const Component: React.FC<Props> = ({
   children,
   title,
   activator,
@@ -92,3 +92,5 @@ export const OperationDialog: React.FC<OperationDialogProps> = ({
     </span>
   );
 };
+
+export const OperationDialog = Component;

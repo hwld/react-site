@@ -1,7 +1,7 @@
 import { DialogContent } from '@material-ui/core';
 import React from 'react';
 import { NoteField } from '../../../../services/notes';
-import { EditNoteField } from '../../ui/EditNoteFields';
+import { EditNoteFields } from '../../ui/EditNoteFields';
 
 type Props = {
   className?: string;
@@ -12,7 +12,7 @@ type Props = {
 const Component: React.FC<Props> = ({ className, noteField, onChange }) => {
   return (
     <DialogContent className={className}>
-      <EditNoteField noteField={noteField} onChange={onChange} />
+      <EditNoteFields noteField={noteField} onChange={onChange} />
     </DialogContent>
   );
 };

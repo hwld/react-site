@@ -34,13 +34,13 @@ const FooterMenu = styled(Toolbar)`
   }
 `;
 
-type ContentColumnProps = {
+type Props = {
   className?: string;
   footerMenu?: ReactNode;
   isMobile?: boolean;
 };
 
-const ContentColumn: React.FC<ContentColumnProps> = ({
+const Component: React.FC<Props> = ({
   children,
   className,
   footerMenu,
@@ -60,4 +60,4 @@ const ContentColumn: React.FC<ContentColumnProps> = ({
   );
 };
 
-export { ContentColumn };
+export const ContentColumn = Component;

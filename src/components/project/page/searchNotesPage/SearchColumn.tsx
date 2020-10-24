@@ -3,15 +3,12 @@ import { SearchNotesCriteria } from '../../../../services/notes';
 import { ContentColumn } from '../../ui/ContentColumn';
 import { SearchForm } from './SearchForm';
 
-type SearchColumnProps = {
+type Props = {
   setCriteria: (criteria: SearchNotesCriteria) => void;
   className?: string;
 };
 
-const SearchColumn: React.FC<SearchColumnProps> = ({
-  setCriteria,
-  className,
-}) => {
+const Component: React.FC<Props> = ({ setCriteria, className }) => {
   return (
     <ContentColumn className={className}>
       <SearchForm search={setCriteria} />
@@ -19,4 +16,4 @@ const SearchColumn: React.FC<SearchColumnProps> = ({
   );
 };
 
-export { SearchColumn };
+export const SearchColumn = Component;

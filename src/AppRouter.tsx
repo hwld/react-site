@@ -6,11 +6,11 @@ import { MainHome } from './components/project/page/mainPage/MainHome';
 import { SearchHome } from './components/project/page/searchNotesPage/SearchHome';
 import { AppUser, AuthState } from './services/auth';
 
-type AppRouterProps = {
+type Props = {
   user: AppUser;
   authState: AuthState;
 };
-const AppRouter: React.FC<AppRouterProps> = ({ user, authState }) => {
+const Component: React.FC<Props> = ({ user, authState }) => {
   return (
     <Switch>
       {authState.loading && <LoadingHome />}
@@ -28,4 +28,4 @@ const AppRouter: React.FC<AppRouterProps> = ({ user, authState }) => {
   );
 };
 
-export { AppRouter };
+export const AppRouter = Component;

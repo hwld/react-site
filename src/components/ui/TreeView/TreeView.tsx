@@ -31,7 +31,7 @@ function arrayDiff<T>(arr1: T[], arr2: T[]) {
   return false;
 }
 
-type TreeViewProps = WithStyles<typeof styles> & {
+type Props = WithStyles<typeof styles> & {
   className?: string;
   defaultExpanded?: string[];
   defaultSelected?: string[];
@@ -46,9 +46,9 @@ type TreeViewProps = WithStyles<typeof styles> & {
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
 };
 
-const UnStyledTreeView = React.forwardRef<
+const Component = React.forwardRef<
   HTMLUListElement,
-  React.PropsWithChildren<TreeViewProps>
+  React.PropsWithChildren<Props>
 >(function TreeView(props, ref) {
   const {
     children,
@@ -730,6 +730,4 @@ const UnStyledTreeView = React.forwardRef<
   );
 });
 
-export const TreeView = withStyles(styles, { name: 'MuiTreeView' })(
-  UnStyledTreeView,
-);
+export const TreeView = withStyles(styles, { name: 'MuiTreeView' })(Component);

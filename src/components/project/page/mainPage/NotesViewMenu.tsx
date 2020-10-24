@@ -6,14 +6,14 @@ import { NotesSortOrder } from '../../../../services/notes';
 import { UpdateNoteButton } from '../../operation/updateNote/UpdateNoteButton';
 import { SortNotesButton } from '../../operation/sortNotes/SortNotesButton';
 
-interface NotesViewMenuProps {
+type Props = {
   sortNotes: (order: NotesSortOrder) => void;
   defaultNotesSortOrder: NotesSortOrder;
   selectedCategoryIds: string[];
   selectedNoteIds: string[];
-}
+};
 
-const NotesViewMenu: React.FC<NotesViewMenuProps> = ({
+const Component: React.FC<Props> = ({
   sortNotes,
   defaultNotesSortOrder,
   selectedCategoryIds,
@@ -46,4 +46,4 @@ const NotesViewMenu: React.FC<NotesViewMenuProps> = ({
   );
 };
 
-export { NotesViewMenu };
+export const NotesViewMenu = Component;

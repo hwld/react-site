@@ -15,9 +15,7 @@ import { IconButton } from '../../ui/IconButton';
 import { useAuthContext } from '../../../context/AuthContext';
 import { LoginButton } from './LoginButton';
 
-type AccountLinkMenuProps = {};
-
-const AccountLinkMenu: React.FC<AccountLinkMenuProps> = () => {
+const Component: React.FC<{}> = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { linkWithGoogle } = useAuthContext();
 
@@ -99,4 +97,4 @@ const AccountLinkMenu: React.FC<AccountLinkMenuProps> = () => {
   );
 };
 
-export { AccountLinkMenu };
+export const AccountLinkMenu = Component;

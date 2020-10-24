@@ -15,11 +15,11 @@ import { useAppStateContext } from '../../../../context/AppStateContext';
 import { NotesSortOrder } from '../../../../services/notes';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 
-interface Props {
+type Props = {
   selectedCategoryIds: string[];
   className?: string;
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
-}
+};
 
 const Component = forwardRef<HTMLUListElement, PropsWithChildren<Props>>(
   function NotesView({ selectedCategoryIds, className, onKeyDown }, ref) {

@@ -22,15 +22,12 @@ const FormTextField = styled(TextField)`
   }
 `;
 
-type EditNoteFieldProps = {
+type Props = {
   noteField: NoteField;
   onChange: (fieldName: keyof NoteField, value: string) => void;
 };
 
-const EditNoteField: React.FC<EditNoteFieldProps> = ({
-  noteField,
-  onChange,
-}) => {
+const Component: React.FC<Props> = ({ noteField, onChange }) => {
   const { title, text } = noteField;
 
   const changeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,4 +75,4 @@ const EditNoteField: React.FC<EditNoteFieldProps> = ({
   );
 };
 
-export { EditNoteField };
+export const EditNoteFields = Component;

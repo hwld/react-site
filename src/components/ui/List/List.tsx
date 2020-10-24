@@ -10,7 +10,7 @@ const StyledMuiList = styled(MuiList)`
   padding-bottom: 0;
 `;
 
-type ListProps = {
+type Props = {
   className?: string;
   selectedIds?: string[];
   onSelect?: (ids: string[]) => void;
@@ -18,9 +18,9 @@ type ListProps = {
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
 };
 
-export const List = React.forwardRef<
+export const Component = React.forwardRef<
   HTMLUListElement,
-  React.PropsWithChildren<ListProps>
+  React.PropsWithChildren<Props>
 >(function List(
   {
     children,
@@ -189,3 +189,5 @@ export const List = React.forwardRef<
     </ListContextProvider>
   );
 });
+
+export const List = Component;

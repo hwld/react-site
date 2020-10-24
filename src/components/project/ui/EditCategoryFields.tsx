@@ -18,15 +18,12 @@ const StyledTextField = styled(TextField)`
   }
 `;
 
-type EditCategoryFieldProps = {
+type Props = {
   categoryField: CategoryField;
   onChange: (fieldName: keyof CategoryField, value: string) => void;
 };
 
-const EditCategoryField: React.FC<EditCategoryFieldProps> = ({
-  categoryField,
-  onChange,
-}) => {
+const Component: React.FC<Props> = ({ categoryField, onChange }) => {
   const { categoryName } = categoryField;
 
   const changeCategoryName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,4 +47,4 @@ const EditCategoryField: React.FC<EditCategoryFieldProps> = ({
   );
 };
 
-export { EditCategoryField };
+export const EditCategoryFields = Component;

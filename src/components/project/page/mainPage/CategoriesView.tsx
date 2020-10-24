@@ -6,49 +6,50 @@ import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 
-type CategoriesViewProps = {
+type Props = {
   onCategorySelect: (selectedId: string[]) => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
   selectedCategoryIds: string[];
   className?: string;
 };
 
-export const CategoriesView = forwardRef<
-  HTMLUListElement,
-  PropsWithChildren<CategoriesViewProps>
->(function CategoriesView(
-  { onCategorySelect, selectedCategoryIds, className, onKeyDown },
-  ref,
-) {
-  const { categories, moveCategories } = useCategoriesContext();
-  const { moveNotes } = useNotesContext();
+const Component = forwardRef<HTMLUListElement, PropsWithChildren<Props>>(
+  function CategoriesView(
+    { onCategorySelect, selectedCategoryIds, className, onKeyDown },
+    ref,
+  ) {
+    const { categories, moveCategories } = useCategoriesContext();
+    const { moveNotes } = useNotesContext();
 
-  const { expandedIds, setExpandedIds } = useAppStateContext();
+    const { expandedIds, setExpandedIds } = useAppStateContext();
 
-  const handleExpand = (ids: string[]) => {
-    setExpandedIds(ids);
-  };
+    const handleExpand = (ids: string[]) => {
+      setExpandedIds(ids);
+    };
 
-  return (
-    <ContentColumn
-      className={className}
-      footerMenu={
-        <CategoriesViewMenu selectedCategoryIds={selectedCategoryIds} />
-      }
-    >
-      <CategoryTreeList
-        draggable
-        multiple
-        categories={categories}
-        selectedCategoryIds={selectedCategoryIds}
-        expanded={expandedIds}
-        onExpand={handleExpand}
-        onCategorySelect={onCategorySelect}
-        onCategoryDrop={moveCategories}
-        onNotesDrop={moveNotes}
-        onKeyDown={onKeyDown}
-        ref={ref}
-      />
-    </ContentColumn>
-  );
-});
+    return (
+      <ContentColumn
+        className={className}
+        footerMenu={
+          <CategoriesViewMenu selectedCategoryIds={selectedCategoryIds} />
+        }
+      >
+        <CategoryTreeList
+          draggable
+          multiple
+          categories={categories}
+          selectedCategoryIds={selectedCategoryIds}
+          expanded={expandedIds}
+          onExpand={handleExpand}
+          onCategorySelect={onCategorySelect}
+          onCategoryDrop={moveCategories}
+          onNotesDrop={moveNotes}
+          onKeyDown={onKeyDown}
+          ref={ref}
+        />
+      </ContentColumn>
+    );
+  },
+);
+
+export const CategoriesView = Component;

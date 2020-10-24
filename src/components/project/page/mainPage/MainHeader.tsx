@@ -3,15 +3,13 @@ import SearchNoteIcon from '@material-ui/icons/Search';
 import { AppHeader } from '../../ui/AppHeader';
 import { IconButton } from '../../../ui/IconButton';
 
-type MainHeaderProps = {
+type Props = {
   onMenuClick: () => void;
+
   onGoSearchMode: () => void;
 };
 
-const MainHeader: React.FC<MainHeaderProps> = ({
-  onMenuClick,
-  onGoSearchMode,
-}) => {
+const Component: React.FC<Props> = ({ onMenuClick, onGoSearchMode }) => {
   return (
     <AppHeader
       title="Notes"
@@ -25,4 +23,4 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   );
 };
 
-export { MainHeader };
+export const MainHeader = Component;

@@ -5,15 +5,12 @@ import { NoteList } from '../../ui/NoteList';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 
-type SearchNotesColumnProps = {
+type Props = {
   searchCriteria: SearchNotesCriteria;
   className?: string;
 };
 
-const ResultNotesColumn: React.FC<SearchNotesColumnProps> = ({
-  searchCriteria,
-  className,
-}) => {
+const Component: React.FC<Props> = ({ searchCriteria, className }) => {
   const { isMobile } = useAppStateContext();
 
   const { notes } = useNotesContext();
@@ -66,4 +63,4 @@ const ResultNotesColumn: React.FC<SearchNotesColumnProps> = ({
     </ContentColumn>
   );
 };
-export { ResultNotesColumn };
+export const ResultNotesColumn = Component;

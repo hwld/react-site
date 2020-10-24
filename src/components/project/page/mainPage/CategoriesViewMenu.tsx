@@ -3,13 +3,11 @@ import { AddCategoryButton } from '../../operation/addCategory/AddCategoryButton
 import { RemoveCategoriesButton } from '../../operation/removeCategories/RemoveCategoriesButton';
 import { UpdateCategoryButton } from '../../operation/updateCategory/UpdateCategoryButton';
 
-interface CategoriesViewMenuProps {
+type Props = {
   selectedCategoryIds: string[];
-}
+};
 
-const CategoriesViewMenu: React.FC<CategoriesViewMenuProps> = ({
-  selectedCategoryIds,
-}) => {
+const Component: React.FC<Props> = ({ selectedCategoryIds }) => {
   return (
     <>
       <AddCategoryButton
@@ -28,4 +26,4 @@ const CategoriesViewMenu: React.FC<CategoriesViewMenuProps> = ({
   );
 };
 
-export { CategoriesViewMenu };
+export const CategoriesViewMenu = Component;

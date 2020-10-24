@@ -4,11 +4,11 @@ import { useHistory } from 'react-router-dom';
 import { AppHeader } from '../../ui/AppHeader';
 import { IconButton } from '../../../ui/IconButton';
 
-type HeaderProps = {
+type Props = {
   onMenuClick: () => void;
 };
 
-const SearchHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
+const Component: React.FC<Props> = ({ onMenuClick }) => {
   const history = useHistory();
 
   const backHome = () => {
@@ -28,4 +28,4 @@ const SearchHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
   );
 };
 
-export { SearchHeader };
+export const SearchHeader = Component;

@@ -4,13 +4,13 @@ import { TreeItem } from '../../ui/TreeView/TreeItem';
 import { ListItemDropType } from '../../ui/List/ListItem';
 import { ItemTypes } from '../../ui/ItemTypes';
 
-type CategoryTreeItemProps = {
+type Props = {
   nodeId: string;
   categoryName: string;
   onNotesDrop?: (noteIds: string[], destCategoryId: string) => void;
 };
 
-const CategoryTreeItem: React.FC<CategoryTreeItemProps> = ({
+const Component: React.FC<Props> = ({
   children,
   nodeId,
   categoryName,
@@ -46,4 +46,4 @@ const CategoryTreeItem: React.FC<CategoryTreeItemProps> = ({
   );
 };
 
-export { CategoryTreeItem };
+export const CategoryTreeItem = Component;

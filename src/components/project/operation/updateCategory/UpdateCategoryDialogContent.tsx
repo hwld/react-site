@@ -1,7 +1,7 @@
 import { DialogContent } from '@material-ui/core';
 import React from 'react';
 import { CategoryField } from '../../../../services/categories';
-import { EditCategoryField } from '../../ui/EditCategoryFields';
+import { EditCategoryFields } from '../../ui/EditCategoryFields';
 
 type Props = {
   className?: string;
@@ -19,7 +19,7 @@ const Component: React.FC<Props> = ({
 }) => {
   return (
     <DialogContent className={className}>
-      <EditCategoryField
+      <EditCategoryFields
         categoryField={newCategoryField}
         onChange={onChangeCategoryField}
       />

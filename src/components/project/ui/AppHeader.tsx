@@ -15,16 +15,12 @@ const AppTitle = styled(Typography)`
   flex-grow: 1;
 `;
 
-type AppHeaderProps = {
+type Props = {
   title: string;
   onMenuClick: () => void;
   menuItems: React.ReactNode;
 };
-const AppHeader: React.FC<AppHeaderProps> = ({
-  title,
-  onMenuClick,
-  menuItems,
-}) => {
+const Component: React.FC<Props> = ({ title, onMenuClick, menuItems }) => {
   const { user, logout, deleteAccount } = useAuthContext();
   const { clearAppState } = useAppStateContext();
 
@@ -59,4 +55,4 @@ const AppHeader: React.FC<AppHeaderProps> = ({
   );
 };
 
-export { AppHeader };
+export const AppHeader = Component;

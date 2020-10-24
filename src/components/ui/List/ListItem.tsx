@@ -41,15 +41,15 @@ export type ListItemDropType = {
   ids: string[];
 };
 
-type ListItemProps = {
+type Props = {
   className?: string;
   itemId: string;
   onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 };
 
-export const ListItem = React.forwardRef<
+export const Component = React.forwardRef<
   HTMLDivElement,
-  React.PropsWithChildren<ListItemProps>
+  React.PropsWithChildren<Props>
 >(function ListItem({ children, className, itemId, onKeyDown }, ref) {
   const {
     selectedIds,
@@ -137,3 +137,5 @@ export const ListItem = React.forwardRef<
     </div>
   );
 });
+
+export const ListItem = Component;

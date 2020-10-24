@@ -28,7 +28,7 @@ const NormalDrawer = styled(MuiDrawer)<{ width?: string }>`
   }
 `;
 
-const Drawer: React.FC<SwipeableDrawerProps & {
+const Component: React.FC<SwipeableDrawerProps & {
   className?: string;
   width?: string;
   isPresistent: boolean;
@@ -55,4 +55,4 @@ const Drawer: React.FC<SwipeableDrawerProps & {
   );
 };
 
-export { Drawer };
+export const Drawer = Component;
