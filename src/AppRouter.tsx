@@ -4,13 +4,11 @@ import { LoadingHome } from './components/project/page/loadingPage/LoadingHome';
 import { LoginHome } from './components/project/page/loginPage/LoginHome';
 import { MainHome } from './components/project/page/mainPage/MainHome';
 import { SearchHome } from './components/project/page/searchNotesPage/SearchHome';
-import { AppUser, AuthState } from './services/auth';
+import { useAuthContext } from './context/AuthContext';
 
-type Props = {
-  user: AppUser;
-  authState: AuthState;
-};
-const Component: React.FC<Props> = ({ user, authState }) => {
+const Component: React.FC = () => {
+  const { user, authState } = useAuthContext();
+
   return (
     <Switch>
       {authState.loading && <LoadingHome />}
