@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { SvgIconProps } from '@material-ui/core';
+import {
+  Button,
+  DialogActions,
+  DialogTitle,
+  SvgIconProps,
+  Typography,
+} from '@material-ui/core';
 import AddCategoryIcon from '@material-ui/icons/CreateNewFolder';
 import { OperationDialog } from '../OperationDialog';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
@@ -8,7 +14,8 @@ import {
   getDefaultCategory,
 } from '../../../../services/categories';
 import { AddCategoryDialogContent } from './AddCategoryDialogContent';
-import { OperationIconButton } from '../OperationIconButton';
+import { ActivatorButton } from '../ActivatorButton';
+import { useDialog } from '../../../../util/hooks/useDialog';
 
 type Props = {
   disabled?: boolean;
@@ -17,20 +24,27 @@ type Props = {
 };
 
 const Component: React.FC<Props> = ({ disabled, parentCategoryId, size }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, open, close } = useDialog(false);
   const [categoryField, setCategoryField] = useState<CategoryField>(
     getDefaultCategory(),
   );
   const { addCategory } = useCategoriesContext();
 
-  const add = () => {
-    addCategory(parentCategoryId, categoryField);
-  };
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     setCategoryField({ categoryName: '' });
-    setIsOpen(true);
+    open();
+  };
+
+  const handleDone = (event: React.SyntheticEvent) => {
+    event.stopPropagation();
+    addCategory(parentCategoryId, categoryField);
+    close();
+  };
+
+  const handleCancel = (event: React.SyntheticEvent) => {
+    event.stopPropagation();
+    close();
   };
 
   const changeCategoryField = (
@@ -42,27 +56,36 @@ const Component: React.FC<Props> = ({ disabled, parentCategoryId, size }) => {
 
   return (
     <>
-      <OperationIconButton
+      <ActivatorButton
         disabled={disabled}
         tooltipText="カテゴリーの追加"
         onClick={handleClick}
         data-testid="activatorButton"
       >
         <AddCategoryIcon fontSize={size} />
-      </OperationIconButton>
+      </ActivatorButton>
       <OperationDialog
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        title="カテゴリーの追加"
-        doneText="追加"
-        onDone={add}
-        doneDisabled={categoryField.categoryName.length === 0}
+        open={isOpen}
+        onClose={close}
         data-testid="addCategoryDialog"
       >
+        <DialogTitle>カテゴリーの追加</DialogTitle>
         <AddCategoryDialogContent
           categoryField={categoryField}
           onChange={changeCategoryField}
         />
+        <DialogActions>
+          <Button
+            disabled={categoryField.categoryName.length === 0}
+            onClick={handleDone}
+            data-testid="doneButton"
+          >
+            <Typography color="textSecondary">追加</Typography>
+          </Button>
+          <Button onClick={handleCancel} data-testid="cancelButton">
+            <Typography color="textSecondary">中止</Typography>
+          </Button>
+        </DialogActions>
       </OperationDialog>
     </>
   );

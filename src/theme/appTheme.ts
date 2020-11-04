@@ -39,6 +39,10 @@ const appTheme = createMuiTheme({
     MuiIconButton: {
       color: 'primary',
     },
+    MuiButton: {
+      variant: 'contained',
+      color: 'secondary',
+    },
   },
   typography: {
     fontFamily: ['Noto Sans JP', 'sans-serif'].join(','),

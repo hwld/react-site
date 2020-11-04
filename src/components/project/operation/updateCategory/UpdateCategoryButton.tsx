@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { SvgIconProps } from '@material-ui/core';
+import {
+  Button,
+  DialogActions,
+  DialogTitle,
+  SvgIconProps,
+  Typography,
+} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { OperationDialog } from '../OperationDialog';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
@@ -9,7 +15,8 @@ import {
   getDefaultCategory,
 } from '../../../../services/categories';
 import { UpdateCategoryDialogContent } from './UpdateCategoryDialogContent';
-import { OperationIconButton } from '../OperationIconButton';
+import { ActivatorButton } from '../ActivatorButton';
+import { useDialog } from '../../../../util/hooks/useDialog';
 
 type Props = {
   disabled?: boolean;
@@ -18,15 +25,11 @@ type Props = {
 };
 
 const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, open, close } = useDialog(false);
   const [newCategory, setNewCategory] = useState<Category>(
     getDefaultCategory(),
   );
   const { categories, updateCategory } = useCategoriesContext();
-
-  const update = () => {
-    updateCategory(newCategory);
-  };
 
   const setDefaultCategory = () => {
     const defaultCategory = categories.find(
@@ -38,10 +41,21 @@ const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
     setNewCategory(defaultCategory);
   };
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     setDefaultCategory();
-    setIsOpen(true);
+    open();
+  };
+
+  const handleDone = (event: React.SyntheticEvent) => {
+    event.stopPropagation();
+    updateCategory(newCategory);
+    close();
+  };
+
+  const handleCancel = (event: React.SyntheticEvent) => {
+    event.stopPropagation();
+    close();
   };
 
   const changeCategoryField = (
@@ -53,27 +67,36 @@ const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
 
   return (
     <>
-      <OperationIconButton
+      <ActivatorButton
         disabled={disabled}
         tooltipText="カテゴリーの編集"
         onClick={handleClick}
         data-testid="activatorButton"
       >
         <EditIcon fontSize={size} />
-      </OperationIconButton>
+      </ActivatorButton>
       <OperationDialog
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        title="カテゴリーの編集"
-        doneText="変更"
-        onDone={update}
-        doneDisabled={newCategory.categoryName === ''}
+        open={isOpen}
+        onClose={close}
         data-testid="updateCategoryDialog"
       >
+        <DialogTitle>カテゴリーの編集</DialogTitle>
         <UpdateCategoryDialogContent
           newCategoryField={newCategory}
           onChangeCategoryField={changeCategoryField}
         />
+        <DialogActions>
+          <Button
+            onClick={handleDone}
+            disabled={newCategory.categoryName === ''}
+            data-testid="doneButton"
+          >
+            <Typography color="textSecondary">変更</Typography>
+          </Button>
+          <Button onClick={handleCancel} data-testid="cancelButton">
+            <Typography color="textSecondary">中止</Typography>
+          </Button>
+        </DialogActions>
       </OperationDialog>
     </>
   );

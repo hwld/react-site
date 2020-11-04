@@ -9,4 +9,4 @@ const StyledComponent = styled(IconButton)`
   }
 `;
 
-export const OperationIconButton = StyledComponent;
+export const ActivatorButton = StyledComponent;

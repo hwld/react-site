@@ -1,10 +1,17 @@
-import React, { forwardRef, PropsWithChildren, useState } from 'react';
-import { SvgIconProps } from '@material-ui/core';
+import React, { forwardRef, PropsWithChildren } from 'react';
+import {
+  Button,
+  DialogActions,
+  DialogTitle,
+  SvgIconProps,
+  Typography,
+} from '@material-ui/core';
 import DeleteNoteIcon from '@material-ui/icons/Delete';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { OperationDialog } from '../OperationDialog';
 import { RemoveNotesDialogContent } from './RemoveNotesDialogContent';
-import { OperationIconButton } from '../OperationIconButton';
+import { ActivatorButton } from '../ActivatorButton';
+import { useDialog } from '../../../../util/hooks/useDialog';
 
 type Props = {
   disabled?: boolean;
@@ -15,21 +22,28 @@ type Props = {
 
 const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
   function RemoveNoteDialog({ disabled, targetNoteIds, size, tabIndex }, ref) {
-    const [isOpen, setIsOpen] = useState(false);
+    const { isOpen, open, close } = useDialog(false);
     const { removeNotes } = useNotesContext();
 
-    const remove = () => {
-      removeNotes(targetNoteIds);
+    const handleClick = (event: React.SyntheticEvent) => {
+      event.stopPropagation();
+      open();
     };
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleDone = (event: React.SyntheticEvent) => {
       event.stopPropagation();
-      setIsOpen(true);
+      removeNotes(targetNoteIds);
+      close();
+    };
+
+    const handleCancel = (event: React.SyntheticEvent) => {
+      event.stopPropagation();
+      close();
     };
 
     return (
       <>
-        <OperationIconButton
+        <ActivatorButton
           ref={ref}
           disabled={disabled}
           tooltipText="メモの削除"
@@ -38,16 +52,22 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
           data-testid="activatorButton"
         >
           <DeleteNoteIcon fontSize={size} />
-        </OperationIconButton>
+        </ActivatorButton>
         <OperationDialog
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          title="メモの削除"
-          doneText="削除"
-          onDone={remove}
+          open={isOpen}
+          onClose={close}
           data-testid="removeNoteDialog"
         >
+          <DialogTitle>メモの削除</DialogTitle>
           <RemoveNotesDialogContent />
+          <DialogActions>
+            <Button onClick={handleDone} data-testid="doneButton">
+              <Typography color="textSecondary">削除</Typography>
+            </Button>
+            <Button onClick={handleCancel} data-testid="cancelButton">
+              <Typography color="textSecondary">中止</Typography>
+            </Button>
+          </DialogActions>
         </OperationDialog>
       </>
     );

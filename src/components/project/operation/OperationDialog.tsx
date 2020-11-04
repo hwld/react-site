@@ -1,60 +1,24 @@
 import React, { BaseSyntheticEvent } from 'react';
-import {
-  Dialog,
-  DialogActions,
-  Button,
-  Typography,
-  DialogTitle,
-} from '@material-ui/core';
+import { Dialog, DialogProps } from '@material-ui/core';
 
-type Props = {
-  title: string;
-  doneText?: string;
-  onDone?: () => void;
-  doneDisabled?: boolean;
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-  onClose?: () => void;
+type Props = DialogProps & {
   'data-testid'?: string;
 };
 
 const Component: React.FC<Props> = ({
   children,
-  title,
-  doneText,
-  onDone,
-  doneDisabled,
-  isOpen,
-  setIsOpen,
-  onClose,
   'data-testid': dataTestId,
+  ...props
 }) => {
   const stopPropagation = (event: BaseSyntheticEvent<{}>) => {
     event.stopPropagation();
   };
 
-  const closeDialog = () => {
-    setIsOpen(false);
-    if (onClose) onClose();
-  };
-
-  const handleDone = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    if (onDone) onDone();
-    closeDialog();
-  };
-
-  const handleCancel = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    closeDialog();
-  };
-
   return (
     <span data-testid={dataTestId}>
       <Dialog
+        {...props}
         fullWidth
-        open={isOpen}
-        onClose={closeDialog}
         maxWidth="sm"
         // ダイアログ外をクリックするとクリックイベントが伝搬してしまうため、ここで防ぐ
         onClick={stopPropagation}
@@ -64,27 +28,7 @@ const Component: React.FC<Props> = ({
         onKeyDown={stopPropagation}
         data-testid="dialog"
       >
-        <DialogTitle>{title}</DialogTitle>
         {children}
-        <DialogActions>
-          <Button
-            disabled={doneDisabled}
-            onClick={handleDone}
-            variant="contained"
-            color="secondary"
-            data-testid="doneButton"
-          >
-            <Typography color="textSecondary">{doneText || '完了'}</Typography>
-          </Button>
-          <Button
-            onClick={handleCancel}
-            variant="contained"
-            color="secondary"
-            data-testid="cancelButton"
-          >
-            <Typography color="textSecondary">中止</Typography>
-          </Button>
-        </DialogActions>
       </Dialog>
     </span>
   );

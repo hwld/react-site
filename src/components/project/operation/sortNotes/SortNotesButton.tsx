@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-import { SvgIconProps } from '@material-ui/core';
+import {
+  Button,
+  DialogActions,
+  DialogTitle,
+  SvgIconProps,
+  Typography,
+} from '@material-ui/core';
 import SortNoteIcon from '@material-ui/icons/Sort';
 import { OperationDialog } from '../OperationDialog';
 import { NotesSortOrder } from '../../../../services/notes';
 import { SortNotesDialogContent } from './SortNotesDialogContent';
-import { OperationIconButton } from '../OperationIconButton';
+import { ActivatorButton } from '../ActivatorButton';
+import { useDialog } from '../../../../util/hooks/useDialog';
 
 type Props = {
   sort: (order: NotesSortOrder) => void;
@@ -19,17 +26,24 @@ const Component: React.FC<Props> = ({
   disabled,
   size,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, open, close } = useDialog(false);
   const [sortOrder, setSortOrder] = useState(defaultSortOrder);
 
-  const sortNotes = () => {
-    sort(sortOrder);
-  };
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     setSortOrder(defaultSortOrder);
-    setIsOpen(true);
+    open();
+  };
+
+  const handleDone = (event: React.SyntheticEvent) => {
+    event.stopPropagation();
+    sort(sortOrder);
+    close();
+  };
+
+  const handleCancel = (event: React.SyntheticEvent) => {
+    event.stopPropagation();
+    close();
   };
 
   const changeSortTargetField = (
@@ -44,27 +58,33 @@ const Component: React.FC<Props> = ({
 
   return (
     <>
-      <OperationIconButton
+      <ActivatorButton
         disabled={disabled}
         tooltipText="ノートの並び替え"
         onClick={handleClick}
         data-testid="activatorButton"
       >
         <SortNoteIcon fontSize={size} />
-      </OperationIconButton>
+      </ActivatorButton>
       <OperationDialog
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        title="ノートの並び替え"
-        doneText="並び替え"
-        onDone={sortNotes}
+        open={isOpen}
+        onClose={close}
         data-testid="sortNotesDialog"
       >
+        <DialogTitle>ノートの並び替え</DialogTitle>
         <SortNotesDialogContent
           sortOrder={sortOrder}
           onChangeSortTargetField={changeSortTargetField}
           onChangeSortOrder={changeSortOrder}
         />
+        <DialogActions>
+          <Button onClick={handleDone} data-testid="doneButton">
+            <Typography color="textSecondary">並び替え</Typography>
+          </Button>
+          <Button onClick={handleCancel} data-testid="cancelButton">
+            <Typography color="textSecondary">中止</Typography>
+          </Button>
+        </DialogActions>
       </OperationDialog>
     </>
   );
