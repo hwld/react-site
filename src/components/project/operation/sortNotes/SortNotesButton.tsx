@@ -43,30 +43,30 @@ const Component: React.FC<Props> = ({
   };
 
   return (
-    <OperationDialog
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      title="ノートの並び替え"
-      activator={
-        <OperationIconButton
-          disabled={disabled}
-          tooltipText="ノートの並び替え"
-          onClick={handleClick}
-          data-testid="activatorButton"
-        >
-          <SortNoteIcon fontSize={size} />
-        </OperationIconButton>
-      }
-      doneText="並び替え"
-      onDone={sortNotes}
-      data-testid="sortNotesDialog"
-    >
-      <SortNotesDialogContent
-        sortOrder={sortOrder}
-        onChangeSortTargetField={changeSortTargetField}
-        onChangeSortOrder={changeSortOrder}
-      />
-    </OperationDialog>
+    <>
+      <OperationIconButton
+        disabled={disabled}
+        tooltipText="ノートの並び替え"
+        onClick={handleClick}
+        data-testid="activatorButton"
+      >
+        <SortNoteIcon fontSize={size} />
+      </OperationIconButton>
+      <OperationDialog
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        title="ノートの並び替え"
+        doneText="並び替え"
+        onDone={sortNotes}
+        data-testid="sortNotesDialog"
+      >
+        <SortNotesDialogContent
+          sortOrder={sortOrder}
+          onChangeSortTargetField={changeSortTargetField}
+          onChangeSortOrder={changeSortOrder}
+        />
+      </OperationDialog>
+    </>
   );
 };
 

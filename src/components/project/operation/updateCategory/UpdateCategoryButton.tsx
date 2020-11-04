@@ -52,30 +52,30 @@ const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
   };
 
   return (
-    <OperationDialog
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      title="カテゴリーの編集"
-      activator={
-        <OperationIconButton
-          disabled={disabled}
-          tooltipText="カテゴリーの編集"
-          onClick={handleClick}
-          data-testid="activatorButton"
-        >
-          <EditIcon fontSize={size} />
-        </OperationIconButton>
-      }
-      doneText="変更"
-      onDone={update}
-      doneDisabled={newCategory.categoryName === ''}
-      data-testid="updateCategoryDialog"
-    >
-      <UpdateCategoryDialogContent
-        newCategoryField={newCategory}
-        onChangeCategoryField={changeCategoryField}
-      />
-    </OperationDialog>
+    <>
+      <OperationIconButton
+        disabled={disabled}
+        tooltipText="カテゴリーの編集"
+        onClick={handleClick}
+        data-testid="activatorButton"
+      >
+        <EditIcon fontSize={size} />
+      </OperationIconButton>
+      <OperationDialog
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        title="カテゴリーの編集"
+        doneText="変更"
+        onDone={update}
+        doneDisabled={newCategory.categoryName === ''}
+        data-testid="updateCategoryDialog"
+      >
+        <UpdateCategoryDialogContent
+          newCategoryField={newCategory}
+          onChangeCategoryField={changeCategoryField}
+        />
+      </OperationDialog>
+    </>
   );
 };
 

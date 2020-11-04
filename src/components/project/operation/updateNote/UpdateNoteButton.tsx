@@ -43,32 +43,32 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
     };
 
     return (
-      <OperationDialog
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        title="メモの編集"
-        activator={
-          <OperationIconButton
-            ref={ref}
-            disabled={disabled}
-            tooltipText="メモの編集"
-            onClick={handleClick}
-            tabIndex={tabIndex}
-            data-testid="activatorButton"
-          >
-            <EditIcon fontSize={size} />
-          </OperationIconButton>
-        }
-        doneText="変更"
-        onDone={update}
-        doneDisabled={newNote.text.length === 0}
-        data-testid="updateNoteDialog"
-      >
-        <UpdateNoteDialogContent
-          newNoteField={newNote}
-          onChangeNoteField={changeNoteField}
-        />
-      </OperationDialog>
+      <>
+        <OperationIconButton
+          ref={ref}
+          disabled={disabled}
+          tooltipText="メモの編集"
+          onClick={handleClick}
+          tabIndex={tabIndex}
+          data-testid="activatorButton"
+        >
+          <EditIcon fontSize={size} />
+        </OperationIconButton>
+        <OperationDialog
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          title="メモの編集"
+          doneText="変更"
+          onDone={update}
+          doneDisabled={newNote.text.length === 0}
+          data-testid="updateNoteDialog"
+        >
+          <UpdateNoteDialogContent
+            newNoteField={newNote}
+            onChangeNoteField={changeNoteField}
+          />
+        </OperationDialog>
+      </>
     );
   },
 );

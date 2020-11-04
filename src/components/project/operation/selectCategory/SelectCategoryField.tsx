@@ -43,40 +43,40 @@ const Component: React.FC<Props> = ({
   };
 
   return (
-    <OperationDialog
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      title="検索するカテゴリーの選択"
-      doneText="選択"
-      onDone={select}
-      activator={
-        <TextField
-          className={className}
-          onClick={handleClickActivator}
-          id="searchFormCategoryName"
-          InputProps={{
-            readOnly: true,
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={handleClickClear}>
-                  <ClearIcon color="secondary" />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          label="カテゴリー名"
-          value={selectedCategoryName}
-          color="secondary"
-          variant="outlined"
-        />
-      }
-    >
-      <SelectCategoryDialogContent
-        categories={categories}
-        selectedCategoryId={internalSelected}
-        selectCategoryId={setInternalSelected}
+    <>
+      <TextField
+        className={className}
+        onClick={handleClickActivator}
+        id="searchFormCategoryName"
+        InputProps={{
+          readOnly: true,
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={handleClickClear}>
+                <ClearIcon color="secondary" />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+        label="カテゴリー名"
+        value={selectedCategoryName}
+        color="secondary"
+        variant="outlined"
       />
-    </OperationDialog>
+      <OperationDialog
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        title="検索するカテゴリーの選択"
+        doneText="選択"
+        onDone={select}
+      >
+        <SelectCategoryDialogContent
+          categories={categories}
+          selectedCategoryId={internalSelected}
+          selectCategoryId={setInternalSelected}
+        />
+      </OperationDialog>
+    </>
   );
 };
 

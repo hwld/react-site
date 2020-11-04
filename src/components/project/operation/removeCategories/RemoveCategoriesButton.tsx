@@ -26,26 +26,26 @@ const Component: React.FC<Props> = ({ disabled, targetCategoryIds, size }) => {
   };
 
   return (
-    <OperationDialog
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      title="カテゴリーの削除"
-      activator={
-        <OperationIconButton
-          disabled={disabled}
-          tooltipText="カテゴリーの削除"
-          onClick={handleClick}
-          data-testid="activatorButton"
-        >
-          <DeleteCategoryIcon fontSize={size} />
-        </OperationIconButton>
-      }
-      doneText="削除"
-      onDone={remove}
-      data-testid="removeCategoryDialog"
-    >
-      <RemoveCategoriesDialogContent />
-    </OperationDialog>
+    <>
+      <OperationIconButton
+        disabled={disabled}
+        tooltipText="カテゴリーの削除"
+        onClick={handleClick}
+        data-testid="activatorButton"
+      >
+        <DeleteCategoryIcon fontSize={size} />
+      </OperationIconButton>
+      <OperationDialog
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        title="カテゴリーの削除"
+        doneText="削除"
+        onDone={remove}
+        data-testid="removeCategoryDialog"
+      >
+        <RemoveCategoriesDialogContent />
+      </OperationDialog>
+    </>
   );
 };
 

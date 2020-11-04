@@ -28,28 +28,28 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
     };
 
     return (
-      <OperationDialog
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        title="メモの削除"
-        activator={
-          <OperationIconButton
-            ref={ref}
-            disabled={disabled}
-            tooltipText="メモの削除"
-            onClick={handleClick}
-            tabIndex={tabIndex}
-            data-testid="activatorButton"
-          >
-            <DeleteNoteIcon fontSize={size} />
-          </OperationIconButton>
-        }
-        doneText="削除"
-        onDone={remove}
-        data-testid="removeNoteDialog"
-      >
-        <RemoveNotesDialogContent />
-      </OperationDialog>
+      <>
+        <OperationIconButton
+          ref={ref}
+          disabled={disabled}
+          tooltipText="メモの削除"
+          onClick={handleClick}
+          tabIndex={tabIndex}
+          data-testid="activatorButton"
+        >
+          <DeleteNoteIcon fontSize={size} />
+        </OperationIconButton>
+        <OperationDialog
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          title="メモの削除"
+          doneText="削除"
+          onDone={remove}
+          data-testid="removeNoteDialog"
+        >
+          <RemoveNotesDialogContent />
+        </OperationDialog>
+      </>
     );
   },
 );

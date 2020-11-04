@@ -33,27 +33,30 @@ const Component: React.FC<Props> = ({ disabled, categoryId, size }) => {
   };
 
   return (
-    <OperationDialog
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      title="メモの追加"
-      activator={
-        <OperationIconButton
-          disabled={disabled}
-          tooltipText="メモの追加"
-          onClick={handleClick}
-          data-testid="activatorButton"
-        >
-          <AddNoteIcon fontSize={size} />
-        </OperationIconButton>
-      }
-      doneText="追加"
-      onDone={add}
-      doneDisabled={noteField.text.length === 0}
-      data-testid="addNoteDialog"
-    >
-      <AddNoteDialogContent noteField={noteField} onChange={changeNoteField} />
-    </OperationDialog>
+    <>
+      <OperationIconButton
+        disabled={disabled}
+        tooltipText="メモの追加"
+        onClick={handleClick}
+        data-testid="activatorButton"
+      >
+        <AddNoteIcon fontSize={size} />
+      </OperationIconButton>
+      <OperationDialog
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        title="メモの追加"
+        doneText="追加"
+        onDone={add}
+        doneDisabled={noteField.text.length === 0}
+        data-testid="addNoteDialog"
+      >
+        <AddNoteDialogContent
+          noteField={noteField}
+          onChange={changeNoteField}
+        />
+      </OperationDialog>
+    </>
   );
 };
 

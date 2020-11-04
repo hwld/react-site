@@ -9,7 +9,6 @@ import {
 
 type Props = {
   title: string;
-  activator: JSX.Element;
   doneText?: string;
   onDone?: () => void;
   doneDisabled?: boolean;
@@ -22,7 +21,6 @@ type Props = {
 const Component: React.FC<Props> = ({
   children,
   title,
-  activator,
   doneText,
   onDone,
   doneDisabled,
@@ -53,7 +51,6 @@ const Component: React.FC<Props> = ({
 
   return (
     <span data-testid={dataTestId}>
-      {activator}
       <Dialog
         fullWidth
         open={isOpen}
