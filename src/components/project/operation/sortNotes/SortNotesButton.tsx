@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  DialogActions,
-  DialogTitle,
-  SvgIconProps,
-  Typography,
-} from '@material-ui/core';
+import { SvgIconProps } from '@material-ui/core';
 import SortNoteIcon from '@material-ui/icons/Sort';
-import { OperationDialog } from '../OperationDialog';
 import { NotesSortOrder } from '../../../../services/notes';
-import { SortNotesDialogContent } from './SortNotesDialogContent';
 import { ActivatorButton } from '../ActivatorButton';
 import { useDialog } from '../../../../util/hooks/useDialog';
+import { SortNotesDialog } from './SortNotesDialog';
 
 type Props = {
   sort: (order: NotesSortOrder) => void;
@@ -35,7 +28,7 @@ const Component: React.FC<Props> = ({
     open();
   };
 
-  const handleDone = (event: React.SyntheticEvent) => {
+  const handleSortNotes = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     sort(sortOrder);
     close();
@@ -46,13 +39,13 @@ const Component: React.FC<Props> = ({
     close();
   };
 
-  const changeSortTargetField = (
+  const handleChangeSortTargetField = (
     targetField: NotesSortOrder['targetField'],
   ) => {
     setSortOrder(state => ({ ...state, targetField }));
   };
 
-  const changeSortOrder = (order: NotesSortOrder['order']) => {
+  const handleChangeSortOrder = (order: NotesSortOrder['order']) => {
     setSortOrder(state => ({ ...state, order }));
   };
 
@@ -66,26 +59,15 @@ const Component: React.FC<Props> = ({
       >
         <SortNoteIcon fontSize={size} />
       </ActivatorButton>
-      <OperationDialog
-        open={isOpen}
+      <SortNotesDialog
+        isOpen={isOpen}
         onClose={close}
-        data-testid="sortNotesDialog"
-      >
-        <DialogTitle>ノートの並び替え</DialogTitle>
-        <SortNotesDialogContent
-          sortOrder={sortOrder}
-          onChangeSortTargetField={changeSortTargetField}
-          onChangeSortOrder={changeSortOrder}
-        />
-        <DialogActions>
-          <Button onClick={handleDone} data-testid="doneButton">
-            <Typography color="textSecondary">並び替え</Typography>
-          </Button>
-          <Button onClick={handleCancel} data-testid="cancelButton">
-            <Typography color="textSecondary">中止</Typography>
-          </Button>
-        </DialogActions>
-      </OperationDialog>
+        sortOrder={sortOrder}
+        onChangeSortTargetField={handleChangeSortTargetField}
+        onChangeSortOrder={handleChangeSortOrder}
+        onSortNotes={handleSortNotes}
+        onCancel={handleCancel}
+      />
     </>
   );
 };

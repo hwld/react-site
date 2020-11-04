@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  DialogActions,
-  DialogTitle,
-  SvgIconProps,
-  Typography,
-} from '@material-ui/core';
+import { SvgIconProps } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import { OperationDialog } from '../OperationDialog';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import {
   Category,
   CategoryField,
   getDefaultCategory,
 } from '../../../../services/categories';
-import { UpdateCategoryDialogContent } from './UpdateCategoryDialogContent';
 import { ActivatorButton } from '../ActivatorButton';
 import { useDialog } from '../../../../util/hooks/useDialog';
+import { UpdateCategoryDialog } from './UpdateCategoryDialog';
 
 type Props = {
   disabled?: boolean;
@@ -47,7 +40,7 @@ const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
     open();
   };
 
-  const handleDone = (event: React.SyntheticEvent) => {
+  const handleUpdateCategory = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     updateCategory(newCategory);
     close();
@@ -75,29 +68,14 @@ const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
       >
         <EditIcon fontSize={size} />
       </ActivatorButton>
-      <OperationDialog
-        open={isOpen}
+      <UpdateCategoryDialog
+        isOpen={isOpen}
         onClose={close}
-        data-testid="updateCategoryDialog"
-      >
-        <DialogTitle>カテゴリーの編集</DialogTitle>
-        <UpdateCategoryDialogContent
-          newCategoryField={newCategory}
-          onChangeCategoryField={changeCategoryField}
-        />
-        <DialogActions>
-          <Button
-            onClick={handleDone}
-            disabled={newCategory.categoryName === ''}
-            data-testid="doneButton"
-          >
-            <Typography color="textSecondary">変更</Typography>
-          </Button>
-          <Button onClick={handleCancel} data-testid="cancelButton">
-            <Typography color="textSecondary">中止</Typography>
-          </Button>
-        </DialogActions>
-      </OperationDialog>
+        newCategory={newCategory}
+        onChangeCategoryField={changeCategoryField}
+        onUpdateCategory={handleUpdateCategory}
+        onCancel={handleCancel}
+      />
     </>
   );
 };

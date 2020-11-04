@@ -7,6 +7,7 @@ type Props = DialogProps & {
 
 const Component: React.FC<Props> = ({
   children,
+  className,
   'data-testid': dataTestId,
   ...props
 }) => {
@@ -27,6 +28,7 @@ const Component: React.FC<Props> = ({
         // ダイアログ内のキーボードイベントを外に出さない
         onKeyDown={stopPropagation}
         data-testid="dialog"
+        PaperProps={{ className }}
       >
         {children}
       </Dialog>

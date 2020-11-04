@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  DialogActions,
-  DialogTitle,
-  SvgIconProps,
-  Typography,
-} from '@material-ui/core';
+import { SvgIconProps } from '@material-ui/core';
 import MoveNoteIcon from '@material-ui/icons/Forward';
-import { OperationDialog } from '../OperationDialog';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { useNotesContext } from '../../../../context/NotesContext';
-import { MoveNotesDialogContent } from './MoveNotesDialogContent';
 import { ActivatorButton } from '../ActivatorButton';
 import { useDialog } from '../../../../util/hooks/useDialog';
+import { MoveNotesDialog } from './MoveNotesDIalog';
 
 type Props = {
   disabled?: boolean;
@@ -32,7 +25,7 @@ const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
     open();
   };
 
-  const handleDone = (event: React.SyntheticEvent) => {
+  const handleMove = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     moveNotes(sourceNoteIds, destCategoryId);
     close();
@@ -57,26 +50,15 @@ const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
       >
         <MoveNoteIcon fontSize={size} />
       </ActivatorButton>
-      <OperationDialog
-        open={isOpen}
+      <MoveNotesDialog
+        isOpen={isOpen}
         onClose={close}
-        data-testid="moveNotesDialog"
-      >
-        <DialogTitle>メモの移動</DialogTitle>
-        <MoveNotesDialogContent
-          categories={categories}
-          destCategoryId={destCategoryId}
-          onCategorySelect={selectCategory}
-        />
-        <DialogActions>
-          <Button onClick={handleDone} data-testid="doneButton">
-            <Typography color="textSecondary">移動</Typography>
-          </Button>
-          <Button onClick={handleCancel} data-testid="cancelButton">
-            <Typography color="textSecondary">中止</Typography>
-          </Button>
-        </DialogActions>
-      </OperationDialog>
+        selectCategory={selectCategory}
+        categories={categories}
+        destCategoryId={destCategoryId}
+        onCancel={handleCancel}
+        onMove={handleMove}
+      />
     </>
   );
 };

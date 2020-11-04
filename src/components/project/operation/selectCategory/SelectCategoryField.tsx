@@ -1,19 +1,11 @@
-import {
-  TextField,
-  InputAdornment,
-  DialogTitle,
-  DialogActions,
-  Button,
-  Typography,
-} from '@material-ui/core';
+import { TextField, InputAdornment } from '@material-ui/core';
 import React, { useState } from 'react';
 import ClearIcon from '@material-ui/icons/Clear';
 import styled from 'styled-components';
-import { OperationDialog } from '../OperationDialog';
-import { SelectCategoryDialogContent } from './SelectCategoryDialogContent';
-import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { IconButton } from '../../../ui/IconButton';
 import { useDialog } from '../../../../util/hooks/useDialog';
+import { SelectCategoryDialog } from './SelectCategoryDialog';
+import { useCategoriesContext } from '../../../../context/CategoriesContext';
 
 type Props = {
   selectedCategoryName: string;
@@ -34,6 +26,10 @@ const Component: React.FC<Props> = ({
   const { categories } = useCategoriesContext();
   const [internalSelected, setInternalSelected] = useState('');
 
+  const selectCategoryIdInternal = (ids: string[]) => {
+    setInternalSelected(ids[0] || '');
+  };
+
   const handleClickActivator = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     setInternalSelected(selectedCategoryId);
@@ -45,7 +41,7 @@ const Component: React.FC<Props> = ({
     clearSelectedCategoryId();
   };
 
-  const handleDone = (event: React.SyntheticEvent) => {
+  const handleSelectCategory = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     selectCategoryId(internalSelected);
     close();
@@ -78,22 +74,15 @@ const Component: React.FC<Props> = ({
         variant="outlined"
         data-testid="activatorButton"
       />
-      <OperationDialog open={isOpen} onClose={close}>
-        <DialogTitle>検索するカテゴリーの選択</DialogTitle>
-        <SelectCategoryDialogContent
-          categories={categories}
-          selectedCategoryId={internalSelected}
-          selectCategoryId={setInternalSelected}
-        />
-        <DialogActions>
-          <Button onClick={handleDone} data-testid="doneButton">
-            <Typography color="textSecondary">選択</Typography>
-          </Button>
-          <Button onClick={handleCancel} data-testid="cancelButton">
-            <Typography color="textSecondary">中止</Typography>
-          </Button>
-        </DialogActions>
-      </OperationDialog>
+      <SelectCategoryDialog
+        isOpen={isOpen}
+        onClose={close}
+        categories={categories}
+        selectedCategoryId={selectedCategoryId}
+        selectCategoryIdInternal={selectCategoryIdInternal}
+        onSelectCategory={handleSelectCategory}
+        onCancel={handleCancel}
+      />
     </>
   );
 };

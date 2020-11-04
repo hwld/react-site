@@ -1,17 +1,10 @@
 import React from 'react';
-import {
-  Button,
-  DialogActions,
-  DialogTitle,
-  SvgIconProps,
-  Typography,
-} from '@material-ui/core';
+import { SvgIconProps } from '@material-ui/core';
 import DeleteCategoryIcon from '@material-ui/icons/Delete';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
-import { OperationDialog } from '../OperationDialog';
-import { RemoveCategoriesDialogContent } from './RemoveCategoriesDialogContent';
 import { ActivatorButton } from '../ActivatorButton';
 import { useDialog } from '../../../../util/hooks/useDialog';
+import { RemoveCategoriesDialog } from './RemoveCategoriesDialog';
 
 type Props = {
   disabled?: boolean;
@@ -28,7 +21,7 @@ const Component: React.FC<Props> = ({ disabled, targetCategoryIds, size }) => {
     open();
   };
 
-  const handleDone = (event: React.SyntheticEvent) => {
+  const handleRemoveCategories = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     removeCategories(targetCategoryIds);
     close();
@@ -49,22 +42,12 @@ const Component: React.FC<Props> = ({ disabled, targetCategoryIds, size }) => {
       >
         <DeleteCategoryIcon fontSize={size} />
       </ActivatorButton>
-      <OperationDialog
-        open={isOpen}
+      <RemoveCategoriesDialog
+        isOpen={isOpen}
         onClose={close}
-        data-testid="removeCategoryDialog"
-      >
-        <DialogTitle>カテゴリーの削除</DialogTitle>
-        <RemoveCategoriesDialogContent />
-        <DialogActions>
-          <Button onClick={handleDone} data-testid="doneButton">
-            <Typography color="textSecondary">削除</Typography>
-          </Button>
-          <Button onClick={handleCancel} data-testid="cancelButton">
-            <Typography color="textSecondary">中止</Typography>
-          </Button>
-        </DialogActions>
-      </OperationDialog>
+        onRemoveCategories={handleRemoveCategories}
+        onCancel={handleCancel}
+      />
     </>
   );
 };

@@ -1,17 +1,10 @@
 import React, { forwardRef, PropsWithChildren } from 'react';
-import {
-  Button,
-  DialogActions,
-  DialogTitle,
-  SvgIconProps,
-  Typography,
-} from '@material-ui/core';
+import { SvgIconProps } from '@material-ui/core';
 import DeleteNoteIcon from '@material-ui/icons/Delete';
 import { useNotesContext } from '../../../../context/NotesContext';
-import { OperationDialog } from '../OperationDialog';
-import { RemoveNotesDialogContent } from './RemoveNotesDialogContent';
 import { ActivatorButton } from '../ActivatorButton';
 import { useDialog } from '../../../../util/hooks/useDialog';
+import { RemoveNotesDialog } from './RemoveNotesDialog';
 
 type Props = {
   disabled?: boolean;
@@ -21,7 +14,7 @@ type Props = {
 };
 
 const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
-  function RemoveNoteDialog({ disabled, targetNoteIds, size, tabIndex }, ref) {
+  function RemoveNoteButton({ disabled, targetNoteIds, size, tabIndex }, ref) {
     const { isOpen, open, close } = useDialog(false);
     const { removeNotes } = useNotesContext();
 
@@ -30,7 +23,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
       open();
     };
 
-    const handleDone = (event: React.SyntheticEvent) => {
+    const handleRemoveNotes = (event: React.SyntheticEvent) => {
       event.stopPropagation();
       removeNotes(targetNoteIds);
       close();
@@ -53,22 +46,12 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
         >
           <DeleteNoteIcon fontSize={size} />
         </ActivatorButton>
-        <OperationDialog
-          open={isOpen}
+        <RemoveNotesDialog
+          isOpen={isOpen}
           onClose={close}
-          data-testid="removeNoteDialog"
-        >
-          <DialogTitle>メモの削除</DialogTitle>
-          <RemoveNotesDialogContent />
-          <DialogActions>
-            <Button onClick={handleDone} data-testid="doneButton">
-              <Typography color="textSecondary">削除</Typography>
-            </Button>
-            <Button onClick={handleCancel} data-testid="cancelButton">
-              <Typography color="textSecondary">中止</Typography>
-            </Button>
-          </DialogActions>
-        </OperationDialog>
+          onRemoveNotesDialog={handleRemoveNotes}
+          onCancel={handleCancel}
+        />
       </>
     );
   },

@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
 import AddNoteIcon from '@material-ui/icons/NoteAdd';
-import {
-  Button,
-  DialogActions,
-  DialogTitle,
-  SvgIconProps,
-  Typography,
-} from '@material-ui/core';
+import { SvgIconProps } from '@material-ui/core';
 import { useNotesContext } from '../../../../context/NotesContext';
-import { OperationDialog } from '../OperationDialog';
 import { getDefaultNote, NoteField } from '../../../../services/notes';
-import { AddNoteDialogContent } from './AddNoteDialogContent';
 import { ActivatorButton } from '../ActivatorButton';
 import { useDialog } from '../../../../util/hooks/useDialog';
+import { AddNoteDialog } from './AddNoteDialog';
 
 type Props = {
   disabled?: boolean;
@@ -31,7 +24,7 @@ const Component: React.FC<Props> = ({ disabled, categoryId, size }) => {
     open();
   };
 
-  const handleDone = (event: React.SyntheticEvent) => {
+  const handleAddNote = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     addNote(categoryId, noteField);
     close();
@@ -56,29 +49,14 @@ const Component: React.FC<Props> = ({ disabled, categoryId, size }) => {
       >
         <AddNoteIcon fontSize={size} />
       </ActivatorButton>
-      <OperationDialog
-        open={isOpen}
+      <AddNoteDialog
+        isOpen={isOpen}
         onClose={close}
-        data-testid="addNoteDialog"
-      >
-        <DialogTitle>メモの追加</DialogTitle>
-        <AddNoteDialogContent
-          noteField={noteField}
-          onChange={changeNoteField}
-        />
-        <DialogActions>
-          <Button
-            disabled={noteField.text.length === 0}
-            onClick={handleDone}
-            data-testid="doneButton"
-          >
-            <Typography color="textSecondary">追加</Typography>
-          </Button>
-          <Button onClick={handleCancel} data-testid="cancelButton">
-            <Typography color="textSecondary">中止</Typography>
-          </Button>
-        </DialogActions>
-      </OperationDialog>
+        noteField={noteField}
+        onAddNote={handleAddNote}
+        onCancel={handleCancel}
+        onChangeNoteField={changeNoteField}
+      />
     </>
   );
 };
