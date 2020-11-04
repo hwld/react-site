@@ -76,6 +76,7 @@ const Component: React.FC<Props> = ({
         value={selectedCategoryName}
         color="secondary"
         variant="outlined"
+        data-testid="activatorButton"
       />
       <OperationDialog open={isOpen} onClose={close}>
         <DialogTitle>検索するカテゴリーの選択</DialogTitle>

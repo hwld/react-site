@@ -34,9 +34,9 @@ describe('<SearchForm />', () => {
       </CategoriesContextProvider>,
     );
 
-    fireEvent.click(getByTestId('activator'));
+    fireEvent.click(getByTestId('activatorButton'));
     fireEvent.click(getByTestId('clickLayer-testCategoryId'));
-    fireEvent.click(getByTestId('selectButton'));
+    fireEvent.click(getByTestId('doneButton'));
 
     fireEvent.change(getByLabelText('タイトル'), {
       target: { value: 'testTitle' },
