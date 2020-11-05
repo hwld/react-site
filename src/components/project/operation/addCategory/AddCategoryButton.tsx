@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SvgIconProps } from '@material-ui/core';
 import AddCategoryIcon from '@material-ui/icons/CreateNewFolder';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
-import {
-  CategoryField,
-  getDefaultCategory,
-} from '../../../../services/categories';
+import { CategoryField } from '../../../../services/categories';
 import { ActivatorButton } from '../ActivatorButton';
 import { useDialog } from '../../../../util/hooks/useDialog';
 import { AddCategoryDialog } from './AddCategoryDialog';
@@ -18,33 +15,21 @@ type Props = {
 
 const Component: React.FC<Props> = ({ disabled, parentCategoryId, size }) => {
   const { isOpen, open, close } = useDialog(false);
-  const [categoryField, setCategoryField] = useState<CategoryField>(
-    getDefaultCategory(),
-  );
   const { addCategory } = useCategoriesContext();
 
   const handleClick = (event: React.SyntheticEvent) => {
     event.stopPropagation();
-    setCategoryField({ categoryName: '' });
     open();
   };
 
-  const handleAddCategory = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    addCategory(parentCategoryId, categoryField);
+  const handleAddCategory = (fields: CategoryField) => {
+    addCategory(parentCategoryId, fields);
     close();
   };
 
   const handleCancel = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     close();
-  };
-
-  const changeCategoryField = (
-    fieldName: keyof CategoryField,
-    value: string,
-  ) => {
-    setCategoryField(state => ({ ...state, [fieldName]: value }));
   };
 
   return (
@@ -63,8 +48,6 @@ const Component: React.FC<Props> = ({ disabled, parentCategoryId, size }) => {
         onClose={close}
         onAddCategory={handleAddCategory}
         onCancel={handleCancel}
-        categoryField={categoryField}
-        onChangeCategoryField={changeCategoryField}
       />
     </>
   );

@@ -7,29 +7,26 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { CategoryField } from '../../../../services/categories';
-import { EditCategoryFields } from '../../ui/EditCategoryFields';
+import { CategoryForm } from '../../ui/CategoryForm';
 import { OperationDialog } from '../OperationDialog';
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  newCategory: CategoryField;
-  onChangeCategoryField: (
-    fieldName: keyof CategoryField,
-    value: string,
-  ) => void;
-  onUpdateCategory: (event: React.SyntheticEvent) => void;
+  defaultCategory?: CategoryField;
+  onUpdateCategory: (field: CategoryField) => void;
   onCancel: (event: React.SyntheticEvent) => void;
 };
 
 const Component: React.FC<Props> = ({
   isOpen,
   onClose,
-  newCategory,
-  onChangeCategoryField,
+  defaultCategory,
   onUpdateCategory,
   onCancel,
 }) => {
+  const formId = 'updateCategoryForm';
+
   return (
     <OperationDialog
       open={isOpen}
@@ -38,17 +35,14 @@ const Component: React.FC<Props> = ({
     >
       <DialogTitle>カテゴリーの編集</DialogTitle>
       <DialogContent>
-        <EditCategoryFields
-          categoryField={newCategory}
-          onChange={onChangeCategoryField}
+        <CategoryForm
+          id={formId}
+          defaultField={defaultCategory}
+          onSubmit={onUpdateCategory}
         />
       </DialogContent>
       <DialogActions>
-        <Button
-          onClick={onUpdateCategory}
-          disabled={newCategory.categoryName === ''}
-          data-testid="doneButton"
-        >
+        <Button type="submit" form={formId} data-testid="doneButton">
           <Typography color="textSecondary">変更</Typography>
         </Button>
         <Button onClick={onCancel} data-testid="cancelButton">

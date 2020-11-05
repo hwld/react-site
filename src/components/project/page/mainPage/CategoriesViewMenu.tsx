@@ -20,7 +20,7 @@ const Component: React.FC<Props> = ({ selectedCategoryIds }) => {
       />
       <UpdateCategoryButton
         disabled={selectedCategoryIds.length !== 1}
-        defaultCategoryId={selectedCategoryIds[0] || ''}
+        defaultCategoryId={selectedCategoryIds[0]}
       />
     </>
   );

@@ -1,61 +1,41 @@
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import { SvgIconProps } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
-import {
-  Category,
-  CategoryField,
-  getDefaultCategory,
-} from '../../../../services/categories';
+import { CategoryField } from '../../../../services/categories';
 import { ActivatorButton } from '../ActivatorButton';
 import { useDialog } from '../../../../util/hooks/useDialog';
 import { UpdateCategoryDialog } from './UpdateCategoryDialog';
 
 type Props = {
   disabled?: boolean;
-  defaultCategoryId: string;
+  defaultCategoryId?: string;
   size?: SvgIconProps['fontSize'];
 };
 
 const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
   const { isOpen, open, close } = useDialog(false);
-  const [newCategory, setNewCategory] = useState<Category>(
-    getDefaultCategory(),
-  );
   const { categories, updateCategory } = useCategoriesContext();
 
-  const setDefaultCategory = () => {
-    const defaultCategory = categories.find(
-      category => category.id === defaultCategoryId,
-    );
-    if (!defaultCategory) {
-      throw Error('存在しないカテゴリー');
-    }
-    setNewCategory(defaultCategory);
-  };
+  const defaultCategory = useMemo(() => {
+    return categories.find(c => c.id === defaultCategoryId);
+  }, [categories, defaultCategoryId]);
 
   const handleClick = (event: React.SyntheticEvent) => {
     event.stopPropagation();
-    setDefaultCategory();
     open();
   };
 
-  const handleUpdateCategory = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    updateCategory(newCategory);
+  const handleUpdateCategory = (field: CategoryField) => {
+    if (defaultCategoryId) {
+      updateCategory({ id: defaultCategoryId, ...field });
+    }
     close();
   };
 
   const handleCancel = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     close();
-  };
-
-  const changeCategoryField = (
-    fieldName: keyof CategoryField,
-    value: string,
-  ) => {
-    setNewCategory(state => ({ ...state, [fieldName]: value }));
   };
 
   return (
@@ -71,8 +51,7 @@ const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
       <UpdateCategoryDialog
         isOpen={isOpen}
         onClose={close}
-        newCategory={newCategory}
-        onChangeCategoryField={changeCategoryField}
+        defaultCategory={defaultCategory}
         onUpdateCategory={handleUpdateCategory}
         onCancel={handleCancel}
       />
