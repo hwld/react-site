@@ -48,8 +48,6 @@ const Component: React.FC<Props> = ({ noteField, onChange }) => {
           label="タイトル"
           value={title}
           onChange={changeTitle}
-          color="secondary"
-          variant="filled"
           fullWidth
         />
       </FormField>
@@ -63,8 +61,6 @@ const Component: React.FC<Props> = ({ noteField, onChange }) => {
           helperText="※メモは必須項目です."
           value={text}
           onChange={changeText}
-          color="secondary"
-          variant="filled"
           fullWidth
           rowsMax="10"
           rows="10"

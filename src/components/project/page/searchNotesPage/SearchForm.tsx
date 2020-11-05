@@ -91,8 +91,6 @@ const Component: React.FC<Props> = ({ className, search }) => {
           label="タイトル"
           value={targetTitle}
           onChange={changeTargetTitle}
-          color="secondary"
-          variant="filled"
           fullWidth
         />
       </div>
@@ -112,8 +110,6 @@ const Component: React.FC<Props> = ({ className, search }) => {
           label="メモ"
           value={targetText}
           onChange={changeTargetText}
-          color="secondary"
-          variant="filled"
           fullWidth
         />
       </div>

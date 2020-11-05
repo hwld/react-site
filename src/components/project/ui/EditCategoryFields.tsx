@@ -40,8 +40,6 @@ const Component: React.FC<Props> = ({ categoryField, onChange }) => {
       helperText="※カテゴリー名は必須項目です"
       value={categoryName}
       onChange={changeCategoryName}
-      color="secondary"
-      variant="filled"
       fullWidth
     />
   );

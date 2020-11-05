@@ -70,7 +70,6 @@ const Component: React.FC<Props> = ({
         }}
         label="カテゴリー名"
         value={selectedCategoryName}
-        color="secondary"
         variant="outlined"
         data-testid="activatorButton"
       />

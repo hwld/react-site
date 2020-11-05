@@ -43,6 +43,10 @@ const appTheme = createMuiTheme({
       variant: 'contained',
       color: 'secondary',
     },
+    MuiTextField: {
+      variant: 'filled',
+      color: 'secondary',
+    },
   },
   typography: {
     fontFamily: ['Noto Sans JP', 'sans-serif'].join(','),
