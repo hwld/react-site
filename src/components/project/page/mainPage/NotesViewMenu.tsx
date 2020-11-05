@@ -31,7 +31,7 @@ const Component: React.FC<Props> = ({
       />
       <UpdateNoteButton
         disabled={selectedNoteIds.length !== 1}
-        defaultNoteId={selectedNoteIds[0] || ''}
+        defaultNoteId={selectedNoteIds[0]}
       />
       <MoveNotesButton
         disabled={selectedNoteIds.length === 0}

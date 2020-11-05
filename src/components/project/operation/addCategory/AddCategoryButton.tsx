@@ -22,8 +22,8 @@ const Component: React.FC<Props> = ({ disabled, parentCategoryId, size }) => {
     open();
   };
 
-  const handleAddCategory = (fields: CategoryField) => {
-    addCategory(parentCategoryId, fields);
+  const handleAddCategory = (field: CategoryField) => {
+    addCategory(parentCategoryId, field);
     close();
   };
 

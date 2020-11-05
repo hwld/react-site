@@ -11,7 +11,7 @@ type Props = {
   className?: string;
   id: string;
   defaultField?: CategoryField;
-  onSubmit: (fields: CategoryField) => void;
+  onSubmit: (field: CategoryField) => void;
 };
 
 const Component: React.FC<Props> = ({
@@ -27,19 +27,18 @@ const Component: React.FC<Props> = ({
   });
   const TypedController = useTypedController<FormCategoryField>({ control });
 
-  const editCategory = (fields: FormCategoryField) => {
-    const newFields: CategoryField = { categoryName: fields.categoryName };
+  const editCategory = (field: FormCategoryField) => {
+    const newFields: CategoryField = { categoryName: field.categoryName };
     onSubmit(newFields);
   };
 
   return (
-    <form onSubmit={handleSubmit(editCategory)} id={id} className={className}>
+    <form id={id} onSubmit={handleSubmit(editCategory)} className={className}>
       <TypedController
         name="categoryName"
         render={props => (
           <TextField
             id="EditCategoryName"
-            name="categoryName"
             label="カテゴリー名"
             placeholder="(100文字以内で入力してください)"
             inputProps={{ autoComplete: 'off' }}

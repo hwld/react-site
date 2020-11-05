@@ -13,17 +13,15 @@ import { OperationDialog } from '../OperationDialog';
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  defaultCategory?: CategoryField;
+  defaultField?: CategoryField;
   onUpdateCategory: (field: CategoryField) => void;
-  onCancel: (event: React.SyntheticEvent) => void;
 };
 
 const Component: React.FC<Props> = ({
   isOpen,
   onClose,
-  defaultCategory,
+  defaultField,
   onUpdateCategory,
-  onCancel,
 }) => {
   const formId = 'updateCategoryForm';
 
@@ -37,7 +35,7 @@ const Component: React.FC<Props> = ({
       <DialogContent>
         <CategoryForm
           id={formId}
-          defaultField={defaultCategory}
+          defaultField={defaultField}
           onSubmit={onUpdateCategory}
         />
       </DialogContent>
@@ -45,7 +43,7 @@ const Component: React.FC<Props> = ({
         <Button type="submit" form={formId} data-testid="doneButton">
           <Typography color="textSecondary">変更</Typography>
         </Button>
-        <Button onClick={onCancel} data-testid="cancelButton">
+        <Button onClick={onClose} data-testid="cancelButton">
           <Typography color="textSecondary">中止</Typography>
         </Button>
       </DialogActions>

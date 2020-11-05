@@ -13,7 +13,7 @@ import { OperationDialog } from '../OperationDialog';
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onAddCategory: (fields: CategoryField) => void;
+  onAddCategory: (field: CategoryField) => void;
   onCancel: (event: React.SyntheticEvent) => void;
 };
 

@@ -71,4 +71,4 @@ const Component: React.FC<Props> = ({ noteField, onChange }) => {
   );
 };
 
-export const EditNoteFields = Component;
+// export const EditNoteFields = Component;

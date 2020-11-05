@@ -33,11 +33,6 @@ const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
     close();
   };
 
-  const handleCancel = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    close();
-  };
-
   return (
     <>
       <ActivatorButton
@@ -51,9 +46,8 @@ const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
       <UpdateCategoryDialog
         isOpen={isOpen}
         onClose={close}
-        defaultCategory={defaultCategory}
+        defaultField={defaultCategory}
         onUpdateCategory={handleUpdateCategory}
-        onCancel={handleCancel}
       />
     </>
   );

@@ -7,26 +7,24 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { NoteField } from '../../../../services/notes';
-import { EditNoteFields } from '../../ui/EditNoteFields';
+import { NoteForm } from '../../ui/NoteForm';
 import { OperationDialog } from '../OperationDialog';
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  newNoteField: NoteField;
-  onChangeNoteField: (fieldName: keyof NoteField, value: string) => void;
-  onUpdateNote: (event: React.SyntheticEvent) => void;
-  onCancel: (event: React.SyntheticEvent) => void;
+  defaultField?: NoteField;
+  onUpdateNote: (field: NoteField) => void;
 };
 
 const Component: React.FC<Props> = ({
   isOpen,
   onClose,
-  newNoteField,
-  onChangeNoteField,
+  defaultField,
   onUpdateNote,
-  onCancel,
 }) => {
+  const formId = 'updateNoteForm';
+
   return (
     <OperationDialog
       open={isOpen}
@@ -35,17 +33,17 @@ const Component: React.FC<Props> = ({
     >
       <DialogTitle>メモの編集</DialogTitle>
       <DialogContent>
-        <EditNoteFields noteField={newNoteField} onChange={onChangeNoteField} />
+        <NoteForm
+          id={formId}
+          defaultField={defaultField}
+          onSubmit={onUpdateNote}
+        />
       </DialogContent>
       <DialogActions>
-        <Button
-          onClick={onUpdateNote}
-          disabled={newNoteField.text.length === 0}
-          data-testid="doneButton"
-        >
+        <Button type="submit" form={formId} data-testid="doneButton">
           <Typography color="textSecondary">変更</Typography>
         </Button>
-        <Button onClick={onCancel} data-testid="cancelButton">
+        <Button onClick={onClose} data-testid="cancelButton">
           <Typography color="textSecondary">中止</Typography>
         </Button>
       </DialogActions>

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AddNoteIcon from '@material-ui/icons/NoteAdd';
 import { SvgIconProps } from '@material-ui/core';
 import { useNotesContext } from '../../../../context/NotesContext';
-import { getDefaultNote, NoteField } from '../../../../services/notes';
 import { ActivatorButton } from '../ActivatorButton';
 import { useDialog } from '../../../../util/hooks/useDialog';
 import { AddNoteDialog } from './AddNoteDialog';
+import { NoteField } from '../../../../services/notes';
 
 type Props = {
   disabled?: boolean;
@@ -15,28 +15,16 @@ type Props = {
 
 const Component: React.FC<Props> = ({ disabled, categoryId, size }) => {
   const { isOpen, open, close } = useDialog(false);
-  const [noteField, setNoteField] = useState<NoteField>(getDefaultNote());
   const { addNote } = useNotesContext();
 
   const handleClick = (event: React.SyntheticEvent) => {
     event.stopPropagation();
-    setNoteField(getDefaultNote());
     open();
   };
 
-  const handleAddNote = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    addNote(categoryId, noteField);
+  const handleAddNote = (field: NoteField) => {
+    addNote(categoryId, field);
     close();
-  };
-
-  const handleCancel = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    close();
-  };
-
-  const changeNoteField = (fieldName: keyof NoteField, value: string) => {
-    setNoteField(state => ({ ...state, [fieldName]: value }));
   };
 
   return (
@@ -52,10 +40,7 @@ const Component: React.FC<Props> = ({ disabled, categoryId, size }) => {
       <AddNoteDialog
         isOpen={isOpen}
         onClose={close}
-        noteField={noteField}
         onAddNote={handleAddNote}
-        onCancel={handleCancel}
-        onChangeNoteField={changeNoteField}
       />
     </>
   );

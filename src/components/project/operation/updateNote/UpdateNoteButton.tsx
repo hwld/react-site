@@ -1,7 +1,7 @@
-import React, { useState, forwardRef, PropsWithChildren } from 'react';
+import React, { forwardRef, PropsWithChildren, useMemo } from 'react';
 import { SvgIconProps } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import { getDefaultNote, Note, NoteField } from '../../../../services/notes';
+import { NoteField } from '../../../../services/notes';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { ActivatorButton } from '../ActivatorButton';
 import { useDialog } from '../../../../util/hooks/useDialog';
@@ -9,7 +9,7 @@ import { UpdateNoteDialog } from './UpdateNoteDialog';
 
 type Props = {
   disabled?: boolean;
-  defaultNoteId: string;
+  defaultNoteId?: string;
   size?: SvgIconProps['fontSize'];
   tabIndex?: number;
 };
@@ -17,36 +17,22 @@ type Props = {
 const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
   function UpdateNoteButton({ disabled, defaultNoteId, size, tabIndex }, ref) {
     const { isOpen, open, close } = useDialog(false);
-    const [newNote, setNewNote] = useState<Note>(getDefaultNote());
     const { notes, updateNote } = useNotesContext();
 
-    const setDefaultNote = () => {
-      const defaultNote = notes.find(note => note.id === defaultNoteId);
-      if (!defaultNote) {
-        throw Error('存在しないノート');
-      }
-      setNewNote(defaultNote);
-    };
+    const defaultNote = useMemo(() => {
+      return notes.find(n => n.id === defaultNoteId);
+    }, [defaultNoteId, notes]);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       event.stopPropagation();
-      setDefaultNote();
       open();
     };
 
-    const handleUpdateNote = (event: React.SyntheticEvent) => {
-      event.stopPropagation();
-      updateNote(newNote);
+    const handleUpdateNote = (field: NoteField) => {
+      if (defaultNoteId) {
+        updateNote({ id: defaultNoteId, ...field });
+      }
       close();
-    };
-
-    const handleCancel = (event: React.SyntheticEvent) => {
-      event.stopPropagation();
-      close();
-    };
-
-    const changeNoteField = (fieldName: keyof NoteField, value: string) => {
-      setNewNote(state => ({ ...state, [fieldName]: value }));
     };
 
     return (
@@ -64,10 +50,8 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
         <UpdateNoteDialog
           isOpen={isOpen}
           onClose={close}
-          newNoteField={newNote}
-          onChangeNoteField={changeNoteField}
+          defaultField={defaultNote}
           onUpdateNote={handleUpdateNote}
-          onCancel={handleCancel}
         />
       </>
     );
