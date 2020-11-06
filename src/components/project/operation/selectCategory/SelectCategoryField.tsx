@@ -1,5 +1,5 @@
 import { TextField, InputAdornment } from '@material-ui/core';
-import React from 'react';
+import React, { useMemo } from 'react';
 import ClearIcon from '@material-ui/icons/Clear';
 import styled from 'styled-components';
 import { IconButton } from '../../../ui/IconButton';
@@ -8,26 +8,30 @@ import { SelectCategoryDialog } from './SelectCategoryDialog';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 
 type Props = {
-  selectedCategoryName: string;
   selectedCategoryId: string;
   selectCategoryId: (id: string) => void;
-  clearSelectedCategoryId: () => void;
   className?: string;
 };
 
 const Component: React.FC<Props> = ({
-  selectedCategoryName,
   selectedCategoryId,
   selectCategoryId,
-  clearSelectedCategoryId,
   className,
 }) => {
   const { isOpen, open, close } = useDialog(false);
   const { categories } = useCategoriesContext();
 
+  const categoryName = useMemo(() => {
+    const name = categories.find(c => c.id === selectedCategoryId)
+      ?.categoryName;
+    if (!name) return '';
+
+    return name;
+  }, [categories, selectedCategoryId]);
+
   const handleClickClear = (event: React.SyntheticEvent) => {
     event.stopPropagation();
-    clearSelectedCategoryId();
+    selectCategoryId('');
   };
 
   const handleSelectCategory = (id: string) => {
@@ -52,7 +56,7 @@ const Component: React.FC<Props> = ({
           ),
         }}
         label="カテゴリー名"
-        value={selectedCategoryName}
+        value={categoryName}
         variant="outlined"
       />
       <SelectCategoryDialog

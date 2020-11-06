@@ -7,7 +7,6 @@ import {
 } from '@material-ui/core';
 import styled from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
-import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import { SelectCategoryField } from '../../operation/selectCategory/SelectCategoryField';
 import { IconButton } from '../../../ui/IconButton';
@@ -18,11 +17,7 @@ type Props = {
 };
 
 const Component: React.FC<Props> = ({ className, search }) => {
-  const { categories } = useCategoriesContext();
-
   const [targetCategoryId, setTargetCategoryId] = useState('');
-  const [targetCategoryName, setTargetCategoryName] = useState('');
-
   const [targetTitle, setTargetTitle] = useState('');
   const [targetText, setTargetText] = useState('');
 
@@ -50,28 +45,13 @@ const Component: React.FC<Props> = ({ className, search }) => {
     setTargetText('');
   };
 
-  // カテゴリー
-  const selectTargetCategory = (id: string) => {
-    setTargetCategoryId(id);
-    let categoryName = categories.find(category => category.id === id)
-      ?.categoryName;
-    if (!categoryName) categoryName = '';
-    setTargetCategoryName(categoryName);
-  };
-
-  const clearSelectedCategoryId = () => {
-    selectTargetCategory('');
-  };
-
   return (
     <div className={className}>
       <Typography className="criteriaTitle">検索条件</Typography>
       <div className="criteriaContent">
         <SelectCategoryField
-          selectedCategoryName={targetCategoryName}
           selectedCategoryId={targetCategoryId}
-          selectCategoryId={selectTargetCategory}
-          clearSelectedCategoryId={clearSelectedCategoryId}
+          selectCategoryId={setTargetCategoryId}
           className="criteriaTextField"
         />
       </div>
