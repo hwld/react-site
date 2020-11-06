@@ -4,6 +4,7 @@ import Alert from '@material-ui/lab/Alert';
 import { TreeView } from '../../ui/TreeView/TreeView';
 import { CategoryTreeItem } from './CategoryTreeItem';
 import { Category } from '../../../services/categories';
+import { categoriesCompareFunction } from '../../../util/compareFunctions';
 
 export type CategoryTreeNode = Category & {
   childrenCategories: CategoryTreeNode[];
@@ -51,21 +52,6 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
     },
     ref,
   ) {
-    // 同じ親を持つcategoryを作成順に並び替える.
-    // そのうち並び順を指定できるようにするかも.
-    const categoriesCompareFunction = useCallback(() => {
-      return (categoryA: Category, categoryB: Category) => {
-        if (categoryA.createdAt.getTime() > categoryB.createdAt.getTime()) {
-          return 1;
-        }
-        if (categoryA.createdAt.getTime() < categoryB.createdAt.getTime()) {
-          return -1;
-        }
-
-        return 0;
-      };
-    }, []);
-
     const buildCategoryTreeNode = useCallback(
       (rawCategory: Category): CategoryTreeNode => {
         // rawCategoryの子カテゴリーを抽出
@@ -83,7 +69,7 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
           childrenCategories: [...childrenCategoryTreeNodes],
         };
       },
-      [categories, categoriesCompareFunction],
+      [categories],
     );
 
     const buildCategoryTreeItems = useCallback(
@@ -119,12 +105,7 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
 
       // CategoryTreeNodeをReactNodeに変換する
       return treeObject.map(obj => buildCategoryTreeItems(obj));
-    }, [
-      buildCategoryTreeItems,
-      buildCategoryTreeNode,
-      categories,
-      categoriesCompareFunction,
-    ]);
+    }, [buildCategoryTreeItems, buildCategoryTreeNode, categories]);
 
     return (
       <StyledTreeView
