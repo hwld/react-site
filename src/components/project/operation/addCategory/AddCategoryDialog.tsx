@@ -14,23 +14,13 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   onAddCategory: (field: CategoryField) => void;
-  onCancel: (event: React.SyntheticEvent) => void;
 };
 
-const Component: React.FC<Props> = ({
-  isOpen,
-  onClose,
-  onAddCategory,
-  onCancel,
-}) => {
+const Component: React.FC<Props> = ({ isOpen, onClose, onAddCategory }) => {
   const formId = 'addCategoryForm';
 
   return (
-    <OperationDialog
-      open={isOpen}
-      onClose={onClose}
-      data-testid="addCategoryDialog"
-    >
+    <OperationDialog open={isOpen} onClose={onClose}>
       <DialogTitle>カテゴリーの追加</DialogTitle>
 
       <DialogContent>
@@ -38,10 +28,10 @@ const Component: React.FC<Props> = ({
       </DialogContent>
 
       <DialogActions>
-        <Button type="submit" form={formId} data-testid="doneButton">
+        <Button type="submit" form={formId}>
           <Typography color="textSecondary">追加</Typography>
         </Button>
-        <Button onClick={onCancel} data-testid="cancelButton">
+        <Button onClick={onClose}>
           <Typography color="textSecondary">中止</Typography>
         </Button>
       </DialogActions>

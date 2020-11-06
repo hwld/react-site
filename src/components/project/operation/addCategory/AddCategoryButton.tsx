@@ -17,18 +17,8 @@ const Component: React.FC<Props> = ({ disabled, parentCategoryId, size }) => {
   const { isOpen, open, close } = useDialog(false);
   const { addCategory } = useCategoriesContext();
 
-  const handleClick = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    open();
-  };
-
   const handleAddCategory = (field: CategoryField) => {
     addCategory(parentCategoryId, field);
-    close();
-  };
-
-  const handleCancel = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
     close();
   };
 
@@ -37,8 +27,7 @@ const Component: React.FC<Props> = ({ disabled, parentCategoryId, size }) => {
       <ActivatorButton
         disabled={disabled}
         tooltipText="カテゴリーの追加"
-        onClick={handleClick}
-        data-testid="activatorButton"
+        onClick={open}
       >
         <AddCategoryIcon fontSize={size} />
       </ActivatorButton>
@@ -47,7 +36,6 @@ const Component: React.FC<Props> = ({ disabled, parentCategoryId, size }) => {
         isOpen={isOpen}
         onClose={close}
         onAddCategory={handleAddCategory}
-        onCancel={handleCancel}
       />
     </>
   );

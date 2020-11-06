@@ -16,19 +16,9 @@ const Component: React.FC<Props> = ({ disabled, targetCategoryIds, size }) => {
   const { isOpen, open, close } = useDialog(false);
   const { removeCategories } = useCategoriesContext();
 
-  const handleClick = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    open();
-  };
-
   const handleRemoveCategories = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     removeCategories(targetCategoryIds);
-    close();
-  };
-
-  const handleCancel = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
     close();
   };
 
@@ -37,8 +27,7 @@ const Component: React.FC<Props> = ({ disabled, targetCategoryIds, size }) => {
       <ActivatorButton
         disabled={disabled}
         tooltipText="カテゴリーの削除"
-        onClick={handleClick}
-        data-testid="activatorButton"
+        onClick={open}
       >
         <DeleteCategoryIcon fontSize={size} />
       </ActivatorButton>
@@ -46,7 +35,6 @@ const Component: React.FC<Props> = ({ disabled, targetCategoryIds, size }) => {
         isOpen={isOpen}
         onClose={close}
         onRemoveCategories={handleRemoveCategories}
-        onCancel={handleCancel}
       />
     </>
   );

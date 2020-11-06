@@ -18,19 +18,9 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
     const { isOpen, open, close } = useDialog(false);
     const { removeNotes } = useNotesContext();
 
-    const handleClick = (event: React.SyntheticEvent) => {
-      event.stopPropagation();
-      open();
-    };
-
     const handleRemoveNotes = (event: React.SyntheticEvent) => {
       event.stopPropagation();
       removeNotes(targetNoteIds);
-      close();
-    };
-
-    const handleCancel = (event: React.SyntheticEvent) => {
-      event.stopPropagation();
       close();
     };
 
@@ -40,9 +30,8 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
           ref={ref}
           disabled={disabled}
           tooltipText="メモの削除"
-          onClick={handleClick}
+          onClick={open}
           tabIndex={tabIndex}
-          data-testid="activatorButton"
         >
           <DeleteNoteIcon fontSize={size} />
         </ActivatorButton>
@@ -50,7 +39,6 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
           isOpen={isOpen}
           onClose={close}
           onRemoveNotesDialog={handleRemoveNotes}
-          onCancel={handleCancel}
         />
       </>
     );

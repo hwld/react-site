@@ -55,7 +55,6 @@ const Component: React.FC<Props> = ({
         disabled={disabled}
         tooltipText="ノートの並び替え"
         onClick={handleClick}
-        data-testid="activatorButton"
       >
         <SortNoteIcon fontSize={size} />
       </ActivatorButton>

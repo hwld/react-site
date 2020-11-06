@@ -13,14 +13,12 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   onRemoveCategories: (event: React.SyntheticEvent) => void;
-  onCancel: (event: React.SyntheticEvent) => void;
 };
 
 const Component: React.FC<Props> = ({
   isOpen,
   onClose,
   onRemoveCategories,
-  onCancel,
 }) => {
   return (
     <OperationDialog
@@ -35,10 +33,10 @@ const Component: React.FC<Props> = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onRemoveCategories} data-testid="doneButton">
+        <Button onClick={onRemoveCategories}>
           <Typography color="textSecondary">削除</Typography>
         </Button>
-        <Button onClick={onCancel} data-testid="cancelButton">
+        <Button onClick={onClose}>
           <Typography color="textSecondary">中止</Typography>
         </Button>
       </DialogActions>

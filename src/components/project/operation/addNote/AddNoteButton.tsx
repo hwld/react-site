@@ -17,11 +17,6 @@ const Component: React.FC<Props> = ({ disabled, categoryId, size }) => {
   const { isOpen, open, close } = useDialog(false);
   const { addNote } = useNotesContext();
 
-  const handleClick = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    open();
-  };
-
   const handleAddNote = (field: NoteField) => {
     addNote(categoryId, field);
     close();
@@ -32,8 +27,7 @@ const Component: React.FC<Props> = ({ disabled, categoryId, size }) => {
       <ActivatorButton
         disabled={disabled}
         tooltipText="メモの追加"
-        onClick={handleClick}
-        data-testid="activatorButton"
+        onClick={open}
       >
         <AddNoteIcon fontSize={size} />
       </ActivatorButton>

@@ -23,11 +23,6 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
       return notes.find(n => n.id === defaultNoteId);
     }, [defaultNoteId, notes]);
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.stopPropagation();
-      open();
-    };
-
     const handleUpdateNote = (field: NoteField) => {
       if (defaultNoteId) {
         updateNote({ id: defaultNoteId, ...field });
@@ -41,9 +36,8 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
           ref={ref}
           disabled={disabled}
           tooltipText="メモの編集"
-          onClick={handleClick}
+          onClick={open}
           tabIndex={tabIndex}
-          data-testid="activatorButton"
         >
           <EditIcon fontSize={size} />
         </ActivatorButton>

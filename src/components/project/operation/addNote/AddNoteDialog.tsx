@@ -20,11 +20,7 @@ const Component: React.FC<Props> = ({ isOpen, onClose, onAddNote }) => {
   const formId = 'addNoteForm';
 
   return (
-    <OperationDialog
-      open={isOpen}
-      onClose={onClose}
-      data-testid="addNoteDialog"
-    >
+    <OperationDialog open={isOpen} onClose={onClose}>
       <DialogTitle>メモの追加</DialogTitle>
 
       <DialogContent>
@@ -32,10 +28,10 @@ const Component: React.FC<Props> = ({ isOpen, onClose, onAddNote }) => {
       </DialogContent>
 
       <DialogActions>
-        <Button type="submit" form={formId} data-testid="doneButton">
+        <Button type="submit" form={formId}>
           <Typography color="textSecondary">追加</Typography>
         </Button>
-        <Button onClick={onClose} data-testid="cancelButton">
+        <Button onClick={onClose}>
           <Typography color="textSecondary">中止</Typography>
         </Button>
       </DialogActions>

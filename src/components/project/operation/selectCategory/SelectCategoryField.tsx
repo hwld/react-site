@@ -25,11 +25,6 @@ const Component: React.FC<Props> = ({
   const { isOpen, open, close } = useDialog(false);
   const { categories } = useCategoriesContext();
 
-  const handleClickActivator = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    open();
-  };
-
   const handleClickClear = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     clearSelectedCategoryId();
@@ -40,16 +35,11 @@ const Component: React.FC<Props> = ({
     close();
   };
 
-  const handleCancel = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    close();
-  };
-
   return (
     <>
       <TextField
         className={className}
-        onClick={handleClickActivator}
+        onClick={open}
         id="searchFormCategoryName"
         InputProps={{
           readOnly: true,
@@ -64,7 +54,6 @@ const Component: React.FC<Props> = ({
         label="カテゴリー名"
         value={selectedCategoryName}
         variant="outlined"
-        data-testid="activatorButton"
       />
       <SelectCategoryDialog
         isOpen={isOpen}
@@ -72,7 +61,6 @@ const Component: React.FC<Props> = ({
         categories={categories}
         defaultSelectedId={selectedCategoryId}
         onSelectCategory={handleSelectCategory}
-        onCancel={handleCancel}
       />
     </>
   );

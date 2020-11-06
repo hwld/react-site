@@ -30,11 +30,7 @@ const Component: React.FC<Props> = ({
   onCancel,
 }) => {
   return (
-    <OperationDialog
-      open={isOpen}
-      onClose={onClose}
-      data-testid="sortNotesDialog"
-    >
+    <OperationDialog open={isOpen} onClose={onClose}>
       <DialogTitle>ノートの並び替え</DialogTitle>
       <DialogContent>
         <NotesSortConditionField
@@ -44,10 +40,10 @@ const Component: React.FC<Props> = ({
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onSortNotes} data-testid="doneButton">
+        <Button onClick={onSortNotes}>
           <Typography color="textSecondary">並び替え</Typography>
         </Button>
-        <Button onClick={onCancel} data-testid="cancelButton">
+        <Button onClick={onCancel}>
           <Typography color="textSecondary">中止</Typography>
         </Button>
       </DialogActions>

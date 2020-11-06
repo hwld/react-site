@@ -17,7 +17,6 @@ type Props = {
   categories: Category[];
   defaultSelectedId: string;
   onSelectCategory: (id: string) => void;
-  onCancel: (event: React.SyntheticEvent) => void;
 };
 
 const Component: React.FC<Props> = ({
@@ -27,7 +26,6 @@ const Component: React.FC<Props> = ({
   categories,
   defaultSelectedId,
   onSelectCategory,
-  onCancel,
 }) => {
   const formId = 'selectCategoryForm';
 
@@ -43,10 +41,10 @@ const Component: React.FC<Props> = ({
         />
       </DialogContent>
       <DialogActions>
-        <Button type="submit" form={formId} data-testid="doneButton">
+        <Button type="submit" form={formId}>
           <Typography color="textSecondary">選択</Typography>
         </Button>
-        <Button onClick={onCancel} data-testid="cancelButton">
+        <Button onClick={onClose}>
           <Typography color="textSecondary">中止</Typography>
         </Button>
       </DialogActions>

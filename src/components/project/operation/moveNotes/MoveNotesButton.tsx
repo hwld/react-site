@@ -5,7 +5,7 @@ import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { ActivatorButton } from '../ActivatorButton';
 import { useDialog } from '../../../../util/hooks/useDialog';
-import { MoveNotesDialog } from './MoveNotesDIalog';
+import { MoveNotesDialog } from './MoveNotesDialog';
 
 type Props = {
   disabled?: boolean;
@@ -18,18 +18,8 @@ const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
   const { categories } = useCategoriesContext();
   const { moveNotes } = useNotesContext();
 
-  const handleClick = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    open();
-  };
-
   const handleMove = (destCategoryId: string) => {
     moveNotes(sourceNoteIds, destCategoryId);
-    close();
-  };
-
-  const handleCancel = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
     close();
   };
 
@@ -38,8 +28,7 @@ const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
       <ActivatorButton
         disabled={disabled}
         tooltipText="メモの移動"
-        onClick={handleClick}
-        data-testid="activatorButton"
+        onClick={open}
       >
         <MoveNoteIcon fontSize={size} />
       </ActivatorButton>
@@ -48,7 +37,6 @@ const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
         onClose={close}
         categories={categories}
         onMove={handleMove}
-        onCancel={handleCancel}
       />
     </>
   );

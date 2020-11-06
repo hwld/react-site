@@ -26,11 +26,7 @@ const Component: React.FC<Props> = ({
   const formId = 'updateCategoryForm';
 
   return (
-    <OperationDialog
-      open={isOpen}
-      onClose={onClose}
-      data-testid="updateCategoryDialog"
-    >
+    <OperationDialog open={isOpen} onClose={onClose}>
       <DialogTitle>カテゴリーの編集</DialogTitle>
       <DialogContent>
         <CategoryForm
@@ -40,10 +36,10 @@ const Component: React.FC<Props> = ({
         />
       </DialogContent>
       <DialogActions>
-        <Button type="submit" form={formId} data-testid="doneButton">
+        <Button type="submit" form={formId}>
           <Typography color="textSecondary">変更</Typography>
         </Button>
-        <Button onClick={onClose} data-testid="cancelButton">
+        <Button onClick={onClose}>
           <Typography color="textSecondary">中止</Typography>
         </Button>
       </DialogActions>

@@ -21,11 +21,6 @@ const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
     return categories.find(c => c.id === defaultCategoryId);
   }, [categories, defaultCategoryId]);
 
-  const handleClick = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    open();
-  };
-
   const handleUpdateCategory = (field: CategoryField) => {
     if (defaultCategoryId) {
       updateCategory({ id: defaultCategoryId, ...field });
@@ -38,8 +33,7 @@ const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
       <ActivatorButton
         disabled={disabled}
         tooltipText="カテゴリーの編集"
-        onClick={handleClick}
-        data-testid="activatorButton"
+        onClick={open}
       >
         <EditIcon fontSize={size} />
       </ActivatorButton>
