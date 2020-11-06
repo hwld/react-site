@@ -36,7 +36,7 @@ export const styles = (theme: Theme) => ({
     WebkitTapHighlightColor: 'transparent',
 
     // , &$focused > div > div > div > $content $label
-    '&:focus > div > div > div > $content $label': {
+    '&$focused > div > div > div > $content $label': {
       backgroundColor: theme.palette.action.hover,
       outline: `1px solid ${theme.palette.secondary.main}`,
     },

@@ -10,8 +10,7 @@ const StyledMuiListItem = styled(MuiListItem)`
   border: 1px solid ${props => props.theme.palette.primary.light};
   border-radius: 10px;
 
-  &.Mui-focusVisible,
-  &:focus {
+  &.focused {
     background-color: ${props => props.theme.palette.action.hover};
     border: 1px solid ${props => props.theme.palette.secondary.light};
   }
@@ -64,6 +63,8 @@ export const Component = React.forwardRef<
   const itemRef = useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(itemRef, ref);
 
+  const focused = isFocused(itemId);
+
   const [, drag, preview] = useDrag({
     item: { type: ItemTypes.ListItem, ids: [...selectedIds] },
     begin: monitor => {
@@ -113,6 +114,7 @@ export const Component = React.forwardRef<
       data-testid={`dragLayer-${itemId}`}
     >
       <StyledMuiListItem
+        className={focused ? 'focused' : ''}
         ref={handleRef}
         button
         onClick={handleClick}
