@@ -6,13 +6,14 @@ import { ResultNotesColumn } from './ResultNotesColumn';
 import { Drawer } from '../../../ui/Drawer/Drawer';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import { useAppStateContext } from '../../../../context/AppStateContext';
+import { useOpener } from '../../../../util/hooks/useOpener';
 
 type Props = {
   className?: string;
 };
 
 const Component: React.FC<Props> = ({ className }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const { isOpen, open, close, invert } = useOpener(true);
   const [searchCriteria, setSearchCriteria] = useState<SearchNotesCriteria>({
     categoryId: '',
     title: '',
@@ -20,27 +21,15 @@ const Component: React.FC<Props> = ({ className }) => {
   });
   const { isMobile } = useAppStateContext();
 
-  const invertDrawer = () => {
-    setIsOpen(state => !state);
-  };
-
-  const openDrawer = () => {
-    setIsOpen(true);
-  };
-
-  const closeDrawer = () => {
-    setIsOpen(false);
-  };
-
   return (
     <div className={className} data-testid="searchNotestPage">
-      <SearchHeader onMenuClick={invertDrawer} />
+      <SearchHeader onMenuClick={invert} />
       <Drawer
         width={isMobile ? '80' : '30'}
         isPresistent={!isMobile}
         open={isOpen}
-        onOpen={openDrawer}
-        onClose={closeDrawer}
+        onOpen={open}
+        onClose={close}
       >
         <SearchColumn setCriteria={setSearchCriteria} />
       </Drawer>

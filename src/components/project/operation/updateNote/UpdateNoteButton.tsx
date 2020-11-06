@@ -4,7 +4,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { NoteField } from '../../../../services/notes';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { ActivatorButton } from '../ActivatorButton';
-import { useDialog } from '../../../../util/hooks/useDialog';
+import { useOpener } from '../../../../util/hooks/useOpener';
 import { UpdateNoteDialog } from './UpdateNoteDialog';
 
 type Props = {
@@ -16,7 +16,7 @@ type Props = {
 
 const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
   function UpdateNoteButton({ disabled, defaultNoteId, size, tabIndex }, ref) {
-    const { isOpen, open, close } = useDialog(false);
+    const { isOpen, open, close } = useOpener(false);
     const { notes, updateNote } = useNotesContext();
 
     const defaultNote = useMemo(() => {

@@ -3,7 +3,7 @@ import { SvgIconProps } from '@material-ui/core';
 import DeleteNoteIcon from '@material-ui/icons/Delete';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { ActivatorButton } from '../ActivatorButton';
-import { useDialog } from '../../../../util/hooks/useDialog';
+import { useOpener } from '../../../../util/hooks/useOpener';
 import { RemoveNotesDialog } from './RemoveNotesDialog';
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
 
 const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
   function RemoveNoteButton({ disabled, targetNoteIds, size, tabIndex }, ref) {
-    const { isOpen, open, close } = useDialog(false);
+    const { isOpen, open, close } = useOpener(false);
     const { removeNotes } = useNotesContext();
 
     const handleRemoveNotes = (event: React.SyntheticEvent) => {

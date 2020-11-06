@@ -3,7 +3,7 @@ import { SvgIconProps } from '@material-ui/core';
 import DeleteCategoryIcon from '@material-ui/icons/Delete';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { ActivatorButton } from '../ActivatorButton';
-import { useDialog } from '../../../../util/hooks/useDialog';
+import { useOpener } from '../../../../util/hooks/useOpener';
 import { RemoveCategoriesDialog } from './RemoveCategoriesDialog';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 };
 
 const Component: React.FC<Props> = ({ disabled, targetCategoryIds, size }) => {
-  const { isOpen, open, close } = useDialog(false);
+  const { isOpen, open, close } = useOpener(false);
   const { removeCategories } = useCategoriesContext();
 
   const handleRemoveCategories = (event: React.SyntheticEvent) => {

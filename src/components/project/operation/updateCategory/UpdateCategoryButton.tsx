@@ -4,7 +4,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { CategoryField } from '../../../../services/categories';
 import { ActivatorButton } from '../ActivatorButton';
-import { useDialog } from '../../../../util/hooks/useDialog';
+import { useOpener } from '../../../../util/hooks/useOpener';
 import { UpdateCategoryDialog } from './UpdateCategoryDialog';
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 };
 
 const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
-  const { isOpen, open, close } = useDialog(false);
+  const { isOpen, open, close } = useOpener(false);
   const { categories, updateCategory } = useCategoriesContext();
 
   const defaultCategory = useMemo(() => {

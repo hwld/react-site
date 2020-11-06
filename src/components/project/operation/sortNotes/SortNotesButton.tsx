@@ -3,7 +3,7 @@ import { SvgIconProps } from '@material-ui/core';
 import SortNoteIcon from '@material-ui/icons/Sort';
 import { NotesSortOrder } from '../../../../services/notes';
 import { ActivatorButton } from '../ActivatorButton';
-import { useDialog } from '../../../../util/hooks/useDialog';
+import { useOpener } from '../../../../util/hooks/useOpener';
 import { SortNotesDialog } from './SortNotesDialog';
 
 type Props = {
@@ -19,7 +19,7 @@ const Component: React.FC<Props> = ({
   disabled,
   size,
 }) => {
-  const { isOpen, open, close } = useDialog(false);
+  const { isOpen, open, close } = useOpener(false);
   const [sortOrder, setSortOrder] = useState(defaultSortOrder);
 
   const handleClick = (event: React.SyntheticEvent) => {

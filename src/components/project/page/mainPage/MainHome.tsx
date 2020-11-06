@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { NotesView } from './NotesView';
@@ -6,13 +6,14 @@ import { MainHeader } from './MainHeader';
 import { Drawer } from '../../../ui/Drawer/Drawer';
 import { CategoriesView } from './CategoriesView';
 import { useAppStateContext } from '../../../../context/AppStateContext';
+import { useOpener } from '../../../../util/hooks/useOpener';
 
 type Props = {
   className?: string;
 };
 
 const Component: React.FC<Props> = ({ className }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const { isOpen, open, close, invert } = useOpener(true);
   const categoriesViewRef = useRef<HTMLUListElement | null>(null);
   const notesViewRef = useRef<HTMLUListElement | null>(null);
   const history = useHistory();
@@ -21,18 +22,6 @@ const Component: React.FC<Props> = ({ className }) => {
     selectedCategoryIds,
     setSelectedCategoryIds,
   } = useAppStateContext();
-
-  const invertDrawer = () => {
-    setIsOpen(state => !state);
-  };
-
-  const openDrawer = () => {
-    setIsOpen(true);
-  };
-
-  const closeDrawer = () => {
-    setIsOpen(false);
-  };
 
   const goSearchMode = () => {
     history.replace('/search');
@@ -70,13 +59,13 @@ const Component: React.FC<Props> = ({ className }) => {
 
   return (
     <div className={className} data-testid="mainPage">
-      <MainHeader onMenuClick={invertDrawer} onGoSearchMode={goSearchMode} />
+      <MainHeader onMenuClick={invert} onGoSearchMode={goSearchMode} />
       <Drawer
         width={isMobile ? '80' : '40'}
         isPresistent={!isMobile}
         open={isOpen}
-        onOpen={openDrawer}
-        onClose={closeDrawer}
+        onOpen={open}
+        onClose={close}
       >
         <CategoriesView
           onCategorySelect={setSelectedCategoryIds}

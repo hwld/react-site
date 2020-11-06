@@ -4,7 +4,7 @@ import AddCategoryIcon from '@material-ui/icons/CreateNewFolder';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { CategoryField } from '../../../../services/categories';
 import { ActivatorButton } from '../ActivatorButton';
-import { useDialog } from '../../../../util/hooks/useDialog';
+import { useOpener } from '../../../../util/hooks/useOpener';
 import { AddCategoryDialog } from './AddCategoryDialog';
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 };
 
 const Component: React.FC<Props> = ({ disabled, parentCategoryId, size }) => {
-  const { isOpen, open, close } = useDialog(false);
+  const { isOpen, open, close } = useOpener(false);
   const { addCategory } = useCategoriesContext();
 
   const handleAddCategory = (field: CategoryField) => {

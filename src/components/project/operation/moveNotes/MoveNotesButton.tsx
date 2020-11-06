@@ -4,7 +4,7 @@ import MoveNoteIcon from '@material-ui/icons/Forward';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { ActivatorButton } from '../ActivatorButton';
-import { useDialog } from '../../../../util/hooks/useDialog';
+import { useOpener } from '../../../../util/hooks/useOpener';
 import { MoveNotesDialog } from './MoveNotesDialog';
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 };
 
 const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
-  const { isOpen, open, close } = useDialog(false);
+  const { isOpen, open, close } = useOpener(false);
   const { categories } = useCategoriesContext();
   const { moveNotes } = useNotesContext();
 

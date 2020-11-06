@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import ClearIcon from '@material-ui/icons/Clear';
 import styled from 'styled-components';
 import { IconButton } from '../../../ui/IconButton';
-import { useDialog } from '../../../../util/hooks/useDialog';
+import { useOpener } from '../../../../util/hooks/useOpener';
 import { SelectCategoryDialog } from './SelectCategoryDialog';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 
@@ -18,7 +18,7 @@ const Component: React.FC<Props> = ({
   selectCategoryId,
   className,
 }) => {
-  const { isOpen, open, close } = useDialog(false);
+  const { isOpen, open, close } = useOpener(false);
   const { categories } = useCategoriesContext();
 
   const categoryName = useMemo(() => {

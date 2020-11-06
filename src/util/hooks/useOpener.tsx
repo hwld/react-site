@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const useDialog = (init: boolean) => {
+export const useOpener = (init: boolean) => {
   const [isOpen, setIsOpen] = useState(init);
   const open = () => {
     setIsOpen(true);
@@ -10,5 +10,9 @@ export const useDialog = (init: boolean) => {
     setIsOpen(false);
   };
 
-  return { isOpen, open, close };
+  const invert = () => {
+    setIsOpen(state => !state);
+  };
+
+  return { isOpen, open, close, invert };
 };
