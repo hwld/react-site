@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import styled from 'styled-components';
 import { Category } from '../../../../services/categories';
-import { CategoryTreeList } from '../../ui/CategoryTreeList';
+import { SelectCategoryForm } from '../../ui/SelectCategoryForm';
 import { OperationDialog } from '../OperationDialog';
 
 type Props = {
@@ -17,9 +17,7 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   categories: Category[];
-  destCategoryId: string;
-  selectCategory: (ids: string[]) => void;
-  onMove: (event: React.SyntheticEvent) => void;
+  onMove: (genreId: string) => void;
   onCancel: (event: React.SyntheticEvent) => void;
 };
 
@@ -28,11 +26,11 @@ const Component: React.FC<Props> = ({
   isOpen,
   onClose,
   categories,
-  destCategoryId,
-  selectCategory,
   onMove,
   onCancel,
 }) => {
+  const formId = 'moveNotesForm';
+
   return (
     <OperationDialog
       className={className}
@@ -46,16 +44,15 @@ const Component: React.FC<Props> = ({
         <DialogContentText color="textPrimary">
           移動先カテゴリー
         </DialogContentText>
-        <CategoryTreeList
-          className="categoryTreeList"
+        <SelectCategoryForm
+          id="moveNotesForm"
           categories={categories}
-          selectedCategoryIds={[destCategoryId]}
-          onCategorySelect={selectCategory}
+          onSubmit={onMove}
         />
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={onMove} data-testid="doneButton">
+        <Button type="submit" form={formId} data-testid="doneButton">
           <Typography color="textSecondary">移動</Typography>
         </Button>
         <Button onClick={onCancel} data-testid="cancelButton">
@@ -66,11 +63,4 @@ const Component: React.FC<Props> = ({
   );
 };
 
-const StyledComponent = styled(Component)`
-  & .categoryTreeList {
-    height: 50vh;
-    background-color: ${props => props.theme.palette.primary.dark};
-  }
-`;
-
-export const MoveNotesDialog = StyledComponent;
+export const MoveNotesDialog = Component;

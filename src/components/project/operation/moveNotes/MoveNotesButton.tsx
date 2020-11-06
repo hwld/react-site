@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SvgIconProps } from '@material-ui/core';
 import MoveNoteIcon from '@material-ui/icons/Forward';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
@@ -15,18 +15,15 @@ type Props = {
 
 const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
   const { isOpen, open, close } = useDialog(false);
-  const [destCategoryId, setDestCategoryId] = useState('');
   const { categories } = useCategoriesContext();
   const { moveNotes } = useNotesContext();
 
   const handleClick = (event: React.SyntheticEvent) => {
     event.stopPropagation();
-    setDestCategoryId('');
     open();
   };
 
-  const handleMove = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
+  const handleMove = (destCategoryId: string) => {
     moveNotes(sourceNoteIds, destCategoryId);
     close();
   };
@@ -34,10 +31,6 @@ const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
   const handleCancel = (event: React.SyntheticEvent) => {
     event.stopPropagation();
     close();
-  };
-
-  const selectCategory = (ids: string[]) => {
-    setDestCategoryId(ids[0] || '');
   };
 
   return (
@@ -53,11 +46,9 @@ const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
       <MoveNotesDialog
         isOpen={isOpen}
         onClose={close}
-        selectCategory={selectCategory}
         categories={categories}
-        destCategoryId={destCategoryId}
-        onCancel={handleCancel}
         onMove={handleMove}
+        onCancel={handleCancel}
       />
     </>
   );

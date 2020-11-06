@@ -6,9 +6,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import React from 'react';
-import styled from 'styled-components';
 import { Category } from '../../../../services/categories';
-import { CategoryTreeList } from '../../ui/CategoryTreeList';
+import { SelectCategoryForm } from '../../ui/SelectCategoryForm';
 import { OperationDialog } from '../OperationDialog';
 
 type Props = {
@@ -16,9 +15,8 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   categories: Category[];
-  selectedCategoryId: string;
-  selectCategoryIdInternal: (ids: string[]) => void;
-  onSelectCategory: (event: React.SyntheticEvent) => void;
+  defaultSelectedId: string;
+  onSelectCategory: (id: string) => void;
   onCancel: (event: React.SyntheticEvent) => void;
 };
 
@@ -27,24 +25,25 @@ const Component: React.FC<Props> = ({
   isOpen,
   onClose,
   categories,
-  selectedCategoryId,
-  selectCategoryIdInternal,
+  defaultSelectedId,
   onSelectCategory,
   onCancel,
 }) => {
+  const formId = 'selectCategoryForm';
+
   return (
     <OperationDialog open={isOpen} onClose={onClose} className={className}>
       <DialogTitle>検索するカテゴリーの選択</DialogTitle>
       <DialogContent>
-        <CategoryTreeList
-          className="categoryTreeList"
+        <SelectCategoryForm
           categories={categories}
-          selectedCategoryIds={[selectedCategoryId]}
-          onCategorySelect={selectCategoryIdInternal}
+          defaultSelectedId={defaultSelectedId}
+          id={formId}
+          onSubmit={onSelectCategory}
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onSelectCategory} data-testid="doneButton">
+        <Button type="submit" form={formId} data-testid="doneButton">
           <Typography color="textSecondary">選択</Typography>
         </Button>
         <Button onClick={onCancel} data-testid="cancelButton">
@@ -55,11 +54,4 @@ const Component: React.FC<Props> = ({
   );
 };
 
-const StyledComponent = styled(Component)`
-  & .categoryTreeList {
-    height: 50vh;
-    background-color: ${props => props.theme.palette.primary.dark};
-  }
-`;
-
-export const SelectCategoryDialog = StyledComponent;
+export const SelectCategoryDialog = Component;

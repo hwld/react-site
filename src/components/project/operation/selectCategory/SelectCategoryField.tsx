@@ -1,5 +1,5 @@
 import { TextField, InputAdornment } from '@material-ui/core';
-import React, { useState } from 'react';
+import React from 'react';
 import ClearIcon from '@material-ui/icons/Clear';
 import styled from 'styled-components';
 import { IconButton } from '../../../ui/IconButton';
@@ -24,15 +24,9 @@ const Component: React.FC<Props> = ({
 }) => {
   const { isOpen, open, close } = useDialog(false);
   const { categories } = useCategoriesContext();
-  const [internalSelected, setInternalSelected] = useState('');
-
-  const selectCategoryIdInternal = (ids: string[]) => {
-    setInternalSelected(ids[0] || '');
-  };
 
   const handleClickActivator = (event: React.SyntheticEvent) => {
     event.stopPropagation();
-    setInternalSelected(selectedCategoryId);
     open();
   };
 
@@ -41,9 +35,8 @@ const Component: React.FC<Props> = ({
     clearSelectedCategoryId();
   };
 
-  const handleSelectCategory = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    selectCategoryId(internalSelected);
+  const handleSelectCategory = (id: string) => {
+    selectCategoryId(id);
     close();
   };
 
@@ -77,8 +70,7 @@ const Component: React.FC<Props> = ({
         isOpen={isOpen}
         onClose={close}
         categories={categories}
-        selectedCategoryId={internalSelected}
-        selectCategoryIdInternal={selectCategoryIdInternal}
+        defaultSelectedId={selectedCategoryId}
         onSelectCategory={handleSelectCategory}
         onCancel={handleCancel}
       />
