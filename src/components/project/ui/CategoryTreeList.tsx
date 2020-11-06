@@ -6,6 +6,7 @@ import { CategoryTreeItem } from './CategoryTreeItem';
 import { Category } from '../../../services/categories';
 import { categoriesCompareFunction } from '../../../util/compareFunctions';
 
+// Categoryの表示用Node
 export type CategoryTreeNode = Category & {
   childrenCategories: CategoryTreeNode[];
 };
@@ -52,6 +53,7 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
     },
     ref,
   ) {
+    // Categoryを表示用のNodeに変換する関数
     const buildCategoryTreeNode = useCallback(
       (rawCategory: Category): CategoryTreeNode => {
         // rawCategoryの子カテゴリーを抽出
@@ -72,6 +74,7 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
       [categories],
     );
 
+    // 表示用のCategoryNodeからReactNodeを構築する関数
     const buildCategoryTreeItems = useCallback(
       (categoryTreeNode: CategoryTreeNode): React.ReactNode => {
         return (
@@ -92,6 +95,7 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
       [onNotesDrop],
     );
 
+    // 受け取ったcategoriesのReactNode
     const categoryTreeItems = useMemo(() => {
       // ルートカテゴリーを取得する
       const rootCategories = categories.filter(
