@@ -7,73 +7,17 @@ import { RemoveNotesButton } from '../operation/removeNotes/RemoveNotesButton';
 import { Note, SearchNotesCriteria } from '../../../services/notes';
 import { UpdateNoteButton } from '../operation/updateNote/UpdateNoteButton';
 
-const StyledListItem = styled(ListItem)<{ isMobile?: boolean }>`
-  margin: ${props => (props.isMobile ? '10px' : '30px')};
-`;
-
-const GridContainer = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: 85% 15%;
-  align-items: flex-start;
-`;
-
-const NoteTextContainer = styled.div`
-  padding-left: 20px;
-  word-break: break-all;
-`;
-
-const TitleText = styled(Typography)`
-  font-size: 2em;
-  font-weight: bold;
-`;
-
-const NoteText = styled(Typography)`
-  white-space: pre-line;
-  font-size: 1.2em;
-  margin-top: 20px;
-  margin-left: 20px;
-  margin-bottom: 20px;
-`;
-
-const MetaData = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-`;
-
-const MetaText = styled(Typography)`
-  font-size: 1em;
-  color: #c0c0c0;
-  margin-right: 10px;
-`;
-
-const HighlightSpan = styled.span`
-  background-color: ${props => props.theme.palette.secondary.light};
-  color: ${props => props.theme.palette.primary.main};
-`;
-
-const MenuContainer = styled.div`
-  height: 100%;
-  line-height: 60px;
-`;
-
-const MenuItem = styled.span`
-  margin-left: 10px;
-`;
-
 type Props = {
-  isMobile?: boolean;
   note: Note;
   itemId: string;
   searchCriteria?: SearchNotesCriteria;
+  className?: string;
 };
 const Component: React.FC<Props> = ({
-  isMobile,
   note,
   itemId,
   searchCriteria,
+  className,
 }) => {
   const refs = useRef<
     [
@@ -127,9 +71,9 @@ const Component: React.FC<Props> = ({
         {parts.map((part, i) =>
           part === highlight ? (
             // eslint-disable-next-line react/no-array-index-key
-            <HighlightSpan key={i} data-testid="search-highlight">
+            <span className="highlight" key={i} data-testid="search-highlight">
               {part}
-            </HighlightSpan>
+            </span>
           ) : (
             part
           ),
@@ -159,42 +103,101 @@ const Component: React.FC<Props> = ({
   }, [note.updatedAt]);
 
   return (
-    <StyledListItem
+    <ListItem
       itemId={itemId}
       onKeyDown={handleKeyDown}
       ref={refs.current[0]}
-      isMobile={isMobile}
+      // isMobile={isMobile}
+      className={className}
     >
-      <GridContainer>
-        <NoteTextContainer>
-          <TitleText variant="h4">
-            <span data-testid="title">{title}</span>
-          </TitleText>
-          <NoteText data-testid="text">{text}</NoteText>
-          <MetaData>
-            <MetaText>{`作成日: ${createdAt}`}</MetaText>
-            <MetaText>{`更新日: ${updatedAt}`}</MetaText>
-          </MetaData>
-        </NoteTextContainer>
-        <MenuContainer>
-          <MenuItem>
+      <div className="itemRoot">
+        <div className="noteContainer">
+          <Typography className="title" variant="h4" data-testid="title">
+            {title}
+          </Typography>
+          <Typography className="text" data-testid="text">
+            {text}
+          </Typography>
+          <div className="metaData">
+            <Typography className="metaText">{`作成日: ${createdAt}`}</Typography>
+            <Typography className="metaText">{`更新日: ${updatedAt}`}</Typography>
+          </div>
+        </div>
+        <div className="menuContainer">
+          <span className="menuItem">
             <RemoveNotesButton
               targetNoteIds={[itemId]}
               tabIndex={-1}
               ref={refs.current[1]}
             />
-          </MenuItem>
-          <MenuItem>
+          </span>
+          <span className="menuItem">
             <UpdateNoteButton
               defaultNoteId={note.id}
               tabIndex={-1}
               ref={refs.current[2]}
             />
-          </MenuItem>
-        </MenuContainer>
-      </GridContainer>
-    </StyledListItem>
+          </span>
+        </div>
+      </div>
+    </ListItem>
   );
 };
 
-export const NoteListItem = Component;
+const StyledComponent = styled(Component)<{ isMobile?: boolean }>`
+  margin: ${props => (props.isMobile ? '10px' : '30px')};
+
+  & .highlight {
+    background-color: ${props => props.theme.palette.secondary.light};
+    color: ${props => props.theme.palette.primary.main};
+  }
+
+  & .itemRoot {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 85% 15%;
+    align-items: flex-start;
+
+    & .noteContainer {
+      padding-left: 20px;
+      word-break: break-all;
+
+      & .title {
+        font-size: 2em;
+        font-weight: bold;
+      }
+
+      & .text {
+        white-space: pre-line;
+        font-size: 1.2em;
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-bottom: 20px;
+      }
+
+      & .metaData {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+
+        & .metaText {
+          font-size: 1em;
+          color: #c0c0c0;
+          margin-right: 10px;
+        }
+      }
+    }
+
+    & .menuContainer {
+      height: 100%;
+      line-height: 60px;
+
+      & .menuItem {
+        margin-left: 10px;
+      }
+    }
+  }
+`;
+
+export const NoteListItem = StyledComponent;

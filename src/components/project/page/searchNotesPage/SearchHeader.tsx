@@ -16,15 +16,11 @@ const Component: React.FC<Props> = ({ onMenuClick }) => {
   };
 
   return (
-    <AppHeader
-      title="検索"
-      onMenuClick={onMenuClick}
-      menuItems={
-        <IconButton tooltipText="ホームに戻る" onClick={backHome}>
-          <HomeIcon />
-        </IconButton>
-      }
-    />
+    <AppHeader title="検索" onMenuClick={onMenuClick}>
+      <IconButton tooltipText="ホームに戻る" onClick={backHome}>
+        <HomeIcon />
+      </IconButton>
+    </AppHeader>
   );
 };
 

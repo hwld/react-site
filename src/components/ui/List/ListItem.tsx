@@ -6,35 +6,6 @@ import { fade } from '@material-ui/core/styles';
 import { ListContext } from './ListContext';
 import { ItemTypes } from '../ItemTypes';
 
-const StyledMuiListItem = styled(MuiListItem)`
-  border: 1px solid ${props => props.theme.palette.primary.light};
-  border-radius: 10px;
-
-  &.focused {
-    background-color: ${props => props.theme.palette.action.hover};
-    border: 1px solid ${props => props.theme.palette.secondary.light};
-  }
-
-  &.Mui-selected {
-    background-color: ${props =>
-      fade(
-        props.theme.palette.action.selected,
-        props.theme.palette.action.selectedOpacity,
-      )};
-  }
-
-  &.Mui-selected.Mui-focusVisible,
-  &.Mui-selected:focus,
-  &.Mui-selected:hover {
-    background-color: ${props =>
-      fade(
-        props.theme.palette.action.selected,
-        props.theme.palette.action.selectedOpacity +
-          props.theme.palette.action.hoverOpacity,
-      )};
-  }
-`;
-
 export type ListItemDropType = {
   type: string;
   ids: string[];
@@ -113,8 +84,8 @@ export const Component = React.forwardRef<
       ref={draggable ? drag : null}
       data-testid={`dragLayer-${itemId}`}
     >
-      <StyledMuiListItem
-        className={focused ? 'focused' : ''}
+      <MuiListItem
+        className={`list-item ${focused && 'focused'}`}
         ref={handleRef}
         button
         onClick={handleClick}
@@ -131,7 +102,7 @@ export const Component = React.forwardRef<
         tabIndex={-1}
       >
         {children}
-      </StyledMuiListItem>
+      </MuiListItem>
       <DragPreviewImage
         connect={preview}
         src={`${process.env.PUBLIC_URL}/note.svg`}
@@ -140,4 +111,35 @@ export const Component = React.forwardRef<
   );
 });
 
-export const ListItem = Component;
+const StyledComponent = styled(Component)`
+  & > .list-item {
+    border: 1px solid ${props => props.theme.palette.primary.light};
+    border-radius: 10px;
+
+    &.focused {
+      background-color: ${props => props.theme.palette.action.hover};
+      border: 1px solid ${props => props.theme.palette.secondary.light};
+    }
+
+    &.Mui-selected {
+      background-color: ${props =>
+        fade(
+          props.theme.palette.action.selected,
+          props.theme.palette.action.selectedOpacity,
+        )};
+    }
+
+    &.Mui-selected.Mui-focusVisible,
+    &.Mui-selected:focus,
+    &.Mui-selected:hover {
+      background-color: ${props =>
+        fade(
+          props.theme.palette.action.selected,
+          props.theme.palette.action.selectedOpacity +
+            props.theme.palette.action.hoverOpacity,
+        )};
+    }
+  }
+`;
+
+export const ListItem = StyledComponent;

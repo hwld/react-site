@@ -114,7 +114,7 @@ const Component = forwardRef<HTMLUListElement, PropsWithChildren<Props>>(
 );
 
 const StyledComponent = styled(Component)`
-  & &_alert {
+  &_alert {
     margin: 20px auto;
     width: 80%;
   }

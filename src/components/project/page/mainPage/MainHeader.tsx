@@ -11,15 +11,11 @@ type Props = {
 
 const Component: React.FC<Props> = ({ onMenuClick, onGoSearchMode }) => {
   return (
-    <AppHeader
-      title="Notes"
-      onMenuClick={onMenuClick}
-      menuItems={
-        <IconButton tooltipText="検索モードに移動" onClick={onGoSearchMode}>
-          <SearchNoteIcon />
-        </IconButton>
-      }
-    />
+    <AppHeader title="Notes" onMenuClick={onMenuClick}>
+      <IconButton tooltipText="検索モードに移動" onClick={onGoSearchMode}>
+        <SearchNoteIcon />
+      </IconButton>
+    </AppHeader>
   );
 };
 

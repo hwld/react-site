@@ -8,10 +8,6 @@ import styled from 'styled-components';
 import { TreeViewContext } from './TreeViewContext';
 import { ItemTypes } from '../ItemTypes';
 
-const DropLayer = styled.div`
-  height: 100%;
-`;
-
 export const styles = () => ({
   /* Styles applied to the root element. */
   root: {
@@ -19,6 +15,9 @@ export const styles = () => ({
     margin: 0,
     listStyle: 'none',
     outline: 'none',
+  },
+  doropLayer: {
+    height: '100%',
   },
 });
 
@@ -712,7 +711,7 @@ const Component = React.forwardRef<
         dropToSelected,
       }}
     >
-      <DropLayer ref={dropRef}>
+      <div className={classes.doropLayer} ref={dropRef}>
         <ul
           tabIndex={0}
           role="tree"
@@ -726,7 +725,7 @@ const Component = React.forwardRef<
         >
           {children}
         </ul>
-      </DropLayer>
+      </div>
     </TreeViewContext.Provider>
   );
 });

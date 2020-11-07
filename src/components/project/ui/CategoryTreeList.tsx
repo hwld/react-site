@@ -11,17 +11,6 @@ export type CategoryTreeNode = Category & {
   childrenCategories: CategoryTreeNode[];
 };
 
-const StyledTreeView = styled(TreeView)`
-  height: 100%;
-  overflow: auto;
-  word-break: keep-all;
-`;
-
-const StyledAlert = styled(Alert)`
-  margin: 20px auto;
-  width: 80%;
-`;
-
 type Props = {
   categories: Category[];
   className?: string;
@@ -112,7 +101,7 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
     }, [buildCategoryTreeItems, buildCategoryTreeNode, categories]);
 
     return (
-      <StyledTreeView
+      <TreeView
         multiSelect={multiple}
         className={className}
         selected={selectedCategoryIds}
@@ -127,11 +116,24 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
         {categories.length !== 0 ? (
           categoryTreeItems
         ) : (
-          <StyledAlert severity="warning">カテゴリーが存在しません</StyledAlert>
+          <Alert className="alert" severity="warning">
+            カテゴリーが存在しません
+          </Alert>
         )}
-      </StyledTreeView>
+      </TreeView>
     );
   },
 );
 
-export const CategoryTreeList = Component;
+const StyledComponent = styled(Component)`
+  height: 100%;
+  overflow: auto;
+  word-break: keep-all;
+
+  & .alert {
+    margin: 20px auto;
+    width: 80%;
+  }
+`;
+
+export const CategoryTreeList = StyledComponent;

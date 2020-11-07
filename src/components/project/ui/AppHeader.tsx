@@ -9,18 +9,17 @@ import { AccountSettingMenu } from './AccountSettingMenu';
 import { useAuthContext } from '../../../context/AuthContext';
 import { useAppStateContext } from '../../../context/AppStateContext';
 
-const AppTitle = styled(Typography)`
-  font-weight: bold;
-  color: ${props => props.theme.palette.text.secondary};
-  flex-grow: 1;
-`;
-
 type Props = {
+  className?: string;
   title: string;
   onMenuClick: () => void;
-  menuItems: React.ReactNode;
 };
-const Component: React.FC<Props> = ({ title, onMenuClick, menuItems }) => {
+const Component: React.FC<Props> = ({
+  className,
+  title,
+  onMenuClick,
+  children,
+}) => {
   const { user, logout, deleteAccount } = useAuthContext();
   const { clearAppState } = useAppStateContext();
 
@@ -33,7 +32,7 @@ const Component: React.FC<Props> = ({ title, onMenuClick, menuItems }) => {
   };
 
   return (
-    <AppBar position="absolute">
+    <AppBar position="absolute" className={className}>
       <Toolbar>
         <IconButton
           tooltipText="カテゴリービューを開く"
@@ -43,8 +42,10 @@ const Component: React.FC<Props> = ({ title, onMenuClick, menuItems }) => {
         >
           <MenuIcon />
         </IconButton>
-        <AppTitle variant="h5">{title}</AppTitle>
-        {menuItems}
+        <Typography className="appTitle" variant="h5">
+          {title}
+        </Typography>
+        {children}
         {user.isAnonymous && <AccountLinkMenu />}
         {!user.isAnonymous && <AccountSettingMenu />}
         <IconButton tooltipText="ログアウト" onClick={logoutAndDelete}>
@@ -55,4 +56,12 @@ const Component: React.FC<Props> = ({ title, onMenuClick, menuItems }) => {
   );
 };
 
-export const AppHeader = Component;
+const StyledComponent = styled(Component)`
+  & .appTitle {
+    font-weight: bold;
+    color: ${props => props.theme.palette.text.secondary};
+    flex-grow: 1;
+  }
+`;
+
+export const AppHeader = StyledComponent;

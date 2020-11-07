@@ -10,11 +10,6 @@ import {
 } from '../../../services/notes';
 import { notesCompareFunction } from '../../../util/compareFunctions';
 
-const StyledAlert = styled(Alert)`
-  margin: 20px auto;
-  width: 80%;
-`;
-
 type Props = {
   notes: Note[];
   notesSortOrder?: NotesSortOrder;
@@ -68,13 +63,20 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
         {notes.length !== 0 ? (
           listItems
         ) : (
-          <StyledAlert className={className} severity="warning">
+          <Alert className="alert" severity="warning">
             メモが存在しません
-          </StyledAlert>
+          </Alert>
         )}
       </List>
     );
   },
 );
 
-export const NoteList = Component;
+const StyledComponent = styled(Component)`
+  & .alert {
+    margin: 20px auto;
+    width: 80%;
+  }
+`;
+
+export const NoteList = StyledComponent;

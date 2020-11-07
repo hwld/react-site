@@ -12,20 +12,6 @@ import styled from 'styled-components';
 import { TreeViewContext } from './TreeViewContext';
 import { ItemTypes } from '../ItemTypes';
 
-const DropLayer = styled.div<{
-  canDrop?: boolean;
-  isDropOver?: boolean;
-}>`
-  background-color: ${props =>
-    props.canDrop && props.isDropOver
-      ? props.theme.palette.secondary.main
-      : ''};
-`;
-
-const DragLayer = styled.div<{ isDragging?: boolean }>`
-  opacity: ${props => (props.isDragging ? 0.5 : 1)};
-`;
-
 export const styles = (theme: Theme) => ({
   /* Styles applied to the root element. */
   root: {
@@ -67,6 +53,27 @@ export const styles = (theme: Theme) => ({
   selected: {},
   /* Pseudo-class applied to the root element when focused. */
   focused: {},
+
+  /* ドロップレイヤーに適用されるスタイル */
+  dropLayer: {
+    '&$canDrop$isDropOver': {
+      backgroundColor: theme.palette.secondary.main,
+    },
+  },
+  /* ドラッグレイヤーに適用されるスタイル */
+  dragLayer: {
+    opacity: 1,
+    '&$isDragging': {
+      opacity: 0.5,
+    },
+  },
+  /* ドロップ可能な要素に適用される疑似クラス */
+  canDrop: {},
+  /* ドロップオーバーされている要素に適用される擬似クラス */
+  isDropOver: {},
+  /* ドラッグされている要素に適用される疑似クラス */
+  isDragging: {},
+
   /* Styles applied to the `role="group"` element. */
   group: {
     margin: 0,
@@ -284,6 +291,7 @@ const UnStyledTreeItem = React.forwardRef<
     },
   });
 
+  // TreeItemはTreeItemをドロップできるので、外側から受け取ったisDropとは別の状態が必要になる.
   const [{ isDropOverInner, canDropInner }, drop] = useDrop({
     accept: ItemTypes.TreeItem,
     collect: monitor => ({
@@ -316,16 +324,25 @@ const UnStyledTreeItem = React.forwardRef<
       ref={handleRef}
       tabIndex={-1}
     >
-      <DropLayer isDropOver={isDropOver} canDrop={canDrop}>
-        <DropLayer
+      <div
+        className={clsx(classes.dropLayer, {
+          [classes.isDropOver]: isDropOver,
+          [classes.canDrop]: canDrop,
+        })}
+      >
+        <div
+          className={clsx(classes.dropLayer, {
+            [classes.isDropOver]: isDropOverInner,
+            [classes.canDrop]: canDropInner,
+          })}
           ref={drop}
-          isDropOver={isDropOverInner}
-          canDrop={canDropInner}
           data-testid={`dropLayer-${nodeId}`}
         >
-          <DragLayer
+          <div
+            className={clsx(classes.dragLayer, {
+              [classes.isDragging]: isDragging,
+            })}
             ref={draggable ? drag : null}
-            isDragging={isDragging}
             data-testid={`dragLayer-${nodeId}`}
           >
             <div
@@ -352,9 +369,9 @@ const UnStyledTreeItem = React.forwardRef<
               connect={preview}
               src={`${process.env.PUBLIC_URL}/folder.svg`}
             />
-          </DragLayer>
-        </DropLayer>
-      </DropLayer>
+          </div>
+        </div>
+      </div>
       {children && (
         <Collapse
           unmountOnExit

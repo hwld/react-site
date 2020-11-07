@@ -3,13 +3,6 @@ import { List as MuiList } from '@material-ui/core';
 import styled from 'styled-components';
 import { ListContextProvider } from './ListContext';
 
-const StyledMuiList = styled(MuiList)`
-  overflow: auto;
-  height: 100%;
-  padding-top: 0;
-  padding-bottom: 0;
-`;
-
 type Props = {
   className?: string;
   selectedIds?: string[];
@@ -177,7 +170,7 @@ export const Component = React.forwardRef<
         focusPrevItem,
       }}
     >
-      <StyledMuiList
+      <MuiList
         className={className}
         ref={ref}
         onKeyDown={handleKeyDown}
@@ -185,9 +178,16 @@ export const Component = React.forwardRef<
         tabIndex={0}
       >
         {children}
-      </StyledMuiList>
+      </MuiList>
     </ListContextProvider>
   );
 });
 
-export const List = Component;
+const StyledComponent = styled(Component)`
+  overflow: auto;
+  height: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
+`;
+
+export const List = StyledComponent;
