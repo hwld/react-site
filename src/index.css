@@ -14,14 +14,14 @@ code {
 
 @font-face{
   font-family: 'Noto Sans JP';
-  src: local('Noto Sans JP'), url(./fonts/NotoSansJP-Regular.otf) format('opentype');
+  src: local('Noto Sans JP'), url(./fonts/NotoSansCJKjp-Regular.woff2) format('woff2');
   font-weight: normal;
   font-display: swap;
 }
 
 @font-face{
   font-family: 'Noto Sans JP';
-  src: local('Noto Sans JP'), url(./fonts/NotoSansJP-Bold.otf) format('opentype');
+  src: local('Noto Sans JP'), url(./fonts/NotoSansCJKjp-Bold.woff2) format('woff2');
   font-weight: 700;
   font-display: swap;
 }
