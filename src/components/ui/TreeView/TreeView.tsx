@@ -4,7 +4,6 @@ import { useControlled } from '@material-ui/core/utils';
 import { WithStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import { useDrop } from 'react-dnd';
-import styled from 'styled-components';
 import { TreeViewContext } from './TreeViewContext';
 import { ItemTypes } from '../ItemTypes';
 

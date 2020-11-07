@@ -8,7 +8,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import clsx from 'clsx';
 import { useDrag, useDrop, DragPreviewImage } from 'react-dnd';
-import styled from 'styled-components';
 import { TreeViewContext } from './TreeViewContext';
 import { ItemTypes } from '../ItemTypes';
 
