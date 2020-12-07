@@ -23,12 +23,15 @@ const Component: React.FC<Props> = ({
         maxWidth="sm"
         // ダイアログ外をクリックするとクリックイベントが伝搬してしまうため、ここで防ぐ
         onClick={stopPropagation}
+        onMouseDown={stopPropagation}
         // ダイアログ内のフォーカスイベントを外に出さない
         onFocus={stopPropagation}
         // ダイアログ内のキーボードイベントを外に出さない
         onKeyDown={stopPropagation}
         data-testid="dialog"
-        PaperProps={{ className }}
+        PaperProps={{
+          className,
+        }}
       >
         {children}
       </Dialog>

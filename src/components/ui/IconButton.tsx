@@ -1,4 +1,4 @@
-import React, { forwardRef, PropsWithChildren } from 'react';
+import React, { forwardRef, PropsWithChildren, MouseEvent } from 'react';
 import {
   Tooltip,
   Typography,
@@ -14,11 +14,21 @@ export type Props = {
 } & MuiIconButtonProps;
 
 const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
-  function IconButton({ tooltipText, disabled, children, ...props }, ref) {
+  function IconButton(
+    { tooltipText, disabled, children, onClick, ...props },
+    ref,
+  ) {
+    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      if (onClick) {
+        onClick(e);
+      }
+    };
+
     if (tooltipText && !disabled) {
       return (
         <Tooltip title={<Typography>{tooltipText}</Typography>}>
-          <MuiIconButton ref={ref} {...props}>
+          <MuiIconButton ref={ref} onClick={handleClick} {...props}>
             {children}
           </MuiIconButton>
         </Tooltip>
@@ -26,7 +36,12 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
     }
 
     return (
-      <MuiIconButton ref={ref} disabled={disabled} {...props}>
+      <MuiIconButton
+        ref={ref}
+        onClick={handleClick}
+        disabled={disabled}
+        {...props}
+      >
         {children}
       </MuiIconButton>
     );
