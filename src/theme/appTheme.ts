@@ -46,6 +46,7 @@ const appTheme = createMuiTheme({
     MuiTextField: {
       variant: 'filled',
       color: 'secondary',
+      spellCheck: false,
     },
   },
   typography: {
