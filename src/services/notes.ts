@@ -1,6 +1,6 @@
 import { useMemo, useCallback } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { db, firebase } from './firebaseConfig';
+import { db, firebase } from '../firebaseConfig';
 
 // types
 export type NoteField = {

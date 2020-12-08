@@ -1,8 +1,8 @@
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useCallback, useMemo } from 'react';
-import { db, firebase } from './firebaseConfig';
 import { getDefaultNotesSortOrder, NoteService, NotesSortOrder } from './notes';
 import { AppStateService } from './appState';
+import { db, firebase } from '../firebaseConfig';
 
 // types
 export type CategoryField = {

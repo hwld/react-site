@@ -1,6 +1,6 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCallback, useMemo } from 'react';
-import { auth, firebase } from './firebaseConfig';
+import { auth, firebase } from '../firebaseConfig';
 
 // types
 export type AppUser = {
