@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { SearchHeader } from './SearchHeader';
+import HomeIcon from '@material-ui/icons/Home';
+import { useHistory } from 'react-router-dom';
 import { SearchColumn } from './SearchColumn';
 import { ResultNotesColumn } from './ResultNotesColumn';
 import { Drawer } from '../../../ui/Drawer/Drawer';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 import { useOpener } from '../../../../util/hooks/useOpener';
+import { AppHeader } from '../../ui/AppHeader';
+import { IconButton } from '../../../ui/IconButton';
 
 type Props = {
   className?: string;
@@ -20,10 +23,20 @@ const Component: React.FC<Props> = ({ className }) => {
     text: '',
   });
   const { isMobile } = useAppStateContext();
+  const history = useHistory();
+
+  const backHome = () => {
+    history.replace('/home');
+  };
 
   return (
     <div className={className} data-testid="searchNotestPage">
-      <SearchHeader onMenuClick={invert} />
+      <AppHeader title="検索" onMenuClick={invert}>
+        <IconButton tooltipText="ホームに戻る" onClick={backHome}>
+          <HomeIcon />
+        </IconButton>
+      </AppHeader>
+
       <Drawer
         width={isMobile ? '80' : '30'}
         isPresistent={!isMobile}

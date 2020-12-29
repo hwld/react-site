@@ -1,12 +1,14 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import SearchNoteIcon from '@material-ui/icons/Search';
 import { NotesView } from './NotesView';
-import { MainHeader } from './MainHeader';
 import { Drawer } from '../../../ui/Drawer/Drawer';
 import { CategoriesView } from './CategoriesView';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 import { useOpener } from '../../../../util/hooks/useOpener';
+import { IconButton } from '../../../ui/IconButton';
+import { AppHeader } from '../../ui/AppHeader';
 
 type Props = {
   className?: string;
@@ -59,7 +61,12 @@ const Component: React.FC<Props> = ({ className }) => {
 
   return (
     <div className={className} data-testid="mainPage">
-      <MainHeader onMenuClick={invert} onGoSearchMode={goSearchMode} />
+      <AppHeader title="Notes" onMenuClick={invert}>
+        <IconButton tooltipText="検索モードに移動" onClick={goSearchMode}>
+          <SearchNoteIcon />
+        </IconButton>
+      </AppHeader>
+
       <Drawer
         width={isMobile ? '80' : '40'}
         isPresistent={!isMobile}

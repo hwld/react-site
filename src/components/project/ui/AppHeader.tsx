@@ -34,12 +34,7 @@ const Component: React.FC<Props> = ({
   return (
     <AppBar position="absolute" className={className}>
       <Toolbar>
-        <IconButton
-          tooltipText="カテゴリービューを開く"
-          edge="start"
-          data-testid="menuButton"
-          onClick={onMenuClick}
-        >
+        <IconButton edge="start" data-testid="menuButton" onClick={onMenuClick}>
           <MenuIcon />
         </IconButton>
         <Typography className="appTitle" variant="h5">
