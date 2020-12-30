@@ -10,6 +10,8 @@ import { useAppStateContext } from '../../../../context/AppStateContext';
 import { useOpener } from '../../../../util/hooks/useOpener';
 import { AppHeader } from '../../ui/AppHeader';
 import { IconButton } from '../../../ui/IconButton';
+import { Loading } from '../../ui/Loading';
+import { useAuthContext } from '../../../../context/AuthContext';
 
 type Props = {
   className?: string;
@@ -23,6 +25,7 @@ const Component: React.FC<Props> = ({ className }) => {
     text: '',
   });
   const { isMobile } = useAppStateContext();
+  const { authState } = useAuthContext();
   const history = useHistory();
 
   const backHome = () => {
@@ -47,6 +50,7 @@ const Component: React.FC<Props> = ({ className }) => {
         <SearchColumn setCriteria={setSearchCriteria} />
       </Drawer>
       <ResultNotesColumn searchCriteria={searchCriteria} />
+      <Loading loading={authState.loading} />
     </div>
   );
 };

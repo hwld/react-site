@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { LoadingHome } from './components/project/page/loadingPage/LoadingHome';
 import { LoginHome } from './components/project/page/loginPage/LoginHome';
 import { MainHome } from './components/project/page/mainPage/MainHome';
 import { SearchHome } from './components/project/page/searchNotesPage/SearchHome';
@@ -11,8 +10,8 @@ const Component: React.FC = () => {
 
   return (
     <Switch>
-      {authState.loading && <LoadingHome />}
-      {user.userId === '' && <LoginHome />}
+      {!authState.loading && user.userId === '' && <LoginHome />}
+
       <Route path="/home">
         <MainHome />
       </Route>

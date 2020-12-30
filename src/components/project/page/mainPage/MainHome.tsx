@@ -9,6 +9,8 @@ import { useAppStateContext } from '../../../../context/AppStateContext';
 import { useOpener } from '../../../../util/hooks/useOpener';
 import { IconButton } from '../../../ui/IconButton';
 import { AppHeader } from '../../ui/AppHeader';
+import { useAuthContext } from '../../../../context/AuthContext';
+import { Loading } from '../../ui/Loading';
 
 type Props = {
   className?: string;
@@ -24,6 +26,7 @@ const Component: React.FC<Props> = ({ className }) => {
     selectedCategoryIds,
     setSelectedCategoryIds,
   } = useAppStateContext();
+  const { authState } = useAuthContext();
 
   const goSearchMode = () => {
     history.replace('/search');
@@ -86,6 +89,8 @@ const Component: React.FC<Props> = ({ className }) => {
         onKeyDown={handleNotesViewKeyDown}
         ref={notesViewRef}
       />
+
+      <Loading loading={authState.loading} />
     </div>
   );
 };
