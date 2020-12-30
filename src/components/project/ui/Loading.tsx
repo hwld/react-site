@@ -3,13 +3,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 type Props = {
-  loading: boolean;
   className?: string;
 };
 
-const Component: React.FC<Props> = ({ loading, className }) => {
+const Component: React.FC<Props> = ({ className }) => {
   return (
-    <Backdrop className={className} open={loading}>
+    <Backdrop className={className} open>
       <CircularProgress
         size="5rem"
         color="secondary"

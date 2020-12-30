@@ -12,6 +12,7 @@ import { AppHeader } from '../../ui/AppHeader';
 import { IconButton } from '../../../ui/IconButton';
 import { Loading } from '../../ui/Loading';
 import { useAuthContext } from '../../../../context/AuthContext';
+import { LoginDialog } from '../../ui/LoginDialog';
 
 type Props = {
   className?: string;
@@ -25,12 +26,15 @@ const Component: React.FC<Props> = ({ className }) => {
     text: '',
   });
   const { isMobile } = useAppStateContext();
-  const { authState } = useAuthContext();
+  const { user, authState } = useAuthContext();
   const history = useHistory();
 
   const backHome = () => {
     history.replace('/home');
   };
+
+  const isLoading = authState.loading;
+  const isNotLogin = !authState.loading && user.userId === '';
 
   return (
     <div className={className} data-testid="searchNotestPage">
@@ -50,7 +54,9 @@ const Component: React.FC<Props> = ({ className }) => {
         <SearchColumn setCriteria={setSearchCriteria} />
       </Drawer>
       <ResultNotesColumn searchCriteria={searchCriteria} />
-      <Loading loading={authState.loading} />
+
+      {isLoading && <Loading />}
+      {isNotLogin && <LoginDialog />}
     </div>
   );
 };

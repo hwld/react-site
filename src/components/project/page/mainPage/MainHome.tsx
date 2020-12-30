@@ -11,6 +11,7 @@ import { IconButton } from '../../../ui/IconButton';
 import { AppHeader } from '../../ui/AppHeader';
 import { useAuthContext } from '../../../../context/AuthContext';
 import { Loading } from '../../ui/Loading';
+import { LoginDialog } from '../../ui/LoginDialog';
 
 type Props = {
   className?: string;
@@ -26,7 +27,10 @@ const Component: React.FC<Props> = ({ className }) => {
     selectedCategoryIds,
     setSelectedCategoryIds,
   } = useAppStateContext();
-  const { authState } = useAuthContext();
+  const { user, authState } = useAuthContext();
+
+  const isLoading = authState.loading;
+  const isNotLogin = !authState.loading && user.userId === '';
 
   const goSearchMode = () => {
     history.replace('/search');
@@ -90,7 +94,8 @@ const Component: React.FC<Props> = ({ className }) => {
         ref={notesViewRef}
       />
 
-      <Loading loading={authState.loading} />
+      {isLoading && <Loading />}
+      {isNotLogin && <LoginDialog />}
     </div>
   );
 };
