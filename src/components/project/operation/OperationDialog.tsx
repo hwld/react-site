@@ -9,6 +9,7 @@ const Component: React.FC<Props> = ({
   children,
   className,
   'data-testid': dataTestId,
+  maxWidth = 'sm',
   ...props
 }) => {
   const stopPropagation = (event: BaseSyntheticEvent<{}>) => {
@@ -18,9 +19,8 @@ const Component: React.FC<Props> = ({
   return (
     <span data-testid={dataTestId}>
       <Dialog
-        {...props}
         fullWidth
-        maxWidth="sm"
+        maxWidth={maxWidth}
         // ダイアログ外をクリックするとクリックイベントが伝搬してしまうため、ここで防ぐ
         onClick={stopPropagation}
         onMouseDown={stopPropagation}
@@ -32,6 +32,7 @@ const Component: React.FC<Props> = ({
         PaperProps={{
           className,
         }}
+        {...props}
       >
         {children}
       </Dialog>

@@ -66,8 +66,8 @@ const Component: React.FC<Props> = ({
               label="メモ"
               placeholder="(5000文字以内で入力してください)"
               error={!!errors.text}
-              rowsMax="20"
-              rows="20"
+              rowsMax="30"
+              rows="30"
               multiline
               fullWidth
               {...props}

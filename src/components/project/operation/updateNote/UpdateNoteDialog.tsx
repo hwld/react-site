@@ -30,6 +30,7 @@ const Component: React.FC<Props> = ({
       open={isOpen}
       onClose={onClose}
       data-testid="updateNoteDialog"
+      maxWidth="md"
     >
       <DialogTitle>メモの編集</DialogTitle>
       <DialogContent>
