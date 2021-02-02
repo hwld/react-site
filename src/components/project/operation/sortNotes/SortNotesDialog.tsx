@@ -1,12 +1,8 @@
-import {
-  Button,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Typography,
-} from '@material-ui/core';
+import { DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import React from 'react';
 import { NotesSortOrder } from '../../../../services/notes';
+import { ApplyButton } from '../../ui/ApplyButton';
+import { CancelButton } from '../../ui/CancelButton';
 import { NotesSortConditionField } from '../../ui/NotesSortConditionFields';
 import { OperationDialog } from '../OperationDialog';
 
@@ -32,6 +28,7 @@ const Component: React.FC<Props> = ({
   return (
     <OperationDialog open={isOpen} onClose={onClose}>
       <DialogTitle>ノートの並び替え</DialogTitle>
+
       <DialogContent>
         <NotesSortConditionField
           notesSortOrder={sortOrder}
@@ -39,13 +36,10 @@ const Component: React.FC<Props> = ({
           onChangeOrder={onChangeSortOrder}
         />
       </DialogContent>
+
       <DialogActions>
-        <Button onClick={onSortNotes}>
-          <Typography color="textSecondary">並び替え</Typography>
-        </Button>
-        <Button onClick={onCancel}>
-          <Typography color="textSecondary">中止</Typography>
-        </Button>
+        <CancelButton text="中止" onClick={onCancel} />
+        <ApplyButton text="並び替え" onClick={onSortNotes} />
       </DialogActions>
     </OperationDialog>
   );

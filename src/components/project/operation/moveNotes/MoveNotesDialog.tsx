@@ -1,13 +1,13 @@
 import {
-  Button,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Typography,
 } from '@material-ui/core';
 import React from 'react';
 import { Category } from '../../../../services/categories';
+import { ApplyButton } from '../../ui/ApplyButton';
+import { CancelButton } from '../../ui/CancelButton';
 import { SelectCategoryForm } from '../../ui/SelectCategoryForm';
 import { OperationDialog } from '../OperationDialog';
 
@@ -44,12 +44,8 @@ const Component: React.FC<Props> = ({
       </DialogContent>
 
       <DialogActions>
-        <Button type="submit" form={formId}>
-          <Typography color="textSecondary">移動</Typography>
-        </Button>
-        <Button onClick={onClose}>
-          <Typography color="textSecondary">中止</Typography>
-        </Button>
+        <CancelButton text="中止" onClick={onClose} />
+        <ApplyButton text="移動" type="submit" form={formId} />
       </DialogActions>
     </OperationDialog>
   );

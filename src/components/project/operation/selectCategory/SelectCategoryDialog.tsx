@@ -1,12 +1,8 @@
-import {
-  Button,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Typography,
-} from '@material-ui/core';
+import { DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import React from 'react';
 import { Category } from '../../../../services/categories';
+import { ApplyButton } from '../../ui/ApplyButton';
+import { CancelButton } from '../../ui/CancelButton';
 import { SelectCategoryForm } from '../../ui/SelectCategoryForm';
 import { OperationDialog } from '../OperationDialog';
 
@@ -32,6 +28,7 @@ const Component: React.FC<Props> = ({
   return (
     <OperationDialog open={isOpen} onClose={onClose} className={className}>
       <DialogTitle>検索するカテゴリーの選択</DialogTitle>
+
       <DialogContent>
         <SelectCategoryForm
           categories={categories}
@@ -40,13 +37,10 @@ const Component: React.FC<Props> = ({
           onSubmit={onSelectCategory}
         />
       </DialogContent>
+
       <DialogActions>
-        <Button type="submit" form={formId}>
-          <Typography color="textSecondary">選択</Typography>
-        </Button>
-        <Button onClick={onClose}>
-          <Typography color="textSecondary">中止</Typography>
-        </Button>
+        <CancelButton text="中止" onClick={onClose} />
+        <ApplyButton text="選択" type="submit" form={formId} />
       </DialogActions>
     </OperationDialog>
   );
