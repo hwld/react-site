@@ -1,11 +1,11 @@
 import {
-  Drawer,
+  SwipeableDrawer as MuiDrawer,
   SwipeableDrawerProps as MuiDrawerProps,
 } from '@material-ui/core';
 import styled from 'styled-components';
 
-export type SwipeableDrawerProps = MuiDrawerProps;
-export const SwipeableDrawer = styled(Drawer)<{ width?: string }>`
+export type SwipeableDrawerProps = MuiDrawerProps & { width?: string };
+export const SwipeableDrawer = styled(MuiDrawer)<SwipeableDrawerProps>`
   height: 100%;
   display: flex;
   flex-direction: column;

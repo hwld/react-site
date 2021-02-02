@@ -4,7 +4,6 @@ import { SwipeableDrawer, SwipeableDrawerProps } from './SwipeableDrawer';
 
 const Component: React.FC<SwipeableDrawerProps & {
   className?: string;
-  width?: string;
   isPresistent: boolean;
 }> = ({ children, open, width, isPresistent, className, ...rest }) => {
   return isPresistent ? (
