@@ -80,6 +80,7 @@ const Component: React.FC<Props> = ({ className }) => {
         open={isOpen}
         onOpen={open}
         onClose={close}
+        aria-label="drawer"
       >
         <CategoriesView
           onCategorySelect={setSelectedCategoryIds}

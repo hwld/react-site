@@ -28,9 +28,12 @@ const Component: React.FC<Props> = ({
         onFocus={stopPropagation}
         // ダイアログ内のキーボードイベントを外に出さない
         onKeyDown={stopPropagation}
-        data-testid="dialog"
+        BackdropProps={{
+          'aria-label': 'operationDialogBackdrop',
+        }}
         PaperProps={{
           className,
+          'aria-label': 'operationDialog',
         }}
         {...props}
       >
