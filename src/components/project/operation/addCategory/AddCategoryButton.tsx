@@ -26,6 +26,7 @@ const Component: React.FC<Props> = ({ disabled, parentCategoryId, size }) => {
     <>
       <ActivatorButton
         disabled={disabled}
+        aria-label="カテゴリー追加ダイアログを表示"
         tooltipText="カテゴリーの追加"
         onClick={open}
       >

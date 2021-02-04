@@ -19,7 +19,9 @@ const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
   const { moveNotes } = useNotesContext();
 
   const handleMove = (destCategoryId: string) => {
-    moveNotes(sourceNoteIds, destCategoryId);
+    if (destCategoryId !== '') {
+      moveNotes(sourceNoteIds, destCategoryId);
+    }
     close();
   };
 
