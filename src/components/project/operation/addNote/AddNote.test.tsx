@@ -7,7 +7,7 @@ import React from 'react';
 import { NotesContextProvider } from '../../../../context/NotesContext';
 import { NoteService } from '../../../../services/notes';
 import { render } from '../../../../test-util';
-import { AddNoteButton } from './AddNoteButton';
+import { AddNoteButton } from './OpenAddNoteDialogButton';
 
 const renderAddNoteButton = (addNote: NoteService['addNote'] = () => {}) => {
   const mock = jest.fn();

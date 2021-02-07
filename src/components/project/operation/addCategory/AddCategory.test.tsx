@@ -7,7 +7,7 @@ import React from 'react';
 import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
 import { CategoryService } from '../../../../services/categories';
 import { render } from '../../../../test-util';
-import { AddCategoryButton } from './AddCategoryButton';
+import { AddCategoryButton } from './OpenAddCategoryDialogButton';
 
 const renderAddCategoryButton = (
   addCategory: CategoryService['addCategory'] = () => {},
