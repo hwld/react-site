@@ -52,4 +52,4 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
   },
 );
 
-export const UpdateNoteButton = Component;
+export const OpenUpdateNoteDialogButton = Component;

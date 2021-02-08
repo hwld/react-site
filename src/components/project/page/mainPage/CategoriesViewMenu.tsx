@@ -1,7 +1,7 @@
 import React from 'react';
-import { AddCategoryButton } from '../../operation/addCategory/AddCategoryButton';
-import { RemoveCategoriesButton } from '../../operation/removeCategories/RemoveCategoriesButton';
-import { UpdateCategoryButton } from '../../operation/updateCategory/UpdateCategoryButton';
+import { OpenAddCategoryDialogButton } from '../../operation/addCategory/OpenAddCategoryDialogButton';
+import { OpenRemoveCategoriesDialogButton } from '../../operation/removeCategories/OpenRemoveCategoriesDialogButton';
+import { OpenUpdateCategoryDialogButton } from '../../operation/updateCategory/OpenUpdateCategoryDialogButton';
 
 type Props = {
   selectedCategoryIds: string[];
@@ -10,15 +10,15 @@ type Props = {
 const Component: React.FC<Props> = ({ selectedCategoryIds }) => {
   return (
     <>
-      <AddCategoryButton
+      <OpenAddCategoryDialogButton
         disabled={selectedCategoryIds.length > 1}
         parentCategoryId={selectedCategoryIds[0] || ''}
       />
-      <RemoveCategoriesButton
+      <OpenRemoveCategoriesDialogButton
         disabled={selectedCategoryIds.length === 0}
         targetCategoryIds={selectedCategoryIds}
       />
-      <UpdateCategoryButton
+      <OpenUpdateCategoryDialogButton
         disabled={selectedCategoryIds.length !== 1}
         defaultCategoryId={selectedCategoryIds[0]}
       />

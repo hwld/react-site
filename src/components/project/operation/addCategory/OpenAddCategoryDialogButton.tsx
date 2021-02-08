@@ -42,4 +42,4 @@ const Component: React.FC<Props> = ({ disabled, parentCategoryId, size }) => {
   );
 };
 
-export const AddCategoryButton = Component;
+export const OpenAddCategoryDialogButton = Component;

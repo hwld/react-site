@@ -47,4 +47,4 @@ const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
   );
 };
 
-export const UpdateCategoryButton = Component;
+export const OpenUpdateCategoryDialogButton = Component;

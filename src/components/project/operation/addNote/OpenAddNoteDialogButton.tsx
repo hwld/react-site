@@ -41,4 +41,4 @@ const Component: React.FC<Props> = ({ disabled, categoryId, size }) => {
   );
 };
 
-export const AddNoteButton = Component;
+export const OpenAddNoteDialogButton = Component;

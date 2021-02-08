@@ -8,9 +8,9 @@ import { CategoriesContextProvider } from '../../../../context/CategoriesContext
 import { NotesContextProvider } from '../../../../context/NotesContext';
 import { NoteService } from '../../../../services/notes';
 import { render } from '../../../../test-util';
-import { MoveNotesButton } from './OpenMoveNotesDialogButton';
+import { OpenMoveNotesDialogButton } from './OpenMoveNotesDialogButton';
 
-const renderMoveNotesButton = (
+const renderOpenDialogButton = (
   moveNotes: NoteService['moveNotes'] = () => {},
 ) => {
   const mock = jest.fn();
@@ -44,7 +44,7 @@ const renderMoveNotesButton = (
           updateNote: mock,
         }}
       >
-        <MoveNotesButton sourceNoteIds={[]} />
+        <OpenMoveNotesDialogButton sourceNoteIds={[]} />
       </NotesContextProvider>
     </CategoriesContextProvider>,
   );
@@ -75,7 +75,7 @@ describe('メモの移動', () => {
       findOperationDialog,
       queryOperationDialog,
       getTestCategoryItem,
-    } = renderMoveNotesButton(moveNotes);
+    } = renderOpenDialogButton(moveNotes);
 
     fireEvent.click(displayDialogButton);
 
@@ -97,7 +97,7 @@ describe('メモの移動', () => {
       displayDialogButton,
       findOperationDialog,
       queryOperationDialog,
-    } = renderMoveNotesButton();
+    } = renderOpenDialogButton();
 
     fireEvent.click(displayDialogButton);
     await findOperationDialog();

@@ -7,9 +7,9 @@ import React from 'react';
 import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
 import { CategoryService } from '../../../../services/categories';
 import { render } from '../../../../test-util';
-import { AddCategoryButton } from './OpenAddCategoryDialogButton';
+import { OpenAddCategoryDialogButton } from './OpenAddCategoryDialogButton';
 
-const renderAddCategoryButton = (
+const renderOpenDialogButton = (
   addCategory: CategoryService['addCategory'] = () => {},
 ) => {
   const mock = jest.fn();
@@ -24,7 +24,7 @@ const renderAddCategoryButton = (
         updateNotesSortOrderInCategory: mock,
       }}
     >
-      <AddCategoryButton parentCategoryId="" />
+      <OpenAddCategoryDialogButton parentCategoryId="" />
     </CategoriesContextProvider>,
   );
 
@@ -64,7 +64,7 @@ describe('カテゴリーの追加', () => {
       queryOperationDialog,
       getCategoryNameInput,
       getAddCategoryButton,
-    } = renderAddCategoryButton(addCategory);
+    } = renderOpenDialogButton(addCategory);
 
     fireEvent.click(displayDialogButton);
 
@@ -91,7 +91,7 @@ describe('カテゴリーの追加', () => {
       queryOperationDialog,
       getOperationDialogBackdrop,
       getCancelButton,
-    } = renderAddCategoryButton();
+    } = renderOpenDialogButton();
 
     // ダイアログが表示される
     fireEvent.click(displayDialogButton);

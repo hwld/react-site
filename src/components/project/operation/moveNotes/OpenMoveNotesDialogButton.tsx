@@ -29,6 +29,7 @@ const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
     <>
       <ActivatorButton
         disabled={disabled}
+        aria-label="メモ移動ダイアログを表示"
         tooltipText="メモの移動"
         onClick={open}
       >
@@ -44,4 +45,4 @@ const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
   );
 };
 
-export const MoveNotesButton = Component;
+export const OpenMoveNotesDialogButton = Component;

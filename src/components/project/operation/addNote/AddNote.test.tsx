@@ -7,9 +7,9 @@ import React from 'react';
 import { NotesContextProvider } from '../../../../context/NotesContext';
 import { NoteService } from '../../../../services/notes';
 import { render } from '../../../../test-util';
-import { AddNoteButton } from './OpenAddNoteDialogButton';
+import { OpenAddNoteDialogButton } from './OpenAddNoteDialogButton';
 
-const renderAddNoteButton = (addNote: NoteService['addNote'] = () => {}) => {
+const renderOpenDialogButton = (addNote: NoteService['addNote'] = () => {}) => {
   const mock = jest.fn();
   const utils = render(
     <NotesContextProvider
@@ -21,7 +21,7 @@ const renderAddNoteButton = (addNote: NoteService['addNote'] = () => {}) => {
         updateNote: mock,
       }}
     >
-      <AddNoteButton categoryId="" />
+      <OpenAddNoteDialogButton categoryId="" />
     </NotesContextProvider>,
   );
 
@@ -61,7 +61,7 @@ describe('メモの追加', () => {
       queryOperationDialog,
       getNoteInput,
       getAddNoteButton,
-    } = renderAddNoteButton(addNote);
+    } = renderOpenDialogButton(addNote);
 
     fireEvent.click(displayDialogButton);
 
@@ -83,7 +83,7 @@ describe('メモの追加', () => {
       queryOperationDialog,
       getOperationDialogBackdrop,
       getCancelButton,
-    } = renderAddNoteButton();
+    } = renderOpenDialogButton();
 
     fireEvent.click(displayDialogButton);
     await findOperationDialog();

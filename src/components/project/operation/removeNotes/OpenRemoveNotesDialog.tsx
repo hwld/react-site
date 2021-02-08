@@ -45,4 +45,4 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
   },
 );
 
-export const RemoveNotesButton = Component;
+export const OpenRemoveNotesDialogButton = Component;

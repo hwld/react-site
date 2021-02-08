@@ -40,4 +40,4 @@ const Component: React.FC<Props> = ({ disabled, targetCategoryIds, size }) => {
   );
 };
 
-export const RemoveCategoriesButton = Component;
+export const OpenRemoveCategoriesDialogButton = Component;

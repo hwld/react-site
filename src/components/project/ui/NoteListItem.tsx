@@ -3,9 +3,9 @@ import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { format } from 'date-fns';
 import { ListItem } from '../../ui/List/ListItem';
-import { RemoveNotesButton } from '../operation/removeNotes/RemoveNotesButton';
 import { Note, SearchNotesCriteria } from '../../../services/notes';
-import { UpdateNoteButton } from '../operation/updateNote/UpdateNoteButton';
+import { OpenRemoveNotesDialogButton } from '../operation/removeNotes/OpenRemoveNotesDialog';
+import { OpenUpdateNoteDialogButton } from '../operation/updateNote/OpenUpdateNoteDialogButton';
 
 type Props = {
   note: Note;
@@ -125,14 +125,14 @@ const Component: React.FC<Props> = ({
         </div>
         <div className="menuContainer">
           <span className="menuItem">
-            <RemoveNotesButton
+            <OpenRemoveNotesDialogButton
               targetNoteIds={[itemId]}
               tabIndex={-1}
               ref={refs.current[1]}
             />
           </span>
           <span className="menuItem">
-            <UpdateNoteButton
+            <OpenUpdateNoteDialogButton
               defaultNoteId={note.id}
               tabIndex={-1}
               ref={refs.current[2]}

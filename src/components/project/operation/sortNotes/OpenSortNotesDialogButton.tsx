@@ -71,4 +71,4 @@ const Component: React.FC<Props> = ({
   );
 };
 
-export const SortNotesButton = Component;
+export const OpenSortNotesDialogButton = Component;
