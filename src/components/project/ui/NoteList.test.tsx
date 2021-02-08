@@ -23,7 +23,7 @@ describe('<NoteList>', () => {
       updatedAt: new Date(2000, 6, 1),
     },
   ];
-  test('渡したノートがすべて表示される', () => {
+  test('渡したメモがすべて表示される', () => {
     const { queryByText } = render(<NoteList notes={notes} />);
 
     expect(queryByText('test-title1')).toBeTruthy();

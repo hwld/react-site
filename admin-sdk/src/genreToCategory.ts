@@ -116,7 +116,7 @@ async function genreToCategory(store: firestore.Firestore, limit: number) {
     exeGenreToCategoryAtCategory,
     limit,
   );
-  // ノートのgenreRefをcategoryRefに変更し、参照を正しく設定する
+  // メモのgenreRefをcategoryRefに変更し、参照を正しく設定する
   await runBatch(store, notesCollectionQuery, exeGenreToCategoryAtNote, limit);
 }
 

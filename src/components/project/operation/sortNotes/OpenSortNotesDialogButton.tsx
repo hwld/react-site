@@ -53,7 +53,8 @@ const Component: React.FC<Props> = ({
     <>
       <ActivatorButton
         disabled={disabled}
-        tooltipText="ノートの並び替え"
+        aria-label="メモ並び替えダイアログを表示"
+        tooltipText="メモの並び替え"
         onClick={handleClick}
       >
         <SortNoteIcon fontSize={size} />

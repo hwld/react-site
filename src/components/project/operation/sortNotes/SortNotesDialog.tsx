@@ -27,7 +27,7 @@ const Component: React.FC<Props> = ({
 }) => {
   return (
     <OperationDialog open={isOpen} onClose={onClose}>
-      <DialogTitle>ノートの並び替え</DialogTitle>
+      <DialogTitle>メモの並び替え</DialogTitle>
 
       <DialogContent>
         <NotesSortConditionField
