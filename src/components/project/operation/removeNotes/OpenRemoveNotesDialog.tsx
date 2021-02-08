@@ -29,6 +29,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
         <ActivatorButton
           ref={ref}
           disabled={disabled}
+          aria-label="メモ削除ダイアログを表示"
           tooltipText="メモの削除"
           onClick={open}
           tabIndex={tabIndex}

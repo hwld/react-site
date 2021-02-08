@@ -55,6 +55,8 @@ const Component: React.FC<Props> = ({
             </InputAdornment>
           ),
         }}
+        // eslint-disable-next-line react/jsx-no-duplicate-props
+        inputProps={{ 'aria-label': 'カテゴリ選択ダイアログの表示' }}
         label="カテゴリー名"
         value={categoryName}
         variant="outlined"

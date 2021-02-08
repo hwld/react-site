@@ -9,7 +9,7 @@ import { CategoryService } from '../../../../services/categories';
 import { render } from '../../../../test-util';
 import { OpenAddCategoryDialogButton } from './OpenAddCategoryDialogButton';
 
-const renderOpenDialogButton = (
+const renderToAddCategory = (
   addCategory: CategoryService['addCategory'] = () => {},
 ) => {
   const utils = render(
@@ -20,7 +20,7 @@ const renderOpenDialogButton = (
 
   return {
     ...utils,
-    displayDialogButton: utils.getByRole('button', {
+    openOperationDialogButton: utils.getByRole('button', {
       name: 'カテゴリー追加ダイアログを表示',
     }),
     findOperationDialog: () => {
@@ -49,14 +49,14 @@ describe('カテゴリーの追加', () => {
     const addCategory = jest.fn();
     const testCategoryName = 'categoryName';
     const {
-      displayDialogButton,
+      openOperationDialogButton,
       findOperationDialog,
       queryOperationDialog,
       getCategoryNameInput,
       getAddCategoryButton,
-    } = renderOpenDialogButton(addCategory);
+    } = renderToAddCategory(addCategory);
 
-    fireEvent.click(displayDialogButton);
+    fireEvent.click(openOperationDialogButton);
 
     // ダイアログが表示される
     await findOperationDialog();
@@ -76,15 +76,15 @@ describe('カテゴリーの追加', () => {
   // eslint-disable-next-line jest/expect-expect
   test('背景・中止ボタンをクリックするとダイアログが閉じる', async () => {
     const {
-      displayDialogButton,
+      openOperationDialogButton,
       findOperationDialog,
       queryOperationDialog,
       getOperationDialogBackdrop,
       getCancelButton,
-    } = renderOpenDialogButton();
+    } = renderToAddCategory();
 
     // ダイアログが表示される
-    fireEvent.click(displayDialogButton);
+    fireEvent.click(openOperationDialogButton);
     await findOperationDialog();
 
     // ダイアログが非表示になる
@@ -92,7 +92,7 @@ describe('カテゴリーの追加', () => {
     await waitForElementToBeRemoved(() => queryOperationDialog());
 
     // ダイアログが表示される
-    fireEvent.click(displayDialogButton);
+    fireEvent.click(openOperationDialogButton);
     await findOperationDialog();
 
     // ダイアログが非表示になる

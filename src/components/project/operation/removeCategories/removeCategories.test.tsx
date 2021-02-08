@@ -5,38 +5,23 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
-import { NotesContextProvider } from '../../../../context/NotesContext';
-import { NoteService } from '../../../../services/notes';
+import { CategoryService } from '../../../../services/categories';
 import { render } from '../../../../test-util';
-import { OpenMoveNotesDialogButton } from './OpenMoveNotesDialogButton';
+import { OpenRemoveCategoriesDialogButton } from './OpenRemoveCategoriesDialogButton';
 
-const renderToMoveNotes = (moveNotes: NoteService['moveNotes'] = () => {}) => {
-  const testCategoryName = 'testCategoryName';
+const renderToRemoveCategories = (
+  removeCategories: CategoryService['removeCategories'] = () => {},
+) => {
   const utils = render(
-    <CategoriesContextProvider
-      value={{
-        categories: [
-          {
-            id: 'testId',
-            categoryName: testCategoryName,
-            notesSortOrder: { order: 'asc', targetField: 'text' },
-            childrenCategoryIds: [],
-            createdAt: new Date(),
-            parentCategoryId: '',
-          },
-        ],
-      }}
-    >
-      <NotesContextProvider value={{ moveNotes }}>
-        <OpenMoveNotesDialogButton sourceNoteIds={[]} />
-      </NotesContextProvider>
+    <CategoriesContextProvider value={{ removeCategories }}>
+      <OpenRemoveCategoriesDialogButton targetCategoryIds={[]} />
     </CategoriesContextProvider>,
   );
 
   return {
     ...utils,
     openOperationDialogButton: utils.getByRole('button', {
-      name: 'メモ移動ダイアログを表示',
+      name: 'カテゴリー削除ダイアログを表示',
     }),
     findOperationDialog: () => {
       return utils.findByRole('dialog', { name: 'operationDialog' });
@@ -47,11 +32,8 @@ const renderToMoveNotes = (moveNotes: NoteService['moveNotes'] = () => {}) => {
     getOperationDialogBackdrop: () => {
       return utils.getByLabelText('operationDialogBackdrop');
     },
-    getTestCategoryItem: () => {
-      return utils.getByText(testCategoryName);
-    },
-    getMoveNotesButton: () => {
-      return utils.getByRole('button', { name: '移動' });
+    getRemoveCategoriesButton: () => {
+      return utils.getByRole('button', { name: '削除' });
     },
     getCancelButton: () => {
       return utils.getByRole('button', { name: '中止' });
@@ -59,25 +41,21 @@ const renderToMoveNotes = (moveNotes: NoteService['moveNotes'] = () => {}) => {
   };
 };
 
-describe('メモの移動', () => {
-  test('移動ボタンでメモ移動処理が呼ばれる', async () => {
-    const moveNotes = jest.fn();
+describe('カテゴリーの削除', () => {
+  test('削除ボタンを押すとカテゴリー削除処理が呼ばれる', async () => {
+    const removeCategories = jest.fn();
     const {
       openOperationDialogButton,
       findOperationDialog,
       queryOperationDialog,
-      getTestCategoryItem,
-      getMoveNotesButton,
-    } = renderToMoveNotes(moveNotes);
+      getRemoveCategoriesButton,
+    } = renderToRemoveCategories(removeCategories);
 
     fireEvent.click(openOperationDialogButton);
-
     await findOperationDialog();
 
-    fireEvent.click(getTestCategoryItem());
-    fireEvent.click(getMoveNotesButton());
-
-    await waitFor(() => expect(moveNotes).toBeCalled());
+    fireEvent.click(getRemoveCategoriesButton());
+    await waitFor(() => expect(removeCategories).toBeCalled());
 
     await waitForElementToBeRemoved(() => queryOperationDialog());
   });
@@ -90,7 +68,7 @@ describe('メモの移動', () => {
       queryOperationDialog,
       getOperationDialogBackdrop,
       getCancelButton,
-    } = renderToMoveNotes();
+    } = renderToRemoveCategories();
 
     fireEvent.click(openOperationDialogButton);
     await findOperationDialog();

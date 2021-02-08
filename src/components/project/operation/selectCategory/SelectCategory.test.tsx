@@ -4,22 +4,23 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import React from 'react';
-import { NotesContextProvider } from '../../../../context/NotesContext';
-import { NoteService } from '../../../../services/notes';
 import { render } from '../../../../test-util';
-import { OpenAddNoteDialogButton } from './OpenAddNoteDialogButton';
+import { SelectCategoryField } from './SelectCategoryField';
 
-const renderToAddNote = (addNote: NoteService['addNote'] = () => {}) => {
+const renderToSelectCategory = (
+  selectCategoryId: (id: string) => void = () => {},
+) => {
   const utils = render(
-    <NotesContextProvider value={{ addNote }}>
-      <OpenAddNoteDialogButton categoryId="" />
-    </NotesContextProvider>,
+    <SelectCategoryField
+      selectCategoryId={selectCategoryId}
+      selectedCategoryId=""
+    />,
   );
 
   return {
     ...utils,
-    openOperationDialogButton: utils.getByRole('button', {
-      name: 'メモ追加ダイアログを表示',
+    openOperationDialogField: utils.getByRole('textbox', {
+      name: 'カテゴリ選択ダイアログの表示',
     }),
     findOperationDialog: () => {
       return utils.findByRole('dialog', { name: 'operationDialog' });
@@ -30,11 +31,8 @@ const renderToAddNote = (addNote: NoteService['addNote'] = () => {}) => {
     getOperationDialogBackdrop: () => {
       return utils.getByLabelText('operationDialogBackdrop');
     },
-    getNoteInput: () => {
-      return utils.getByRole('textbox', { name: 'メモ' });
-    },
-    getAddNoteButton: () => {
-      return utils.getByRole('button', { name: '追加' });
+    getSelectCategoryButton: () => {
+      return utils.getByRole('button', { name: '選択' });
     },
     getCancelButton: () => {
       return utils.getByRole('button', { name: '中止' });
@@ -42,47 +40,41 @@ const renderToAddNote = (addNote: NoteService['addNote'] = () => {}) => {
   };
 };
 
-describe('メモの追加', () => {
-  test('メモを入力するとメモ追加処理が呼ばれる', async () => {
-    const addNote = jest.fn();
-    const testNote = 'note';
+describe('カテゴリーの選択', () => {
+  test('選択ボタンを押すとカテゴリ選択処理が呼ばれる', async () => {
+    const selectCategory = jest.fn();
     const {
-      openOperationDialogButton,
+      openOperationDialogField,
       findOperationDialog,
       queryOperationDialog,
-      getNoteInput,
-      getAddNoteButton,
-    } = renderToAddNote(addNote);
+      getSelectCategoryButton,
+    } = renderToSelectCategory(selectCategory);
 
-    fireEvent.click(openOperationDialogButton);
-
+    fireEvent.click(openOperationDialogField);
     await findOperationDialog();
 
-    fireEvent.input(getNoteInput(), { target: { value: testNote } });
-    fireEvent.click(getAddNoteButton());
-
-    await waitFor(() => expect(addNote).toBeCalled());
+    fireEvent.click(getSelectCategoryButton());
+    await waitFor(() => expect(selectCategory).toBeCalled());
 
     await waitForElementToBeRemoved(() => queryOperationDialog());
   });
-
   // eslint-disable-next-line jest/expect-expect
   test('背景・中止ボタンをクリックするとダイアログが閉じる', async () => {
     const {
-      openOperationDialogButton,
+      openOperationDialogField,
       findOperationDialog,
       queryOperationDialog,
       getOperationDialogBackdrop,
       getCancelButton,
-    } = renderToAddNote();
+    } = renderToSelectCategory();
 
-    fireEvent.click(openOperationDialogButton);
+    fireEvent.click(openOperationDialogField);
     await findOperationDialog();
 
     fireEvent.click(getOperationDialogBackdrop());
     await waitForElementToBeRemoved(() => queryOperationDialog());
 
-    fireEvent.click(openOperationDialogButton);
+    fireEvent.click(openOperationDialogField);
     await findOperationDialog();
 
     fireEvent.click(getCancelButton());
