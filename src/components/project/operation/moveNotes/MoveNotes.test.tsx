@@ -13,7 +13,6 @@ import { OpenMoveNotesDialogButton } from './OpenMoveNotesDialogButton';
 const renderOpenDialogButton = (
   moveNotes: NoteService['moveNotes'] = () => {},
 ) => {
-  const mock = jest.fn();
   const testCategoryName = 'testCategoryName';
   const utils = render(
     <CategoriesContextProvider
@@ -28,22 +27,9 @@ const renderOpenDialogButton = (
             parentCategoryId: '',
           },
         ],
-        addCategory: mock,
-        moveCategories: mock,
-        removeCategories: mock,
-        updateCategory: mock,
-        updateNotesSortOrderInCategory: mock,
       }}
     >
-      <NotesContextProvider
-        value={{
-          notes: [],
-          addNote: mock,
-          moveNotes,
-          removeNotes: mock,
-          updateNote: mock,
-        }}
-      >
+      <NotesContextProvider value={{ moveNotes }}>
         <OpenMoveNotesDialogButton sourceNoteIds={[]} />
       </NotesContextProvider>
     </CategoriesContextProvider>,

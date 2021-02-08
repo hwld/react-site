@@ -12,18 +12,8 @@ import { OpenAddCategoryDialogButton } from './OpenAddCategoryDialogButton';
 const renderOpenDialogButton = (
   addCategory: CategoryService['addCategory'] = () => {},
 ) => {
-  const mock = jest.fn();
   const utils = render(
-    <CategoriesContextProvider
-      value={{
-        categories: [],
-        addCategory,
-        moveCategories: mock,
-        removeCategories: mock,
-        updateCategory: mock,
-        updateNotesSortOrderInCategory: mock,
-      }}
-    >
+    <CategoriesContextProvider value={{ addCategory }}>
       <OpenAddCategoryDialogButton parentCategoryId="" />
     </CategoriesContextProvider>,
   );

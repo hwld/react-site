@@ -10,10 +10,12 @@ const CategoriesContext = React.createContext<CategoryService>(
 );
 
 export const CategoriesContextProvider: React.FC<{
-  value: CategoryService;
+  value: Partial<CategoryService>;
 }> = ({ children, value }) => {
   return (
-    <CategoriesContext.Provider value={value}>
+    <CategoriesContext.Provider
+      value={{ ...getDefaultCategoryService(), ...value }}
+    >
       {children}
     </CategoriesContext.Provider>
   );

@@ -1,17 +1,21 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { AppStateService, defaultAppStateService } from '../services/appState';
+import {
+  AppStateService,
+  getDefaultAppStateService,
+} from '../services/appState';
 
 const AppStateContext = React.createContext<AppStateService>(
-  defaultAppStateService(),
+  getDefaultAppStateService(),
 );
 
-export const AppStateProvider: React.FC<{ value: AppStateService }> = ({
-  children,
-  value,
-}) => {
+export const AppStateProvider: React.FC<{
+  value: Partial<AppStateService>;
+}> = ({ children, value }) => {
   return (
-    <AppStateContext.Provider value={value}>
+    <AppStateContext.Provider
+      value={{ ...getDefaultAppStateService(), ...value }}
+    >
       {children}
     </AppStateContext.Provider>
   );

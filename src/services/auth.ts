@@ -23,7 +23,7 @@ export type AuthService = {
 };
 
 // default value
-export const defaultAuthService = (): AuthService => {
+export const getDefaultAuthService = (): AuthService => {
   return {
     user: { userId: '', isAnonymous: false },
     authState: { loading: false },

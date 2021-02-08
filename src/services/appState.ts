@@ -19,7 +19,7 @@ export type AppStateService = {
 // default value
 export const defaultAppState = (): FirestoreAppState => ({ expandedIds: [] });
 
-export const defaultAppStateService = (): AppStateService => ({
+export const getDefaultAppStateService = (): AppStateService => ({
   isMobile: false,
   expandedIds: [],
   selectedCategoryIds: [],

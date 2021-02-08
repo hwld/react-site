@@ -10,17 +10,8 @@ import { render } from '../../../../test-util';
 import { OpenAddNoteDialogButton } from './OpenAddNoteDialogButton';
 
 const renderOpenDialogButton = (addNote: NoteService['addNote'] = () => {}) => {
-  const mock = jest.fn();
   const utils = render(
-    <NotesContextProvider
-      value={{
-        notes: [],
-        addNote,
-        moveNotes: mock,
-        removeNotes: mock,
-        updateNote: mock,
-      }}
-    >
+    <NotesContextProvider value={{ addNote }}>
       <OpenAddNoteDialogButton categoryId="" />
     </NotesContextProvider>,
   );
