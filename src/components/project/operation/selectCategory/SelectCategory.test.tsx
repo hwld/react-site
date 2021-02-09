@@ -20,7 +20,7 @@ const renderToSelectCategory = (
   return {
     ...utils,
     openOperationDialogField: utils.getByRole('textbox', {
-      name: 'カテゴリ選択ダイアログの表示',
+      name: 'カテゴリーの選択',
     }),
     findOperationDialog: () => {
       return utils.findByRole('dialog', { name: 'operationDialog' });
@@ -58,6 +58,7 @@ describe('カテゴリーの選択', () => {
 
     await waitForElementToBeRemoved(() => queryOperationDialog());
   });
+
   // eslint-disable-next-line jest/expect-expect
   test('背景・中止ボタンをクリックするとダイアログが閉じる', async () => {
     const {

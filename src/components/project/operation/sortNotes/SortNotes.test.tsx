@@ -4,24 +4,16 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import React from 'react';
-import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
-import { CategoryService } from '../../../../services/categories';
 import { render } from '../../../../test-util';
-import { OpenAddCategoryDialogButton } from './OpenAddCategoryDialogButton';
+import { OpenSortNotesDialogButton } from './OpenSortNotesDialogButton';
 
-const renderToAddCategory = (
-  addCategory: CategoryService['addCategory'] = () => {},
-) => {
-  const utils = render(
-    <CategoriesContextProvider value={{ addCategory }}>
-      <OpenAddCategoryDialogButton parentCategoryId="" />
-    </CategoriesContextProvider>,
-  );
+const renderToSortNotes = (sortNotes: () => void = () => {}) => {
+  const utils = render(<OpenSortNotesDialogButton sort={sortNotes} />);
 
   return {
     ...utils,
     openOperationDialogButton: utils.getByRole('button', {
-      name: 'カテゴリー追加ダイアログを表示',
+      name: 'メモ並び替えダイアログを表示',
     }),
     findOperationDialog: () => {
       return utils.findByRole('dialog', { name: 'operationDialog' });
@@ -32,11 +24,8 @@ const renderToAddCategory = (
     getOperationDialogBackdrop: () => {
       return utils.getByLabelText('operationDialogBackdrop');
     },
-    getCategoryNameInput: () => {
-      return utils.getByRole('textbox', { name: 'カテゴリー名' });
-    },
-    getAddCategoryButton: () => {
-      return utils.getByRole('button', { name: '追加' });
+    getSortNotesButton: () => {
+      return utils.getByRole('button', { name: '並び替え' });
     },
     getCancelButton: () => {
       return utils.getByRole('button', { name: '中止' });
@@ -44,31 +33,22 @@ const renderToAddCategory = (
   };
 };
 
-describe('カテゴリーの追加', () => {
-  test('カテゴリ名を入力し、追加ボタンを押すとカテゴリー追加処理が呼ばれる', async () => {
-    const addCategory = jest.fn();
+describe('メモの並び替え', () => {
+  test('並び替えボタンを押すとメモ並び替え処理が呼ばれる', async () => {
+    const sortNotes = jest.fn();
     const {
       openOperationDialogButton,
       findOperationDialog,
       queryOperationDialog,
-      getCategoryNameInput,
-      getAddCategoryButton,
-    } = renderToAddCategory(addCategory);
+      getSortNotesButton,
+    } = renderToSortNotes(sortNotes);
 
     fireEvent.click(openOperationDialogButton);
-
-    // ダイアログが表示される
     await findOperationDialog();
 
-    fireEvent.input(getCategoryNameInput(), {
-      target: { value: 'categoryName' },
-    });
-    fireEvent.click(getAddCategoryButton());
+    fireEvent.click(getSortNotesButton());
+    await waitFor(() => expect(sortNotes).toBeCalled());
 
-    // addCategoryが呼ばれる
-    await waitFor(() => expect(addCategory).toBeCalled());
-
-    // ダイアログが非表示になる
     await waitForElementToBeRemoved(() => queryOperationDialog());
   });
 
@@ -80,21 +60,17 @@ describe('カテゴリーの追加', () => {
       queryOperationDialog,
       getOperationDialogBackdrop,
       getCancelButton,
-    } = renderToAddCategory();
+    } = renderToSortNotes();
 
-    // ダイアログが表示される
     fireEvent.click(openOperationDialogButton);
     await findOperationDialog();
 
-    // ダイアログが非表示になる
     fireEvent.click(getOperationDialogBackdrop());
     await waitForElementToBeRemoved(() => queryOperationDialog());
 
-    // ダイアログが表示される
     fireEvent.click(openOperationDialogButton);
     await findOperationDialog();
 
-    // ダイアログが非表示になる
     fireEvent.click(getCancelButton());
     await waitForElementToBeRemoved(() => queryOperationDialog());
   });
