@@ -1,6 +1,6 @@
 import React from 'react';
-import { Note } from '../../../services/notes';
-import { render } from '../../../test-util';
+import { Note } from '../../../../services/notes';
+import { render } from '../../../../test-util';
 
 import { NoteList } from './NoteList';
 

@@ -1,10 +1,10 @@
 import React, { useCallback, useMemo, forwardRef } from 'react';
 import styled from 'styled-components';
 import Alert from '@material-ui/lab/Alert';
-import { TreeView } from '../../ui/TreeView/TreeView';
+import { TreeView } from '../../../ui/TreeView/TreeView';
 import { CategoryTreeItem } from './CategoryTreeItem';
-import { Category } from '../../../services/categories';
-import { categoriesCompareFunction } from '../../../util/compareFunctions';
+import { Category } from '../../../../services/categories';
+import { categoriesCompareFunction } from '../../../../util/compareFunctions';
 
 // Categoryの表示用Node
 export type CategoryTreeNode = Category & {

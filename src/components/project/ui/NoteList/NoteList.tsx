@@ -2,13 +2,13 @@ import React, { useMemo, forwardRef } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import styled from 'styled-components';
 import { NoteListItem } from './NoteListItem';
-import { List } from '../../ui/List/List';
+import { List } from '../../../ui/List/List';
 import {
   Note,
   NotesSortOrder,
   SearchNotesCriteria,
-} from '../../../services/notes';
-import { notesCompareFunction } from '../../../util/compareFunctions';
+} from '../../../../services/notes';
+import { notesCompareFunction } from '../../../../util/compareFunctions';
 
 type Props = {
   notes: Note[];

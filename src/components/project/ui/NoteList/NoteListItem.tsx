@@ -2,10 +2,10 @@ import React, { useMemo, useCallback, useRef, createRef } from 'react';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { format } from 'date-fns';
-import { ListItem } from '../../ui/List/ListItem';
-import { Note, SearchNotesCriteria } from '../../../services/notes';
-import { OpenRemoveNotesDialogButton } from '../operation/removeNotes/OpenRemoveNotesDialog';
-import { OpenUpdateNoteDialogButton } from '../operation/updateNote/OpenUpdateNoteDialogButton';
+import { ListItem } from '../../../ui/List/ListItem';
+import { Note, SearchNotesCriteria } from '../../../../services/notes';
+import { OpenRemoveNotesDialogButton } from '../../operation/removeNotes/OpenRemoveNotesDialog';
+import { OpenUpdateNoteDialogButton } from '../../operation/updateNote/OpenUpdateNoteDialogButton';
 
 type Props = {
   note: Note;

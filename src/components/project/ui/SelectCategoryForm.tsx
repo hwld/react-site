@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Category } from '../../../services/categories';
-import { CategoryTreeList } from './CategoryTreeList';
+import { CategoryTreeList } from './CategoryTree/CategoryTreeList';
 
 type Props = {
   id: string;

@@ -1,5 +1,5 @@
 import React, { forwardRef, PropsWithChildren } from 'react';
-import { CategoryTreeList } from '../../ui/CategoryTreeList';
+import { CategoryTreeList } from '../../ui/CategoryTree/CategoryTreeList';
 import { ContentColumn } from '../../ui/ContentColumn';
 import { CategoriesViewMenu } from './CategoriesViewMenu';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
