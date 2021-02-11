@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SvgIconProps } from '@material-ui/core';
 import SortNoteIcon from '@material-ui/icons/Sort';
 import { NotesSortOrder } from '../../../../services/notes';
@@ -20,33 +20,10 @@ const Component: React.FC<Props> = ({
   size,
 }) => {
   const { isOpen, open, close } = useOpener(false);
-  const [sortOrder, setSortOrder] = useState(defaultSortOrder);
 
-  const handleClick = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    setSortOrder(defaultSortOrder);
-    open();
-  };
-
-  const handleSortNotes = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    sort(sortOrder);
+  const handleSortNotes = (order: NotesSortOrder) => {
+    sort(order);
     close();
-  };
-
-  const handleCancel = (event: React.SyntheticEvent) => {
-    event.stopPropagation();
-    close();
-  };
-
-  const handleChangeSortTargetField = (
-    targetField: NotesSortOrder['targetField'],
-  ) => {
-    setSortOrder(state => ({ ...state, targetField }));
-  };
-
-  const handleChangeSortOrder = (order: NotesSortOrder['order']) => {
-    setSortOrder(state => ({ ...state, order }));
   };
 
   return (
@@ -55,18 +32,15 @@ const Component: React.FC<Props> = ({
         disabled={disabled}
         aria-label="メモ並び替えダイアログを表示"
         tooltipText="メモの並び替え"
-        onClick={handleClick}
+        onClick={open}
       >
         <SortNoteIcon fontSize={size} />
       </ActivatorButton>
       <SortNotesDialog
         isOpen={isOpen}
         onClose={close}
-        sortOrder={sortOrder}
-        onChangeSortTargetField={handleChangeSortTargetField}
-        onChangeSortOrder={handleChangeSortOrder}
+        defaultSortOrder={defaultSortOrder}
         onSortNotes={handleSortNotes}
-        onCancel={handleCancel}
       />
     </>
   );

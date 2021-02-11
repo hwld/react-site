@@ -14,6 +14,7 @@ type Props = {
   title: string;
   onMenuClick: () => void;
 };
+
 const Component: React.FC<Props> = ({
   className,
   title,

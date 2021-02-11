@@ -22,12 +22,7 @@ const Component: React.FC<Props> = ({
   const formId = 'updateNoteForm';
 
   return (
-    <OperationDialog
-      open={isOpen}
-      onClose={onClose}
-      data-testid="updateNoteDialog"
-      maxWidth="md"
-    >
+    <OperationDialog open={isOpen} onClose={onClose} maxWidth="md">
       <DialogTitle>メモの編集</DialogTitle>
 
       <DialogContent>

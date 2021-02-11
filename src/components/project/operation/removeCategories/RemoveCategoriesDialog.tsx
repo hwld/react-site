@@ -21,11 +21,7 @@ const Component: React.FC<Props> = ({
   onRemoveCategories,
 }) => {
   return (
-    <OperationDialog
-      open={isOpen}
-      onClose={onClose}
-      data-testid="removeCategoryDialog"
-    >
+    <OperationDialog open={isOpen} onClose={onClose}>
       <DialogTitle>カテゴリーの削除</DialogTitle>
 
       <DialogContent>

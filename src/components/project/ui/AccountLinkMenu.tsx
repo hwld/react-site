@@ -14,27 +14,30 @@ import {
 import { IconButton } from '../../ui/IconButton';
 import { useAuthContext } from '../../../context/AuthContext';
 import { LoginButton } from './LoginButton';
+import { useOpener } from '../../../util/hooks/useOpener';
 
 const Component: React.FC<{}> = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
   const { linkWithGoogle } = useAuthContext();
 
-  const [open, setOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const {
+    isOpen: isOpenErrorDialog,
+    open: openErrorDialog,
+    close: closeErrorDialog,
+  } = useOpener(false);
 
   const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorElement(event.currentTarget);
   };
 
   const closeMenu = () => {
-    setAnchorEl(null);
+    setAnchorElement(null);
   };
 
-  const openDialog = () => {
-    setOpen(true);
-  };
-  const closeDialog = () => {
-    setOpen(false);
+  const openErrorDialogWithMessage = (message: string) => {
+    setErrorMessage(message);
+    openErrorDialog();
   };
 
   const link = async () => {
@@ -42,17 +45,14 @@ const Component: React.FC<{}> = () => {
       closeMenu();
       await linkWithGoogle();
     } catch (error) {
-      const { code }: firebase.auth.Error = error;
-      switch (code) {
+      switch (error.code) {
         case 'auth/credential-already-in-use':
-          setErrorMessage('アカウントはすでに使用されています');
-          openDialog();
+          openErrorDialogWithMessage('アカウントはすでに使用されています');
           break;
         case 'auth/popup-closed-by-user':
           break;
         default:
-          setErrorMessage('不明なエラー');
-          openDialog();
+          openErrorDialogWithMessage('不明なエラー');
           break;
       }
     }
@@ -64,8 +64,8 @@ const Component: React.FC<{}> = () => {
         <PersonAddIcon />
       </IconButton>
       <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
+        anchorEl={anchorElement}
+        open={Boolean(anchorElement)}
         onClose={closeMenu}
         getContentAnchorEl={null}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
@@ -80,7 +80,8 @@ const Component: React.FC<{}> = () => {
           />
         </MenuItem>
       </Menu>
-      <Dialog open={open} onClose={closeDialog}>
+
+      <Dialog open={isOpenErrorDialog} onClose={closeErrorDialog}>
         <DialogTitle>アカウントの連携に失敗しました</DialogTitle>
         <DialogContent>
           <DialogContentText color="textPrimary">
@@ -88,7 +89,11 @@ const Component: React.FC<{}> = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeDialog} variant="contained" color="secondary">
+          <Button
+            onClick={closeErrorDialog}
+            variant="contained"
+            color="secondary"
+          >
             <Typography color="textSecondary">閉じる</Typography>
           </Button>
         </DialogActions>
