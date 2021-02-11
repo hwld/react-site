@@ -1,0 +1,82 @@
+rules_version = '2';
+service cloud.firestore {	
+	// categoryドキュメントのスキーマ検証
+	function isValidCategory(category){
+  	return category.size() == 6
+      && 'id' in category && category.id is string
+      && 'categoryName' in category && category.categoryName is string
+      && 'parentCategoryRef' in category && category.parentCategoryRef is path
+    	&& 'childrenCategoryRefs' in category && category.childrenCategoryRefs is list
+      && 'createdAt' in category && category.createdAt is timestamp
+      && 'notesSortOrder' in category && category.notesSortOrder is map
+      && isValidNotesSortOrder(category.notesSortOrder)
+      && category.categoryName.size() <= 100
+      && category.childrenCategoryRefs.size() <= 1000
+  }
+  
+  // notesSortOrderのスキーマ検証
+  function isValidNotesSortOrder(order){
+  	return order.size() == 2
+    	&& 'targetField' in order && order.targetField is string
+      && 'order' in order && order.order is string
+  }
+  
+  // noteドキュメントのスキーマ検証
+  function isValidNote(note){
+  	return note.size() == 6
+    	&& 'id' in note && note.id is string
+      && 'categoryRef' in note && note.categoryRef is path
+      && 'title' in note && note.title is string
+      && 'text' in note && note.text is string
+      && 'createdAt' in note && note.createdAt is timestamp
+      && 'updatedAt' in note && note.updatedAt is timestamp
+      && note.title.size() <= 100
+      && note.text.size() <= 5000
+  }
+  
+  // appStateのスキーマ検証
+  function isValidAppState(appState){
+  	return appState.size() == 2
+      && 'expandedCategoryIds' in appState && appState.expandedCategoryIds is list
+      && 'selectedCategoryIds' in appState && appState.selectedCategoryIds is list
+      && appState.expandedCategoryIds.size() <= 1000
+      && appState.selectedCategoryIds.size() <= 1000
+  }
+
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow create: if request.auth.uid == userId
+        && isValidAppState(request.resource.data);
+        
+      allow update: if request.auth.uid == userId
+        && isValidAppState(request.resource.data);
+      
+      allow read: if request.auth.uid == userId;
+      
+      match /categories/{category}{
+      	allow create: if request.auth.uid == userId
+        	&& isValidCategory(request.resource.data);
+          
+        allow update: if request.auth.uid == userId
+        	&& isValidCategory(request.resource.data)
+          && request.resource.data.id == resource.data.id;
+        
+        allow delete: if request.auth.uid == userId;
+        
+        allow list: if request.auth.uid == userId;
+      }
+      match /notes/{note}{
+      	allow create: if request.auth.uid == userId
+        	&& isValidNote(request.resource.data);
+          
+        allow update: if request.auth.uid == userId
+        	&& isValidNote(request.resource.data)
+          && request.resource.data.id == resource.data.id;
+        
+        allow delete: if request.auth.uid == userId;
+        
+        allow list: if request.auth.uid == userId;
+      }
+    }
+	}
+}
