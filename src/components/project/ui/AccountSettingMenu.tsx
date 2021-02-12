@@ -14,6 +14,7 @@ import {
 import { IconButton } from '../../ui/IconButton';
 import { useAuthContext } from '../../../context/AuthContext';
 import { useOpener } from '../../../util/hooks/useOpener';
+import { firebase } from '../../../firebaseConfig';
 
 const Component: React.FC<{}> = () => {
   const { googleLogin, deleteAccount } = useAuthContext();

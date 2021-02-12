@@ -20,7 +20,7 @@
     "@types/styled-components": "^5.0.0",
     "clsx": "^1.1.1",
     "date-fns": "^2.16.1",
-    "firebase": "^7.8.2",
+    "firebase": "^8.2.7",
     "history": "^5.0.0",
     "react": "^16.12.0",
     "react-dnd": "^11.1.3",
