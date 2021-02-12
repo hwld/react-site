@@ -22,6 +22,10 @@ node_modules
 devNote
 
 .firebase
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+debug.log
 
 npm-debug.log*
 yarn-debug.log*
