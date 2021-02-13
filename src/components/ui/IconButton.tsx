@@ -28,7 +28,12 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
     if (tooltipText && !disabled) {
       return (
         <Tooltip title={<Typography>{tooltipText}</Typography>}>
-          <MuiIconButton ref={ref} onClick={handleClick} {...props}>
+          <MuiIconButton
+            ref={ref}
+            onClick={handleClick}
+            onMouseDown={e => e.preventDefault()}
+            {...props}
+          >
             {children}
           </MuiIconButton>
         </Tooltip>
@@ -39,6 +44,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
       <MuiIconButton
         ref={ref}
         onClick={handleClick}
+        onMouseDown={e => e.preventDefault()}
         disabled={disabled}
         {...props}
       >
