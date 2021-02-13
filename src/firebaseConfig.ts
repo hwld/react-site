@@ -15,6 +15,12 @@ const firebaseConfig = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
+
+  // Emulatorsの有効化
+  if (process.env.NODE_ENV !== 'production') {
+    firebase.auth().useEmulator('http://localhost:9099/');
+    firebase.firestore().useEmulator('localhost', 8080);
+  }
 }
 
 const auth = firebase.auth();
