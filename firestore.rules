@@ -33,26 +33,9 @@ service cloud.firestore {
       && note.title.size() <= 100
       && note.text.size() <= 5000
   }
-  
-  // appStateのスキーマ検証
-  function isValidAppState(appState){
-  	return appState.size() == 2
-      && 'expandedCategoryIds' in appState && appState.expandedCategoryIds is list
-      && 'selectedCategoryIds' in appState && appState.selectedCategoryIds is list
-      && appState.expandedCategoryIds.size() <= 1000
-      && appState.selectedCategoryIds.size() <= 1000
-  }
 
   match /databases/{database}/documents {
     match /users/{userId} {
-      allow create: if request.auth.uid == userId
-        && isValidAppState(request.resource.data);
-        
-      allow update: if request.auth.uid == userId
-        && isValidAppState(request.resource.data);
-      
-      allow read: if request.auth.uid == userId;
-      
       match /categories/{category}{
       	allow create: if request.auth.uid == userId
         	&& isValidCategory(request.resource.data);
