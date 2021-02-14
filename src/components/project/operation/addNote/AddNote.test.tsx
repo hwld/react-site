@@ -42,7 +42,7 @@ const renderToAddNote = (addNote: NoteService['addNote'] = () => {}) => {
   };
 };
 
-describe('メモの追加', () => {
+describe('メモの追加ダイアログ', () => {
   test('メモを入力するとメモ追加処理が呼ばれる', async () => {
     const addNote = jest.fn();
     const testNote = 'note';

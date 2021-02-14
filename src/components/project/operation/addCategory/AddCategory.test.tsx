@@ -44,7 +44,7 @@ const renderToAddCategory = (
   };
 };
 
-describe('カテゴリーの追加', () => {
+describe('カテゴリーの追加ダイアログ', () => {
   test('カテゴリ名を入力し、追加ボタンを押すとカテゴリー追加処理が呼ばれる', async () => {
     const addCategory = jest.fn();
     const {

@@ -1,5 +1,6 @@
 import { useTypedController } from '@hookform/strictly-typed';
 import { TextField, Typography } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
@@ -7,14 +8,14 @@ import { CategoryField } from '../../../services/categories';
 
 type FormCategoryField = Record<keyof CategoryField, string>;
 
-type Props = {
+export type CategoryFormProps = {
   className?: string;
   id: string;
   defaultField?: CategoryField;
   onSubmit: (field: CategoryField) => void;
 };
 
-const Component: React.FC<Props> = ({
+const Component: React.FC<CategoryFormProps> = ({
   className,
   id,
   defaultField,
@@ -53,9 +54,15 @@ const Component: React.FC<Props> = ({
         }}
       />
       <div className="errorField">
-        <Typography className="errorText">
-          {errors.categoryName?.message}
-        </Typography>
+        {errors.categoryName && (
+          <Typography
+            className="errorText"
+            role="alert"
+            aria-label="カテゴリ名のエラー"
+          >
+            {errors.categoryName.message}
+          </Typography>
+        )}
       </div>
     </form>
   );

@@ -7,6 +7,7 @@ import { useOpener } from '../../../../util/hooks/useOpener';
 import { RemoveNotesDialog } from './RemoveNotesDialog';
 
 type Props = {
+  className?: string;
   disabled?: boolean;
   targetNoteIds: string[];
   size?: SvgIconProps['fontSize'];
@@ -14,7 +15,10 @@ type Props = {
 };
 
 const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
-  function RemoveNoteButton({ disabled, targetNoteIds, size, tabIndex }, ref) {
+  function RemoveNoteButton(
+    { className, disabled, targetNoteIds, size, tabIndex },
+    ref,
+  ) {
     const { isOpen, open, close } = useOpener(false);
     const { removeNotes } = useNotesContext();
 
@@ -27,6 +31,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
     return (
       <>
         <ActivatorButton
+          className={className}
           ref={ref}
           disabled={disabled}
           aria-label="メモ削除ダイアログを表示"

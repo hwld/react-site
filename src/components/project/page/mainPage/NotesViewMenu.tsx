@@ -1,7 +1,7 @@
 import React from 'react';
 import { NotesSortOrder } from '../../../../services/notes';
 import { OpenSortNotesDialogButton } from '../../operation/sortNotes/OpenSortNotesDialogButton';
-import { OpenRemoveNotesDialogButton } from '../../operation/removeNotes/OpenRemoveNotesDialog';
+import { OpenRemoveNotesDialogButton } from '../../operation/removeNotes/OpenRemoveNotesDialogButton';
 import { OpenAddNoteDialogButton } from '../../operation/addNote/OpenAddNoteDialogButton';
 import { OpenMoveNotesDialogButton } from '../../operation/moveNotes/OpenMoveNotesDialogButton';
 import { OpenUpdateNoteDialogButton } from '../../operation/updateNote/OpenUpdateNoteDialogButton';

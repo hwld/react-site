@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { format } from 'date-fns';
 import { ListItem } from '../../../ui/List/ListItem';
 import { Note, SearchNotesCriteria } from '../../../../services/notes';
-import { OpenRemoveNotesDialogButton } from '../../operation/removeNotes/OpenRemoveNotesDialog';
+import { OpenRemoveNotesDialogButton } from '../../operation/removeNotes/OpenRemoveNotesDialogButton';
 import { OpenUpdateNoteDialogButton } from '../../operation/updateNote/OpenUpdateNoteDialogButton';
 
 type Props = {
@@ -27,7 +27,6 @@ const Component: React.FC<Props> = ({
     ]
   >([createRef(), createRef(), createRef()]);
 
-  //
   const focusIndex = useRef<number>(0);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -107,7 +106,6 @@ const Component: React.FC<Props> = ({
       itemId={itemId}
       onKeyDown={handleKeyDown}
       ref={refs.current[0]}
-      // isMobile={isMobile}
       className={className}
     >
       <div className="itemRoot">
@@ -124,20 +122,18 @@ const Component: React.FC<Props> = ({
           </div>
         </div>
         <div className="menuContainer">
-          <span className="menuItem">
-            <OpenRemoveNotesDialogButton
-              targetNoteIds={[itemId]}
-              tabIndex={-1}
-              ref={refs.current[1]}
-            />
-          </span>
-          <span className="menuItem">
-            <OpenUpdateNoteDialogButton
-              defaultNoteId={note.id}
-              tabIndex={-1}
-              ref={refs.current[2]}
-            />
-          </span>
+          <OpenRemoveNotesDialogButton
+            className="menuItem"
+            targetNoteIds={[itemId]}
+            tabIndex={-1}
+            ref={refs.current[1]}
+          />
+          <OpenUpdateNoteDialogButton
+            className="menuItem"
+            defaultNoteId={note.id}
+            tabIndex={-1}
+            ref={refs.current[2]}
+          />
         </div>
       </div>
     </ListItem>

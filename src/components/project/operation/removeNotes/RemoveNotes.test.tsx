@@ -7,7 +7,7 @@ import React from 'react';
 import { NotesContextProvider } from '../../../../context/NotesContext';
 import { NoteService } from '../../../../services/notes';
 import { render } from '../../../../test-util';
-import { OpenRemoveNotesDialogButton } from './OpenRemoveNotesDialog';
+import { OpenRemoveNotesDialogButton } from './OpenRemoveNotesDialogButton';
 
 const renderToRemoveNotes = (
   removeNotes: NoteService['removeNotes'] = () => {},
@@ -41,7 +41,7 @@ const renderToRemoveNotes = (
   };
 };
 
-describe('メモの削除', () => {
+describe('メモの削除ダイアログ', () => {
   test('削除ボタンを押すとメモ削除処理が呼ばれる', async () => {
     const removeNotes = jest.fn();
     const {

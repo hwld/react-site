@@ -3,34 +3,26 @@ import React from 'react';
 import styled from 'styled-components';
 
 type Props = {
-  message: string;
   imgSrc: string;
   imgAlt: string;
   onClick: () => void;
-  'data-testid'?: string;
   className?: string;
 };
 
 const Component: React.FC<Props> = ({
-  message,
+  children,
   imgSrc,
   imgAlt,
   onClick,
-  'data-testid': dataTestid,
   className,
 }) => {
   return (
-    <button
-      className={className}
-      type="button"
-      onClick={onClick}
-      data-testid={dataTestid}
-    >
+    <button className={className} type="button" onClick={onClick}>
       <span className="iconField">
         <img className="icon" src={imgSrc} alt={imgAlt} />
       </span>
       <span className="textField">
-        <Typography className="text">{message}</Typography>
+        <Typography className="text">{children}</Typography>
       </span>
     </button>
   );

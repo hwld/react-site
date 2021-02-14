@@ -41,7 +41,7 @@ const renderToRemoveCategories = (
   };
 };
 
-describe('カテゴリーの削除', () => {
+describe('カテゴリーの削除ダイアログ', () => {
   test('削除ボタンを押すとカテゴリー削除処理が呼ばれる', async () => {
     const removeCategories = jest.fn();
     const {

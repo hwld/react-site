@@ -71,13 +71,9 @@ const Component: React.FC<{}> = () => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
         <MenuItem>
-          <LoginButton
-            imgSrc="./google.svg"
-            imgAlt="google"
-            onClick={link}
-            message="Googleでログイン"
-            data-testid="googleLoginButton"
-          />
+          <LoginButton imgSrc="./google.svg" imgAlt="google" onClick={link}>
+            Googleでログイン
+          </LoginButton>
         </MenuItem>
       </Menu>
 

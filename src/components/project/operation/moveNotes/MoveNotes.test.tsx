@@ -59,7 +59,7 @@ const renderToMoveNotes = (moveNotes: NoteService['moveNotes'] = () => {}) => {
   };
 };
 
-describe('メモの移動', () => {
+describe('メモの移動ダイアログ', () => {
   test('移動ボタンでメモ移動処理が呼ばれる', async () => {
     const moveNotes = jest.fn();
     const {

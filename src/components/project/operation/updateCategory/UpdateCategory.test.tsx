@@ -44,7 +44,7 @@ const renderToUpdateCategory = (
   };
 };
 
-describe('カテゴリーの編集', () => {
+describe('カテゴリーの編集ダイアログ', () => {
   test('カテゴリ名を入力し、変更ボタンを押すとカテゴリー編集処理が呼ばれる', async () => {
     const updateCategory = jest.fn();
     const {

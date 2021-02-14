@@ -3,20 +3,17 @@ import { render, dragAndDrop } from '../../../../test-util';
 import { CategoriesView } from './CategoriesView';
 import { CategoriesContextProvider } from '../../../../context/CategoriesContext';
 import { getDefaultNotesSortOrder } from '../../../../services/notes';
+import { CategoryService } from '../../../../services/categories';
 
 describe('<CategoriesView>', () => {
   const CategoryViewTest: React.FC<{
-    moveCategories: (sourceCategoryId: string[], destCategoryId: string) => {};
+    moveCategories: CategoryService['moveCategories'];
   }> = ({ moveCategories }) => {
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
     return (
       <CategoriesContextProvider
         value={{
-          addCategory: () => {},
-          removeCategories: () => {},
-          updateCategory: () => {},
-          updateNotesSortOrderInCategory: () => {},
           categories: [
             {
               categoryName: 'category1',

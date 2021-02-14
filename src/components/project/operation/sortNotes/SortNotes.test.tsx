@@ -33,7 +33,7 @@ const renderToSortNotes = (sortNotes: () => void = () => {}) => {
   };
 };
 
-describe('メモの並び替え', () => {
+describe('メモの並び替えダイアログ', () => {
   test('並び替えボタンを押すとメモ並び替え処理が呼ばれる', async () => {
     const sortNotes = jest.fn();
     const {

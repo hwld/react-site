@@ -45,24 +45,22 @@ const Component: React.FC<Props> = ({ className }) => {
           )}
         </div>
         <ul className={`${className}_loginButtonList`}>
-          <li className="listItem">
-            <LoginButton
-              imgSrc="./google.svg"
-              imgAlt="google"
-              onClick={onGoogleLogin}
-              message="Googleでログイン"
-              data-testid="googleLoginButton"
-            />
-          </li>
-          <li className="listItem">
-            <LoginButton
-              imgSrc="./anonymous.svg"
-              imgAlt="anonymous"
-              onClick={onAnonymousLogin}
-              message="ゲストとしてログイン"
-              data-testid="guestLoginButton"
-            />
-          </li>
+          <LoginButton
+            className="loginButton"
+            imgSrc="./google.svg"
+            imgAlt="googleLoginButton"
+            onClick={onGoogleLogin}
+          >
+            Googleでログイン
+          </LoginButton>
+          <LoginButton
+            className="loginButton"
+            imgSrc="./anonymous.svg"
+            imgAlt="anonymousLoginButton"
+            onClick={onAnonymousLogin}
+          >
+            ゲストとしてログイン
+          </LoginButton>
         </ul>
       </DialogContent>
     </Dialog>
@@ -92,7 +90,7 @@ const StyledComponent = styled(Component)`
     list-style: none;
     padding: 0;
 
-    & > .listItem {
+    & > .loginButton {
       margin-top: 30px;
     }
   }

@@ -44,7 +44,7 @@ const renderToUpdateNote = (
   };
 };
 
-describe('メモの編集', () => {
+describe('メモの編集ダイアログ', () => {
   test('メモを入力し、変更ボタンを押すとカテゴリー編集処理が呼ばれる', async () => {
     const updateNote = jest.fn();
     const {

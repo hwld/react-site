@@ -4,18 +4,13 @@ import { List } from '../../ui/List/List';
 import { CategoryTreeItem } from '../../project/ui/CategoryTree/CategoryTreeItem';
 import { ListItem } from '../../ui/List/ListItem';
 import { NotesContextProvider } from '../../../context/NotesContext';
-import { getDefaultNoteService } from '../../../services/notes';
 
 describe('<CategoryTreeItem> with <List>', () => {
   const DnDTestList: React.FC<{ onDrop: () => {} }> = ({ onDrop }) => {
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
     return (
-      <NotesContextProvider
-        value={{
-          ...getDefaultNoteService(),
-        }}
-      >
+      <NotesContextProvider>
         <List
           draggable
           selectedIds={selectedIds}

@@ -40,7 +40,7 @@ const renderToSelectCategory = (
   };
 };
 
-describe('カテゴリーの選択', () => {
+describe('カテゴリーの選択ダイアログ', () => {
   test('選択ボタンを押すとカテゴリ選択処理が呼ばれる', async () => {
     const selectCategory = jest.fn();
     const {

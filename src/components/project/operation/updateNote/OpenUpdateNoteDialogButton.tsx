@@ -8,6 +8,7 @@ import { useOpener } from '../../../../util/hooks/useOpener';
 import { UpdateNoteDialog } from './UpdateNoteDialog';
 
 type Props = {
+  className?: string;
   disabled?: boolean;
   defaultNoteId?: string;
   size?: SvgIconProps['fontSize'];
@@ -15,7 +16,10 @@ type Props = {
 };
 
 const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
-  function UpdateNoteButton({ disabled, defaultNoteId, size, tabIndex }, ref) {
+  function UpdateNoteButton(
+    { className, disabled, defaultNoteId, size, tabIndex },
+    ref,
+  ) {
     const { isOpen, open, close } = useOpener(false);
     const { notes, updateNote } = useNotesContext();
 
@@ -33,6 +37,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
     return (
       <>
         <ActivatorButton
+          className={className}
           ref={ref}
           disabled={disabled}
           aria-label="メモ編集ダイアログを表示"

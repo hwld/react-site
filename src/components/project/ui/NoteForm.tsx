@@ -7,14 +7,14 @@ import { NoteField } from '../../../services/notes';
 
 type FormNoteField = Record<keyof NoteField, string>;
 
-type Props = {
+export type NoteFormProps = {
   className?: string;
   id: string;
   defaultField?: NoteField;
   onSubmit: (field: NoteField) => void;
 };
 
-const Component: React.FC<Props> = ({
+const Component: React.FC<NoteFormProps> = ({
   className,
   id,
   defaultField,
@@ -54,7 +54,15 @@ const Component: React.FC<Props> = ({
           }}
         />
         <div className="errorField">
-          <Typography className="errorText">{errors.title?.message}</Typography>
+          {errors.title && (
+            <Typography
+              className="errorText"
+              role="alert"
+              aria-label="タイトルのエラー"
+            >
+              {errors.title?.message}
+            </Typography>
+          )}
         </div>
       </div>
       <div className="formField">
@@ -82,7 +90,15 @@ const Component: React.FC<Props> = ({
           }}
         />
         <div className="errorField">
-          <Typography className="errorText">{errors.text?.message}</Typography>
+          {errors.text && (
+            <Typography
+              className="errorText"
+              role="alert"
+              aria-label="メモのエラー"
+            >
+              {errors.text.message}
+            </Typography>
+          )}
         </div>
       </div>
     </form>

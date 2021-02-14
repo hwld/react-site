@@ -5,8 +5,8 @@ import { getDefaultNoteService, NoteService } from '../services/notes';
 const NotesContext = React.createContext<NoteService>(getDefaultNoteService());
 
 export const NotesContextProvider: React.FC<{
-  value: Partial<NoteService>;
-}> = ({ children, value }) => {
+  value?: Partial<NoteService>;
+}> = ({ children, value = getDefaultNoteService() }) => {
   return (
     <NotesContext.Provider value={{ ...getDefaultNoteService(), ...value }}>
       {children}
