@@ -1,18 +1,20 @@
 import React from 'react';
+import { AuthContextProvider } from '../../../../context/AuthContext';
 import { render, fireEvent } from '../../../../test-util';
 import { MainHome } from './MainHome';
 
 describe('<MainHome>', () => {
-  test('メインページが表示されている', () => {
-    const { queryByTestId } = render(<MainHome />);
-    expect(queryByTestId('mainPage')).toBeTruthy();
-  });
-
   test('ドロワーを開閉できる', () => {
-    const { queryByTestId, getByTestId } = render(<MainHome />);
+    const { queryByLabelText, getByRole } = render(
+      <AuthContextProvider
+        value={{ user: { userId: 'temp', isAnonymous: false } }}
+      >
+        <MainHome />
+      </AuthContextProvider>,
+    );
 
-    expect(queryByTestId('presistentDrawer')).toHaveAttribute('open');
-    fireEvent.click(getByTestId('menuButton'));
-    expect(queryByTestId('presistentDrawer')).not.toHaveAttribute('open');
+    expect(queryByLabelText('presistentDrawer')).toHaveAttribute('open');
+    fireEvent.click(getByRole('button', { name: 'menuButton' }));
+    expect(queryByLabelText('presistentDrawer')).not.toHaveAttribute('open');
   });
 });

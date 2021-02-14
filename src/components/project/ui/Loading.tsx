@@ -12,7 +12,7 @@ const Component: React.FC<Props> = ({ className }) => {
       <CircularProgress
         size="5rem"
         color="secondary"
-        data-testid="loadingCircle"
+        aria-label="loadingCircle"
       />
     </Backdrop>
   );

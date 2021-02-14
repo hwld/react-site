@@ -98,7 +98,7 @@ const Component: React.FC<Props> = ({ className, search }) => {
           variant="contained"
           color="secondary"
           onClick={onSearch}
-          data-testid="searchButton"
+          aria-label="searchButton"
         >
           検索
         </Button>

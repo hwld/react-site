@@ -9,7 +9,6 @@ import {
 export type Props = {
   tooltipText?: string;
   disabled?: boolean;
-  'data-testid'?: string;
   tabIndex?: number;
 } & MuiIconButtonProps;
 

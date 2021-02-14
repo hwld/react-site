@@ -70,7 +70,7 @@ const Component: React.FC<Props> = ({
         {parts.map((part, i) =>
           part === highlight ? (
             // eslint-disable-next-line react/no-array-index-key
-            <span className="highlight" key={i} data-testid="search-highlight">
+            <span className="highlight" key={i} aria-label="search-highlight">
               {part}
             </span>
           ) : (
@@ -110,10 +110,10 @@ const Component: React.FC<Props> = ({
     >
       <div className="itemRoot">
         <div className="noteContainer">
-          <Typography className="title" variant="h4" data-testid="title">
+          <Typography className="title" variant="h4" aria-label="title">
             {title}
           </Typography>
-          <Typography className="text" data-testid="text">
+          <Typography className="text" aria-label="text">
             {text}
           </Typography>
           <div className="metaData">

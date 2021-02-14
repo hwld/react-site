@@ -4,7 +4,7 @@ import { NoteListItem } from './NoteListItem';
 
 describe('<NoteListItem>', () => {
   test('検索結果のハイライトが当てられている', () => {
-    const { getAllByTestId } = render(
+    const { getAllByLabelText } = render(
       <NoteListItem
         itemId=""
         note={{
@@ -24,13 +24,13 @@ describe('<NoteListItem>', () => {
     );
 
     expect(
-      getAllByTestId('search-highlight').some(
+      getAllByLabelText('search-highlight').some(
         element => element.textContent === 'title1',
       ),
     ).toBeTruthy();
 
     expect(
-      getAllByTestId('search-highlight').some(
+      getAllByLabelText('search-highlight').some(
         element => element.textContent === 'text1',
       ),
     ).toBeTruthy();

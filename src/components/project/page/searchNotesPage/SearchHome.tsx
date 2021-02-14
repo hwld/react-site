@@ -37,7 +37,7 @@ const Component: React.FC<Props> = ({ className }) => {
   const isNotLogin = !authState.loading && user.userId === '';
 
   return (
-    <div className={className} data-testid="searchNotestPage">
+    <div className={className} aria-label="searchNotesPage">
       <AppHeader title="検索" onMenuClick={invert}>
         <IconButton tooltipText="ホームに戻る" onClick={backHome}>
           <HomeIcon />

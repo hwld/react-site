@@ -16,15 +16,12 @@ const Component: React.FC<Props> = ({
 }) => {
   return (
     <div className={className}>
-      <Toolbar className="header" data-testid="header" />
+      <Toolbar className="header" aria-label="header" />
       <Divider />
 
       <div className="content">{children}</div>
 
-      <Toolbar
-        className={`footer ${isMobile && 'mobile'}`}
-        data-testid="footer"
-      >
+      <Toolbar className={`footer ${isMobile && 'mobile'}`} aria-label="footer">
         {footerMenu}
       </Toolbar>
     </div>

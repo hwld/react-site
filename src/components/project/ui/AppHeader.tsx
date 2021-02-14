@@ -35,7 +35,7 @@ const Component: React.FC<Props> = ({
   return (
     <AppBar position="absolute" className={className}>
       <Toolbar>
-        <IconButton edge="start" data-testid="menuButton" onClick={onMenuClick}>
+        <IconButton edge="start" aria-label="menuButton" onClick={onMenuClick}>
           <MenuIcon />
         </IconButton>
         <Typography className="appTitle" variant="h5">

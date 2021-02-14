@@ -34,15 +34,15 @@ describe('<NoteList>', () => {
   });
 
   test('タイトルの昇降順で並び替えができる', () => {
-    const { getAllByTestId, rerender } = render(
+    const { getAllByLabelText, rerender } = render(
       <NoteList
         notes={notes}
         notesSortOrder={{ targetField: 'title', order: 'asc' }}
       />,
     );
 
-    expect(getAllByTestId('title')[0].textContent).toBe('test-title1');
-    expect(getAllByTestId('title')[1].textContent).toBe('test-title2');
+    expect(getAllByLabelText('title')[0].textContent).toBe('test-title1');
+    expect(getAllByLabelText('title')[1].textContent).toBe('test-title2');
 
     rerender(
       <NoteList
@@ -51,19 +51,19 @@ describe('<NoteList>', () => {
       />,
     );
 
-    expect(getAllByTestId('title')[0].textContent).toBe('test-title2');
-    expect(getAllByTestId('title')[1].textContent).toBe('test-title1');
+    expect(getAllByLabelText('title')[0].textContent).toBe('test-title2');
+    expect(getAllByLabelText('title')[1].textContent).toBe('test-title1');
   });
   test('テキストの昇降順で並び替えができる', () => {
-    const { getAllByTestId, rerender } = render(
+    const { getAllByLabelText, rerender } = render(
       <NoteList
         notes={notes}
         notesSortOrder={{ targetField: 'text', order: 'asc' }}
       />,
     );
 
-    expect(getAllByTestId('text')[0].textContent).toBe('test-text1');
-    expect(getAllByTestId('text')[1].textContent).toBe('test-text2');
+    expect(getAllByLabelText('text')[0].textContent).toBe('test-text1');
+    expect(getAllByLabelText('text')[1].textContent).toBe('test-text2');
 
     rerender(
       <NoteList
@@ -72,18 +72,18 @@ describe('<NoteList>', () => {
       />,
     );
 
-    expect(getAllByTestId('text')[0].textContent).toBe('test-text2');
-    expect(getAllByTestId('text')[1].textContent).toBe('test-text1');
+    expect(getAllByLabelText('text')[0].textContent).toBe('test-text2');
+    expect(getAllByLabelText('text')[1].textContent).toBe('test-text1');
   });
   test('作成日の昇降順で並び替えができる', () => {
-    const { getAllByTestId, rerender } = render(
+    const { getAllByLabelText, rerender } = render(
       <NoteList
         notes={notes}
         notesSortOrder={{ targetField: 'createdAt', order: 'asc' }}
       />,
     );
-    expect(getAllByTestId('title')[0].textContent).toMatch(/test-title1/);
-    expect(getAllByTestId('title')[1].textContent).toMatch(/test-title2/);
+    expect(getAllByLabelText('title')[0].textContent).toMatch(/test-title1/);
+    expect(getAllByLabelText('title')[1].textContent).toMatch(/test-title2/);
 
     rerender(
       <NoteList
@@ -92,18 +92,18 @@ describe('<NoteList>', () => {
       />,
     );
 
-    expect(getAllByTestId('title')[0].textContent).toMatch(/test-title2/);
-    expect(getAllByTestId('title')[1].textContent).toMatch(/test-title1/);
+    expect(getAllByLabelText('title')[0].textContent).toMatch(/test-title2/);
+    expect(getAllByLabelText('title')[1].textContent).toMatch(/test-title1/);
   });
   test('更新日の昇降順で並び替えができる', () => {
-    const { getAllByTestId, rerender } = render(
+    const { getAllByLabelText, rerender } = render(
       <NoteList
         notes={notes}
         notesSortOrder={{ targetField: 'updatedAt', order: 'asc' }}
       />,
     );
-    expect(getAllByTestId('title')[0].textContent).toMatch(/test-title2/);
-    expect(getAllByTestId('title')[1].textContent).toMatch(/test-title1/);
+    expect(getAllByLabelText('title')[0].textContent).toMatch(/test-title2/);
+    expect(getAllByLabelText('title')[1].textContent).toMatch(/test-title1/);
 
     rerender(
       <NoteList
@@ -112,7 +112,7 @@ describe('<NoteList>', () => {
       />,
     );
 
-    expect(getAllByTestId('title')[0].textContent).toMatch(/test-title1/);
-    expect(getAllByTestId('title')[1].textContent).toMatch(/test-title2/);
+    expect(getAllByLabelText('title')[0].textContent).toMatch(/test-title1/);
+    expect(getAllByLabelText('title')[1].textContent).toMatch(/test-title2/);
   });
 });

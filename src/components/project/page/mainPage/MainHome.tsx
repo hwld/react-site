@@ -67,7 +67,7 @@ const Component: React.FC<Props> = ({ className }) => {
   };
 
   return (
-    <div className={className} data-testid="mainPage">
+    <div className={className} aria-label="mainPage">
       <AppHeader title="Notes" onMenuClick={invert}>
         <IconButton tooltipText="検索モードに移動" onClick={goSearchMode}>
           <SearchNoteIcon />

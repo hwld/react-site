@@ -5,11 +5,7 @@ import { NotesContextProvider } from '../../../../context/NotesContext';
 import { NoteService } from '../../../../services/notes';
 
 describe('<NotesView>', () => {
-  const notesContextValue: NoteService = {
-    addNote: () => {},
-    moveNotes: () => {},
-    removeNotes: () => {},
-    updateNote: () => {},
+  const notesContextValue: Partial<NoteService> = {
     notes: [
       {
         id: 'note1',
@@ -55,7 +51,7 @@ describe('<NotesView>', () => {
     expect(queryByText(/text2/)).toBeTruthy();
   });
   test('カテゴリーを選択していないときにはメモは表示されず、アラートが表示される', () => {
-    const { queryByTestId, queryByText } = render(
+    const { queryByRole, queryByText } = render(
       <NotesView selectedCategoryIds={[]} />,
     );
 
@@ -65,6 +61,6 @@ describe('<NotesView>', () => {
     expect(queryByText(/title2/)).toBeFalsy();
     expect(queryByText(/text2/)).toBeFalsy();
 
-    expect(queryByTestId('noselectedAlert')).toBeTruthy();
+    expect(queryByRole('alert', { name: 'noselectedAlert' })).toBeTruthy();
   });
 });

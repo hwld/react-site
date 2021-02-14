@@ -103,7 +103,7 @@ const Component = forwardRef<HTMLUListElement, PropsWithChildren<Props>>(
           <Alert
             className={`${className}_alert`}
             severity="warning"
-            data-testid="noselectedAlert"
+            aria-label="noselectedAlert"
           >
             カテゴリーを選択してください
           </Alert>

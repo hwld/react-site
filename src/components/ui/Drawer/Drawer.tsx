@@ -10,7 +10,7 @@ const Component: React.FC<SwipeableDrawerProps & {
     <PresistentDrawer
       open={open}
       width={width}
-      data-testid="presistentDrawer"
+      aria-label="presistentDrawer"
       className={className}
     >
       {children}
@@ -20,7 +20,7 @@ const Component: React.FC<SwipeableDrawerProps & {
       open={open}
       width={width}
       {...rest}
-      data-testid="normalDrawer"
+      aria-label="normalDrawer"
       className={className}
     >
       {children}
