@@ -33,16 +33,15 @@ const Component: React.FC<Props> = ({
   });
 
   return (
-    <div ref={drop} data-testid={`gti-dropLayer-${nodeId}`}>
-      <TreeItem
-        nodeId={nodeId}
-        label={categoryName}
-        isDropOver={isDropOver}
-        canDrop={canDrop}
-      >
-        {children}
-      </TreeItem>
-    </div>
+    <TreeItem
+      nodeId={nodeId}
+      label={categoryName}
+      dropRef={drop}
+      isDropOver={isDropOver}
+      canDrop={canDrop}
+    >
+      {children}
+    </TreeItem>
   );
 };
 

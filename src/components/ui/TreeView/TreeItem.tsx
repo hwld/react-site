@@ -7,7 +7,12 @@ import { useForkRef } from '@material-ui/core/utils';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import clsx from 'clsx';
-import { useDrag, useDrop, DragPreviewImage } from 'react-dnd';
+import {
+  useDrag,
+  useDrop,
+  DragPreviewImage,
+  DragElementWrapper,
+} from 'react-dnd';
 import { TreeViewContext } from './TreeViewContext';
 import { ItemTypes } from '../ItemTypes';
 
@@ -122,6 +127,7 @@ type TreeItemProps = WithStyles<typeof styles> & {
   className?: string;
   label: string;
   nodeId: string;
+  dropRef?: DragElementWrapper<unknown>;
   canDrop?: boolean;
   isDropOver?: boolean;
   onKeyDown?: (event: React.KeyboardEvent) => void;
@@ -137,6 +143,7 @@ const UnStyledTreeItem = React.forwardRef<
     classes,
     label,
     nodeId,
+    dropRef,
     isDropOver,
     canDrop,
   } = props;
@@ -290,7 +297,7 @@ const UnStyledTreeItem = React.forwardRef<
     },
   });
 
-  // TreeItemはTreeItemをドロップできるので、外側から受け取ったisDropとは別の状態が必要になる.
+  // TreeItemはTreeItemをドロップできるので、外側から受け取ったdropRefとは別の状態が必要になる.
   const [{ isDropOverInner, canDropInner }, drop] = useDrop({
     accept: ItemTypes.TreeItem,
     collect: monitor => ({
@@ -328,6 +335,8 @@ const UnStyledTreeItem = React.forwardRef<
           [classes.isDropOver]: isDropOver,
           [classes.canDrop]: canDrop,
         })}
+        ref={dropRef}
+        data-testid={`outer-dropLayer-${nodeId}`}
       >
         <div
           className={clsx(classes.dropLayer, {

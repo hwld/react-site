@@ -32,7 +32,7 @@ describe('<CategoryTreeItem> with <List>', () => {
 
     dragAndDrop(
       getByTestId('dragLayer-listItem'),
-      getByTestId('gti-dropLayer-treeItem'),
+      getByTestId('outer-dropLayer-treeItem'),
     );
 
     expect(onDrop.mock.calls.length).toBe(1);
