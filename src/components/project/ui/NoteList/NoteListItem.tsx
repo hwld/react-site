@@ -140,9 +140,7 @@ const Component: React.FC<Props> = ({
   );
 };
 
-const StyledComponent = styled(Component)<{ isMobile?: boolean }>`
-  margin: ${props => (props.isMobile ? '10px' : '30px')};
-
+const StyledComponent = styled(Component)`
   & .highlight {
     background-color: ${props => props.theme.palette.secondary.light};
     color: ${props => props.theme.palette.primary.main};

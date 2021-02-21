@@ -33,7 +33,6 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
       searchCriteria,
       className,
       draggable = false,
-      isMobile,
     },
     ref,
   ) {
@@ -42,14 +41,14 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
         .sort(notesCompareFunction(notesSortOrder))
         .map(note => (
           <NoteListItem
+            className="noteListItem"
             key={note.id}
             note={note}
             itemId={note.id}
             searchCriteria={searchCriteria}
-            isMobile={isMobile}
           />
         ));
-    }, [isMobile, notes, notesSortOrder, searchCriteria]);
+    }, [notes, notesSortOrder, searchCriteria]);
 
     return (
       <List
@@ -73,6 +72,16 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
 );
 
 const StyledComponent = styled(Component)`
+  margin: 5px;
+
+  &:focus {
+    outline: 1px solid ${props => props.theme.palette.secondary.main};
+  }
+
+  & .noteListItem {
+    margin: 15px;
+  }
+
   & .alert {
     margin: 20px auto;
     width: 80%;

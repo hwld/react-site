@@ -42,7 +42,7 @@ const Component: React.FC<Props> = ({ className }) => {
     switch (event.key) {
       case 'ArrowRight': {
         if (notesViewRef.current) {
-          notesViewRef.current.focus();
+          notesViewRef.current.focus({ preventScroll: true });
         }
         break;
       }
@@ -57,7 +57,7 @@ const Component: React.FC<Props> = ({ className }) => {
     switch (event.key) {
       case 'ArrowLeft': {
         if (categoriesViewRef.current) {
-          categoriesViewRef.current.focus();
+          categoriesViewRef.current.focus({ preventScroll: true });
         }
         break;
       }

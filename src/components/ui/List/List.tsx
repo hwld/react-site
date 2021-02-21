@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { List as MuiList } from '@material-ui/core';
-import styled from 'styled-components';
 import { ListContextProvider } from './ListContext';
 
 type Props = {
@@ -85,13 +84,13 @@ export const Component = React.forwardRef<
 
   // ListItemのfocusイベントをstopPropagationを使って伝搬させないようにしていることが前提
   const handleFocus = () => {
-    if (!focusedId) {
-      if (selectedIds.length !== 0) {
-        focus(selectedIds[0]);
-      } else {
-        focusFirstNode();
-      }
-    }
+    // if (!focusedId) {
+    //   if (selectedIds.length !== 0) {
+    //     focus(selectedIds[0]);
+    //   } else {
+    //     focusFirstNode();
+    //   }
+    // }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
@@ -105,6 +104,8 @@ export const Component = React.forwardRef<
       case 'ArrowDown': {
         if (focusedId) {
           focusNextItem(focusedId);
+        } else {
+          focusFirstNode();
         }
         break;
       }
@@ -193,11 +194,4 @@ export const Component = React.forwardRef<
   );
 });
 
-const StyledComponent = styled(Component)`
-  overflow: auto;
-  height: 100%;
-  padding-top: 0;
-  padding-bottom: 0;
-`;
-
-export const List = StyledComponent;
+export const List = Component;
