@@ -25,6 +25,7 @@ export const Component = React.forwardRef<
   },
   ref,
 ) {
+  // removeItemが直接onSelectに依存しないようにするために、内部的な選択状態を作成する。
   const [internalSelectedIds, setInternalSelectedIds] = useState(selectedIds);
   const [focusedId, setFocusedId] = useState<string | null>(null);
 
@@ -124,6 +125,8 @@ export const Component = React.forwardRef<
     [onSelect],
   );
 
+  // ここにonSelectの依存関係を入れると、onSelectが変更されたときにremoveItemIdが変更されて、ListItemの破棄時以外にも実行されてしまう。
+  // そのため、選択状態の内部状態であるInternalSelectedIdsを作る。
   const removeItemId = useCallback((targetId: string) => {
     setInternalSelectedIds(ids => ids.filter(id => id !== targetId));
   }, []);
@@ -175,6 +178,13 @@ export const Component = React.forwardRef<
         ref={ref}
         onKeyDown={handleKeyDown}
         onFocus={handleFocus}
+        // // クリックでフォーカスが当たらないようにする
+        onMouseDown={e => {
+          e.preventDefault();
+        }}
+        onClick={() => {
+          selectItem([]);
+        }}
         tabIndex={0}
       >
         {children}

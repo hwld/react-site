@@ -54,18 +54,26 @@ export const Component = React.forwardRef<
     },
   });
 
-  const handleClick = useCallback(() => {
-    if (!isFocused(itemId)) {
-      focus(itemId);
-    }
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      e.stopPropagation();
 
-    if (!selectedIds.includes(itemId)) {
-      selectItem([...selectedIds, itemId]);
-    } else {
-      selectItem(selectedIds.filter(id => id !== itemId));
-    }
-  }, [focus, isFocused, itemId, selectItem, selectedIds]);
+      if (!isFocused(itemId)) {
+        focus(itemId);
+      }
 
+      if (!selectedIds.includes(itemId)) {
+        selectItem([...selectedIds, itemId]);
+      } else {
+        selectItem(selectedIds.filter(id => id !== itemId));
+      }
+    },
+    [focus, isFocused, itemId, selectItem, selectedIds],
+  );
+
+  // コンポーネントの破棄時にだけremoveItemIdが呼ばれることを期待する。
+  // removeItemIdがそれ以外のタイミングで変更されると想定していない動作になる。
+  // itemIdも同様で、使用する側でitemIdを動的に変更しないように気をつける。
   useEffect(() => {
     return () => {
       removeItemId(itemId);
@@ -80,9 +88,14 @@ export const Component = React.forwardRef<
 
   return (
     <div
+      role="none"
       className={className}
       ref={draggable ? drag : null}
       data-testid={`dragLayer-${itemId}`}
+      onMouseDown={e => {
+        // ListのpreventDefaultを回避
+        e.stopPropagation();
+      }}
     >
       <MuiListItem
         className={`list-item ${focused && 'focused'}`}

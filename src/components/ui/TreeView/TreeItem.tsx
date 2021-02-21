@@ -231,6 +231,7 @@ const UnStyledTreeItem = React.forwardRef<
   const handleMouseDown = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
+    event.stopPropagation();
     if (event.shiftKey || event.ctrlKey || event.metaKey) {
       event.preventDefault();
     }

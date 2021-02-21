@@ -710,7 +710,12 @@ const Component = React.forwardRef<
         dropToSelected,
       }}
     >
-      <div className={classes.doropLayer} ref={dropRef}>
+      <div
+        className={classes.doropLayer}
+        ref={dropRef}
+        role="none"
+        onMouseDown={e => e.preventDefault()}
+      >
         <ul
           tabIndex={0}
           role="tree"
