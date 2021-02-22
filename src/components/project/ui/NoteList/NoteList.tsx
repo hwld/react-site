@@ -72,11 +72,7 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
 );
 
 const StyledComponent = styled(Component)`
-  margin: 5px;
-
-  &:focus {
-    outline: 1px solid ${props => props.theme.palette.secondary.main};
-  }
+  padding: 0;
 
   & .noteListItem {
     margin: 15px;
