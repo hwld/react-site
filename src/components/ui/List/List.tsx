@@ -82,15 +82,30 @@ export const Component = React.forwardRef<
   };
   const focusFirstNode = () => focus(getFirstItem());
 
+  // 内部の選択状態と外部の選択状態を同時に設定する
+  const selectItem = useCallback(
+    (ids: string[]) => {
+      onSelect(ids);
+      setInternalSelectedIds(ids);
+    },
+    [onSelect],
+  );
+
+  // ここにonSelectの依存関係を入れると、onSelectが変更されたときにremoveItemIdが変更されて、ListItemの破棄時以外にも実行されてしまう。
+  // そのため、選択状態の内部状態であるInternalSelectedIdsを作る。
+  const removeItemId = useCallback((targetId: string) => {
+    setInternalSelectedIds(ids => ids.filter(id => id !== targetId));
+  }, []);
+
   // ListItemのfocusイベントをstopPropagationを使って伝搬させないようにしていることが前提
   const handleFocus = () => {
-    // if (!focusedId) {
-    //   if (selectedIds.length !== 0) {
-    //     focus(selectedIds[0]);
-    //   } else {
-    //     focusFirstNode();
-    //   }
-    // }
+    if (!focusedId) {
+      if (selectedIds.length !== 0) {
+        focus(selectedIds[selectedIds.length - 1]);
+      } else {
+        focusFirstNode();
+      }
+    }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
@@ -117,20 +132,15 @@ export const Component = React.forwardRef<
     onKeyDown(event);
   };
 
-  // 内部の選択状態と外部の選択状態を同時に設定する
-  const selectItem = useCallback(
-    (ids: string[]) => {
-      onSelect(ids);
-      setInternalSelectedIds(ids);
-    },
-    [onSelect],
-  );
+  const handleClick = () => {
+    selectItem([]);
 
-  // ここにonSelectの依存関係を入れると、onSelectが変更されたときにremoveItemIdが変更されて、ListItemの破棄時以外にも実行されてしまう。
-  // そのため、選択状態の内部状態であるInternalSelectedIdsを作る。
-  const removeItemId = useCallback((targetId: string) => {
-    setInternalSelectedIds(ids => ids.filter(id => id !== targetId));
-  }, []);
+    const element = document.activeElement;
+    if (focusedId && element instanceof HTMLElement) {
+      element.blur();
+    }
+    setFocusedId(null);
+  };
 
   // 内部の選択状態と外部の選択状態の同期をとる
   useEffect(() => {
@@ -179,14 +189,11 @@ export const Component = React.forwardRef<
         ref={ref}
         onKeyDown={handleKeyDown}
         onFocus={handleFocus}
-        // // クリックでフォーカスが当たらないようにする
+        onClick={handleClick}
         onMouseDown={e => {
           e.preventDefault();
         }}
-        onClick={() => {
-          selectItem([]);
-        }}
-        tabIndex={0}
+        tabIndex={-1}
       >
         {children}
       </MuiList>
