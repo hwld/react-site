@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import styled from 'styled-components';
-import { NoteList } from '../../ui/NoteList/NoteList';
+import { NoteList, NoteListProps } from '../../ui/NoteList/NoteList';
 import { ContentColumn } from '../../ui/ContentColumn';
 import { NotesViewMenu } from './NotesViewMenu';
 import { useNotesContext } from '../../../../context/NotesContext';
@@ -17,8 +17,8 @@ import { useCategoriesContext } from '../../../../context/CategoriesContext';
 
 type Props = {
   selectedCategoryIds: string[];
-  focusedId?: string;
-  onSetFocusedId?: (id: string | null) => void;
+  focusedId?: NoteListProps['focusedId'];
+  onSetFocusedId?: NoteListProps['onSetFocusedId'];
   className?: string;
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
 };

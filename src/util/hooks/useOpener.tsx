@@ -10,9 +10,9 @@ export const useOpener = (init: boolean) => {
     setIsOpen(false);
   };
 
-  const invert = () => {
+  const toggle = () => {
     setIsOpen(state => !state);
   };
 
-  return { isOpen, open, close, invert };
+  return { isOpen, open, close, toggle };
 };

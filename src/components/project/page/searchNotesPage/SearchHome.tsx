@@ -19,7 +19,7 @@ type Props = {
 };
 
 const Component: React.FC<Props> = ({ className }) => {
-  const { isOpen, open, close, invert } = useOpener(true);
+  const { isOpen, open, close, toggle } = useOpener(true);
   const [searchCriteria, setSearchCriteria] = useState<SearchNotesCriteria>({
     categoryId: '',
     title: '',
@@ -38,7 +38,7 @@ const Component: React.FC<Props> = ({ className }) => {
 
   return (
     <div className={className} aria-label="searchNotesPage">
-      <AppHeader title="検索" onMenuClick={invert}>
+      <AppHeader title="検索" onMenuClick={toggle}>
         <IconButton tooltipText="ホームに戻る" onClick={backHome}>
           <HomeIcon />
         </IconButton>

@@ -18,16 +18,16 @@ type Props = {
 };
 
 const Component: React.FC<Props> = ({ className }) => {
-  const { isOpen, open, close, invert } = useOpener(true);
-  const categoriesViewRef = useRef<HTMLUListElement | null>(null);
-  const notesViewRef = useRef<HTMLUListElement | null>(null);
-  const history = useHistory();
   const {
     isMobile,
     selectedCategoryIds,
     setSelectedCategoryIds,
   } = useAppStateContext();
   const { user, authState } = useAuthContext();
+  const history = useHistory();
+  const { isOpen, open, close, toggle } = useOpener(true);
+  const categoriesViewRef = useRef<HTMLUListElement | null>(null);
+  const notesViewRef = useRef<HTMLUListElement | null>(null);
 
   const isLoading = authState.loading;
   const isNotLogin = !authState.loading && user.userId === '';
@@ -68,7 +68,7 @@ const Component: React.FC<Props> = ({ className }) => {
 
   return (
     <div className={className} aria-label="mainPage">
-      <AppHeader title="Notes" onMenuClick={invert}>
+      <AppHeader title="Notes" onMenuClick={toggle}>
         <IconButton tooltipText="検索モードに移動" onClick={goSearchMode}>
           <SearchNoteIcon />
         </IconButton>

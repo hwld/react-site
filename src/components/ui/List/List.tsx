@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { List as MuiList } from '@material-ui/core';
 import { ListContextProvider } from './ListContext';
 
-type Props = {
+export type ListProps = {
   className?: string;
   selectedIds?: string[];
   onSelect?: (ids: string[]) => void;
@@ -14,7 +14,7 @@ type Props = {
 
 export const Component = React.forwardRef<
   HTMLUListElement,
-  React.PropsWithChildren<Props>
+  React.PropsWithChildren<ListProps>
 >(function List(
   {
     children,
@@ -164,8 +164,8 @@ export const Component = React.forwardRef<
     const element = document.activeElement;
     if (focused && element instanceof HTMLElement) {
       element.blur();
+      setFocus(null);
     }
-    setInternalFocusedId(null);
   };
 
   // 内部の選択状態と外部の選択状態の同期をとる

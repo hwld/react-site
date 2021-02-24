@@ -2,7 +2,7 @@ import React, { useMemo, forwardRef } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import styled from 'styled-components';
 import { NoteListItem } from './NoteListItem';
-import { List } from '../../../ui/List/List';
+import { List, ListProps } from '../../../ui/List/List';
 import {
   Note,
   NotesSortOrder,
@@ -10,72 +10,73 @@ import {
 } from '../../../../services/notes';
 import { notesCompareFunction } from '../../../../util/compareFunctions';
 
-type Props = {
+export type NoteListProps = {
   notes: Note[];
   notesSortOrder?: NotesSortOrder;
   onNotesSelect?: (selectedIds: string[]) => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
   selectedNoteIds?: string[];
   searchCriteria?: SearchNotesCriteria;
-  focusedId?: string;
-  onSetFocusedId?: (id: string | null) => void;
+  focusedId?: ListProps['focusedId'];
+  onSetFocusedId?: ListProps['onSetFocusedId'];
   className?: string;
   draggable?: boolean;
   isMobile?: boolean;
 };
 
-const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
-  function NoteList(
-    {
-      notes,
-      notesSortOrder = { targetField: 'updatedAt', order: 'asc' },
-      selectedNoteIds = [],
-      onNotesSelect,
-      focusedId,
-      onSetFocusedId,
-      onKeyDown,
-      searchCriteria,
-      className,
-      draggable = false,
-    },
-    ref,
-  ) {
-    const listItems = useMemo(() => {
-      return notes
-        .sort(notesCompareFunction(notesSortOrder))
-        .map(note => (
-          <NoteListItem
-            className="noteListItem"
-            key={note.id}
-            note={note}
-            itemId={note.id}
-            searchCriteria={searchCriteria}
-          />
-        ));
-    }, [notes, notesSortOrder, searchCriteria]);
-
-    return (
-      <List
-        draggable={draggable}
-        className={className}
-        selectedIds={selectedNoteIds}
-        onSelect={onNotesSelect}
-        focusedId={focusedId}
-        onSetFocusedId={onSetFocusedId}
-        onKeyDown={onKeyDown}
-        ref={ref}
-      >
-        {notes.length !== 0 ? (
-          listItems
-        ) : (
-          <Alert className="alert" severity="warning">
-            メモが存在しません
-          </Alert>
-        )}
-      </List>
-    );
+const Component = forwardRef<
+  HTMLUListElement,
+  React.PropsWithChildren<NoteListProps>
+>(function NoteList(
+  {
+    notes,
+    notesSortOrder = { targetField: 'updatedAt', order: 'asc' },
+    selectedNoteIds = [],
+    onNotesSelect,
+    focusedId,
+    onSetFocusedId,
+    onKeyDown,
+    searchCriteria,
+    className,
+    draggable = false,
   },
-);
+  ref,
+) {
+  const listItems = useMemo(() => {
+    return notes
+      .sort(notesCompareFunction(notesSortOrder))
+      .map(note => (
+        <NoteListItem
+          className="noteListItem"
+          key={note.id}
+          note={note}
+          itemId={note.id}
+          searchCriteria={searchCriteria}
+        />
+      ));
+  }, [notes, notesSortOrder, searchCriteria]);
+
+  return (
+    <List
+      draggable={draggable}
+      className={className}
+      selectedIds={selectedNoteIds}
+      onSelect={onNotesSelect}
+      focusedId={focusedId}
+      onSetFocusedId={onSetFocusedId}
+      onKeyDown={onKeyDown}
+      ref={ref}
+    >
+      {notes.length !== 0 ? (
+        listItems
+      ) : (
+        <Alert className="alert" severity="warning">
+          メモが存在しません
+        </Alert>
+      )}
+    </List>
+  );
+});
 
 const StyledComponent = styled(Component)`
   padding: 0;
