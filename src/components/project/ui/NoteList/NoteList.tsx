@@ -17,6 +17,8 @@ type Props = {
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
   selectedNoteIds?: string[];
   searchCriteria?: SearchNotesCriteria;
+  focusedId?: string;
+  onSetFocusedId?: (id: string | null) => void;
   className?: string;
   draggable?: boolean;
   isMobile?: boolean;
@@ -29,6 +31,8 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
       notesSortOrder = { targetField: 'updatedAt', order: 'asc' },
       selectedNoteIds = [],
       onNotesSelect,
+      focusedId,
+      onSetFocusedId,
       onKeyDown,
       searchCriteria,
       className,
@@ -56,6 +60,8 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
         className={className}
         selectedIds={selectedNoteIds}
         onSelect={onNotesSelect}
+        focusedId={focusedId}
+        onSetFocusedId={onSetFocusedId}
         onKeyDown={onKeyDown}
         ref={ref}
       >

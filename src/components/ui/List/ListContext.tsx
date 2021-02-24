@@ -6,8 +6,8 @@ type ListContextValue = {
   selectItem: (ids: string[]) => void;
   removeItemId: (id: string) => void;
   isFocused: (id: string) => boolean;
-  focus: (id: string | null) => void;
-  unFocus: (id: string | null) => void;
+  focus: (id: string) => void;
+  unFocus: (id: string) => void;
   focusNextItem: (id: string) => void;
   focusPrevItem: (id: string) => void;
 };

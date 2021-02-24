@@ -17,12 +17,17 @@ import { useCategoriesContext } from '../../../../context/CategoriesContext';
 
 type Props = {
   selectedCategoryIds: string[];
+  focusedId?: string;
+  onSetFocusedId?: (id: string | null) => void;
   className?: string;
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
 };
 
 const Component = forwardRef<HTMLUListElement, PropsWithChildren<Props>>(
-  function NotesView({ selectedCategoryIds, className, onKeyDown }, ref) {
+  function NotesView(
+    { selectedCategoryIds, focusedId, onSetFocusedId, className, onKeyDown },
+    ref,
+  ) {
     const { isMobile } = useAppStateContext();
     const { notes } = useNotesContext();
     const {
@@ -94,6 +99,8 @@ const Component = forwardRef<HTMLUListElement, PropsWithChildren<Props>>(
             notes={viewNotes}
             selectedNoteIds={selectedNoteIds}
             onNotesSelect={setSelectedNoteIds}
+            focusedId={focusedId}
+            onSetFocusedId={onSetFocusedId}
             onKeyDown={onKeyDown}
             notesSortOrder={notesSortOrder}
             ref={ref}

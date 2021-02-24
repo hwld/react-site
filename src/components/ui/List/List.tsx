@@ -6,6 +6,8 @@ type Props = {
   className?: string;
   selectedIds?: string[];
   onSelect?: (ids: string[]) => void;
+  focusedId?: string | null;
+  onSetFocusedId?: (id: string | null) => void;
   draggable?: boolean;
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
 };
@@ -19,6 +21,8 @@ export const Component = React.forwardRef<
     className,
     selectedIds = [],
     onSelect = () => {},
+    focusedId,
+    onSetFocusedId,
     draggable = false,
     onKeyDown = () => {},
   },
@@ -26,11 +30,13 @@ export const Component = React.forwardRef<
 ) {
   // removeItemが直接onSelectに依存しないようにするために、内部的な選択状態を作成する。
   const [internalSelectedIds, setInternalSelectedIds] = useState(selectedIds);
-  const [focusedId, setFocusedId] = useState<string | null>(null);
+
+  // focusedId、onFocuseIdが渡されなかった場合に使用する
+  const [internalFocusedId, setInternalFocusedId] = useState<string | null>(
+    null,
+  );
 
   const itemIds = useRef<string[]>([]);
-
-  const isFocused = (id: string) => focusedId === id;
 
   const getNextItem = (id: string) => {
     const itemIndex = itemIds.current.indexOf(id);
@@ -58,29 +64,49 @@ export const Component = React.forwardRef<
     return null;
   };
 
-  const focus = (id: string | null) => {
-    if (id) {
-      setFocusedId(id);
-    }
+  const focused = focusedId !== undefined ? focusedId : internalFocusedId;
+
+  const isFocused = (id: string) => focused === id;
+
+  const setFocus = useCallback(
+    (id: string | null) => {
+      if (onSetFocusedId) {
+        onSetFocusedId(id);
+      } else {
+        setInternalFocusedId(id);
+      }
+    },
+    [onSetFocusedId],
+  );
+
+  const focus = (id: string) => {
+    setFocus(id);
   };
 
-  const blur = () => {
-    setFocusedId(null);
-  };
-
-  const unFocus = (id: string | null) => {
-    if (id && focusedId === id) {
-      blur();
+  const unFocus = (id: string) => {
+    if (focused === id) {
+      setFocus(null);
     }
   };
 
   const focusNextItem = (id: string) => {
-    focus(getNextItem(id));
+    const item = getNextItem(id);
+    if (item) {
+      focus(item);
+    }
   };
   const focusPrevItem = (id: string) => {
-    focus(getPrevItem(id));
+    const item = getPrevItem(id);
+    if (item) {
+      focus(item);
+    }
   };
-  const focusFirstNode = () => focus(getFirstItem());
+  const focusFirstNode = () => {
+    const item = getFirstItem();
+    if (item) {
+      focus(item);
+    }
+  };
 
   // 内部の選択状態と外部の選択状態を同時に設定する
   const selectItem = useCallback(
@@ -99,7 +125,7 @@ export const Component = React.forwardRef<
 
   // ListItemのfocusイベントをstopPropagationを使って伝搬させないようにしていることが前提
   const handleFocus = () => {
-    if (!focusedId) {
+    if (!focused) {
       if (selectedIds.length !== 0) {
         focus(selectedIds[selectedIds.length - 1]);
       } else {
@@ -111,14 +137,14 @@ export const Component = React.forwardRef<
   const handleKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
     switch (event.key) {
       case 'ArrowUp': {
-        if (focusedId) {
-          focusPrevItem(focusedId);
+        if (focused) {
+          focusPrevItem(focused);
         }
         break;
       }
       case 'ArrowDown': {
-        if (focusedId) {
-          focusNextItem(focusedId);
+        if (focused) {
+          focusNextItem(focused);
         } else {
           focusFirstNode();
         }
@@ -136,10 +162,10 @@ export const Component = React.forwardRef<
     selectItem([]);
 
     const element = document.activeElement;
-    if (focusedId && element instanceof HTMLElement) {
+    if (focused && element instanceof HTMLElement) {
       element.blur();
     }
-    setFocusedId(null);
+    setInternalFocusedId(null);
   };
 
   // 内部の選択状態と外部の選択状態の同期をとる
@@ -165,10 +191,10 @@ export const Component = React.forwardRef<
   }, [children]);
 
   useEffect(() => {
-    if (focusedId && !itemIds.current.includes(focusedId)) {
-      blur();
+    if (focused && !itemIds.current.includes(focused)) {
+      setFocus(null);
     }
-  }, [children, focusedId]);
+  }, [children, focused, setFocus]);
 
   return (
     <ListContextProvider
