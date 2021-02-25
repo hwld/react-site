@@ -238,6 +238,7 @@ const UnStyledTreeItem = React.forwardRef<
   };
 
   const handleFocus = (event: React.FocusEvent<HTMLLIElement>) => {
+    event.stopPropagation();
     if (!focused && event.currentTarget === event.target) {
       focus(nodeId);
     }

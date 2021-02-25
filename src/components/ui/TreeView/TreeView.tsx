@@ -30,16 +30,19 @@ function arrayDiff<T>(arr1: T[], arr2: T[]) {
   return false;
 }
 
-type Props = WithStyles<typeof styles> & {
+export type TreeViewProps = WithStyles<typeof styles> & {
   className?: string;
   defaultExpanded?: string[];
   defaultSelected?: string[];
+  defaultFocused?: string | null;
   disableSelection?: boolean;
   multiSelect?: boolean;
   expanded?: string[];
   onExpand?: (expanded: string[]) => void;
   onNodeSelect?: (ids: string[]) => void;
   selected?: string[];
+  focused?: string | null;
+  onSetFocused?: (id: string | null) => void;
   draggable?: boolean;
   onDrop?: (sourceId: string[], targetId: string) => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
@@ -47,7 +50,7 @@ type Props = WithStyles<typeof styles> & {
 
 const Component = React.forwardRef<
   HTMLUListElement,
-  React.PropsWithChildren<Props>
+  React.PropsWithChildren<TreeViewProps>
 >(function TreeView(props, ref) {
   const {
     children,
@@ -61,11 +64,25 @@ const Component = React.forwardRef<
     onExpand,
     onNodeSelect,
     selected: selectedProp,
+    focused: focusedProp,
+    onSetFocused: onSetFocusedProp,
     draggable = false,
     onDrop = () => {},
     onKeyDown = () => {},
   } = props;
-  const [focusedNodeId, setFocusedNodeId] = React.useState<string | null>(null);
+  const [focused, setFocusedId] = React.useState<string | null>(null);
+
+  const focusedNodeId = focusedProp !== undefined ? focusedProp : focused;
+  const setFocusedNodeId = React.useCallback(
+    (id: string | null) => {
+      if (onSetFocusedProp) {
+        onSetFocusedProp(id);
+      } else {
+        setFocusedId(id);
+      }
+    },
+    [onSetFocusedProp],
+  );
 
   const nodeMap = React.useRef(
     new Map<
@@ -167,47 +184,44 @@ const Component = React.forwardRef<
     [getAllDescendants, selected],
   );
 
-  // TreeViewにfocusが当たったか
-  const [isTreeViewFocused, setIsTreeViewFocused] = React.useState(false);
-
   // TreeItemにfocusが当たっているか
-  const isFocused = (id: string) => {
-    if (isTreeViewFocused) {
-      return focusedNodeId === id;
-    }
-
-    // TreeViewからfocuseが外れていたら常にfalseを返す
-    return false;
-  };
+  const isFocused = (id: string) => focusedNodeId === id;
 
   /*
    * Focus Helpers
    */
 
-  const focus = (id: string | null) => {
-    if (id) {
-      setFocusedNodeId(id);
-    }
+  const focus = (id: string) => {
+    setFocusedNodeId(id);
   };
 
-  const focusNextNode = (id: string) => focus(getNextNode(id));
-  const focusPreviousNode = (id: string) => focus(getPreviousNode(id));
-  const focusFirstNode = () => focus(getFirstNode());
-  const focusLastNode = () => focus(getLastNode());
+  const focusNextNode = (id: string) => {
+    const next = getNextNode(id);
+    if (next) {
+      focus(next);
+    }
+  };
+  const focusPreviousNode = (id: string) => {
+    const prev = getPreviousNode(id);
+    if (prev) {
+      focus(prev);
+    }
+  };
+  const focusFirstNode = () => {
+    focus(getFirstNode());
+  };
+  const focusLastNode = () => {
+    focus(getLastNode());
+  };
 
   const handleFocus = () => {
-    setIsTreeViewFocused(true);
     if (!focusedNodeId) {
       if (selected.length !== 0) {
-        focus(selected[0]);
+        focus(selected[selected.length - 1]);
       } else {
         focusFirstNode();
       }
     }
-  };
-
-  const handleBlur = () => {
-    setIsTreeViewFocused(false);
   };
 
   /*
@@ -600,17 +614,21 @@ const Component = React.forwardRef<
         }
       });
       nodeMap.current = newMap;
-
-      setFocusedNodeId(oldFocusedNodeId => {
-        if (oldFocusedNodeId === id) {
-          return null;
-        }
-
-        return oldFocusedNodeId;
-      });
     },
     [getNodesToRemove],
   );
+
+  const handleClick = () => {
+    if (!disableSelection) {
+      selectNode(null);
+    }
+
+    const element = document.activeElement;
+    if (focusedNodeId && element instanceof HTMLElement) {
+      element.blur();
+      setFocusedNodeId(null);
+    }
+  };
 
   const prevChildIds = React.useRef<string[]>([]);
   const [childrenCalculated, setChildrenCalculated] = React.useState(false);
@@ -672,6 +690,13 @@ const Component = React.forwardRef<
     }
   }, [onNodeSelect, removedNodes, selected]);
 
+  // 削除されたノードがフォーカスされていたときに解除する
+  React.useEffect(() => {
+    if (focusedNodeId && !nodeMap.current.get(focusedNodeId)) {
+      setFocusedNodeId(null);
+    }
+  }, [focusedNodeId, setFocusedNodeId]);
+
   const noopSelection = () => {
     return false;
   };
@@ -717,14 +742,13 @@ const Component = React.forwardRef<
         onMouseDown={e => e.preventDefault()}
       >
         <ul
-          tabIndex={0}
+          tabIndex={-1}
           role="tree"
           aria-multiselectable={multiSelect}
           className={clsx(classes.root, className)}
-          onClick={() => !disableSelection && selectNode(null)}
+          onClick={handleClick}
           onKeyDown={handleKeyDown}
           onFocus={handleFocus}
-          onBlur={handleBlur}
           ref={ref}
         >
           {children}

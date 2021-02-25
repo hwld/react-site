@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, forwardRef } from 'react';
 import styled from 'styled-components';
 import Alert from '@material-ui/lab/Alert';
-import { TreeView } from '../../../ui/TreeView/TreeView';
+import { TreeView, TreeViewProps } from '../../../ui/TreeView/TreeView';
 import { CategoryTreeItem } from './CategoryTreeItem';
 import { Category } from '../../../../services/categories';
 import { categoriesCompareFunction } from '../../../../util/compareFunctions';
@@ -16,6 +16,8 @@ type Props = {
   className?: string;
   multiple?: boolean;
   selectedCategoryIds?: string[];
+  focused?: TreeViewProps['focused'];
+  onSetFocused?: TreeViewProps['onSetFocused'];
   expanded?: string[];
   onExpand?: (expandedIds: string[]) => void;
   onCategorySelect?: (selectedId: string[]) => void;
@@ -39,6 +41,8 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
       onNotesDrop,
       onKeyDown,
       className,
+      focused,
+      onSetFocused,
     },
     ref,
   ) {
@@ -108,6 +112,8 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
         expanded={expanded}
         onExpand={onExpand}
         onNodeSelect={onCategorySelect}
+        focused={focused}
+        onSetFocused={onSetFocused}
         draggable={draggable}
         onDrop={onCategoryDrop}
         onKeyDown={onKeyDown}

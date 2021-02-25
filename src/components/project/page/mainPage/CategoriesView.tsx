@@ -5,17 +5,27 @@ import { CategoriesViewMenu } from './CategoriesViewMenu';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { useAppStateContext } from '../../../../context/AppStateContext';
+import { TreeViewProps } from '../../../ui/TreeView/TreeView';
 
 type Props = {
   onCategorySelect: (selectedId: string[]) => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
   selectedCategoryIds: string[];
   className?: string;
+  focused?: TreeViewProps['focused'];
+  onSetFocused?: TreeViewProps['onSetFocused'];
 };
 
 const Component = forwardRef<HTMLUListElement, PropsWithChildren<Props>>(
   function CategoriesView(
-    { onCategorySelect, selectedCategoryIds, className, onKeyDown },
+    {
+      onCategorySelect,
+      selectedCategoryIds,
+      className,
+      onKeyDown,
+      focused,
+      onSetFocused,
+    },
     ref,
   ) {
     const { categories, moveCategories } = useCategoriesContext();
@@ -46,6 +56,8 @@ const Component = forwardRef<HTMLUListElement, PropsWithChildren<Props>>(
           onNotesDrop={moveNotes}
           onKeyDown={onKeyDown}
           ref={ref}
+          focused={focused}
+          onSetFocused={onSetFocused}
         />
       </ContentColumn>
     );
