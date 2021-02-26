@@ -150,6 +150,7 @@ const UnStyledTreeItem = React.forwardRef<
 
   const {
     focus,
+    unFocus,
     selectNode,
     selectRange,
     toggleExpansion,
@@ -244,6 +245,11 @@ const UnStyledTreeItem = React.forwardRef<
     }
   };
 
+  const handleBlur = (event: React.FocusEvent<HTMLLIElement>) => {
+    event.stopPropagation();
+    unFocus(nodeId);
+  };
+
   React.useEffect(() => {
     if (addNodeToNodeMap) {
       const childIds: string[] = [];
@@ -327,6 +333,7 @@ const UnStyledTreeItem = React.forwardRef<
       })}
       role="treeitem"
       onFocus={handleFocus}
+      onBlur={handleBlur}
       aria-expanded={expandable ? expanded : undefined}
       aria-selected={ariaSelected}
       ref={handleRef}
@@ -358,6 +365,7 @@ const UnStyledTreeItem = React.forwardRef<
             <div
               className={classes.content}
               onClick={handleContentClick}
+              onBlur={() => console.log('blur')}
               onMouseDown={handleMouseDown}
               ref={contentRef}
               data-testid={`clickLayer-${nodeId}`}

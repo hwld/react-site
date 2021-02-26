@@ -2,6 +2,7 @@ import * as React from 'react';
 
 type TreeViewContextValue = {
   focus: (id: string) => void;
+  unFocus: (id: string) => void;
   focusFirstNode: () => void;
   focusLastNode: () => void;
   focusNextNode: (id: string) => void;
@@ -45,6 +46,7 @@ type TreeViewContextValue = {
  */
 const TreeViewContext = React.createContext<TreeViewContextValue>({
   focus: () => {},
+  unFocus: () => {},
   focusFirstNode: () => {},
   focusLastNode: () => {},
   focusNextNode: () => {},

@@ -198,6 +198,12 @@ const Component = React.forwardRef<
     setFocusedNodeId(id);
   };
 
+  const unFocus = (id: string) => {
+    if (focusedNodeId === id) {
+      setFocusedNodeId(null);
+    }
+  };
+
   const focusNextNode = (id: string) => {
     const next = getNextNode(id);
     if (next) {
@@ -708,6 +714,7 @@ const Component = React.forwardRef<
     <TreeViewContext.Provider
       value={{
         focus,
+        unFocus,
         focusFirstNode,
         focusLastNode,
         focusNextNode,
