@@ -2,7 +2,7 @@ import React, { useMemo, useCallback, useRef, createRef } from 'react';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { format } from 'date-fns';
-import { ListItem } from '../../../ui/List/ListItem';
+import { ListItem, ListItemProps } from '../../../ui/List/ListItem';
 import { Note, SearchNotesCriteria } from '../../../../services/notes';
 import { OpenRemoveNotesDialogButton } from '../../operation/removeNotes/OpenRemoveNotesDialogButton';
 import { OpenUpdateNoteDialogButton } from '../../operation/updateNote/OpenUpdateNoteDialogButton';
@@ -12,12 +12,15 @@ type Props = {
   itemId: string;
   searchCriteria?: SearchNotesCriteria;
   className?: string;
+  tabIndex?: ListItemProps['tabIndex'];
 };
+
 const Component: React.FC<Props> = ({
   note,
   itemId,
   searchCriteria,
   className,
+  tabIndex,
 }) => {
   const refs = useRef<
     [
@@ -107,6 +110,7 @@ const Component: React.FC<Props> = ({
       onKeyDown={handleKeyDown}
       ref={refs.current[0]}
       className={className}
+      tabIndex={tabIndex}
     >
       <div className="itemRoot">
         <div className="noteContainer">

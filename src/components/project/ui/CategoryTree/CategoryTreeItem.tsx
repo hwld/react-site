@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
-import { TreeItem } from '../../../ui/TreeView/TreeItem';
+import { TreeItem, TreeItemProps } from '../../../ui/TreeView/TreeItem';
 import { ListItemDropType } from '../../../ui/List/ListItem';
 import { ItemTypes } from '../../../ui/ItemTypes';
 
@@ -8,6 +8,7 @@ type Props = {
   nodeId: string;
   categoryName: string;
   onNotesDrop?: (noteIds: string[], destCategoryId: string) => void;
+  tabIndex?: TreeItemProps['tabIndex'];
 };
 
 const Component: React.FC<Props> = ({
@@ -15,6 +16,7 @@ const Component: React.FC<Props> = ({
   nodeId,
   categoryName,
   onNotesDrop = () => {},
+  tabIndex,
 }) => {
   const [{ isDropOver, canDrop }, drop] = useDrop({
     accept: ItemTypes.ListItem,
@@ -39,6 +41,7 @@ const Component: React.FC<Props> = ({
       dropRef={drop}
       isDropOver={isDropOver}
       canDrop={canDrop}
+      tabIndex={tabIndex}
     >
       {children}
     </TreeItem>

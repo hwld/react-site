@@ -11,16 +11,17 @@ export type ListItemDropType = {
   ids: string[];
 };
 
-type Props = {
+export type ListItemProps = {
   className?: string;
   itemId: string;
   onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  tabIndex?: number;
 };
 
 export const Component = React.forwardRef<
   HTMLDivElement,
-  React.PropsWithChildren<Props>
->(function ListItem({ children, className, itemId, onKeyDown }, ref) {
+  React.PropsWithChildren<ListItemProps>
+>(function ListItem({ children, className, itemId, onKeyDown, tabIndex }, ref) {
   const {
     selectedIds,
     draggable,
@@ -112,7 +113,7 @@ export const Component = React.forwardRef<
         }}
         selected={selectedIds.includes(itemId)}
         data-testid={`selectLayer-${itemId}`}
-        tabIndex={-1}
+        tabIndex={tabIndex ?? 0}
       >
         {children}
       </MuiListItem>

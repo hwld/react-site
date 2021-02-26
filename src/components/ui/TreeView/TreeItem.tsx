@@ -123,7 +123,7 @@ export const styles = (theme: Theme) => ({
   },
 });
 
-type TreeItemProps = WithStyles<typeof styles> & {
+export type TreeItemProps = WithStyles<typeof styles> & {
   className?: string;
   label: string;
   nodeId: string;
@@ -131,6 +131,7 @@ type TreeItemProps = WithStyles<typeof styles> & {
   canDrop?: boolean;
   isDropOver?: boolean;
   onKeyDown?: (event: React.KeyboardEvent) => void;
+  tabIndex?: number;
 };
 
 const UnStyledTreeItem = React.forwardRef<
@@ -146,6 +147,7 @@ const UnStyledTreeItem = React.forwardRef<
     dropRef,
     isDropOver,
     canDrop,
+    tabIndex,
   } = props;
 
   const {
@@ -337,7 +339,7 @@ const UnStyledTreeItem = React.forwardRef<
       aria-expanded={expandable ? expanded : undefined}
       aria-selected={ariaSelected}
       ref={handleRef}
-      tabIndex={-1}
+      tabIndex={tabIndex ?? 0}
     >
       <div
         className={clsx(classes.dropLayer, {
@@ -365,7 +367,6 @@ const UnStyledTreeItem = React.forwardRef<
             <div
               className={classes.content}
               onClick={handleContentClick}
-              onBlur={() => console.log('blur')}
               onMouseDown={handleMouseDown}
               ref={contentRef}
               data-testid={`clickLayer-${nodeId}`}

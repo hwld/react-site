@@ -69,13 +69,17 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
 
     // 表示用のCategoryNodeからReactNodeを構築する関数
     const buildCategoryTreeItems = useCallback(
-      (categoryTreeNode: CategoryTreeNode): React.ReactNode => {
+      (
+        categoryTreeNode: CategoryTreeNode,
+        option?: { first: boolean },
+      ): React.ReactNode => {
         return (
           <CategoryTreeItem
             nodeId={categoryTreeNode.id}
             categoryName={categoryTreeNode.categoryName}
             key={categoryTreeNode.id}
             onNotesDrop={onNotesDrop}
+            tabIndex={option?.first ? 0 : -1}
           >
             {categoryTreeNode.childrenCategories.length === 0
               ? null
@@ -101,7 +105,9 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
         .map(category => buildCategoryTreeNode(category));
 
       // CategoryTreeNodeをReactNodeに変換する
-      return treeObject.map(obj => buildCategoryTreeItems(obj));
+      return treeObject.map((obj, index) =>
+        buildCategoryTreeItems(obj, { first: index === 0 }),
+      );
     }, [buildCategoryTreeItems, buildCategoryTreeNode, categories]);
 
     return (
