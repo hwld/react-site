@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import SearchNoteIcon from '@material-ui/icons/Search';
@@ -29,6 +29,8 @@ const Component: React.FC<Props> = ({ className }) => {
   const categoriesViewRef = useRef<HTMLUListElement | null>(null);
   const notesViewRef = useRef<HTMLUListElement | null>(null);
 
+  const [focusedCategoryId, setFocusedCategory] = useState<string | null>(null);
+
   const isLoading = authState.loading;
   const isNotLogin = !authState.loading && user.userId === '';
 
@@ -44,6 +46,7 @@ const Component: React.FC<Props> = ({ className }) => {
         if (notesViewRef.current) {
           notesViewRef.current.focus({ preventScroll: true });
         }
+        setFocusedCategory(null);
         break;
       }
       default:
@@ -87,6 +90,8 @@ const Component: React.FC<Props> = ({ className }) => {
           selectedCategoryIds={selectedCategoryIds}
           onKeyDown={handleCategoriesViewKeyDown}
           ref={categoriesViewRef}
+          focused={focusedCategoryId}
+          onSetFocused={setFocusedCategory}
         />
       </Drawer>
       <NotesView
