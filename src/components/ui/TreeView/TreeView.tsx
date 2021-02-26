@@ -70,15 +70,18 @@ const Component = React.forwardRef<
     onDrop = () => {},
     onKeyDown = () => {},
   } = props;
-  const [focused, setFocusedId] = React.useState<string | null>(null);
+  const [internalFocused, setInternalFocusedId] = React.useState<string | null>(
+    null,
+  );
 
-  const focusedNodeId = focusedProp !== undefined ? focusedProp : focused;
+  const focusedNodeId =
+    focusedProp !== undefined ? focusedProp : internalFocused;
   const setFocusedNodeId = React.useCallback(
     (id: string | null) => {
       if (onSetFocusedProp) {
         onSetFocusedProp(id);
       } else {
-        setFocusedId(id);
+        setInternalFocusedId(id);
       }
     },
     [onSetFocusedProp],
