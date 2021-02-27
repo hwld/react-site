@@ -45,17 +45,19 @@ const Component = forwardRef<
   const listItems = useMemo(() => {
     return notes
       .sort(notesCompareFunction(notesSortOrder))
-      .map((note, index) => (
-        <NoteListItem
-          className="noteListItem"
-          key={note.id}
-          note={note}
-          itemId={note.id}
-          searchCriteria={searchCriteria}
-          tabIndex={index === 0 ? 0 : -1}
-        />
-      ));
-  }, [notes, notesSortOrder, searchCriteria]);
+      .map((note, index) => {
+        return (
+          <NoteListItem
+            className="noteListItem"
+            key={note.id}
+            note={note}
+            itemId={note.id}
+            searchCriteria={searchCriteria}
+            tabIndex={!focusedId && index === 0 ? 0 : -1}
+          />
+        );
+      });
+  }, [focusedId, notes, notesSortOrder, searchCriteria]);
 
   return (
     <List

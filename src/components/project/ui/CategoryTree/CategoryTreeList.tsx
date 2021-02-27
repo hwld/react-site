@@ -79,7 +79,7 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
             categoryName={categoryTreeNode.categoryName}
             key={categoryTreeNode.id}
             onNotesDrop={onNotesDrop}
-            tabIndex={option?.first ? 0 : -1}
+            tabIndex={!focused && option?.first ? 0 : -1}
           >
             {categoryTreeNode.childrenCategories.length === 0
               ? null
@@ -89,7 +89,7 @@ const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
           </CategoryTreeItem>
         );
       },
-      [onNotesDrop],
+      [focused, onNotesDrop],
     );
 
     // 受け取ったcategoriesのReactNode

@@ -29,7 +29,10 @@ const Component: React.FC<Props> = ({ className }) => {
   const categoriesViewRef = useRef<HTMLUListElement | null>(null);
   const notesViewRef = useRef<HTMLUListElement | null>(null);
 
-  const [focusedCategoryId, setFocusedCategory] = useState<string | null>(null);
+  const [focusedCategoryId, setFocusedCategoryId] = useState<string | null>(
+    null,
+  );
+  const [focusedNoteId, setFocusedNoteId] = useState<string | null>(null);
 
   const isLoading = authState.loading;
   const isNotLogin = !authState.loading && user.userId === '';
@@ -46,7 +49,7 @@ const Component: React.FC<Props> = ({ className }) => {
         if (notesViewRef.current) {
           notesViewRef.current.focus({ preventScroll: true });
         }
-        setFocusedCategory(null);
+        setFocusedCategoryId(null);
         break;
       }
       default:
@@ -91,13 +94,15 @@ const Component: React.FC<Props> = ({ className }) => {
           onKeyDown={handleCategoriesViewKeyDown}
           ref={categoriesViewRef}
           focused={focusedCategoryId}
-          onSetFocused={setFocusedCategory}
+          onSetFocused={setFocusedCategoryId}
         />
       </Drawer>
       <NotesView
         selectedCategoryIds={selectedCategoryIds}
         onKeyDown={handleNotesViewKeyDown}
         ref={notesViewRef}
+        focusedId={focusedNoteId}
+        onSetFocusedId={setFocusedNoteId}
       />
 
       {isLoading && <Loading />}
