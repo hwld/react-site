@@ -32,7 +32,24 @@ const Component: React.FC<Props> = ({ className }) => {
   const [focusedCategoryId, setFocusedCategoryId] = useState<string | null>(
     null,
   );
+
   const [focusedNoteId, setFocusedNoteId] = useState<string | null>(null);
+
+  const [
+    lastFocusedNoteIdByCategory,
+    setLastFocusedNoteIdByCategory,
+  ] = useState(new Map<string, string | null>());
+
+  const setLastFocusedNoteId = (args: {
+    categoryId: string;
+    focusedNoteId: string | null;
+  }) => {
+    setLastFocusedNoteIdByCategory(map => {
+      map.set(args.categoryId, args.focusedNoteId);
+
+      return new Map(map);
+    });
+  };
 
   const isLoading = authState.loading;
   const isNotLogin = !authState.loading && user.userId === '';
@@ -50,6 +67,13 @@ const Component: React.FC<Props> = ({ className }) => {
           notesViewRef.current.focus({ preventScroll: true });
         }
         setFocusedCategoryId(null);
+
+        const lastFocused = lastFocusedNoteIdByCategory.get(
+          selectedCategoryIds[0],
+        );
+        if (selectedCategoryIds.length === 1 && lastFocused) {
+          setFocusedNoteId(lastFocused);
+        }
         break;
       }
       default:
@@ -64,6 +88,12 @@ const Component: React.FC<Props> = ({ className }) => {
       case 'ArrowLeft': {
         if (categoriesViewRef.current) {
           categoriesViewRef.current.focus({ preventScroll: true });
+        }
+        if (selectedCategoryIds.length === 1) {
+          setLastFocusedNoteId({
+            categoryId: selectedCategoryIds[0],
+            focusedNoteId,
+          });
         }
         break;
       }

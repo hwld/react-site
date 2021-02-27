@@ -11,7 +11,7 @@ export type CategoryTreeNode = Category & {
   childrenCategories: CategoryTreeNode[];
 };
 
-type Props = {
+export type CategoryTreeListProps = {
   categories: Category[];
   className?: string;
   multiple?: boolean;
@@ -27,115 +27,116 @@ type Props = {
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
 };
 
-const Component = forwardRef<HTMLUListElement, React.PropsWithChildren<Props>>(
-  function CategoryTreeList(
-    {
-      multiple,
-      categories,
-      selectedCategoryIds = [],
-      expanded,
-      onExpand = () => {},
-      onCategorySelect = () => {},
-      draggable = false,
-      onCategoryDrop,
-      onNotesDrop,
-      onKeyDown,
-      className,
-      focused,
-      onSetFocused,
-    },
-    ref,
-  ) {
-    // Categoryを表示用のNodeに変換する関数
-    const buildCategoryTreeNode = useCallback(
-      (rawCategory: Category): CategoryTreeNode => {
-        // rawCategoryの子カテゴリーを抽出
-        const childrenCategories = categories.filter(
-          category => category.parentCategoryId === rawCategory.id,
-        );
-
-        // childrenCategoriesそれぞれのCategoryTreeNodeを作成
-        const childrenCategoryTreeNodes = childrenCategories
-          .sort(categoriesCompareFunction())
-          .map(category => buildCategoryTreeNode(category));
-
-        return {
-          ...rawCategory,
-          childrenCategories: [...childrenCategoryTreeNodes],
-        };
-      },
-      [categories],
-    );
-
-    // 表示用のCategoryNodeからReactNodeを構築する関数
-    const buildCategoryTreeItems = useCallback(
-      (
-        categoryTreeNode: CategoryTreeNode,
-        option?: { first: boolean },
-      ): React.ReactNode => {
-        return (
-          <CategoryTreeItem
-            nodeId={categoryTreeNode.id}
-            categoryName={categoryTreeNode.categoryName}
-            key={categoryTreeNode.id}
-            onNotesDrop={onNotesDrop}
-            tabIndex={!focused && option?.first ? 0 : -1}
-          >
-            {categoryTreeNode.childrenCategories.length === 0
-              ? null
-              : categoryTreeNode.childrenCategories.map(node =>
-                  buildCategoryTreeItems(node),
-                )}
-          </CategoryTreeItem>
-        );
-      },
-      [focused, onNotesDrop],
-    );
-
-    // 受け取ったcategoriesのReactNode
-    const categoryTreeItems = useMemo(() => {
-      // ルートカテゴリーを取得する
-      const rootCategories = categories.filter(
-        category => category.parentCategoryId === '',
+const Component = forwardRef<
+  HTMLUListElement,
+  React.PropsWithChildren<CategoryTreeListProps>
+>(function CategoryTreeList(
+  {
+    multiple,
+    categories,
+    selectedCategoryIds = [],
+    expanded,
+    onExpand = () => {},
+    onCategorySelect = () => {},
+    draggable = false,
+    onCategoryDrop,
+    onNotesDrop,
+    onKeyDown,
+    className,
+    focused,
+    onSetFocused,
+  },
+  ref,
+) {
+  // Categoryを表示用のNodeに変換する関数
+  const buildCategoryTreeNode = useCallback(
+    (rawCategory: Category): CategoryTreeNode => {
+      // rawCategoryの子カテゴリーを抽出
+      const childrenCategories = categories.filter(
+        category => category.parentCategoryId === rawCategory.id,
       );
 
-      // ルートカテゴリーそれぞれのCategoryTreeNodeを作成する
-      const treeObject = rootCategories
+      // childrenCategoriesそれぞれのCategoryTreeNodeを作成
+      const childrenCategoryTreeNodes = childrenCategories
         .sort(categoriesCompareFunction())
         .map(category => buildCategoryTreeNode(category));
 
-      // CategoryTreeNodeをReactNodeに変換する
-      return treeObject.map((obj, index) =>
-        buildCategoryTreeItems(obj, { first: index === 0 }),
-      );
-    }, [buildCategoryTreeItems, buildCategoryTreeNode, categories]);
+      return {
+        ...rawCategory,
+        childrenCategories: [...childrenCategoryTreeNodes],
+      };
+    },
+    [categories],
+  );
 
-    return (
-      <TreeView
-        multiSelect={multiple}
-        className={className}
-        selected={selectedCategoryIds}
-        expanded={expanded}
-        onExpand={onExpand}
-        onNodeSelect={onCategorySelect}
-        focused={focused}
-        onSetFocused={onSetFocused}
-        draggable={draggable}
-        onDrop={onCategoryDrop}
-        onKeyDown={onKeyDown}
-        ref={ref}
-      >
-        {categories.length !== 0 ? (
-          categoryTreeItems
-        ) : (
-          <Alert className="alert" severity="warning">
-            カテゴリーが存在しません
-          </Alert>
-        )}
-      </TreeView>
+  // 表示用のCategoryNodeからReactNodeを構築する関数
+  const buildCategoryTreeItems = useCallback(
+    (
+      categoryTreeNode: CategoryTreeNode,
+      option?: { first: boolean },
+    ): React.ReactNode => {
+      return (
+        <CategoryTreeItem
+          nodeId={categoryTreeNode.id}
+          categoryName={categoryTreeNode.categoryName}
+          key={categoryTreeNode.id}
+          onNotesDrop={onNotesDrop}
+          tabIndex={!focused && option?.first ? 0 : -1}
+        >
+          {categoryTreeNode.childrenCategories.length === 0
+            ? null
+            : categoryTreeNode.childrenCategories.map(node =>
+                buildCategoryTreeItems(node),
+              )}
+        </CategoryTreeItem>
+      );
+    },
+    [focused, onNotesDrop],
+  );
+
+  // 受け取ったcategoriesのReactNode
+  const categoryTreeItems = useMemo(() => {
+    // ルートカテゴリーを取得する
+    const rootCategories = categories.filter(
+      category => category.parentCategoryId === '',
     );
-  },
-);
+
+    // ルートカテゴリーそれぞれのCategoryTreeNodeを作成する
+    const treeObject = rootCategories
+      .sort(categoriesCompareFunction())
+      .map(category => buildCategoryTreeNode(category));
+
+    // CategoryTreeNodeをReactNodeに変換する
+    return treeObject.map((obj, index) =>
+      buildCategoryTreeItems(obj, { first: index === 0 }),
+    );
+  }, [buildCategoryTreeItems, buildCategoryTreeNode, categories]);
+
+  return (
+    <TreeView
+      multiSelect={multiple}
+      className={className}
+      selected={selectedCategoryIds}
+      expanded={expanded}
+      onExpand={onExpand}
+      onNodeSelect={onCategorySelect}
+      focused={focused}
+      onSetFocused={onSetFocused}
+      draggable={draggable}
+      onDrop={onCategoryDrop}
+      onKeyDown={onKeyDown}
+      ref={ref}
+    >
+      {categories.length !== 0 ? (
+        categoryTreeItems
+      ) : (
+        <Alert className="alert" severity="warning">
+          カテゴリーが存在しません
+        </Alert>
+      )}
+    </TreeView>
+  );
+});
 
 const StyledComponent = styled(Component)`
   height: 100%;
