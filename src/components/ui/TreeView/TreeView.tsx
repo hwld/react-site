@@ -699,13 +699,6 @@ const Component = React.forwardRef<
     }
   }, [onNodeSelect, removedNodes, selected]);
 
-  // 削除されたノードがフォーカスされていたときに解除する
-  React.useEffect(() => {
-    if (focusedNodeId && !nodeMap.current.get(focusedNodeId)) {
-      setFocusedNodeId(null);
-    }
-  }, [focusedNodeId, setFocusedNodeId]);
-
   const noopSelection = () => {
     return false;
   };

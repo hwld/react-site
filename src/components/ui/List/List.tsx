@@ -190,12 +190,6 @@ export const Component = React.forwardRef<
     itemIds.current = newItemIds;
   }, [children]);
 
-  useEffect(() => {
-    if (focused && !itemIds.current.includes(focused)) {
-      setFocus(null);
-    }
-  }, [children, focused, setFocus]);
-
   return (
     <ListContextProvider
       value={{
