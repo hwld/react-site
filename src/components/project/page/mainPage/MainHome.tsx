@@ -30,7 +30,7 @@ const Component: React.FC<Props> = ({ className }) => {
   const notesViewRef = useRef<HTMLUListElement | null>(null);
 
   const [focusedCategoryId, setFocusedCategoryId] = useState<string | null>(
-    null,
+    selectedCategoryIds[0],
   );
 
   const [focusedNoteId, setFocusedNoteId] = useState<string | null>(null);
