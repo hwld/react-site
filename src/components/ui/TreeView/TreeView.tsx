@@ -690,14 +690,23 @@ const Component = React.forwardRef<
     setRemovedNodes(nodes => [...nodes, id]);
   }, []);
 
-  // 削除されたノードが選択状態のときに解除する
+  // 削除されたノードの後処理
   React.useEffect(() => {
-    if (onNodeSelect && removedNodes.length !== 0) {
-      const newSelected = selected.filter(id => !removedNodes.includes(id));
-      onNodeSelect(newSelected);
+    if (removedNodes.length !== 0) {
+      // 選択状態から外す
+      if (onNodeSelect) {
+        const newSelected = selected.filter(id => !removedNodes.includes(id));
+        onNodeSelect(newSelected);
+      }
+
+      // フォーカスの状態を外す
+      if (focusedNodeId && removedNodes.includes(focusedNodeId)) {
+        setFocusedNodeId(null);
+      }
+
       setRemovedNodes([]);
     }
-  }, [onNodeSelect, removedNodes, selected]);
+  }, [focusedNodeId, onNodeSelect, removedNodes, selected, setFocusedNodeId]);
 
   const noopSelection = () => {
     return false;

@@ -28,9 +28,6 @@ export const Component = React.forwardRef<
   },
   ref,
 ) {
-  // removeItemが直接onSelectに依存しないようにするために、内部的な選択状態を作成する。
-  const [internalSelectedIds, setInternalSelectedIds] = useState(selectedIds);
-
   // focusedId、onFocuseIdが渡されなかった場合に使用する
   const [internalFocusedId, setInternalFocusedId] = useState<string | null>(
     null,
@@ -108,21 +105,6 @@ export const Component = React.forwardRef<
     }
   };
 
-  // 内部の選択状態と外部の選択状態を同時に設定する
-  const selectItem = useCallback(
-    (ids: string[]) => {
-      onSelect(ids);
-      setInternalSelectedIds(ids);
-    },
-    [onSelect],
-  );
-
-  // ここにonSelectの依存関係を入れると、onSelectが変更されたときにremoveItemIdが変更されて、ListItemの破棄時以外にも実行されてしまう。
-  // そのため、選択状態の内部状態であるInternalSelectedIdsを作る。
-  const removeItemId = useCallback((targetId: string) => {
-    setInternalSelectedIds(ids => ids.filter(id => id !== targetId));
-  }, []);
-
   // ListItemのfocusイベントをstopPropagationを使って伝搬させないようにしていることが前提
   const handleFocus = () => {
     if (!focused) {
@@ -159,7 +141,7 @@ export const Component = React.forwardRef<
   };
 
   const handleClick = () => {
-    selectItem([]);
+    onSelect([]);
 
     const element = document.activeElement;
     if (focused && element instanceof HTMLElement) {
@@ -167,13 +149,6 @@ export const Component = React.forwardRef<
       setFocus(null);
     }
   };
-
-  // 内部の選択状態と外部の選択状態の同期をとる
-  useEffect(() => {
-    if (internalSelectedIds.length !== selectedIds.length) {
-      onSelect(internalSelectedIds);
-    }
-  }, [internalSelectedIds, onSelect, selectedIds]);
 
   // itemを収集する
   useEffect(() => {
@@ -190,12 +165,35 @@ export const Component = React.forwardRef<
     itemIds.current = newItemIds;
   }, [children]);
 
+  const [removedItemIds, setRemovedItemIds] = useState<string[]>([]);
+  const removeItemId = useCallback((id: string) => {
+    setRemovedItemIds(ids => [...ids, id]);
+  }, []);
+
+  // 削除されたアイテムの後処理
+  useEffect(() => {
+    if (removedItemIds.length !== 0) {
+      // 選択状態から外す
+      const newSelected = selectedIds.filter(
+        id => !removedItemIds.includes(id),
+      );
+      onSelect(newSelected);
+
+      // フォーカス状態を外す
+      if (focused && removedItemIds.includes(focused)) {
+        setFocus(null);
+      }
+
+      setRemovedItemIds([]);
+    }
+  }, [focused, onSelect, removedItemIds, selectedIds, setFocus]);
+
   return (
     <ListContextProvider
       value={{
         selectedIds,
         draggable,
-        selectItem,
+        selectItem: onSelect,
         removeItemId,
         isFocused,
         focus,
