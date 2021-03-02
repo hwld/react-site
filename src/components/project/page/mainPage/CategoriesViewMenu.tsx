@@ -12,7 +12,7 @@ const Component: React.FC<Props> = ({ selectedCategoryIds }) => {
     <>
       <OpenAddCategoryDialogButton
         disabled={selectedCategoryIds.length > 1}
-        parentCategoryId={selectedCategoryIds[0] || ''}
+        parentCategoryId={selectedCategoryIds[0] ?? ''}
       />
       <OpenRemoveCategoriesDialogButton
         disabled={selectedCategoryIds.length === 0}

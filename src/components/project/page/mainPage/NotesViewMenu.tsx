@@ -23,7 +23,7 @@ const Component: React.FC<Props> = ({
     <>
       <OpenAddNoteDialogButton
         disabled={selectedCategoryIds.length !== 1}
-        categoryId={selectedCategoryIds[0] || ''}
+        categoryId={selectedCategoryIds[0] ?? ''}
       />
       <OpenRemoveNotesDialogButton
         disabled={selectedNoteIds.length === 0}

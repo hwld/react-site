@@ -22,8 +22,8 @@ const Component: React.FC<NoteFormProps> = ({
 }) => {
   const { control, errors, handleSubmit } = useForm<FormNoteField>({
     defaultValues: {
-      title: defaultField?.title || '',
-      text: defaultField?.text || '',
+      title: defaultField?.title ?? '',
+      text: defaultField?.text ?? '',
     },
   });
   const TypedController = useTypedController<FormNoteField>({ control });

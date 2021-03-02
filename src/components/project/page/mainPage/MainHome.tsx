@@ -51,9 +51,6 @@ const Component: React.FC<Props> = ({ className }) => {
     });
   };
 
-  const isLoading = authState.loading;
-  const isNotLogin = !authState.loading && user.userId === '';
-
   const goSearchMode = () => {
     history.replace('/search');
   };
@@ -63,6 +60,10 @@ const Component: React.FC<Props> = ({ className }) => {
   ) => {
     switch (event.key) {
       case 'ArrowRight': {
+        if (selectedCategoryIds.length === 0) {
+          return;
+        }
+
         if (notesViewRef.current) {
           notesViewRef.current.focus({ preventScroll: true });
         }
@@ -135,8 +136,8 @@ const Component: React.FC<Props> = ({ className }) => {
         onSetFocusedId={setFocusedNoteId}
       />
 
-      {isLoading && <Loading />}
-      {isNotLogin && <LoginDialog />}
+      {authState.loading && <Loading />}
+      {!authState.loading && user.userId === '' && <LoginDialog />}
     </div>
   );
 };

@@ -18,7 +18,7 @@ const Component: React.FC<Props> = ({
   onSubmit,
   className,
 }) => {
-  const [selectedId, setSelectedId] = useState(defaultSelectedId || '');
+  const [selectedId, setSelectedId] = useState(defaultSelectedId ?? '');
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -26,7 +26,7 @@ const Component: React.FC<Props> = ({
   };
 
   const handleSelect = (ids: string[]) => {
-    setSelectedId(ids[0] || '');
+    setSelectedId(ids[0] ?? '');
   };
 
   return (

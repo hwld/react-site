@@ -22,7 +22,7 @@ const Component: React.FC<CategoryFormProps> = ({
 }) => {
   const { control, errors, handleSubmit } = useForm<FormCategoryField>({
     defaultValues: {
-      categoryName: defaultField?.categoryName || '',
+      categoryName: defaultField?.categoryName ?? '',
     },
   });
   const TypedController = useTypedController<FormCategoryField>({ control });
