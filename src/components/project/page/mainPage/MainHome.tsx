@@ -8,10 +8,8 @@ import { CategoriesView } from './CategoriesView';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 import { useOpener } from '../../../../util/hooks/useOpener';
 import { IconButton } from '../../../ui/IconButton';
-import { AppHeader } from '../../ui/AppHeader';
-import { useAuthContext } from '../../../../context/AuthContext';
-import { Loading } from '../../ui/Loading';
-import { LoginDialog } from '../../ui/LoginDialog';
+import { PageHeader } from '../PageHeader';
+import { AuthRequiredPage } from '../AuthRequiredPage';
 
 type Props = {
   className?: string;
@@ -23,16 +21,22 @@ const Component: React.FC<Props> = ({ className }) => {
     selectedCategoryIds,
     setSelectedCategoryIds,
   } = useAppStateContext();
-  const { user, authState } = useAuthContext();
+
   const history = useHistory();
-  const { isOpen, open, close, toggle } = useOpener(true);
+
+  const {
+    isOpen: isDrawerOpen,
+    open: openDrawer,
+    close: closeDrawer,
+    toggle: toggleDrawer,
+  } = useOpener(true);
+
   const categoriesViewRef = useRef<HTMLUListElement | null>(null);
   const notesViewRef = useRef<HTMLUListElement | null>(null);
 
   const [focusedCategoryId, setFocusedCategoryId] = useState<string | null>(
     selectedCategoryIds[0],
   );
-
   const [focusedNoteId, setFocusedNoteId] = useState<string | null>(null);
 
   const [
@@ -51,7 +55,7 @@ const Component: React.FC<Props> = ({ className }) => {
     });
   };
 
-  const goSearchMode = () => {
+  const goSearchPage = () => {
     history.replace('/search');
   };
 
@@ -104,19 +108,19 @@ const Component: React.FC<Props> = ({ className }) => {
   };
 
   return (
-    <div className={className} aria-label="mainPage">
-      <AppHeader title="Notes" onMenuClick={toggle}>
-        <IconButton tooltipText="検索モードに移動" onClick={goSearchMode}>
+    <AuthRequiredPage className={className} aria-label="mainPage">
+      <PageHeader title="Notes" onMenuClick={toggleDrawer} aria-label="helo">
+        <IconButton tooltipText="検索モードに移動" onClick={goSearchPage}>
           <SearchNoteIcon />
         </IconButton>
-      </AppHeader>
+      </PageHeader>
 
       <Drawer
         width={isMobile ? '80' : '40'}
         isPresistent={!isMobile}
-        open={isOpen}
-        onOpen={open}
-        onClose={close}
+        open={isDrawerOpen}
+        onOpen={openDrawer}
+        onClose={closeDrawer}
         aria-label="drawer"
       >
         <CategoriesView
@@ -135,10 +139,7 @@ const Component: React.FC<Props> = ({ className }) => {
         focusedId={focusedNoteId}
         onSetFocusedId={setFocusedNoteId}
       />
-
-      {authState.loading && <Loading />}
-      {!authState.loading && user.userId === '' && <LoginDialog />}
-    </div>
+    </AuthRequiredPage>
   );
 };
 

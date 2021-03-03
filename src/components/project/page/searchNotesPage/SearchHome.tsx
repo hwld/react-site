@@ -8,56 +8,55 @@ import { Drawer } from '../../../ui/Drawer/Drawer';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 import { useOpener } from '../../../../util/hooks/useOpener';
-import { AppHeader } from '../../ui/AppHeader';
+import { PageHeader } from '../PageHeader';
 import { IconButton } from '../../../ui/IconButton';
-import { Loading } from '../../ui/Loading';
-import { useAuthContext } from '../../../../context/AuthContext';
-import { LoginDialog } from '../../ui/LoginDialog';
+import { AuthRequiredPage } from '../AuthRequiredPage';
 
 type Props = {
   className?: string;
 };
 
 const Component: React.FC<Props> = ({ className }) => {
-  const { isOpen, open, close, toggle } = useOpener(true);
+  const { isMobile } = useAppStateContext();
+
+  const history = useHistory();
+
+  const {
+    isOpen: isDrawerOpen,
+    open: openDrawer,
+    close: closeDrawer,
+    toggle: toggleDrawer,
+  } = useOpener(true);
+
   const [searchCriteria, setSearchCriteria] = useState<SearchNotesCriteria>({
     categoryId: '',
     title: '',
     text: '',
   });
-  const { isMobile } = useAppStateContext();
-  const { user, authState } = useAuthContext();
-  const history = useHistory();
 
-  const backHome = () => {
+  const backHomePage = () => {
     history.replace('/home');
   };
 
-  const isLoading = authState.loading;
-  const isNotLogin = !authState.loading && user.userId === '';
-
   return (
-    <div className={className} aria-label="searchNotesPage">
-      <AppHeader title="検索" onMenuClick={toggle}>
-        <IconButton tooltipText="ホームに戻る" onClick={backHome}>
+    <AuthRequiredPage className={className} aria-label="searchNotesPage">
+      <PageHeader title="検索" onMenuClick={toggleDrawer}>
+        <IconButton tooltipText="ホームに戻る" onClick={backHomePage}>
           <HomeIcon />
         </IconButton>
-      </AppHeader>
+      </PageHeader>
 
       <Drawer
         width={isMobile ? '80' : '30'}
         isPresistent={!isMobile}
-        open={isOpen}
-        onOpen={open}
-        onClose={close}
+        open={isDrawerOpen}
+        onOpen={openDrawer}
+        onClose={closeDrawer}
       >
         <SearchColumn setCriteria={setSearchCriteria} />
       </Drawer>
       <ResultNotesColumn searchCriteria={searchCriteria} />
-
-      {isLoading && <Loading />}
-      {isNotLogin && <LoginDialog />}
-    </div>
+    </AuthRequiredPage>
   );
 };
 

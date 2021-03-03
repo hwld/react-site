@@ -4,8 +4,8 @@ import { AppBar, Typography, Toolbar } from '@material-ui/core';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton } from '../../ui/IconButton';
-import { AccountLinkMenu } from './AccountLinkMenu';
-import { AccountSettingMenu } from './AccountSettingMenu';
+import { AccountLinkMenu } from '../ui/AccountLinkMenu';
+import { AccountSettingMenu } from '../ui/AccountSettingMenu';
 import { useAuthContext } from '../../../context/AuthContext';
 import { useAppStateContext } from '../../../context/AppStateContext';
 
@@ -60,4 +60,4 @@ const StyledComponent = styled(Component)`
   }
 `;
 
-export const AppHeader = StyledComponent;
+export const PageHeader = StyledComponent;
