@@ -43,16 +43,13 @@ const Component = forwardRef<
   });
 
   const notesSortOrder: NotesSortOrder = useMemo(() => {
-    // カテゴリーの選択状態を外部に保存しているのでカテゴリーが読み込まれる前にlengthが1になる可能性があり、例外を出してしまう.
-    if (selectedCategoryIds.length === 1 && categories.length !== 0) {
+    if (selectedCategoryIds.length === 1) {
       const selectedCategory = categories.find(
         g => g.id === selectedCategoryIds[0],
       );
-      if (!selectedCategory) {
-        throw new Error('存在しないカテゴリーが選択されています');
+      if (selectedCategory) {
+        return selectedCategory.notesSortOrder;
       }
-
-      return selectedCategory.notesSortOrder;
     }
 
     return internalNotesSortOrder;
