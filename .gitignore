@@ -20,6 +20,7 @@ node_modules
 .env.production.local
 
 devNote
+/admin-sdk
 
 .firebase
 firebase-debug.log
