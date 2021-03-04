@@ -4,10 +4,12 @@ import {
   CategoryTreeListProps,
 } from '../../ui/CategoryTree/CategoryTreeList';
 import { ContentColumn } from '../common/ContentColumn';
-import { CategoriesViewMenu } from './CategoriesViewMenu';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { useAppStateContext } from '../../../../context/AppStateContext';
+import { OpenAddCategoryDialogButton } from '../../operation/addCategory/OpenAddCategoryDialogButton';
+import { OpenRemoveCategoriesDialogButton } from '../../operation/removeCategories/OpenRemoveCategoriesDialogButton';
+import { OpenUpdateCategoryDialogButton } from '../../operation/updateCategory/OpenUpdateCategoryDialogButton';
 
 export type CategoriesViewProps = {
   onCategorySelect: (selectedId: string[]) => void;
@@ -45,7 +47,20 @@ const Component = forwardRef<
     <ContentColumn
       className={className}
       footerMenu={
-        <CategoriesViewMenu selectedCategoryIds={selectedCategoryIds} />
+        <>
+          <OpenAddCategoryDialogButton
+            disabled={selectedCategoryIds.length > 1}
+            parentCategoryId={selectedCategoryIds[0] ?? ''}
+          />
+          <OpenRemoveCategoriesDialogButton
+            disabled={selectedCategoryIds.length === 0}
+            targetCategoryIds={selectedCategoryIds}
+          />
+          <OpenUpdateCategoryDialogButton
+            disabled={selectedCategoryIds.length !== 1}
+            defaultCategoryId={selectedCategoryIds[0]}
+          />
+        </>
       }
     >
       <CategoryTreeList

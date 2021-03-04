@@ -9,11 +9,15 @@ import Alert from '@material-ui/lab/Alert';
 import styled from 'styled-components';
 import { NoteList, NoteListProps } from '../../ui/NoteList/NoteList';
 import { ContentColumn } from '../common/ContentColumn';
-import { NotesViewMenu } from './NotesViewMenu';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 import { NotesSortOrder } from '../../../../services/notes';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
+import { OpenAddNoteDialogButton } from '../../operation/addNote/OpenAddNoteDialogButton';
+import { OpenRemoveNotesDialogButton } from '../../operation/removeNotes/OpenRemoveNotesDialogButton';
+import { OpenUpdateNoteDialogButton } from '../../operation/updateNote/OpenUpdateNoteDialogButton';
+import { OpenMoveNotesDialogButton } from '../../operation/moveNotes/OpenMoveNotesDialogButton';
+import { OpenSortNotesDialogButton } from '../../operation/sortNotes/OpenSortNotesDialogButton';
 
 export type NotesViewProps = {
   selectedCategoryIds: string[];
@@ -79,12 +83,29 @@ const Component = forwardRef<
       className={className}
       isMobile={isMobile}
       footerMenu={
-        <NotesViewMenu
-          selectedCategoryIds={selectedCategoryIds}
-          selectedNoteIds={selectedNoteIds}
-          defaultNotesSortOrder={notesSortOrder}
-          sortNotes={setNotesSortOrder}
-        />
+        <>
+          <OpenAddNoteDialogButton
+            disabled={selectedCategoryIds.length !== 1}
+            categoryId={selectedCategoryIds[0] ?? ''}
+          />
+          <OpenRemoveNotesDialogButton
+            disabled={selectedNoteIds.length === 0}
+            targetNoteIds={selectedNoteIds}
+          />
+          <OpenUpdateNoteDialogButton
+            disabled={selectedNoteIds.length !== 1}
+            defaultNoteId={selectedNoteIds[0]}
+          />
+          <OpenMoveNotesDialogButton
+            disabled={selectedNoteIds.length === 0}
+            sourceNoteIds={selectedNoteIds}
+          />
+          <OpenSortNotesDialogButton
+            disabled={selectedCategoryIds.length === 0}
+            defaultSortOrder={notesSortOrder}
+            sort={setNotesSortOrder}
+          />
+        </>
       }
     >
       {selectedCategoryIds.length !== 0 ? (
