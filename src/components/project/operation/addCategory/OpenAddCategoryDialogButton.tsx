@@ -11,14 +11,23 @@ type Props = {
   disabled?: boolean;
   parentCategoryId: string;
   size?: SvgIconProps['fontSize'];
+  onAfterAddCategory?: (parentCategoryId: string) => void;
 };
 
-const Component: React.FC<Props> = ({ disabled, parentCategoryId, size }) => {
+const Component: React.FC<Props> = ({
+  disabled,
+  parentCategoryId,
+  size,
+  onAfterAddCategory,
+}) => {
   const { isOpen, open, close } = useOpener(false);
   const { addCategory } = useCategoriesContext();
 
   const handleAddCategory = (field: CategoryField) => {
     addCategory(parentCategoryId, field);
+    if (onAfterAddCategory) {
+      onAfterAddCategory(parentCategoryId);
+    }
     close();
   };
 

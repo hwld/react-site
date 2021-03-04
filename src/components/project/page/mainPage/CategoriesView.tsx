@@ -36,11 +36,12 @@ const Component = forwardRef<
 ) {
   const { categories, moveCategories } = useCategoriesContext();
   const { moveNotes } = useNotesContext();
-
   const { expandedIds, setExpandedIds } = useAppStateContext();
 
-  const handleExpand = (ids: string[]) => {
-    setExpandedIds(ids);
+  const afterAddCategory = (parentCategoryId: string) => {
+    if (!expandedIds.includes(parentCategoryId)) {
+      setExpandedIds([...expandedIds, parentCategoryId]);
+    }
   };
 
   return (
@@ -51,6 +52,7 @@ const Component = forwardRef<
           <OpenAddCategoryDialogButton
             disabled={selectedCategoryIds.length > 1}
             parentCategoryId={selectedCategoryIds[0] ?? ''}
+            onAfterAddCategory={afterAddCategory}
           />
           <OpenRemoveCategoriesDialogButton
             disabled={selectedCategoryIds.length === 0}
@@ -69,7 +71,7 @@ const Component = forwardRef<
         categories={categories}
         selectedCategoryIds={selectedCategoryIds}
         expanded={expandedIds}
-        onExpand={handleExpand}
+        onExpand={setExpandedIds}
         onCategorySelect={onCategorySelect}
         onCategoryDrop={moveCategories}
         onNotesDrop={moveNotes}
