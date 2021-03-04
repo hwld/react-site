@@ -87,6 +87,10 @@ const Component = React.forwardRef<
     [onSetFocusedProp],
   );
 
+  const [lastFocusedNodeId, setLastFocusedNodeId] = React.useState<
+    string | null
+  >(focusedNodeId);
+
   const nodeMap = React.useRef(
     new Map<
       string,
@@ -190,6 +194,9 @@ const Component = React.forwardRef<
   // TreeItemにfocusが当たっているか
   const isFocused = (id: string) => focusedNodeId === id;
 
+  // TreeItemが最後にfocusを当てられたか
+  const isLastFocused = (id: string) => lastFocusedNodeId === id;
+
   /*
    * Focus Helpers
    */
@@ -202,6 +209,7 @@ const Component = React.forwardRef<
     if (focusedNodeId === id) {
       setFocusedNodeId(null);
     }
+    setLastFocusedNodeId(id);
   };
 
   const focusNextNode = (id: string) => {
@@ -715,6 +723,8 @@ const Component = React.forwardRef<
   return (
     <TreeViewContext.Provider
       value={{
+        focusedId: focusedNodeId,
+        lastFocusedId: lastFocusedNodeId,
         focus,
         unFocus,
         focusFirstNode,
@@ -725,6 +735,7 @@ const Component = React.forwardRef<
         toggleExpansion,
         isExpanded,
         isFocused,
+        isLastFocused,
         isSelected,
         isDescendantOfSelected,
         selectNode: disableSelection ? noopSelection : selectNode,

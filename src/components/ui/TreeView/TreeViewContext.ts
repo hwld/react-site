@@ -1,6 +1,8 @@
 import * as React from 'react';
 
 type TreeViewContextValue = {
+  focusedId: string | null;
+  lastFocusedId: string | null;
   focus: (id: string) => void;
   unFocus: (id: string) => void;
   focusFirstNode: () => void;
@@ -11,6 +13,7 @@ type TreeViewContextValue = {
   toggleExpansion: (event: React.SyntheticEvent, value?: string | null) => void;
   isExpanded: (id: string) => boolean;
   isFocused: (id: string) => boolean;
+  isLastFocused: (id: string) => boolean;
   isSelected: (id: string) => boolean;
   isDescendantOfSelected: (id: string) => boolean;
   selectNode: (id: string | null, multiple?: boolean) => boolean;
@@ -45,6 +48,8 @@ type TreeViewContextValue = {
  * @ignore - internal component.
  */
 const TreeViewContext = React.createContext<TreeViewContextValue>({
+  focusedId: null,
+  lastFocusedId: null,
   focus: () => {},
   unFocus: () => {},
   focusFirstNode: () => {},
@@ -55,6 +60,7 @@ const TreeViewContext = React.createContext<TreeViewContextValue>({
   toggleExpansion: () => {},
   isExpanded: () => false,
   isFocused: () => false,
+  isLastFocused: () => false,
   isSelected: () => false,
   isDescendantOfSelected: () => false,
   selectNode: () => false,

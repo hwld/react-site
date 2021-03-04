@@ -131,7 +131,6 @@ export type TreeItemProps = WithStyles<typeof styles> & {
   canDrop?: boolean;
   isDropOver?: boolean;
   onKeyDown?: (event: React.KeyboardEvent) => void;
-  tabIndex?: number;
 };
 
 const UnStyledTreeItem = React.forwardRef<
@@ -147,10 +146,11 @@ const UnStyledTreeItem = React.forwardRef<
     dropRef,
     isDropOver,
     canDrop,
-    tabIndex,
   } = props;
 
   const {
+    focusedId,
+    lastFocusedId,
     focus,
     unFocus,
     selectNode,
@@ -158,6 +158,7 @@ const UnStyledTreeItem = React.forwardRef<
     toggleExpansion,
     isExpanded,
     isFocused,
+    isLastFocused,
     isSelected,
     isDescendantOfSelected,
     multiSelect,
@@ -177,6 +178,7 @@ const UnStyledTreeItem = React.forwardRef<
   );
   const expanded = isExpanded ? isExpanded(nodeId) : false;
   const focused = isFocused ? isFocused(nodeId) : false;
+  const lastFocused = isLastFocused(nodeId);
   const selected = isSelected ? isSelected(nodeId) : false;
 
   const icon = () => {
@@ -326,12 +328,31 @@ const UnStyledTreeItem = React.forwardRef<
     },
   });
 
+  const tabIndex = React.useMemo(() => {
+    // いずれかのitemにfocusがあたっている場合はすべて-1
+    if (focusedId) {
+      return -1;
+    }
+
+    // 最後にフォーカスが当てられたitemが存在しない場合はすべて0
+    if (!lastFocusedId) {
+      return 0;
+    }
+
+    // 最後にフォーカスが当てられたitemは0
+    if (lastFocused) {
+      return 0;
+    }
+
+    return -1;
+  }, [focusedId, lastFocused, lastFocusedId]);
+
   return (
     <li
       className={clsx(classes.root, className, {
         [classes.expanded]: expanded,
         [classes.selected]: selected,
-        [classes.focused]: isFocused(nodeId),
+        [classes.focused]: focused,
       })}
       role="treeitem"
       onFocus={handleFocus}
@@ -339,7 +360,7 @@ const UnStyledTreeItem = React.forwardRef<
       aria-expanded={expandable ? expanded : undefined}
       aria-selected={ariaSelected}
       ref={handleRef}
-      tabIndex={tabIndex ?? 0}
+      tabIndex={tabIndex}
     >
       <div
         className={clsx(classes.dropLayer, {
