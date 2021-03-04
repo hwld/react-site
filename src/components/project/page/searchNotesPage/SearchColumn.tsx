@@ -1,6 +1,6 @@
 import React from 'react';
 import { SearchNotesCriteria } from '../../../../services/notes';
-import { ContentColumn } from '../../ui/ContentColumn';
+import { ContentColumn } from '../common/ContentColumn';
 import { SearchForm } from './SearchForm';
 
 type Props = {

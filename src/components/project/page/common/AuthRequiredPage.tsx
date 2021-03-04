@@ -1,7 +1,7 @@
 import React, { AriaAttributes } from 'react';
-import { useAuthContext } from '../../../context/AuthContext';
-import { Loading } from '../ui/Loading';
-import { LoginDialog } from '../ui/LoginDialog';
+import { useAuthContext } from '../../../../context/AuthContext';
+import { Loading } from './Loading';
+import { LoginDialog } from '../../ui/LoginDialog';
 
 type Props = {
   className?: string;

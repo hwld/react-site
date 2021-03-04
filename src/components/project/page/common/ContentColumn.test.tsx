@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '../../../test-util';
+import { render } from '../../../../test-util';
 import { ContentColumn } from './ContentColumn';
 
 describe('<ContentColumn>', () => {

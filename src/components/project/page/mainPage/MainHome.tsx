@@ -8,8 +8,8 @@ import { CategoriesView } from './CategoriesView';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 import { useOpener } from '../../../../util/hooks/useOpener';
 import { IconButton } from '../../../ui/IconButton';
-import { PageHeader } from '../PageHeader';
-import { AuthRequiredPage } from '../AuthRequiredPage';
+import { PageHeader } from '../common/PageHeader';
+import { AuthRequiredPage } from '../common/AuthRequiredPage';
 
 type Props = {
   className?: string;

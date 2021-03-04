@@ -8,7 +8,7 @@ import React, {
 import Alert from '@material-ui/lab/Alert';
 import styled from 'styled-components';
 import { NoteList, NoteListProps } from '../../ui/NoteList/NoteList';
-import { ContentColumn } from '../../ui/ContentColumn';
+import { ContentColumn } from '../common/ContentColumn';
 import { NotesViewMenu } from './NotesViewMenu';
 import { useNotesContext } from '../../../../context/NotesContext';
 import { useAppStateContext } from '../../../../context/AppStateContext';

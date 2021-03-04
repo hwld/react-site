@@ -3,7 +3,7 @@ import {
   CategoryTreeList,
   CategoryTreeListProps,
 } from '../../ui/CategoryTree/CategoryTreeList';
-import { ContentColumn } from '../../ui/ContentColumn';
+import { ContentColumn } from '../common/ContentColumn';
 import { CategoriesViewMenu } from './CategoriesViewMenu';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { useNotesContext } from '../../../../context/NotesContext';

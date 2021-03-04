@@ -8,9 +8,9 @@ import { Drawer } from '../../../ui/Drawer/Drawer';
 import { SearchNotesCriteria } from '../../../../services/notes';
 import { useAppStateContext } from '../../../../context/AppStateContext';
 import { useOpener } from '../../../../util/hooks/useOpener';
-import { PageHeader } from '../PageHeader';
+import { PageHeader } from '../common/PageHeader';
 import { IconButton } from '../../../ui/IconButton';
-import { AuthRequiredPage } from '../AuthRequiredPage';
+import { AuthRequiredPage } from '../common/AuthRequiredPage';
 
 type Props = {
   className?: string;
