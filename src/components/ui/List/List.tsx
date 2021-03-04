@@ -62,8 +62,10 @@ export const Component = React.forwardRef<
   };
 
   const focused = focusedId !== undefined ? focusedId : internalFocusedId;
+  const [lastFocused, setLastFocused] = useState(focused);
 
   const isFocused = (id: string) => focused === id;
+  const isLastFocused = (id: string) => lastFocused === id;
 
   const setFocus = useCallback(
     (id: string | null) => {
@@ -84,6 +86,7 @@ export const Component = React.forwardRef<
     if (focused === id) {
       setFocus(null);
     }
+    setLastFocused(id);
   };
 
   const focusNextItem = (id: string) => {
@@ -191,11 +194,14 @@ export const Component = React.forwardRef<
   return (
     <ListContextProvider
       value={{
+        focusedId: focused,
+        lastFocusedId: lastFocused,
         selectedIds,
         draggable,
         selectItem: onSelect,
         removeItemId,
         isFocused,
+        isLastFocused,
         focus,
         unFocus,
         focusNextItem,

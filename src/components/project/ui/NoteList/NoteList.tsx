@@ -43,21 +43,18 @@ const Component = forwardRef<
   ref,
 ) {
   const listItems = useMemo(() => {
-    return notes
-      .sort(notesCompareFunction(notesSortOrder))
-      .map((note, index) => {
-        return (
-          <NoteListItem
-            className="noteListItem"
-            key={note.id}
-            note={note}
-            itemId={note.id}
-            searchCriteria={searchCriteria}
-            tabIndex={!focusedId && index === 0 ? 0 : -1}
-          />
-        );
-      });
-  }, [focusedId, notes, notesSortOrder, searchCriteria]);
+    return notes.sort(notesCompareFunction(notesSortOrder)).map(note => {
+      return (
+        <NoteListItem
+          className="noteListItem"
+          key={note.id}
+          note={note}
+          itemId={note.id}
+          searchCriteria={searchCriteria}
+        />
+      );
+    });
+  }, [notes, notesSortOrder, searchCriteria]);
 
   return (
     <List

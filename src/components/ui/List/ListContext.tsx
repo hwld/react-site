@@ -1,11 +1,14 @@
 import * as React from 'react';
 
 type ListContextValue = {
+  focusedId: string | null;
+  lastFocusedId: string | null;
   draggable: boolean;
   selectedIds: string[];
   selectItem: (ids: string[]) => void;
   removeItemId: (id: string) => void;
   isFocused: (id: string) => boolean;
+  isLastFocused: (id: string) => boolean;
   focus: (id: string) => void;
   unFocus: (id: string) => void;
   focusNextItem: (id: string) => void;
@@ -13,11 +16,14 @@ type ListContextValue = {
 };
 
 const ListContext = React.createContext<ListContextValue>({
+  focusedId: null,
+  lastFocusedId: null,
   draggable: false,
   selectedIds: [],
   selectItem: () => {},
   removeItemId: () => {},
   isFocused: () => false,
+  isLastFocused: () => false,
   focus: () => {},
   unFocus: () => {},
   focusNextItem: () => {},

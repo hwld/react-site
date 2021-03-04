@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import { ListItem as MuiListItem, useForkRef } from '@material-ui/core';
 import { useDrag, DragPreviewImage } from 'react-dnd';
 import styled from 'styled-components';
@@ -15,19 +21,21 @@ export type ListItemProps = {
   className?: string;
   itemId: string;
   onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  tabIndex?: number;
 };
 
 export const Component = React.forwardRef<
   HTMLDivElement,
   React.PropsWithChildren<ListItemProps>
->(function ListItem({ children, className, itemId, onKeyDown, tabIndex }, ref) {
+>(function ListItem({ children, className, itemId, onKeyDown }, ref) {
   const {
+    focusedId,
+    lastFocusedId,
     selectedIds,
     draggable,
     selectItem,
     removeItemId,
     isFocused,
+    isLastFocused,
     focus,
     unFocus,
   } = useContext(ListContext);
@@ -36,6 +44,7 @@ export const Component = React.forwardRef<
   const handleRef = useForkRef(itemRef, ref);
 
   const focused = isFocused(itemId);
+  const lastFocused = isLastFocused(itemId);
 
   const [, drag, preview] = useDrag({
     item: { type: ItemTypes.ListItem, ids: [...selectedIds] },
@@ -87,6 +96,25 @@ export const Component = React.forwardRef<
     }
   }, [isFocused, itemId]);
 
+  const tabIndex = useMemo(() => {
+    // いずれかのitemのfocusが当たっていたらすべて-1
+    if (focusedId) {
+      return -1;
+    }
+
+    // 最後にfocusされたitemが存在しない場合はすべて0
+    if (!lastFocusedId) {
+      return 0;
+    }
+
+    // 最後にfocusされたitemは0
+    if (lastFocused) {
+      return 0;
+    }
+
+    return -1;
+  }, [focusedId, lastFocused, lastFocusedId]);
+
   return (
     <div
       role="none"
@@ -113,7 +141,7 @@ export const Component = React.forwardRef<
         }}
         selected={selectedIds.includes(itemId)}
         data-testid={`selectLayer-${itemId}`}
-        tabIndex={tabIndex ?? 0}
+        tabIndex={tabIndex}
       >
         {children}
       </MuiListItem>
