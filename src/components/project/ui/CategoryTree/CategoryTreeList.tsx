@@ -141,7 +141,6 @@ const Component = forwardRef<
 const StyledComponent = styled(Component)`
   height: 100%;
   overflow: auto;
-  word-break: keep-all;
 
   & .alert {
     margin: 20px auto;
