@@ -111,7 +111,9 @@ export const Component = React.forwardRef<
   // ListItemのfocusイベントをstopPropagationを使って伝搬させないようにしていることが前提
   const handleFocus = () => {
     if (!focused) {
-      if (selectedIds.length !== 0) {
+      if (lastFocused) {
+        focus(lastFocused);
+      } else if (selectedIds.length !== 0) {
         focus(selectedIds[selectedIds.length - 1]);
       } else {
         focusFirstNode();
@@ -187,9 +189,14 @@ export const Component = React.forwardRef<
         setFocus(null);
       }
 
+      // 最後のフォーカス状態を外す
+      if (lastFocused && removedItemIds.includes(lastFocused)) {
+        setLastFocused(null);
+      }
+
       setRemovedItemIds([]);
     }
-  }, [focused, onSelect, removedItemIds, selectedIds, setFocus]);
+  }, [focused, lastFocused, onSelect, removedItemIds, selectedIds, setFocus]);
 
   return (
     <ListContextProvider

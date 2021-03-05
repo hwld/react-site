@@ -233,7 +233,9 @@ const Component = React.forwardRef<
 
   const handleFocus = () => {
     if (!focusedNodeId) {
-      if (selected.length !== 0) {
+      if (lastFocusedNodeId) {
+        focus(lastFocusedNodeId);
+      } else if (selected.length !== 0) {
         focus(selected[selected.length - 1]);
       } else {
         focusFirstNode();
@@ -712,9 +714,21 @@ const Component = React.forwardRef<
         setFocusedNodeId(null);
       }
 
+      // 最後のフォーカスの状態を外す
+      if (lastFocusedNodeId) {
+        setLastFocusedNodeId(null);
+      }
+
       setRemovedNodes([]);
     }
-  }, [focusedNodeId, onNodeSelect, removedNodes, selected, setFocusedNodeId]);
+  }, [
+    focusedNodeId,
+    lastFocusedNodeId,
+    onNodeSelect,
+    removedNodes,
+    selected,
+    setFocusedNodeId,
+  ]);
 
   const noopSelection = () => {
     return false;
