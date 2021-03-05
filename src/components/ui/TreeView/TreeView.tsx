@@ -1,4 +1,13 @@
-import * as React from 'react';
+import React, {
+  Children,
+  forwardRef,
+  isValidElement,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { useControlled } from '@material-ui/core/utils';
 import { WithStyles } from '@material-ui/styles';
@@ -48,11 +57,11 @@ export type TreeViewProps = WithStyles<typeof styles> & {
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
 };
 
-const Component = React.forwardRef<
+const Component = forwardRef<
   HTMLUListElement,
-  React.PropsWithChildren<TreeViewProps>
->(function TreeView(props, ref) {
-  const {
+  PropsWithChildren<TreeViewProps>
+>(function TreeView(
+  {
     children,
     className,
     classes,
@@ -69,14 +78,13 @@ const Component = React.forwardRef<
     draggable = false,
     onDrop = () => {},
     onKeyDown = () => {},
-  } = props;
-  const [internalFocused, setInternalFocusedId] = React.useState<string | null>(
-    null,
-  );
+  },
+  ref,
+) {
+  const [internalFocused, setInternalFocusedId] = useState<string | null>(null);
 
-  const focusedNodeId =
-    focusedProp !== undefined ? focusedProp : internalFocused;
-  const setFocusedNodeId = React.useCallback(
+  const focused = focusedProp !== undefined ? focusedProp : internalFocused;
+  const setFocused = useCallback(
     (id: string | null) => {
       if (onSetFocusedProp) {
         onSetFocusedProp(id);
@@ -87,18 +95,16 @@ const Component = React.forwardRef<
     [onSetFocusedProp],
   );
 
-  const [lastFocusedNodeId, setLastFocusedNodeId] = React.useState<
-    string | null
-  >(focusedNodeId);
+  const [lastFocused, setLastFocused] = useState<string | null>(focused);
 
-  const nodeMap = React.useRef(
+  const nodeMap = useRef(
     new Map<
       string,
       { parent?: string | null; children: string[]; expandable: boolean }
     >(),
   );
 
-  const visibleNodes = React.useRef<string[]>([]);
+  const visibleNodes = useRef<string[]>([]);
 
   // expandedPropがundefinedではない場合はsetExpandedStateで何も起こらない.
   // 外側で開閉状態を制御する必要がある.
@@ -152,7 +158,7 @@ const Component = React.forwardRef<
     return visibleNodes.current.slice(start, end + 1);
   };
 
-  const getAllDescendants = React.useCallback((id: string): string[] => {
+  const getAllDescendants = useCallback((id: string): string[] => {
     const node = nodeMap.current.get(id);
     if (!node) {
       return [];
@@ -168,19 +174,21 @@ const Component = React.forwardRef<
   /*
    * Status Helpers
    */
-  const isExpanded = React.useCallback(
-    (id: string) =>
-      Array.isArray(expanded) ? expanded.indexOf(id) !== -1 : false,
+  const isExpanded = useCallback(
+    (id: string) => {
+      return expanded.indexOf(id) !== -1;
+    },
     [expanded],
   );
 
-  const isSelected = React.useCallback(
-    (id: string) =>
-      Array.isArray(selected) ? selected.indexOf(id) !== -1 : selected === id,
+  const isSelected = useCallback(
+    (id: string) => {
+      return selected.indexOf(id) !== -1;
+    },
     [selected],
   );
 
-  const isDescendantOfSelected = React.useCallback(
+  const isDescendantOfSelected = useCallback(
     (id: string) => {
       const descendantsOfSelected = selected.flatMap(selectedId =>
         getAllDescendants(selectedId),
@@ -192,24 +200,24 @@ const Component = React.forwardRef<
   );
 
   // TreeItemにfocusが当たっているか
-  const isFocused = (id: string) => focusedNodeId === id;
+  const isFocused = (id: string) => focused === id;
 
   // TreeItemが最後にfocusを当てられたか
-  const isLastFocused = (id: string) => lastFocusedNodeId === id;
+  const isLastFocused = (id: string) => lastFocused === id;
 
   /*
    * Focus Helpers
    */
 
   const focus = (id: string) => {
-    setFocusedNodeId(id);
+    setFocused(id);
   };
 
   const unFocus = (id: string) => {
-    if (focusedNodeId === id) {
-      setFocusedNodeId(null);
+    if (focused === id) {
+      setFocused(null);
     }
-    setLastFocusedNodeId(id);
+    setLastFocused(id);
   };
 
   const focusNextNode = (id: string) => {
@@ -232,9 +240,9 @@ const Component = React.forwardRef<
   };
 
   const handleFocus = () => {
-    if (!focusedNodeId) {
-      if (lastFocusedNodeId) {
-        focus(lastFocusedNodeId);
+    if (!focused) {
+      if (lastFocused) {
+        focus(lastFocused);
       } else if (selected.length !== 0) {
         focus(selected[selected.length - 1]);
       } else {
@@ -247,10 +255,7 @@ const Component = React.forwardRef<
    * Expansion Helpers
    */
 
-  const toggleExpansion = (
-    event: React.SyntheticEvent,
-    value = focusedNodeId,
-  ) => {
+  const toggleExpansion = (event: React.SyntheticEvent, value = focused) => {
     if (value !== null) {
       let newExpanded: string[];
       if (expanded.indexOf(value) !== -1) {
@@ -290,9 +295,9 @@ const Component = React.forwardRef<
    * Selection Helpers
    */
 
-  const lastSelectedNode = React.useRef<string | null>(null);
-  const lastSelectionWasRange = React.useRef(false);
-  const currentRangeSelection = React.useRef<string[]>([]);
+  const lastSelectedNode = useRef<string | null>(null);
+  const lastSelectionWasRange = useRef(false);
+  const currentRangeSelection = useRef<string[]>([]);
 
   const handleRangeArrowSelect = (
     event: React.SyntheticEvent,
@@ -472,7 +477,7 @@ const Component = React.forwardRef<
     let flag = false;
     const { key } = event;
 
-    if (event.altKey || !focusedNodeId) {
+    if (event.altKey || !focused) {
       return;
     }
 
@@ -480,7 +485,7 @@ const Component = React.forwardRef<
 
     switch (key) {
       case ' ':
-        if (nodeMap.current.get(focusedNodeId)?.expandable) {
+        if (nodeMap.current.get(focused)?.expandable) {
           toggleExpansion(event);
           flag = true;
         }
@@ -488,46 +493,46 @@ const Component = React.forwardRef<
         break;
       case 'Enter':
         if (multiSelect && event.shiftKey) {
-          flag = selectRange(event, { end: focusedNodeId });
+          flag = selectRange(event, { end: focused });
         } else if (multiSelect && event.ctrlKey) {
-          flag = selectNode(focusedNodeId, true);
+          flag = selectNode(focused, true);
         } else {
-          flag = selectNode(focusedNodeId);
+          flag = selectNode(focused);
         }
 
         event.stopPropagation();
         break;
       case 'ArrowDown':
         if (multiSelect && event.shiftKey) {
-          selectNextNode(event, focusedNodeId);
+          selectNextNode(event, focused);
         }
-        focusNextNode(focusedNodeId);
+        focusNextNode(focused);
         flag = true;
         break;
       case 'ArrowUp':
         if (multiSelect && event.shiftKey) {
-          selectPreviousNode(event, focusedNodeId);
+          selectPreviousNode(event, focused);
         }
-        focusPreviousNode(focusedNodeId);
+        focusPreviousNode(focused);
         flag = true;
         break;
       case 'Home':
         if (multiSelect && ctrlPressed && event.shiftKey) {
-          rangeSelectToFirst(event, focusedNodeId);
+          rangeSelectToFirst(event, focused);
         }
         focusFirstNode();
         flag = true;
         break;
       case 'End':
         if (multiSelect && ctrlPressed && event.shiftKey) {
-          rangeSelectToLast(event, focusedNodeId);
+          rangeSelectToLast(event, focused);
         }
         focusLastNode();
         flag = true;
         break;
       default:
         if (key === '*') {
-          expandAllSiblings(event, focusedNodeId);
+          expandAllSiblings(event, focused);
           flag = true;
         } else if (multiSelect && ctrlPressed && key.toLowerCase() === 'a') {
           flag = selectAllNodes(event);
@@ -548,7 +553,7 @@ const Component = React.forwardRef<
    * Drop and Drag
    */
 
-  const dropToSelected = React.useCallback(
+  const dropToSelected = useCallback(
     (targetId: string) => {
       onDrop(selected, targetId);
     },
@@ -593,7 +598,7 @@ const Component = React.forwardRef<
     });
   };
 
-  const getNodesToRemove = React.useCallback((id: string) => {
+  const getNodesToRemove = useCallback((id: string) => {
     const map = nodeMap.current.get(id);
     const nodes: string[] = [];
     if (map) {
@@ -609,7 +614,7 @@ const Component = React.forwardRef<
     return nodes;
   }, []);
 
-  const removeNodeFromNodeMap = React.useCallback(
+  const removeNodeFromNodeMap = useCallback(
     (id: string) => {
       const nodes = getNodesToRemove(id);
       const newMap = new Map(nodeMap.current);
@@ -643,19 +648,19 @@ const Component = React.forwardRef<
     }
 
     const element = document.activeElement;
-    if (focusedNodeId && element instanceof HTMLElement) {
+    if (focused && element instanceof HTMLElement) {
       element.blur();
-      setFocusedNodeId(null);
+      setFocused(null);
     }
   };
 
-  const prevChildIds = React.useRef<string[]>([]);
-  const [childrenCalculated, setChildrenCalculated] = React.useState(false);
-  React.useEffect(() => {
+  const prevChildIds = useRef<string[]>([]);
+  const [childrenCalculated, setChildrenCalculated] = useState(false);
+  useEffect(() => {
     const childIds: string[] = [];
 
-    React.Children.forEach(children, child => {
-      if (React.isValidElement(child) && child.props.nodeId) {
+    Children.forEach(children, child => {
+      if (isValidElement(child) && child.props.nodeId) {
         childIds.push(child.props.nodeId);
       }
     });
@@ -673,7 +678,7 @@ const Component = React.forwardRef<
     }
   }, [children]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const buildVisible = (nodes: string[]) => {
       let list: string[] = [];
       for (let i = 0; i < nodes.length; i += 1) {
@@ -695,13 +700,13 @@ const Component = React.forwardRef<
     }
   }, [expanded, childrenCalculated, isExpanded, children]);
 
-  const [removedNodes, setRemovedNodes] = React.useState<string[]>([]);
-  const setRemovedNode = React.useCallback((id: string) => {
+  const [removedNodes, setRemovedNodes] = useState<string[]>([]);
+  const setRemovedNode = useCallback((id: string) => {
     setRemovedNodes(nodes => [...nodes, id]);
   }, []);
 
   // 削除されたノードの後処理
-  React.useEffect(() => {
+  useEffect(() => {
     if (removedNodes.length !== 0) {
       // 選択状態から外す
       if (onNodeSelect) {
@@ -710,25 +715,18 @@ const Component = React.forwardRef<
       }
 
       // フォーカスの状態を外す
-      if (focusedNodeId && removedNodes.includes(focusedNodeId)) {
-        setFocusedNodeId(null);
+      if (focused && removedNodes.includes(focused)) {
+        setFocused(null);
       }
 
       // 最後のフォーカスの状態を外す
-      if (lastFocusedNodeId) {
-        setLastFocusedNodeId(null);
+      if (lastFocused) {
+        setLastFocused(null);
       }
 
       setRemovedNodes([]);
     }
-  }, [
-    focusedNodeId,
-    lastFocusedNodeId,
-    onNodeSelect,
-    removedNodes,
-    selected,
-    setFocusedNodeId,
-  ]);
+  }, [focused, lastFocused, onNodeSelect, removedNodes, selected, setFocused]);
 
   const noopSelection = () => {
     return false;
@@ -737,8 +735,8 @@ const Component = React.forwardRef<
   return (
     <TreeViewContext.Provider
       value={{
-        focusedId: focusedNodeId,
-        lastFocusedId: lastFocusedNodeId,
+        focusedId: focused,
+        lastFocusedId: lastFocused,
         focus,
         unFocus,
         focusFirstNode,

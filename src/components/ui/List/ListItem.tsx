@@ -30,7 +30,7 @@ export const Component = React.forwardRef<
   const {
     focusedId,
     lastFocusedId,
-    selectedIds,
+    selected,
     draggable,
     selectItem,
     removeItemId,
@@ -47,9 +47,9 @@ export const Component = React.forwardRef<
   const lastFocused = isLastFocused(itemId);
 
   const [, drag, preview] = useDrag({
-    item: { type: ItemTypes.ListItem, ids: [...selectedIds] },
+    item: { type: ItemTypes.ListItem, ids: [...selected] },
     begin: monitor => {
-      if (!selectedIds.includes(itemId)) {
+      if (!selected.includes(itemId)) {
         selectItem([itemId]);
 
         return { type: ItemTypes.ListItem, ids: [itemId] };
@@ -72,13 +72,13 @@ export const Component = React.forwardRef<
         focus(itemId);
       }
 
-      if (!selectedIds.includes(itemId)) {
-        selectItem([...selectedIds, itemId]);
+      if (!selected.includes(itemId)) {
+        selectItem([...selected, itemId]);
       } else {
-        selectItem(selectedIds.filter(id => id !== itemId));
+        selectItem(selected.filter(id => id !== itemId));
       }
     },
-    [focus, isFocused, itemId, selectItem, selectedIds],
+    [focus, isFocused, itemId, selectItem, selected],
   );
 
   // コンポーネントの破棄時にだけremoveItemIdが呼ばれることを期待する。
@@ -139,7 +139,7 @@ export const Component = React.forwardRef<
         onBlur={() => {
           unFocus(itemId);
         }}
-        selected={selectedIds.includes(itemId)}
+        selected={selected.includes(itemId)}
         data-testid={`selectLayer-${itemId}`}
         tabIndex={tabIndex}
       >

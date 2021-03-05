@@ -1,5 +1,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions  */
-import * as React from 'react';
+import React, {
+  Children,
+  FocusEvent,
+  forwardRef,
+  isValidElement,
+  PropsWithChildren,
+  useMemo,
+  useContext,
+  useEffect,
+  useRef,
+} from 'react';
 import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 import { fade, withStyles, Theme, WithStyles } from '@material-ui/core/styles';
@@ -130,12 +140,12 @@ export type TreeItemProps = WithStyles<typeof styles> & {
   dropRef?: DragElementWrapper<unknown>;
   canDrop?: boolean;
   isDropOver?: boolean;
-  onKeyDown?: (event: React.KeyboardEvent) => void;
+  onKeyDown?: (event: KeyboardEvent) => void;
 };
 
-const UnStyledTreeItem = React.forwardRef<
+const UnStyledTreeItem = forwardRef<
   HTMLLIElement,
-  React.PropsWithChildren<TreeItemProps>
+  PropsWithChildren<TreeItemProps>
 >(function TreeItem(props, ref) {
   const {
     children,
@@ -167,21 +177,21 @@ const UnStyledTreeItem = React.forwardRef<
     setRemovedNode,
     draggable,
     dropToSelected,
-  } = React.useContext(TreeViewContext);
+  } = useContext(TreeViewContext);
 
-  const nodeRef = React.useRef<HTMLLIElement>(null);
-  const contentRef = React.useRef(null);
+  const nodeRef = useRef<HTMLLIElement>(null);
+  const contentRef = useRef(null);
   const handleRef = useForkRef(nodeRef, ref);
 
   const expandable = Boolean(
     Array.isArray(children) ? children.length : children,
   );
-  const expanded = isExpanded ? isExpanded(nodeId) : false;
-  const focused = isFocused ? isFocused(nodeId) : false;
+  const expanded = isExpanded(nodeId);
+  const focused = isFocused(nodeId);
   const lastFocused = isLastFocused(nodeId);
-  const selected = isSelected ? isSelected(nodeId) : false;
+  const selected = isSelected(nodeId);
 
-  const icon = () => {
+  const icon = useMemo(() => {
     if (!expandable) {
       return <></>;
     }
@@ -190,7 +200,7 @@ const UnStyledTreeItem = React.forwardRef<
     }
 
     return <ChevronRightIcon color="secondary" />;
-  };
+  }, [expandable, expanded]);
 
   const handleContentClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -242,23 +252,23 @@ const UnStyledTreeItem = React.forwardRef<
     }
   };
 
-  const handleFocus = (event: React.FocusEvent<HTMLLIElement>) => {
+  const handleFocus = (event: FocusEvent<HTMLLIElement>) => {
     event.stopPropagation();
     if (!focused && event.currentTarget === event.target) {
       focus(nodeId);
     }
   };
 
-  const handleBlur = (event: React.FocusEvent<HTMLLIElement>) => {
+  const handleBlur = (event: FocusEvent<HTMLLIElement>) => {
     event.stopPropagation();
     unFocus(nodeId);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (addNodeToNodeMap) {
       const childIds: string[] = [];
-      React.Children.forEach(children, child => {
-        if (React.isValidElement(child) && child.props.nodeId) {
+      Children.forEach(children, child => {
+        if (isValidElement(child) && child.props.nodeId) {
           childIds.push(child.props.nodeId);
         }
       });
@@ -266,7 +276,7 @@ const UnStyledTreeItem = React.forwardRef<
     }
   }, [children, nodeId, addNodeToNodeMap, expandable]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (removeNodeFromNodeMap) {
       return () => {
         removeNodeFromNodeMap(nodeId);
@@ -277,7 +287,7 @@ const UnStyledTreeItem = React.forwardRef<
     return undefined;
   }, [nodeId, removeNodeFromNodeMap, setRemovedNode]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const reference = nodeRef.current;
     if (focused && reference) {
       reference.focus();
@@ -328,7 +338,7 @@ const UnStyledTreeItem = React.forwardRef<
     },
   });
 
-  const tabIndex = React.useMemo(() => {
+  const tabIndex = useMemo(() => {
     // いずれかのitemにfocusがあたっている場合はすべて-1
     if (focusedId) {
       return -1;
@@ -399,7 +409,7 @@ const UnStyledTreeItem = React.forwardRef<
                 tabIndex={-1}
                 data-testid={`expandLayer-${nodeId}`}
               >
-                {icon()}
+                {icon}
               </div>
               <Typography component="div" className={classes.label}>
                 {label}

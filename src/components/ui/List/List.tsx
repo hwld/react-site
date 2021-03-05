@@ -4,10 +4,10 @@ import { ListContextProvider } from './ListContext';
 
 export type ListProps = {
   className?: string;
-  selectedIds?: string[];
+  selected?: string[];
   onSelect?: (ids: string[]) => void;
-  focusedId?: string | null;
-  onSetFocusedId?: (id: string | null) => void;
+  focused?: string | null;
+  onSetFocused?: (id: string | null) => void;
   draggable?: boolean;
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
 };
@@ -19,64 +19,67 @@ export const Component = React.forwardRef<
   {
     children,
     className,
-    selectedIds = [],
+    selected = [],
     onSelect = () => {},
-    focusedId,
-    onSetFocusedId,
+    focused: focusedProp,
+    onSetFocused,
     draggable = false,
     onKeyDown = () => {},
   },
   ref,
 ) {
-  // focusedId、onFocuseIdが渡されなかった場合に使用する
-  const [internalFocusedId, setInternalFocusedId] = useState<string | null>(
-    null,
+  // focusedProp、onSetFocusedが渡されなかった場合に使用する
+  const [internalFocused, setInternalFocused] = useState<string | null>(null);
+  const focused = focusedProp !== undefined ? focusedProp : internalFocused;
+  const setFocus = useCallback(
+    (id: string | null) => {
+      if (onSetFocused) {
+        onSetFocused(id);
+      } else {
+        setInternalFocused(id);
+      }
+    },
+    [onSetFocused],
   );
 
-  const itemIds = useRef<string[]>([]);
+  const [lastFocused, setLastFocused] = useState(focused);
+
+  const nodeIds = useRef<string[]>([]);
+
+  // Node Helpers
 
   const getNextItem = (id: string) => {
-    const itemIndex = itemIds.current.indexOf(id);
-    if (itemIndex !== -1 && itemIndex + 1 < itemIds.current.length) {
-      return itemIds.current[itemIndex + 1];
+    const itemIndex = nodeIds.current.indexOf(id);
+    if (itemIndex !== -1 && itemIndex + 1 < nodeIds.current.length) {
+      return nodeIds.current[itemIndex + 1];
     }
 
     return null;
   };
 
   const getPrevItem = (id: string) => {
-    const itemIndex = itemIds.current.indexOf(id);
+    const itemIndex = nodeIds.current.indexOf(id);
     if (itemIndex !== -1 && itemIndex - 1 >= 0) {
-      return itemIds.current[itemIndex - 1];
+      return nodeIds.current[itemIndex - 1];
     }
 
     return null;
   };
 
   const getFirstItem = () => {
-    if (itemIds.current.length !== 0) {
-      return itemIds.current[0];
+    if (nodeIds.current.length !== 0) {
+      return nodeIds.current[0];
     }
 
     return null;
   };
 
-  const focused = focusedId !== undefined ? focusedId : internalFocusedId;
-  const [lastFocused, setLastFocused] = useState(focused);
+  // Status Helpers
 
   const isFocused = (id: string) => focused === id;
   const isLastFocused = (id: string) => lastFocused === id;
 
-  const setFocus = useCallback(
-    (id: string | null) => {
-      if (onSetFocusedId) {
-        onSetFocusedId(id);
-      } else {
-        setInternalFocusedId(id);
-      }
-    },
-    [onSetFocusedId],
-  );
+  // Focus Helpers
 
   const focus = (id: string) => {
     setFocus(id);
@@ -113,8 +116,8 @@ export const Component = React.forwardRef<
     if (!focused) {
       if (lastFocused) {
         focus(lastFocused);
-      } else if (selectedIds.length !== 0) {
-        focus(selectedIds[selectedIds.length - 1]);
+      } else if (selected.length !== 0) {
+        focus(selected[selected.length - 1]);
       } else {
         focusFirstNode();
       }
@@ -155,7 +158,7 @@ export const Component = React.forwardRef<
     }
   };
 
-  // itemを収集する
+  // nodeを収集する
   useEffect(() => {
     const newItemIds: string[] = [];
     React.Children.forEach(children, child => {
@@ -167,7 +170,7 @@ export const Component = React.forwardRef<
         newItemIds.push(child.props.itemId);
       }
     });
-    itemIds.current = newItemIds;
+    nodeIds.current = newItemIds;
   }, [children]);
 
   const [removedItemIds, setRemovedItemIds] = useState<string[]>([]);
@@ -175,13 +178,11 @@ export const Component = React.forwardRef<
     setRemovedItemIds(ids => [...ids, id]);
   }, []);
 
-  // 削除されたアイテムの後処理
+  // 削除されたノードの後処理
   useEffect(() => {
     if (removedItemIds.length !== 0) {
       // 選択状態から外す
-      const newSelected = selectedIds.filter(
-        id => !removedItemIds.includes(id),
-      );
+      const newSelected = selected.filter(id => !removedItemIds.includes(id));
       onSelect(newSelected);
 
       // フォーカス状態を外す
@@ -196,14 +197,14 @@ export const Component = React.forwardRef<
 
       setRemovedItemIds([]);
     }
-  }, [focused, lastFocused, onSelect, removedItemIds, selectedIds, setFocus]);
+  }, [focused, lastFocused, onSelect, removedItemIds, selected, setFocus]);
 
   return (
     <ListContextProvider
       value={{
         focusedId: focused,
         lastFocusedId: lastFocused,
-        selectedIds,
+        selected,
         draggable,
         selectItem: onSelect,
         removeItemId,

@@ -17,8 +17,8 @@ export type NoteListProps = {
   onKeyDown?: (event: React.KeyboardEvent<HTMLUListElement>) => void;
   selectedNoteIds?: string[];
   searchCriteria?: SearchNotesCriteria;
-  focusedId?: ListProps['focusedId'];
-  onSetFocusedId?: ListProps['onSetFocusedId'];
+  focusedId?: ListProps['focused'];
+  onSetFocusedId?: ListProps['onSetFocused'];
   className?: string;
   draggable?: boolean;
   isMobile?: boolean;
@@ -60,10 +60,10 @@ const Component = forwardRef<
     <List
       draggable={draggable}
       className={className}
-      selectedIds={selectedNoteIds}
+      selected={selectedNoteIds}
       onSelect={onNotesSelect}
-      focusedId={focusedId}
-      onSetFocusedId={onSetFocusedId}
+      focused={focusedId}
+      onSetFocused={onSetFocusedId}
       onKeyDown={onKeyDown}
       ref={ref}
     >

@@ -4,7 +4,7 @@ type ListContextValue = {
   focusedId: string | null;
   lastFocusedId: string | null;
   draggable: boolean;
-  selectedIds: string[];
+  selected: string[];
   selectItem: (ids: string[]) => void;
   removeItemId: (id: string) => void;
   isFocused: (id: string) => boolean;
@@ -19,7 +19,7 @@ const ListContext = React.createContext<ListContextValue>({
   focusedId: null,
   lastFocusedId: null,
   draggable: false,
-  selectedIds: [],
+  selected: [],
   selectItem: () => {},
   removeItemId: () => {},
   isFocused: () => false,
