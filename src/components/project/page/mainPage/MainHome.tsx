@@ -92,6 +92,9 @@ const Component: React.FC<Props> = ({ className }) => {
     switch (event.key) {
       case 'ArrowLeft': {
         if (categoriesViewRef.current) {
+          if (!isDrawerOpen) {
+            openDrawer();
+          }
           categoriesViewRef.current.focus({ preventScroll: true });
         }
         if (selectedCategoryIds.length === 1) {
