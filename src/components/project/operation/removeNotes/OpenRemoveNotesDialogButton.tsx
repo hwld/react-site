@@ -38,6 +38,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
           tooltipText="メモの削除"
           onClick={open}
           tabIndex={tabIndex}
+          onFocus={e => e.stopPropagation()}
         >
           <DeleteNoteIcon fontSize={size} />
         </ActivatorButton>

@@ -44,6 +44,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
           tooltipText="メモの編集"
           onClick={open}
           tabIndex={tabIndex}
+          onFocus={e => e.stopPropagation()}
         >
           <EditIcon fontSize={size} />
         </ActivatorButton>

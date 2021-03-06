@@ -129,14 +129,16 @@ export const Component = React.forwardRef<
       case 'ArrowUp': {
         if (focused) {
           focusPrevItem(focused);
+        } else if (lastFocused) {
+          focusPrevItem(lastFocused);
         }
         break;
       }
       case 'ArrowDown': {
         if (focused) {
           focusNextItem(focused);
-        } else {
-          focusFirstNode();
+        } else if (lastFocused) {
+          focusNextItem(lastFocused);
         }
         break;
       }
