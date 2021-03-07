@@ -28,7 +28,9 @@ const Component: React.FC<CategoryFormProps> = ({
   const TypedController = useTypedController<FormCategoryField>({ control });
 
   const editCategory = (field: FormCategoryField) => {
-    const newFields: CategoryField = { categoryName: field.categoryName };
+    const newFields: CategoryField = {
+      categoryName: field.categoryName.trim(),
+    };
     onSubmit(newFields);
   };
 
