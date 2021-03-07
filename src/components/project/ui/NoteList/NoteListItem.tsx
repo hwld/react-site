@@ -158,12 +158,13 @@ const StyledComponent = styled(Component)`
       word-break: break-all;
 
       & .title {
+        white-space: pre-wrap;
         font-size: 2em;
         font-weight: bold;
       }
 
       & .text {
-        white-space: pre-line;
+        white-space: pre-wrap;
         font-size: 1.2em;
         margin-top: 20px;
         margin-left: 20px;
