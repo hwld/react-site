@@ -3,34 +3,27 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db, firebase } from '../firebaseConfig';
 
 // types
-export type NoteField = {
+export type Note = {
+  id: string;
+  categoryId: string;
   title: string;
   text: string;
-};
-
-export type NoteDate = {
   createdAt: Date;
   updatedAt: Date;
 };
 
-type FirestoreNoteDate = {
+type FirestoreNote = Omit<Note, 'categoryId' | 'createdAt' | 'updatedAt'> & {
+  categoryRef: firebase.firestore.DocumentReference;
   createdAt: firebase.firestore.Timestamp;
   updatedAt: firebase.firestore.Timestamp;
 };
 
-export type NoteInfo = {
-  id: string;
-  categoryId: string;
+export type NoteField = Pick<Note, 'title' | 'text'>;
+
+type NoteDate = {
+  createdAt: Date;
+  updatedAt: Date;
 };
-
-type FirestoreNoteInfo = {
-  id: string;
-  categoryRef: firebase.firestore.DocumentReference;
-};
-
-export type Note = NoteField & NoteDate & NoteInfo;
-
-type FirestoreNote = NoteField & FirestoreNoteDate & FirestoreNoteInfo;
 
 export interface SearchNotesCriteria {
   categoryId: string;

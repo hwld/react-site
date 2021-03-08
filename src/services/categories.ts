@@ -5,39 +5,25 @@ import { AppStateService } from './appState';
 import { db, firebase } from '../firebaseConfig';
 
 // types
-export type CategoryField = {
-  categoryName: string;
-};
-
-export type CategoryDate = {
-  createdAt: Date;
-};
-
-type FirestoreCategoryDate = {
-  createdAt: firebase.firestore.Timestamp;
-};
-
-export type CategoryInfo = {
+export type Category = {
   id: string;
+  categoryName: string;
+  createdAt: Date;
   parentCategoryId: string;
-  // 直接の子カテゴリーのみをもたせる
   childrenCategoryIds: string[];
   notesSortOrder: NotesSortOrder;
 };
 
-type FirestoreCategoryInfo = {
-  id: string;
-  // 親が存在しない場合は自分自身への参照にする
+type FirestoreCategory = Omit<
+  Category,
+  'createdAt' | 'parentCategoryId' | 'childrenCategoryIds'
+> & {
+  createdAt: firebase.firestore.Timestamp;
   parentCategoryRef: firebase.firestore.DocumentReference;
   childrenCategoryRefs: firebase.firestore.DocumentReference[];
-  notesSortOrder: NotesSortOrder;
 };
 
-export type Category = CategoryField & CategoryDate & CategoryInfo;
-
-export type FirestoreCategory = CategoryField &
-  FirestoreCategoryDate &
-  FirestoreCategoryInfo;
+export type CategoryField = Pick<Category, 'categoryName'>;
 
 export type CategoryService = {
   categories: Category[];
