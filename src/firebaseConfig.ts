@@ -18,7 +18,12 @@ if (!firebase.apps.length) {
 
   // Emulatorsの有効化
   if (process.env.NODE_ENV !== 'production') {
-    firebase.auth().useEmulator('http://localhost:9099/');
+    firebase
+      .auth()
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      .useEmulator('http://localhost:9099/', { disableWarnings: true });
+
     firebase.firestore().useEmulator('localhost', 8080);
   }
 }
