@@ -53,6 +53,9 @@ const Component: React.FC<Props> = ({
 };
 
 const StyledComponent = styled(Component)`
+  min-width: 100%;
+  width: auto;
+
   & .appTitle {
     font-weight: bold;
     color: ${props => props.theme.palette.text.secondary};
