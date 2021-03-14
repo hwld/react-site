@@ -6,6 +6,7 @@ import { ListItem } from '../../../ui/List/ListItem';
 import { Note, SearchNotesCriteria } from '../../../../services/notes';
 import { OpenRemoveNotesDialogButton } from '../../operation/removeNotes/OpenRemoveNotesDialogButton';
 import { OpenUpdateNoteDialogButton } from '../../operation/updateNote/OpenUpdateNoteDialogButton';
+import { useAppStateContext } from '../../../../context/AppStateContext';
 
 type Props = {
   note: Note;
@@ -20,6 +21,7 @@ const Component: React.FC<Props> = ({
   searchCriteria,
   className,
 }) => {
+  const { isMobile } = useAppStateContext();
   const refs = useRef<
     [
       React.RefObject<HTMLDivElement>,
@@ -27,7 +29,6 @@ const Component: React.FC<Props> = ({
       React.RefObject<HTMLButtonElement>,
     ]
   >([createRef(), createRef(), createRef()]);
-
   const focusIndex = useRef<number>(0);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -109,7 +110,7 @@ const Component: React.FC<Props> = ({
       ref={refs.current[0]}
       className={className}
     >
-      <div className="itemRoot">
+      <div className={`itemRoot ${isMobile && 'mobile'}`}>
         <div className="noteContainer">
           <Typography className="title" variant="h4" aria-label="title">
             {title}
@@ -122,20 +123,22 @@ const Component: React.FC<Props> = ({
             <Typography className="metaText">{`更新日: ${updatedAt}`}</Typography>
           </div>
         </div>
-        <div className="menuContainer">
-          <OpenRemoveNotesDialogButton
-            className="menuItem"
-            targetNoteIds={[itemId]}
-            tabIndex={-1}
-            ref={refs.current[1]}
-          />
-          <OpenUpdateNoteDialogButton
-            className="menuItem"
-            defaultNoteId={note.id}
-            tabIndex={-1}
-            ref={refs.current[2]}
-          />
-        </div>
+        {!isMobile && (
+          <div className="menuContainer">
+            <OpenRemoveNotesDialogButton
+              className="menuItem"
+              targetNoteIds={[itemId]}
+              tabIndex={-1}
+              ref={refs.current[1]}
+            />
+            <OpenUpdateNoteDialogButton
+              className="menuItem"
+              defaultNoteId={note.id}
+              tabIndex={-1}
+              ref={refs.current[2]}
+            />
+          </div>
+        )}
       </div>
     </ListItem>
   );
@@ -149,26 +152,28 @@ const StyledComponent = styled(Component)`
 
   & .itemRoot {
     width: 100%;
-    display: grid;
-    grid-template-columns: 85% 15%;
     align-items: flex-start;
 
+    &:not(.mobile) {
+      display: grid;
+      grid-template-columns: 85% 15%;
+    }
+
     & .noteContainer {
-      padding-left: 20px;
       word-break: break-all;
 
       & .title {
         white-space: pre-wrap;
-        font-size: 2em;
+        font-size: 1.5em;
         font-weight: bold;
       }
 
       & .text {
         white-space: pre-wrap;
-        font-size: 1.2em;
-        margin-top: 20px;
-        margin-left: 20px;
-        margin-bottom: 20px;
+        font-size: 1em;
+        margin-top: 10px;
+        margin-left: 10px;
+        margin-bottom: 10px;
       }
 
       & .metaData {
@@ -178,7 +183,7 @@ const StyledComponent = styled(Component)`
         width: 100%;
 
         & .metaText {
-          font-size: 1em;
+          font-size: 0.8em;
           color: #c0c0c0;
           margin-right: 10px;
         }
