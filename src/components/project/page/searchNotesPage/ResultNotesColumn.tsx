@@ -54,12 +54,8 @@ const Component: React.FC<Props> = ({ searchCriteria, className }) => {
   ]);
 
   return (
-    <ContentColumn className={className} isMobile={isMobile}>
-      <NoteList
-        notes={searchNotes}
-        searchCriteria={searchCriteria}
-        isMobile={isMobile}
-      />
+    <ContentColumn className={className} isFixedFooter={isMobile}>
+      <NoteList notes={searchNotes} searchCriteria={searchCriteria} />
     </ContentColumn>
   );
 };

@@ -6,7 +6,6 @@ import { SearchColumn } from './SearchColumn';
 import { ResultNotesColumn } from './ResultNotesColumn';
 import { Drawer } from '../../../ui/Drawer/Drawer';
 import { SearchNotesCriteria } from '../../../../services/notes';
-import { useAppStateContext } from '../../../../context/AppStateContext';
 import { useOpener } from '../../../../util/hooks/useOpener';
 import { PageHeader } from '../common/PageHeader';
 import { IconButton } from '../../../ui/IconButton';
@@ -14,11 +13,10 @@ import { AuthRequiredPage } from '../common/AuthRequiredPage';
 
 type Props = {
   className?: string;
+  isMobile: boolean;
 };
 
-const Component: React.FC<Props> = ({ className }) => {
-  const { isMobile } = useAppStateContext();
-
+const Component: React.FC<Props> = ({ className, isMobile }) => {
   const history = useHistory();
 
   const {

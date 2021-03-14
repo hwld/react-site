@@ -13,14 +13,11 @@ import { AuthRequiredPage } from '../common/AuthRequiredPage';
 
 type Props = {
   className?: string;
+  isMobile: boolean;
 };
 
-const Component: React.FC<Props> = ({ className }) => {
-  const {
-    isMobile,
-    selectedCategoryIds,
-    setSelectedCategoryIds,
-  } = useAppStateContext();
+const Component: React.FC<Props> = ({ className, isMobile }) => {
+  const { selectedCategoryIds, setSelectedCategoryIds } = useAppStateContext();
 
   const history = useHistory();
 

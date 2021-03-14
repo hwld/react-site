@@ -81,7 +81,7 @@ const Component = forwardRef<
   return (
     <ContentColumn
       className={className}
-      isMobile={isMobile}
+      isFixedFooter={isMobile}
       footerMenu={
         <>
           <OpenAddNoteDialogButton
@@ -119,7 +119,6 @@ const Component = forwardRef<
           onKeyDown={onKeyDown}
           notesSortOrder={notesSortOrder}
           ref={ref}
-          isMobile={isMobile}
         />
       ) : (
         <Alert

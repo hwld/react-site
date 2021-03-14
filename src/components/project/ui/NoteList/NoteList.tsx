@@ -21,7 +21,6 @@ export type NoteListProps = {
   onSetFocusedId?: ListProps['onSetFocused'];
   className?: string;
   draggable?: boolean;
-  isMobile?: boolean;
 };
 
 const Component = forwardRef<

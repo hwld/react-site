@@ -1,19 +1,13 @@
 import React, { ReactNode } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Toolbar, Divider } from '@material-ui/core';
 
 type Props = {
   className?: string;
   footerMenu?: ReactNode;
-  isMobile?: boolean;
 };
 
-const Component: React.FC<Props> = ({
-  children,
-  className,
-  footerMenu,
-  isMobile,
-}) => {
+const Component: React.FC<Props> = ({ children, className, footerMenu }) => {
   return (
     <div className={className}>
       <Toolbar className="header" aria-label="header" />
@@ -21,14 +15,14 @@ const Component: React.FC<Props> = ({
 
       <div className="content">{children}</div>
 
-      <Toolbar className={`footer ${isMobile && 'mobile'}`} aria-label="footer">
+      <Toolbar className="footer" aria-label="footer">
         {footerMenu}
       </Toolbar>
     </div>
   );
 };
 
-const StyledComponent = styled(Component)<{ isMobile?: boolean }>`
+const StyledComponent = styled(Component)<{ isFixedFooter?: boolean }>`
   height: 100%;
   width: 100%;
   display: flex;
@@ -51,11 +45,13 @@ const StyledComponent = styled(Component)<{ isMobile?: boolean }>`
     flex: 1;
     background-color: ${props => props.theme.palette.secondary.main};
 
-    &.mobile {
-      position: fixed;
-      width: 100%;
-      bottom: 0;
-    }
+    ${props =>
+      props.isFixedFooter &&
+      css`
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+      `}
   }
 `;
 
