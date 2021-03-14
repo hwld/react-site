@@ -6,6 +6,7 @@ import { CategoryField } from '../../../../services/categories';
 import { ActivatorButton } from '../ActivatorButton';
 import { useOpener } from '../../../../util/hooks/useOpener';
 import { AddCategoryDialog } from './AddCategoryDialog';
+import { useAppStateContext } from '../../../../context/AppStateContext';
 
 type Props = {
   disabled?: boolean;
@@ -22,6 +23,7 @@ const Component: React.FC<Props> = ({
 }) => {
   const { isOpen, open, close } = useOpener(false);
   const { addCategory } = useCategoriesContext();
+  const { isMobile } = useAppStateContext();
 
   const handleAddCategory = (field: CategoryField) => {
     addCategory(parentCategoryId, field);
@@ -44,6 +46,7 @@ const Component: React.FC<Props> = ({
 
       <AddCategoryDialog
         isOpen={isOpen}
+        isMobile={isMobile}
         onClose={close}
         onAddCategory={handleAddCategory}
       />

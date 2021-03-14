@@ -5,6 +5,7 @@ import { NotesSortOrder } from '../../../../services/notes';
 import { ActivatorButton } from '../ActivatorButton';
 import { useOpener } from '../../../../util/hooks/useOpener';
 import { SortNotesDialog } from './SortNotesDialog';
+import { useAppStateContext } from '../../../../context/AppStateContext';
 
 type Props = {
   sort: (order: NotesSortOrder) => void;
@@ -20,6 +21,7 @@ const Component: React.FC<Props> = ({
   size,
 }) => {
   const { isOpen, open, close } = useOpener(false);
+  const { isMobile } = useAppStateContext();
 
   const handleSortNotes = (order: NotesSortOrder) => {
     sort(order);
@@ -38,6 +40,7 @@ const Component: React.FC<Props> = ({
       </ActivatorButton>
       <SortNotesDialog
         isOpen={isOpen}
+        isMobile={isMobile}
         onClose={close}
         defaultSortOrder={defaultSortOrder}
         onSortNotes={handleSortNotes}

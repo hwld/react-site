@@ -1,5 +1,6 @@
 import React, { BaseSyntheticEvent } from 'react';
 import { Dialog, DialogProps } from '@material-ui/core';
+import styled, { css } from 'styled-components';
 
 type Props = DialogProps;
 
@@ -38,4 +39,11 @@ const Component: React.FC<Props> = ({
   );
 };
 
-export const OperationDialog = Component;
+export const OperationDialog = styled(Component)<{ isMobile: boolean }>`
+  ${props =>
+    props.isMobile &&
+    css`
+      width: 100%;
+      margin: 10px;
+    `}
+`;

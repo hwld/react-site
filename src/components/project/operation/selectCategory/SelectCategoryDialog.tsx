@@ -9,6 +9,7 @@ import { OperationDialog } from '../OperationDialog';
 type Props = {
   className?: string;
   isOpen: boolean;
+  isMobile: boolean;
   onClose: () => void;
   categories: Category[];
   defaultSelectedId: string;
@@ -18,6 +19,7 @@ type Props = {
 const Component: React.FC<Props> = ({
   className,
   isOpen,
+  isMobile,
   onClose,
   categories,
   defaultSelectedId,
@@ -26,7 +28,12 @@ const Component: React.FC<Props> = ({
   const formId = 'selectCategoryForm';
 
   return (
-    <OperationDialog open={isOpen} onClose={onClose} className={className}>
+    <OperationDialog
+      open={isOpen}
+      isMobile={isMobile}
+      onClose={onClose}
+      className={className}
+    >
       <DialogTitle>検索するカテゴリーの選択</DialogTitle>
 
       <DialogContent>

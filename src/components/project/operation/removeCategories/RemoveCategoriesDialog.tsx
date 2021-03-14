@@ -11,17 +11,19 @@ import { OperationDialog } from '../OperationDialog';
 
 type Props = {
   isOpen: boolean;
+  isMobile: boolean;
   onClose: () => void;
   onRemoveCategories: (event: React.SyntheticEvent) => void;
 };
 
 const Component: React.FC<Props> = ({
   isOpen,
+  isMobile,
   onClose,
   onRemoveCategories,
 }) => {
   return (
-    <OperationDialog open={isOpen} onClose={onClose}>
+    <OperationDialog open={isOpen} isMobile={isMobile} onClose={onClose}>
       <DialogTitle>カテゴリーの削除</DialogTitle>
 
       <DialogContent>

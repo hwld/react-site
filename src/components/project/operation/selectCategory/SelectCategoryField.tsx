@@ -6,6 +6,7 @@ import { IconButton } from '../../../ui/IconButton';
 import { useOpener } from '../../../../util/hooks/useOpener';
 import { SelectCategoryDialog } from './SelectCategoryDialog';
 import { useCategoriesContext } from '../../../../context/CategoriesContext';
+import { useAppStateContext } from '../../../../context/AppStateContext';
 
 type Props = {
   selectedCategoryId: string;
@@ -20,6 +21,7 @@ const Component: React.FC<Props> = ({
 }) => {
   const { isOpen, open, close } = useOpener(false);
   const { categories } = useCategoriesContext();
+  const { isMobile } = useAppStateContext();
 
   const categoryName = useMemo(() => {
     const name = categories.find(c => c.id === selectedCategoryId)
@@ -61,6 +63,7 @@ const Component: React.FC<Props> = ({
       />
       <SelectCategoryDialog
         isOpen={isOpen}
+        isMobile={isMobile}
         onClose={close}
         categories={categories}
         defaultSelectedId={selectedCategoryId}

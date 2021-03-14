@@ -9,6 +9,7 @@ import { OperationDialog } from '../OperationDialog';
 
 type Props = {
   isOpen: boolean;
+  isMobile: boolean;
   onClose: () => void;
   defaultSortOrder: NotesSortOrder;
   onSortNotes: (order: NotesSortOrder) => void;
@@ -16,6 +17,7 @@ type Props = {
 
 const Component: React.FC<Props> = ({
   isOpen,
+  isMobile,
   onClose,
   defaultSortOrder,
   onSortNotes,
@@ -23,7 +25,7 @@ const Component: React.FC<Props> = ({
   const formId = 'sortNotesDialogForm';
 
   return (
-    <OperationDialog open={isOpen} onClose={onClose}>
+    <OperationDialog open={isOpen} isMobile={isMobile} onClose={onClose}>
       <DialogTitle>メモの並び替え</DialogTitle>
 
       <DialogContent>

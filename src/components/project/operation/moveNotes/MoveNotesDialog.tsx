@@ -14,6 +14,7 @@ import { OperationDialog } from '../OperationDialog';
 type Props = {
   className?: string;
   isOpen: boolean;
+  isMobile: boolean;
   onClose: () => void;
   categories: Category[];
   onMove: (genreId: string) => void;
@@ -22,6 +23,7 @@ type Props = {
 const Component: React.FC<Props> = ({
   className,
   isOpen,
+  isMobile,
   onClose,
   categories,
   onMove,
@@ -29,7 +31,12 @@ const Component: React.FC<Props> = ({
   const formId = 'moveNotesForm';
 
   return (
-    <OperationDialog className={className} open={isOpen} onClose={onClose}>
+    <OperationDialog
+      className={className}
+      open={isOpen}
+      isMobile={isMobile}
+      onClose={onClose}
+    >
       <DialogTitle>メモの移動</DialogTitle>
 
       <DialogContent>

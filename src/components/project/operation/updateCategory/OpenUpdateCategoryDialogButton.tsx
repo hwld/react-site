@@ -6,6 +6,7 @@ import { CategoryField } from '../../../../services/categories';
 import { ActivatorButton } from '../ActivatorButton';
 import { useOpener } from '../../../../util/hooks/useOpener';
 import { UpdateCategoryDialog } from './UpdateCategoryDialog';
+import { useAppStateContext } from '../../../../context/AppStateContext';
 
 type Props = {
   disabled?: boolean;
@@ -16,6 +17,7 @@ type Props = {
 const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
   const { isOpen, open, close } = useOpener(false);
   const { categories, updateCategory } = useCategoriesContext();
+  const { isMobile } = useAppStateContext();
 
   const defaultCategory = useMemo(() => {
     return categories.find(c => c.id === defaultCategoryId);
@@ -40,6 +42,7 @@ const Component: React.FC<Props> = ({ disabled, defaultCategoryId, size }) => {
       </ActivatorButton>
       <UpdateCategoryDialog
         isOpen={isOpen}
+        isMobile={isMobile}
         onClose={close}
         defaultField={defaultCategory}
         onUpdateCategory={handleUpdateCategory}

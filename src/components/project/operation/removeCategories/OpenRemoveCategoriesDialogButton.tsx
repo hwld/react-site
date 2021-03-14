@@ -5,6 +5,7 @@ import { useCategoriesContext } from '../../../../context/CategoriesContext';
 import { ActivatorButton } from '../ActivatorButton';
 import { useOpener } from '../../../../util/hooks/useOpener';
 import { RemoveCategoriesDialog } from './RemoveCategoriesDialog';
+import { useAppStateContext } from '../../../../context/AppStateContext';
 
 type Props = {
   disabled?: boolean;
@@ -15,6 +16,7 @@ type Props = {
 const Component: React.FC<Props> = ({ disabled, targetCategoryIds, size }) => {
   const { isOpen, open, close } = useOpener(false);
   const { removeCategories } = useCategoriesContext();
+  const { isMobile } = useAppStateContext();
 
   const handleRemoveCategories = (event: React.SyntheticEvent) => {
     event.stopPropagation();
@@ -34,6 +36,7 @@ const Component: React.FC<Props> = ({ disabled, targetCategoryIds, size }) => {
       </ActivatorButton>
       <RemoveCategoriesDialog
         isOpen={isOpen}
+        isMobile={isMobile}
         onClose={close}
         onRemoveCategories={handleRemoveCategories}
       />

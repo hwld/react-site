@@ -6,6 +6,7 @@ import { useNotesContext } from '../../../../context/NotesContext';
 import { ActivatorButton } from '../ActivatorButton';
 import { useOpener } from '../../../../util/hooks/useOpener';
 import { UpdateNoteDialog } from './UpdateNoteDialog';
+import { useAppStateContext } from '../../../../context/AppStateContext';
 
 type Props = {
   className?: string;
@@ -22,6 +23,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
   ) {
     const { isOpen, open, close } = useOpener(false);
     const { notes, updateNote } = useNotesContext();
+    const { isMobile } = useAppStateContext();
 
     const defaultNote = useMemo(() => {
       return notes.find(n => n.id === defaultNoteId);
@@ -50,6 +52,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
         </ActivatorButton>
         <UpdateNoteDialog
           isOpen={isOpen}
+          isMobile={isMobile}
           onClose={close}
           defaultField={defaultNote}
           onUpdateNote={handleUpdateNote}

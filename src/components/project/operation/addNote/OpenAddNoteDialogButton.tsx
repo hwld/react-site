@@ -6,6 +6,7 @@ import { ActivatorButton } from '../ActivatorButton';
 import { AddNoteDialog } from './AddNoteDialog';
 import { NoteField } from '../../../../services/notes';
 import { useOpener } from '../../../../util/hooks/useOpener';
+import { useAppStateContext } from '../../../../context/AppStateContext';
 
 type Props = {
   disabled?: boolean;
@@ -16,6 +17,7 @@ type Props = {
 const Component: React.FC<Props> = ({ disabled, categoryId, size }) => {
   const { isOpen, open, close } = useOpener(false);
   const { addNote } = useNotesContext();
+  const { isMobile } = useAppStateContext();
 
   const handleAddNote = (field: NoteField) => {
     addNote(categoryId, field);
@@ -34,6 +36,7 @@ const Component: React.FC<Props> = ({ disabled, categoryId, size }) => {
       </ActivatorButton>
       <AddNoteDialog
         isOpen={isOpen}
+        isMobile={isMobile}
         onClose={close}
         onAddNote={handleAddNote}
       />

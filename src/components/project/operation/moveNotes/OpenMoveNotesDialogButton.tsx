@@ -6,6 +6,7 @@ import { useNotesContext } from '../../../../context/NotesContext';
 import { ActivatorButton } from '../ActivatorButton';
 import { useOpener } from '../../../../util/hooks/useOpener';
 import { MoveNotesDialog } from './MoveNotesDialog';
+import { useAppStateContext } from '../../../../context/AppStateContext';
 
 type Props = {
   disabled?: boolean;
@@ -17,6 +18,7 @@ const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
   const { isOpen, open, close } = useOpener(false);
   const { categories } = useCategoriesContext();
   const { moveNotes } = useNotesContext();
+  const { isMobile } = useAppStateContext();
 
   const handleMove = (destCategoryId: string) => {
     if (destCategoryId !== '') {
@@ -37,6 +39,7 @@ const Component: React.FC<Props> = ({ disabled, sourceNoteIds, size }) => {
       </ActivatorButton>
       <MoveNotesDialog
         isOpen={isOpen}
+        isMobile={isMobile}
         onClose={close}
         categories={categories}
         onMove={handleMove}

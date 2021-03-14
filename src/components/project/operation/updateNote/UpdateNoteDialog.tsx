@@ -1,5 +1,6 @@
 import { DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import React from 'react';
+import styled, { css } from 'styled-components';
 import { NoteField } from '../../../../services/notes';
 import { ApplyButton } from '../../ui/ApplyButton';
 import { CancelButton } from '../../ui/CancelButton';
@@ -7,14 +8,18 @@ import { NoteForm } from '../../ui/NoteForm';
 import { OperationDialog } from '../OperationDialog';
 
 type Props = {
+  className?: string;
   isOpen: boolean;
+  isMobile: boolean;
   onClose: () => void;
   defaultField?: NoteField;
   onUpdateNote: (field: NoteField) => void;
 };
 
 const Component: React.FC<Props> = ({
+  className,
   isOpen,
+  isMobile,
   onClose,
   defaultField,
   onUpdateNote,
@@ -22,10 +27,16 @@ const Component: React.FC<Props> = ({
   const formId = 'updateNoteForm';
 
   return (
-    <OperationDialog open={isOpen} onClose={onClose} maxWidth="md">
+    <OperationDialog
+      className={className}
+      open={isOpen}
+      isMobile={isMobile}
+      onClose={onClose}
+      maxWidth="md"
+    >
       <DialogTitle>メモの編集</DialogTitle>
 
-      <DialogContent>
+      <DialogContent className="dialogContent">
         <NoteForm
           id={formId}
           defaultField={defaultField}
@@ -41,4 +52,12 @@ const Component: React.FC<Props> = ({
   );
 };
 
-export const UpdateNoteDialog = Component;
+export const UpdateNoteDialog = styled(Component)`
+  .dialogContent {
+    ${props =>
+      props.isMobile &&
+      css`
+        padding: 8px 10px;
+      `}
+  }
+`;

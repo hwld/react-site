@@ -5,6 +5,7 @@ import { useNotesContext } from '../../../../context/NotesContext';
 import { ActivatorButton } from '../ActivatorButton';
 import { useOpener } from '../../../../util/hooks/useOpener';
 import { RemoveNotesDialog } from './RemoveNotesDialog';
+import { useAppStateContext } from '../../../../context/AppStateContext';
 
 type Props = {
   className?: string;
@@ -21,6 +22,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
   ) {
     const { isOpen, open, close } = useOpener(false);
     const { removeNotes } = useNotesContext();
+    const { isMobile } = useAppStateContext();
 
     const handleRemoveNotes = (event: React.SyntheticEvent) => {
       event.stopPropagation();
@@ -44,6 +46,7 @@ const Component = forwardRef<HTMLButtonElement, PropsWithChildren<Props>>(
         </ActivatorButton>
         <RemoveNotesDialog
           isOpen={isOpen}
+          isMobile={isMobile}
           onClose={close}
           onRemoveNotesDialog={handleRemoveNotes}
         />
