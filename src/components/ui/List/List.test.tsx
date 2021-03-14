@@ -11,12 +11,12 @@ describe('<List>', () => {
     test('選択状態のアイテムを削除すると、選択状態から除外される', () => {
       const itemSelect = jest.fn();
       const { rerender } = render(
-        <List selectedIds={['item']} onSelect={itemSelect}>
+        <List selected={['item']} onSelect={itemSelect}>
           <ListItem itemId="item" />
         </List>,
       );
 
-      rerender(<List selectedIds={['item']} onSelect={itemSelect} />);
+      rerender(<List selected={['item']} onSelect={itemSelect} />);
 
       expect(itemSelect.mock.calls.length).toBe(1);
       expect(itemSelect.mock.calls[0][0]).toEqual([]);
@@ -40,7 +40,7 @@ describe('<List>', () => {
         <>
           <List
             draggable
-            selectedIds={selectedIds}
+            selected={selectedIds}
             onSelect={ids => setSelectedIds(ids)}
           >
             <ListItem itemId="item1" />

@@ -41,7 +41,9 @@
     "disable": "firebase hosting:disable",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen --verbose",
     "eject": "react-scripts eject",
-    "lint": "npx eslint src/**/*.tsx src/**/*.ts"
+    "lint": "eslint src --ext .ts,.tsx",
+    "type-check": "tsc --noEmit",
+    "check": "yarn run type-check && yarn run lint"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -13,7 +13,7 @@ import { AuthRequiredPage } from '../common/AuthRequiredPage';
 
 type Props = {
   className?: string;
-  isMobile: boolean;
+  isMobile?: boolean;
 };
 
 const Component: React.FC<Props> = ({ className, isMobile }) => {

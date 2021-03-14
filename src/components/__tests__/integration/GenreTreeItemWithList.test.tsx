@@ -13,7 +13,7 @@ describe('<CategoryTreeItem> with <List>', () => {
       <NotesContextProvider>
         <List
           draggable
-          selectedIds={selectedIds}
+          selected={selectedIds}
           onSelect={ids => setSelectedIds(ids)}
         >
           <ListItem itemId="listItem" />
