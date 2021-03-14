@@ -123,14 +123,6 @@ const StyledComponent = styled(Component)`
   .MuiFormLabel-root {
     color: ${props => props.theme.palette.secondary.main};
   }
-
-  & .MuiFormHelperText-root {
-    font-size: large;
-  }
-
-  & .MuiFilledInput-input:-webkit-autofill {
-    box-shadow: 0 0 0 100px ${props => props.theme.palette.primary.main}e5 inset;
-  }
 `;
 
 export const NoteForm = StyledComponent;
