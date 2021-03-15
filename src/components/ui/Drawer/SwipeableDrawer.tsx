@@ -12,6 +12,6 @@ export const SwipeableDrawer = styled(MuiDrawer)<SwipeableDrawerProps>`
   overflow: hidden;
 
   & .MuiDrawer-paper {
-    width: ${({ width }) => `${width}vw`};
+    width: 80vw;
   }
 `;

@@ -5,11 +5,10 @@ import { SwipeableDrawer, SwipeableDrawerProps } from './SwipeableDrawer';
 const Component: React.FC<SwipeableDrawerProps & {
   className?: string;
   isPresistent: boolean;
-}> = ({ children, open, width, isPresistent, className, ...rest }) => {
+}> = ({ children, open, isPresistent, className, ...rest }) => {
   return isPresistent ? (
     <PresistentDrawer
       open={open}
-      width={width}
       aria-label="presistentDrawer"
       className={className}
     >
@@ -18,7 +17,6 @@ const Component: React.FC<SwipeableDrawerProps & {
   ) : (
     <SwipeableDrawer
       open={open}
-      width={width}
       {...rest}
       aria-label="normalDrawer"
       className={className}

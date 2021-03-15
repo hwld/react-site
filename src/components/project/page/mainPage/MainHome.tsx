@@ -116,7 +116,6 @@ const Component: React.FC<Props> = ({ className, isMobile }) => {
       </PageHeader>
 
       <Drawer
-        width={isMobile ? '80' : '40'}
         isPresistent={!isMobile}
         open={isDrawerOpen}
         onOpen={openDrawer}
